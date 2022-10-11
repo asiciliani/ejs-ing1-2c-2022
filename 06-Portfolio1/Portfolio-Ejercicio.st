@@ -37,6 +37,75 @@ test03PortfolioHasAddedPortfoliosBalance
 	
 	self assert: portfolio2 balance equals: portfolio1 balance.! !
 
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/11/2022 16:08:12'!
+test04EmptyPortfolioHasNoRegisteredTransactions
+
+	| account portfolio deposit |
+	
+	
+	portfolio := Portfolio new.
+	account := ReceptiveAccount new.
+	deposit := Deposit register: 100 on: account.
+	
+	self deny: (portfolio hasRegistered: deposit).! !
+
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/11/2022 16:13:30'!
+test05PortfolioHasAddedAccountsTransactionRegistered
+
+	| account portfolio deposit |
+	
+	
+	portfolio := Portfolio new.
+	account := ReceptiveAccount new.
+	portfolio addAccount: account.
+	deposit := Deposit register: 100 on: account.
+	
+	self assert: (portfolio hasRegistered: deposit).! !
+
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/11/2022 16:15:47'!
+test06PortfolioHasAddedPortfoliosTransactionRegistered
+
+	| account portfolio1 portfolio2 deposit |
+	
+	
+	portfolio1 := Portfolio new.
+	portfolio2 := Portfolio new.
+	account := ReceptiveAccount new.
+	deposit := Deposit register: 100 on: account.
+	portfolio2 addAccount: account.
+	portfolio1 addPortfolio: portfolio2.
+	
+	self assert: (portfolio1 hasRegistered: deposit).! !
+
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/11/2022 16:37:12'!
+test07CanAskPortfolioForAddedAccountsTransactions
+
+	| account portfolio deposit withdraw|
+	
+	
+	portfolio := Portfolio new.
+	account := ReceptiveAccount new.
+	deposit := Deposit register: 100 on: account.
+	withdraw := Withdraw register: 30 on: account.
+	portfolio addAccount: account.
+	
+	self assert: (Set with: deposit with: withdraw) equals: portfolio transactions asSet.! !
+
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/11/2022 16:41:26'!
+test08CanAskPortfolioForAddedPortfoliosTransactions
+
+	| account portfolio1 portfolio2 deposit withdraw |
+	
+	portfolio1 := Portfolio new.
+	portfolio2 := Portfolio new.
+	account := ReceptiveAccount new.
+	deposit := Deposit register: 100 on: account.
+	withdraw := Withdraw register: 30 on: account.
+	portfolio2 addAccount: account.
+	portfolio1 addPortfolio: portfolio2.
+	
+	self assert: (Set with: deposit with: withdraw) equals: portfolio1 transactions asSet.! !
+
 
 !classDefinition: #ReceptiveAccountTest category: 'Portfolio-Ejercicio'!
 TestCase subclass: #ReceptiveAccountTest
@@ -256,6 +325,16 @@ addPortfolio: aPortfolio
 initialize
 	accounts := OrderedCollection new.
 	portfolios := OrderedCollection new.! !
+
+
+!Portfolio methodsFor: 'transactions' stamp: 'AS 10/11/2022 16:16:23'!
+hasRegistered: anAccountTransaction
+	^(accounts anySatisfy: 	[:account | account hasRegistered: anAccountTransaction]) or: [portfolios anySatisfy: 	[:account | account hasRegistered: anAccountTransaction]].! !
+
+!Portfolio methodsFor: 'transactions' stamp: 'AS 10/11/2022 16:41:02'!
+transactions
+	^portfolios inject: (accounts inject: OrderedCollection new into: [:portfolioTransactions :account | portfolioTransactions addAll: account transactions])
+			into: [:portfolioTransactions :portfolio | portfolioTransactions addAll: portfolio transactions].! !
 
 
 !classDefinition: #ReceptiveAccount category: 'Portfolio-Ejercicio'!

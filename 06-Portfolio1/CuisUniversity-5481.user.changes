@@ -926,3 +926,586 @@ PASSED!
 PASSED!
 
 ----SNAPSHOT----(6 October 2022 21:56:07) CuisUniversity-5481.image priorSource: 7102007!
+
+----STARTUP---- (11 October 2022 10:18:59) as /home/andisici/Documents/2022/ing-2c2022/cuisPortfolio/CuisUniversity-5481.image!
+
+
+!testRun: #PortfolioTest #test03PortfolioHasAddedPortfoliosBalance stamp: 'AS 10/11/2022 10:22:26'!
+PASSED!
+
+!testRun: #PortfolioTest #test01EmptyPortfolioHasZeroBalance stamp: 'AS 10/11/2022 10:22:26'!
+PASSED!
+
+!testRun: #PortfolioTest #test02PortfolioHasAddedAccountsBalance stamp: 'AS 10/11/2022 10:22:26'!
+PASSED!
+
+!testRun: #PortfolioTest #test03PortfolioHasAddedPortfoliosBalance stamp: 'AS 10/11/2022 10:22:26'!
+PASSED!
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/11/2022 16:07:10'!
+test04EmptyPortfolioHasNoRegisteredTransactions
+
+	| account portfolio|
+	
+	
+	portfolio := Portfolio new.
+	account := ReceptiveAccount new.
+	Deposit register: 100 on: account.
+	
+	self deny: portfolio hasRegistered: account.! !
+
+!testRun: #PortfolioTest #test04EmptyPortfolioHasNoRegisteredTransactions stamp: 'AS 10/11/2022 16:07:11'!
+ERROR!
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/11/2022 16:07:31' prior: 50553625!
+test04EmptyPortfolioHasNoRegisteredTransactions
+
+	| account portfolio|
+	
+	
+	portfolio := Portfolio new.
+	account := ReceptiveAccount new.
+	Deposit register: 100 on: account.
+	
+	self deny: (portfolio hasRegistered: account).! !
+
+!testRun: #PortfolioTest #test04EmptyPortfolioHasNoRegisteredTransactions stamp: 'AS 10/11/2022 16:07:31'!
+ERROR!
+!Portfolio methodsFor: 'transactions' stamp: 'AS 10/11/2022 16:07:43'!
+hasRegistered: aReceptiveAccount 
+	self shouldBeImplemented.! !
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/11/2022 16:08:12' prior: 50553639!
+test04EmptyPortfolioHasNoRegisteredTransactions
+
+	| account portfolio deposit |
+	
+	
+	portfolio := Portfolio new.
+	account := ReceptiveAccount new.
+	deposit := Deposit register: 100 on: account.
+	
+	self deny: (portfolio hasRegistered: deposit).! !
+
+!testRun: #PortfolioTest #test04EmptyPortfolioHasNoRegisteredTransactions stamp: 'AS 10/11/2022 16:08:14'!
+ERROR!
+
+!methodRemoval: Portfolio #hasRegistered: stamp: 'AS 10/11/2022 16:08:33'!
+hasRegistered: aReceptiveAccount 
+	self shouldBeImplemented.!
+
+!testRun: #PortfolioTest #test04EmptyPortfolioHasNoRegisteredTransactions stamp: 'AS 10/11/2022 16:08:37'!
+ERROR!
+!Portfolio methodsFor: 'transactions' stamp: 'AS 10/11/2022 16:08:42'!
+hasRegistered: aDeposit 
+	self shouldBeImplemented.! !
+!Portfolio methodsFor: 'transactions' stamp: 'AS 10/11/2022 16:08:59' prior: 50553679!
+hasRegistered: anAccountTransaction
+	^false.! !
+
+!testRun: #PortfolioTest #test04EmptyPortfolioHasNoRegisteredTransactions stamp: 'AS 10/11/2022 16:09:00'!
+PASSED!
+
+!testRun: #PortfolioTest #test01EmptyPortfolioHasZeroBalance stamp: 'AS 10/11/2022 16:09:00'!
+PASSED!
+
+!testRun: #PortfolioTest #test02PortfolioHasAddedAccountsBalance stamp: 'AS 10/11/2022 16:09:00'!
+PASSED!
+
+!testRun: #PortfolioTest #test03PortfolioHasAddedPortfoliosBalance stamp: 'AS 10/11/2022 16:09:00'!
+PASSED!
+
+!testRun: #PortfolioTest #test04EmptyPortfolioHasNoRegisteredTransactions stamp: 'AS 10/11/2022 16:09:00'!
+PASSED!
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/11/2022 16:10:53'!
+test05PortfolioHasAccountsTransactionRegistered
+
+	| account portfolio deposit |
+	
+	
+	portfolio := Portfolio new.
+	account := ReceptiveAccount new.
+	portfolio addAccount: account.
+	deposit := Deposit register: 100 on: account.
+	
+	self deny: (portfolio hasRegistered: deposit).! !
+
+!testRun: #PortfolioTest #test05PortfolioHasAccountsTransactionRegistered stamp: 'AS 10/11/2022 16:10:57'!
+PASSED!
+
+!testRun: #PortfolioTest #test01EmptyPortfolioHasZeroBalance stamp: 'AS 10/11/2022 16:10:57'!
+PASSED!
+
+!testRun: #PortfolioTest #test02PortfolioHasAddedAccountsBalance stamp: 'AS 10/11/2022 16:10:57'!
+PASSED!
+
+!testRun: #PortfolioTest #test03PortfolioHasAddedPortfoliosBalance stamp: 'AS 10/11/2022 16:10:57'!
+PASSED!
+
+!testRun: #PortfolioTest #test04EmptyPortfolioHasNoRegisteredTransactions stamp: 'AS 10/11/2022 16:10:57'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasAccountsTransactionRegistered stamp: 'AS 10/11/2022 16:10:57'!
+PASSED!
+
+!methodRemoval: PortfolioTest #test05PortfolioHasAccountsTransactionRegistered stamp: 'AS 10/11/2022 16:11:05'!
+test05PortfolioHasAccountsTransactionRegistered
+
+	| account portfolio deposit |
+	
+	
+	portfolio := Portfolio new.
+	account := ReceptiveAccount new.
+	portfolio addAccount: account.
+	deposit := Deposit register: 100 on: account.
+	
+	self deny: (portfolio hasRegistered: deposit).!
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/11/2022 16:11:18'!
+test05PortfolioHasAccountsTransactionRegistered
+
+	| account portfolio deposit |
+	
+	
+	portfolio := Portfolio new.
+	account := ReceptiveAccount new.
+	portfolio addAccount: account.
+	deposit := Deposit register: 100 on: account.
+	
+	self assert: (portfolio hasRegistered: deposit).! !
+
+!testRun: #PortfolioTest #test05PortfolioHasAccountsTransactionRegistered stamp: 'AS 10/11/2022 16:11:18'!
+FAILURE!
+!Portfolio methodsFor: 'transactions' stamp: 'AS 10/11/2022 16:12:52' prior: 50553684!
+hasRegistered: anAccountTransaction
+	^accounts anySatisfy: 	[:account | account hasRegistered: anAccountTransaction].! !
+
+!testRun: #PortfolioTest #test05PortfolioHasAccountsTransactionRegistered stamp: 'AS 10/11/2022 16:12:58'!
+PASSED!
+
+!testRun: #PortfolioTest #test01EmptyPortfolioHasZeroBalance stamp: 'AS 10/11/2022 16:12:58'!
+PASSED!
+
+!testRun: #PortfolioTest #test02PortfolioHasAddedAccountsBalance stamp: 'AS 10/11/2022 16:12:58'!
+PASSED!
+
+!testRun: #PortfolioTest #test03PortfolioHasAddedPortfoliosBalance stamp: 'AS 10/11/2022 16:12:58'!
+PASSED!
+
+!testRun: #PortfolioTest #test04EmptyPortfolioHasNoRegisteredTransactions stamp: 'AS 10/11/2022 16:12:58'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasAccountsTransactionRegistered stamp: 'AS 10/11/2022 16:12:58'!
+PASSED!
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/11/2022 16:13:30'!
+test05PortfolioHasAddedAccountsTransactionRegistered
+
+	| account portfolio deposit |
+	
+	
+	portfolio := Portfolio new.
+	account := ReceptiveAccount new.
+	portfolio addAccount: account.
+	deposit := Deposit register: 100 on: account.
+	
+	self assert: (portfolio hasRegistered: deposit).! !
+
+!methodRemoval: PortfolioTest #test05PortfolioHasAccountsTransactionRegistered stamp: 'AS 10/11/2022 16:13:30'!
+test05PortfolioHasAccountsTransactionRegistered
+
+	| account portfolio deposit |
+	
+	
+	portfolio := Portfolio new.
+	account := ReceptiveAccount new.
+	portfolio addAccount: account.
+	deposit := Deposit register: 100 on: account.
+	
+	self assert: (portfolio hasRegistered: deposit).!
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/11/2022 16:15:47'!
+test06PortfolioHasAddedPortfoliosTransactionRegistered
+
+	| account portfolio1 portfolio2 deposit |
+	
+	
+	portfolio1 := Portfolio new.
+	portfolio2 := Portfolio new.
+	account := ReceptiveAccount new.
+	deposit := Deposit register: 100 on: account.
+	portfolio2 addAccount: account.
+	portfolio1 addPortfolio: portfolio2.
+	
+	self assert: (portfolio1 hasRegistered: deposit).! !
+
+!testRun: #PortfolioTest #test06PortfolioHasAddedPortfoliosTransactionRegistered stamp: 'AS 10/11/2022 16:15:49'!
+FAILURE!
+!Portfolio methodsFor: 'transactions' stamp: 'AS 10/11/2022 16:16:23' prior: 50553765!
+hasRegistered: anAccountTransaction
+	^(accounts anySatisfy: 	[:account | account hasRegistered: anAccountTransaction]) or: [portfolios anySatisfy: 	[:account | account hasRegistered: anAccountTransaction]].! !
+
+!testRun: #PortfolioTest #test06PortfolioHasAddedPortfoliosTransactionRegistered stamp: 'AS 10/11/2022 16:16:24'!
+PASSED!
+
+!testRun: #PortfolioTest #test01EmptyPortfolioHasZeroBalance stamp: 'AS 10/11/2022 16:16:24'!
+PASSED!
+
+!testRun: #PortfolioTest #test02PortfolioHasAddedAccountsBalance stamp: 'AS 10/11/2022 16:16:24'!
+PASSED!
+
+!testRun: #PortfolioTest #test03PortfolioHasAddedPortfoliosBalance stamp: 'AS 10/11/2022 16:16:24'!
+PASSED!
+
+!testRun: #PortfolioTest #test04EmptyPortfolioHasNoRegisteredTransactions stamp: 'AS 10/11/2022 16:16:24'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasAddedAccountsTransactionRegistered stamp: 'AS 10/11/2022 16:16:24'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioHasAddedPortfoliosTransactionRegistered stamp: 'AS 10/11/2022 16:16:24'!
+PASSED!
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/11/2022 16:23:52'!
+test07CanAskPortfolioForAddedAccountsTransactions
+
+	| account portfolio deposit withdraw|
+	
+	
+	portfolio := Portfolio new.
+	account := ReceptiveAccount new.
+	deposit := Deposit register: 100 on: account.
+	withdraw := Withdraw register: 30 on: account.
+	portfolio addAccount: account.
+	
+	self assert: (portfolio transactions includesAll: #(deposit withdraw)).! !
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/11/2022 16:24:40' prior: 50553869!
+test07CanAskPortfolioForAddedAccountsTransactions
+
+	| account portfolio deposit withdraw|
+	
+	
+	portfolio := Portfolio new.
+	account := ReceptiveAccount new.
+	deposit := Deposit register: 100 on: account.
+	withdraw := Withdraw register: 30 on: account.
+	portfolio addAccount: account.
+	
+	self assert: (portfolio transactions includesAll: (OrderedCollection with: deposit with: withdraw)).! !
+
+!testRun: #PortfolioTest #test07CanAskPortfolioForAddedAccountsTransactions stamp: 'AS 10/11/2022 16:24:47'!
+ERROR!
+!Portfolio methodsFor: 'transactions' stamp: 'AS 10/11/2022 16:24:52'!
+transactions
+	self shouldBeImplemented.! !
+!Portfolio methodsFor: 'transactions' stamp: 'AS 10/11/2022 16:31:18' prior: 50553902!
+transactions
+	^accounts inject: OrderedCollection new into: [:portfolioTransactions :account | portfolioTransactions addAll: account transactions].! !
+
+!testRun: #PortfolioTest #test07CanAskPortfolioForAddedAccountsTransactions stamp: 'AS 10/11/2022 16:31:20'!
+ERROR!
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/11/2022 16:33:37' prior: 50553883!
+test07CanAskPortfolioForAddedAccountsTransactions
+
+	| account portfolio deposit withdraw|
+	
+	
+	portfolio := Portfolio new.
+	account := ReceptiveAccount new.
+	deposit := Deposit register: 100 on: account.
+	withdraw := Withdraw register: 30 on: account.
+	portfolio addAccount: account.
+	
+	self assert: (portfolio transactions includesAll: (Set with: deposit with: withdraw)).! !
+
+!testRun: #PortfolioTest #test07CanAskPortfolioForAddedAccountsTransactions stamp: 'AS 10/11/2022 16:33:39'!
+ERROR!
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/11/2022 16:34:11' prior: 50553918!
+test07CanAskPortfolioForAddedAccountsTransactions
+
+	| account portfolio deposit withdraw|
+	
+	
+	portfolio := Portfolio new.
+	account := ReceptiveAccount new.
+	deposit := Deposit register: 100 on: account.
+	withdraw := Withdraw register: 30 on: account.
+	portfolio addAccount: account.
+	
+	self assert: (Set with: deposit with: withdraw) equals: portfolio transactions.! !
+
+!testRun: #PortfolioTest #test07CanAskPortfolioForAddedAccountsTransactions stamp: 'AS 10/11/2022 16:34:12'!
+FAILURE!
+!Portfolio methodsFor: 'transactions' stamp: 'AS 10/11/2022 16:34:26' prior: 50553907!
+transactions
+	^accounts inject: Set new into: [:portfolioTransactions :account | portfolioTransactions addAll: account transactions].! !
+
+!testRun: #PortfolioTest #test07CanAskPortfolioForAddedAccountsTransactions stamp: 'AS 10/11/2022 16:34:27'!
+FAILURE!
+
+portfolioTransactions addAll: account transactions!
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/11/2022 16:37:12' prior: 50553937!
+test07CanAskPortfolioForAddedAccountsTransactions
+
+	| account portfolio deposit withdraw|
+	
+	
+	portfolio := Portfolio new.
+	account := ReceptiveAccount new.
+	deposit := Deposit register: 100 on: account.
+	withdraw := Withdraw register: 30 on: account.
+	portfolio addAccount: account.
+	
+	self assert: (Set with: deposit with: withdraw) equals: portfolio transactions asSet.! !
+
+!testRun: #PortfolioTest #test07CanAskPortfolioForAddedAccountsTransactions stamp: 'AS 10/11/2022 16:37:12'!
+PASSED!
+
+!testRun: #PortfolioTest #test01EmptyPortfolioHasZeroBalance stamp: 'AS 10/11/2022 16:37:12'!
+PASSED!
+
+!testRun: #PortfolioTest #test02PortfolioHasAddedAccountsBalance stamp: 'AS 10/11/2022 16:37:12'!
+PASSED!
+
+!testRun: #PortfolioTest #test03PortfolioHasAddedPortfoliosBalance stamp: 'AS 10/11/2022 16:37:12'!
+PASSED!
+
+!testRun: #PortfolioTest #test04EmptyPortfolioHasNoRegisteredTransactions stamp: 'AS 10/11/2022 16:37:12'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasAddedAccountsTransactionRegistered stamp: 'AS 10/11/2022 16:37:12'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioHasAddedPortfoliosTransactionRegistered stamp: 'AS 10/11/2022 16:37:12'!
+PASSED!
+
+!testRun: #PortfolioTest #test07CanAskPortfolioForAddedAccountsTransactions stamp: 'AS 10/11/2022 16:37:12'!
+PASSED!
+!Portfolio methodsFor: 'transactions' stamp: 'AS 10/11/2022 16:37:28' prior: 50553955!
+transactions
+	^accounts inject: OrderedCollection new into: [:portfolioTransactions :account | portfolioTransactions addAll: account transactions].! !
+
+!testRun: #PortfolioTest #test01EmptyPortfolioHasZeroBalance stamp: 'AS 10/11/2022 16:37:28'!
+PASSED!
+
+!testRun: #PortfolioTest #test02PortfolioHasAddedAccountsBalance stamp: 'AS 10/11/2022 16:37:28'!
+PASSED!
+
+!testRun: #PortfolioTest #test03PortfolioHasAddedPortfoliosBalance stamp: 'AS 10/11/2022 16:37:28'!
+PASSED!
+
+!testRun: #PortfolioTest #test04EmptyPortfolioHasNoRegisteredTransactions stamp: 'AS 10/11/2022 16:37:28'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasAddedAccountsTransactionRegistered stamp: 'AS 10/11/2022 16:37:28'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioHasAddedPortfoliosTransactionRegistered stamp: 'AS 10/11/2022 16:37:28'!
+PASSED!
+
+!testRun: #PortfolioTest #test07CanAskPortfolioForAddedAccountsTransactions stamp: 'AS 10/11/2022 16:37:28'!
+PASSED!
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/11/2022 16:38:51'!
+test07CanAskPortfolioForAddedPortfoliosTransactions
+
+	| account portfolio1 portfolio2 deposit withdraw |
+	
+	
+	portfolio1 := Portfolio new.
+	portfolio2 := Portfolio new.
+	account := ReceptiveAccount new.
+	deposit := Deposit register: 100 on: account.
+	withdraw := Withdraw register: 30 on: account.
+	portfolio2 addAccount: account.
+	portfolio1 addPortfolio: portfolio2.
+	
+	
+	self assert: (Set with: deposit with: withdraw) equals: portfolio1 transactions asSet.! !
+
+!testRun: #PortfolioTest #test07CanAskPortfolioForAddedPortfoliosTransactions stamp: 'AS 10/11/2022 16:38:51'!
+FAILURE!
+!Portfolio methodsFor: 'transactions' stamp: 'AS 10/11/2022 16:41:02' prior: 50554012!
+transactions
+	^portfolios inject: (accounts inject: OrderedCollection new into: [:portfolioTransactions :account | portfolioTransactions addAll: account transactions])
+			into: [:portfolioTransactions :portfolio | portfolioTransactions addAll: portfolio transactions].! !
+
+!testRun: #PortfolioTest #test07CanAskPortfolioForAddedPortfoliosTransactions stamp: 'AS 10/11/2022 16:41:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test01EmptyPortfolioHasZeroBalance stamp: 'AS 10/11/2022 16:41:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test02PortfolioHasAddedAccountsBalance stamp: 'AS 10/11/2022 16:41:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test03PortfolioHasAddedPortfoliosBalance stamp: 'AS 10/11/2022 16:41:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test04EmptyPortfolioHasNoRegisteredTransactions stamp: 'AS 10/11/2022 16:41:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasAddedAccountsTransactionRegistered stamp: 'AS 10/11/2022 16:41:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioHasAddedPortfoliosTransactionRegistered stamp: 'AS 10/11/2022 16:41:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test07CanAskPortfolioForAddedAccountsTransactions stamp: 'AS 10/11/2022 16:41:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test07CanAskPortfolioForAddedPortfoliosTransactions stamp: 'AS 10/11/2022 16:41:03'!
+PASSED!
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/11/2022 16:41:16'!
+test08CanAskPortfolioForAddedPortfoliosTransactions
+
+	| account portfolio1 portfolio2 deposit withdraw |
+	
+	
+	portfolio1 := Portfolio new.
+	portfolio2 := Portfolio new.
+	account := ReceptiveAccount new.
+	deposit := Deposit register: 100 on: account.
+	withdraw := Withdraw register: 30 on: account.
+	portfolio2 addAccount: account.
+	portfolio1 addPortfolio: portfolio2.
+	
+	
+	self assert: (Set with: deposit with: withdraw) equals: portfolio1 transactions asSet.! !
+
+!methodRemoval: PortfolioTest #test07CanAskPortfolioForAddedPortfoliosTransactions stamp: 'AS 10/11/2022 16:41:16'!
+test07CanAskPortfolioForAddedPortfoliosTransactions
+
+	| account portfolio1 portfolio2 deposit withdraw |
+	
+	
+	portfolio1 := Portfolio new.
+	portfolio2 := Portfolio new.
+	account := ReceptiveAccount new.
+	deposit := Deposit register: 100 on: account.
+	withdraw := Withdraw register: 30 on: account.
+	portfolio2 addAccount: account.
+	portfolio1 addPortfolio: portfolio2.
+	
+	
+	self assert: (Set with: deposit with: withdraw) equals: portfolio1 transactions asSet.!
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/11/2022 16:41:20' prior: 50554109!
+test08CanAskPortfolioForAddedPortfoliosTransactions
+
+	| account portfolio1 portfolio2 deposit withdraw |
+
+	
+	portfolio1 := Portfolio new.
+	portfolio2 := Portfolio new.
+	account := ReceptiveAccount new.
+	deposit := Deposit register: 100 on: account.
+	withdraw := Withdraw register: 30 on: account.
+	portfolio2 addAccount: account.
+	portfolio1 addPortfolio: portfolio2.
+	
+	
+	self assert: (Set with: deposit with: withdraw) equals: portfolio1 transactions asSet.! !
+
+!testRun: #PortfolioTest #test08CanAskPortfolioForAddedPortfoliosTransactions stamp: 'AS 10/11/2022 16:41:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test01EmptyPortfolioHasZeroBalance stamp: 'AS 10/11/2022 16:41:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test02PortfolioHasAddedAccountsBalance stamp: 'AS 10/11/2022 16:41:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test03PortfolioHasAddedPortfoliosBalance stamp: 'AS 10/11/2022 16:41:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test04EmptyPortfolioHasNoRegisteredTransactions stamp: 'AS 10/11/2022 16:41:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasAddedAccountsTransactionRegistered stamp: 'AS 10/11/2022 16:41:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioHasAddedPortfoliosTransactionRegistered stamp: 'AS 10/11/2022 16:41:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test07CanAskPortfolioForAddedAccountsTransactions stamp: 'AS 10/11/2022 16:41:20'!
+PASSED!
+
+!testRun: #PortfolioTest #test08CanAskPortfolioForAddedPortfoliosTransactions stamp: 'AS 10/11/2022 16:41:20'!
+PASSED!
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/11/2022 16:41:23' prior: 50554145!
+test08CanAskPortfolioForAddedPortfoliosTransactions
+
+	| account portfolio1 portfolio2 deposit withdraw |
+	
+	portfolio1 := Portfolio new.
+	portfolio2 := Portfolio new.
+	account := ReceptiveAccount new.
+	deposit := Deposit register: 100 on: account.
+	withdraw := Withdraw register: 30 on: account.
+	portfolio2 addAccount: account.
+	portfolio1 addPortfolio: portfolio2.
+	
+	
+	self assert: (Set with: deposit with: withdraw) equals: portfolio1 transactions asSet.! !
+
+!testRun: #PortfolioTest #test08CanAskPortfolioForAddedPortfoliosTransactions stamp: 'AS 10/11/2022 16:41:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test01EmptyPortfolioHasZeroBalance stamp: 'AS 10/11/2022 16:41:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test02PortfolioHasAddedAccountsBalance stamp: 'AS 10/11/2022 16:41:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test03PortfolioHasAddedPortfoliosBalance stamp: 'AS 10/11/2022 16:41:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test04EmptyPortfolioHasNoRegisteredTransactions stamp: 'AS 10/11/2022 16:41:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasAddedAccountsTransactionRegistered stamp: 'AS 10/11/2022 16:41:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioHasAddedPortfoliosTransactionRegistered stamp: 'AS 10/11/2022 16:41:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test07CanAskPortfolioForAddedAccountsTransactions stamp: 'AS 10/11/2022 16:41:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test08CanAskPortfolioForAddedPortfoliosTransactions stamp: 'AS 10/11/2022 16:41:23'!
+PASSED!
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/11/2022 16:41:26' prior: 50554195!
+test08CanAskPortfolioForAddedPortfoliosTransactions
+
+	| account portfolio1 portfolio2 deposit withdraw |
+	
+	portfolio1 := Portfolio new.
+	portfolio2 := Portfolio new.
+	account := ReceptiveAccount new.
+	deposit := Deposit register: 100 on: account.
+	withdraw := Withdraw register: 30 on: account.
+	portfolio2 addAccount: account.
+	portfolio1 addPortfolio: portfolio2.
+	
+	self assert: (Set with: deposit with: withdraw) equals: portfolio1 transactions asSet.! !
+
+!testRun: #PortfolioTest #test08CanAskPortfolioForAddedPortfoliosTransactions stamp: 'AS 10/11/2022 16:41:26'!
+PASSED!
+
+!testRun: #PortfolioTest #test01EmptyPortfolioHasZeroBalance stamp: 'AS 10/11/2022 16:41:26'!
+PASSED!
+
+!testRun: #PortfolioTest #test02PortfolioHasAddedAccountsBalance stamp: 'AS 10/11/2022 16:41:26'!
+PASSED!
+
+!testRun: #PortfolioTest #test03PortfolioHasAddedPortfoliosBalance stamp: 'AS 10/11/2022 16:41:26'!
+PASSED!
+
+!testRun: #PortfolioTest #test04EmptyPortfolioHasNoRegisteredTransactions stamp: 'AS 10/11/2022 16:41:26'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasAddedAccountsTransactionRegistered stamp: 'AS 10/11/2022 16:41:26'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioHasAddedPortfoliosTransactionRegistered stamp: 'AS 10/11/2022 16:41:26'!
+PASSED!
+
+!testRun: #PortfolioTest #test07CanAskPortfolioForAddedAccountsTransactions stamp: 'AS 10/11/2022 16:41:26'!
+PASSED!
+
+!testRun: #PortfolioTest #test08CanAskPortfolioForAddedPortfoliosTransactions stamp: 'AS 10/11/2022 16:41:26'!
+PASSED!
+
+----SNAPSHOT----(11 October 2022 16:44:14) CuisUniversity-5481.image priorSource: 7102520!
