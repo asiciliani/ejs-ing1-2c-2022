@@ -10,7 +10,7 @@ test01EmptyPortfolioHasZeroBalance
 
 	self assert: 0 equals: Portfolio new balance.! !
 
-!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/6/2022 21:45:01'!
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/11/2022 17:00:16'!
 test02PortfolioHasAddedAccountsBalance
 
 	| account portfolio |
@@ -19,10 +19,10 @@ test02PortfolioHasAddedAccountsBalance
 	account := ReceptiveAccount new.
 	Deposit register: 100 on: account.
 	
-	portfolio addAccount: account.
+	portfolio add: account.
 	self assert: account balance equals: portfolio balance.! !
 
-!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/6/2022 21:46:50'!
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/11/2022 17:00:23'!
 test03PortfolioHasAddedPortfoliosBalance
 
 	| account portfolio1 portfolio2|
@@ -32,8 +32,8 @@ test03PortfolioHasAddedPortfoliosBalance
 	portfolio2 := Portfolio new.
 	account := ReceptiveAccount new.
 	Deposit register: 100 on: account.
-	portfolio2 addAccount: account.
-	portfolio1 addPortfolio: portfolio2.
+	portfolio2 add: account.
+	portfolio1 add: portfolio2.
 	
 	self assert: portfolio2 balance equals: portfolio1 balance.! !
 
@@ -49,7 +49,7 @@ test04EmptyPortfolioHasNoRegisteredTransactions
 	
 	self deny: (portfolio hasRegistered: deposit).! !
 
-!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/11/2022 16:13:30'!
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/11/2022 17:00:29'!
 test05PortfolioHasAddedAccountsTransactionRegistered
 
 	| account portfolio deposit |
@@ -57,12 +57,12 @@ test05PortfolioHasAddedAccountsTransactionRegistered
 	
 	portfolio := Portfolio new.
 	account := ReceptiveAccount new.
-	portfolio addAccount: account.
+	portfolio add: account.
 	deposit := Deposit register: 100 on: account.
 	
 	self assert: (portfolio hasRegistered: deposit).! !
 
-!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/11/2022 16:15:47'!
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/11/2022 17:00:36'!
 test06PortfolioHasAddedPortfoliosTransactionRegistered
 
 	| account portfolio1 portfolio2 deposit |
@@ -72,12 +72,12 @@ test06PortfolioHasAddedPortfoliosTransactionRegistered
 	portfolio2 := Portfolio new.
 	account := ReceptiveAccount new.
 	deposit := Deposit register: 100 on: account.
-	portfolio2 addAccount: account.
-	portfolio1 addPortfolio: portfolio2.
+	portfolio2 add: account.
+	portfolio1 add: portfolio2.
 	
 	self assert: (portfolio1 hasRegistered: deposit).! !
 
-!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/11/2022 16:37:12'!
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/11/2022 17:00:40'!
 test07CanAskPortfolioForAddedAccountsTransactions
 
 	| account portfolio deposit withdraw|
@@ -87,11 +87,11 @@ test07CanAskPortfolioForAddedAccountsTransactions
 	account := ReceptiveAccount new.
 	deposit := Deposit register: 100 on: account.
 	withdraw := Withdraw register: 30 on: account.
-	portfolio addAccount: account.
+	portfolio add: account.
 	
 	self assert: (Set with: deposit with: withdraw) equals: portfolio transactions asSet.! !
 
-!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/11/2022 16:41:26'!
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/11/2022 17:00:46'!
 test08CanAskPortfolioForAddedPortfoliosTransactions
 
 	| account portfolio1 portfolio2 deposit withdraw |
@@ -101,8 +101,8 @@ test08CanAskPortfolioForAddedPortfoliosTransactions
 	account := ReceptiveAccount new.
 	deposit := Deposit register: 100 on: account.
 	withdraw := Withdraw register: 30 on: account.
-	portfolio2 addAccount: account.
-	portfolio1 addPortfolio: portfolio2.
+	portfolio2 add: account.
+	portfolio1 add: portfolio2.
 	
 	self assert: (Set with: deposit with: withdraw) equals: portfolio1 transactions asSet.! !
 
@@ -292,53 +292,63 @@ for: aValue
 	^ self new initializeFor: aValue ! !
 
 
-!classDefinition: #Portfolio category: 'Portfolio-Ejercicio'!
-Object subclass: #Portfolio
-	instanceVariableNames: 'accounts portfolios'
+!classDefinition: #FinancialAccount category: 'Portfolio-Ejercicio'!
+Object subclass: #FinancialAccount
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Portfolio-Ejercicio'!
 
-!Portfolio methodsFor: 'balance - private' stamp: 'AS 10/6/2022 21:50:25'!
-accountsBalance
-	^accounts sum: [:account | account balance] ifEmpty: [^0]! !
+!FinancialAccount methodsFor: 'transactions' stamp: 'AS 10/11/2022 16:57:44'!
+hasRegistered: aTransaction
 
-!Portfolio methodsFor: 'balance - private' stamp: 'AS 10/6/2022 21:50:45'!
-portfoliosBalance
-	^portfolios sum: [:portfolio | portfolio balance] ifEmpty: [^0]! !
+	self subclassResponsibility.! !
 
-
-!Portfolio methodsFor: 'balance' stamp: 'AS 10/6/2022 21:50:57'!
-balance
-	^self accountsBalance + self portfoliosBalance ! !
-
-
-!Portfolio methodsFor: 'adding' stamp: 'AS 10/6/2022 21:33:25'!
-addAccount: anAccount 
-	accounts add: anAccount.! !
-
-!Portfolio methodsFor: 'adding' stamp: 'AS 10/6/2022 21:47:09'!
-addPortfolio: aPortfolio 
-	portfolios add: aPortfolio .! !
-
-!Portfolio methodsFor: 'adding' stamp: 'AS 10/6/2022 21:47:27'!
-initialize
-	accounts := OrderedCollection new.
-	portfolios := OrderedCollection new.! !
-
-
-!Portfolio methodsFor: 'transactions' stamp: 'AS 10/11/2022 16:16:23'!
-hasRegistered: anAccountTransaction
-	^(accounts anySatisfy: 	[:account | account hasRegistered: anAccountTransaction]) or: [portfolios anySatisfy: 	[:account | account hasRegistered: anAccountTransaction]].! !
-
-!Portfolio methodsFor: 'transactions' stamp: 'AS 10/11/2022 16:41:02'!
+!FinancialAccount methodsFor: 'transactions' stamp: 'AS 10/11/2022 16:56:31'!
 transactions
-	^portfolios inject: (accounts inject: OrderedCollection new into: [:portfolioTransactions :account | portfolioTransactions addAll: account transactions])
-			into: [:portfolioTransactions :portfolio | portfolioTransactions addAll: portfolio transactions].! !
+
+	self subclassResponsibility.! !
+
+
+!FinancialAccount methodsFor: 'balance' stamp: 'AS 10/11/2022 16:56:26'!
+balance
+
+	self subclassResponsibility.! !
+
+
+!classDefinition: #Portfolio category: 'Portfolio-Ejercicio'!
+FinancialAccount subclass: #Portfolio
+	instanceVariableNames: 'financialAccounts'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+
+!Portfolio methodsFor: 'balance' stamp: 'AS 10/11/2022 17:01:49'!
+balance
+	^financialAccounts sum: [:financialAccount | financialAccount balance] ifEmpty: [^0]! !
+
+
+!Portfolio methodsFor: 'adding' stamp: 'AS 10/11/2022 16:59:26'!
+add: aFinancialAccount 
+	financialAccounts add: aFinancialAccount.! !
+
+
+!Portfolio methodsFor: 'transactions' stamp: 'AS 10/11/2022 17:02:34'!
+hasRegistered: aTransaction
+	^financialAccounts anySatisfy: 	[:financialAccount | financialAccount hasRegistered: aTransaction].! !
+
+!Portfolio methodsFor: 'transactions' stamp: 'AS 10/11/2022 17:03:37'!
+transactions
+	^financialAccounts inject: OrderedCollection new into: [:transactions :financialAccount | transactions addAll: financialAccount transactions]! !
+
+
+!Portfolio methodsFor: 'initialization' stamp: 'AS 10/11/2022 17:04:02'!
+initialize
+	financialAccounts := OrderedCollection new.! !
 
 
 !classDefinition: #ReceptiveAccount category: 'Portfolio-Ejercicio'!
-Object subclass: #ReceptiveAccount
+FinancialAccount subclass: #ReceptiveAccount
 	instanceVariableNames: 'transactions'
 	classVariableNames: ''
 	poolDictionaries: ''
