@@ -106,6 +106,36 @@ test08CanAskPortfolioForAddedPortfoliosTransactions
 	
 	self assert: (Set with: deposit with: withdraw) equals: portfolio1 transactions asSet.! !
 
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/13/2022 21:29:45'!
+test09CanNotAddToPortfolioSameReceptiveAccountMoreThanOnce
+
+	| account portfolio  |
+	
+	portfolio := Portfolio new.
+	account := ReceptiveAccount new.
+	portfolio add: account.
+	
+	self should:  [portfolio add: account]
+		raise:  Error - MessageNotUnderstood
+		withMessageText: Portfolio accountAlreadyInPortfolioErrorMessage.
+	
+	! !
+
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/16/2022 18:17:27'!
+test10CanNotAddToPortfolioAReceptiveAccountThatIsAlreadyAddedToPortfolioPortfolioIsAddedTo
+
+	| account portfolio1 portfolio2  |
+	
+	account := ReceptiveAccount new.
+	portfolio1 := Portfolio new.
+	portfolio1 add: account.
+	portfolio2 := Portfolio new.
+	portfolio1 add: portfolio2.
+	
+	self should:  [portfolio2 add: account]
+		raise:  Error - MessageNotUnderstood
+		withMessageText: Portfolio accountAlreadyInPortfolioErrorMessage.! !
+
 
 !classDefinition: #ReceptiveAccountTest category: 'Portfolio-Ejercicio'!
 TestCase subclass: #ReceptiveAccountTest
@@ -318,7 +348,7 @@ balance
 
 !classDefinition: #Portfolio category: 'Portfolio-Ejercicio'!
 FinancialAccount subclass: #Portfolio
-	instanceVariableNames: 'financialAccounts'
+	instanceVariableNames: 'financialAccounts portfoliosIAmAddedTo'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Portfolio-Ejercicio'!
@@ -328,9 +358,12 @@ balance
 	^financialAccounts sum: [:financialAccount | financialAccount balance] ifEmpty: [^0]! !
 
 
-!Portfolio methodsFor: 'adding' stamp: 'AS 10/11/2022 16:59:26'!
-add: aFinancialAccount 
-	financialAccounts add: aFinancialAccount.! !
+!Portfolio methodsFor: 'adding' stamp: 'AS 10/16/2022 18:18:28'!
+add: aFinancialAccountToBeAdded
+	self assertNotDirectlyInPortfolio: aFinancialAccountToBeAdded.
+	self assertNotDirectlyInPortfoliosIAmAddedTo: aFinancialAccountToBeAdded.
+	financialAccounts add: aFinancialAccountToBeAdded.
+	aFinancialAccountToBeAdded isNowAddedTo: self.! !
 
 
 !Portfolio methodsFor: 'transactions' stamp: 'AS 10/11/2022 17:02:34'!
@@ -342,22 +375,61 @@ transactions
 	^financialAccounts inject: OrderedCollection new into: [:transactions :financialAccount | transactions addAll: financialAccount transactions]! !
 
 
-!Portfolio methodsFor: 'initialization' stamp: 'AS 10/11/2022 17:04:02'!
+!Portfolio methodsFor: 'initialization' stamp: 'AS 10/13/2022 21:37:47'!
 initialize
-	financialAccounts := OrderedCollection new.! !
+	financialAccounts := OrderedCollection new.
+	portfoliosIAmAddedTo := OrderedCollection new.! !
+
+
+!Portfolio methodsFor: 'assertions' stamp: 'AS 10/13/2022 21:09:04'!
+assertNotDirectlyInPortfolio: aFinancialAccount
+
+	^ (financialAccounts includes: aFinancialAccount) ifTrue: [self accountAlreadyInPortfolioErrorSignal]! !
+
+!Portfolio methodsFor: 'assertions' stamp: 'AS 10/13/2022 21:58:45'!
+assertNotDirectlyInPortfoliosIAmAddedTo: aFinancialAccountToBeAdded
+
+	^ portfoliosIAmAddedTo do: [:portfolio | portfolio assertNotDirectlyInPortfolio: aFinancialAccountToBeAdded]! !
+
+!Portfolio methodsFor: 'assertions' stamp: 'AS 10/13/2022 21:59:56'!
+assertNotInPortfoliosIAmAddedTo: aFinancialAccountToBeAdded
+
+	^ portfoliosIAmAddedTo do: [:portfolio | portfolio assertNotDirectlyInPortfoliosIAmAddedTo: aFinancialAccountToBeAdded]! !
+
+
+!Portfolio methodsFor: 'error signal' stamp: 'AS 10/13/2022 20:49:12'!
+accountAlreadyInPortfolioErrorSignal
+
+	^ self error: self class accountAlreadyInPortfolioErrorMessage! !
+
+
+!Portfolio methodsFor: 'testing' stamp: 'AS 10/13/2022 21:43:50'!
+isNowAddedTo: aPortfolio 
+	portfoliosIAmAddedTo add: aPortfolio.! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'Portfolio class' category: 'Portfolio-Ejercicio'!
+Portfolio class
+	instanceVariableNames: ''!
+
+!Portfolio class methodsFor: 'error message' stamp: 'AS 10/13/2022 20:46:05'!
+accountAlreadyInPortfolioErrorMessage
+	^'Account already in portfolio!!'! !
 
 
 !classDefinition: #ReceptiveAccount category: 'Portfolio-Ejercicio'!
 FinancialAccount subclass: #ReceptiveAccount
-	instanceVariableNames: 'transactions'
+	instanceVariableNames: 'transactions portfoliosIAmAddedTo'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Portfolio-Ejercicio'!
 
-!ReceptiveAccount methodsFor: 'initialization' stamp: 'NR 10/17/2019 15:06:56'!
+!ReceptiveAccount methodsFor: 'initialization' stamp: 'AS 10/13/2022 21:40:37'!
 initialize
 
-	transactions := OrderedCollection new.! !
+	transactions := OrderedCollection new.
+	portfoliosIAmAddedTo := OrderedCollection new.! !
 
 
 !ReceptiveAccount methodsFor: 'transactions' stamp: 'HernanWilkinson 7/13/2011 18:37'!
@@ -384,3 +456,7 @@ hasRegistered: aTransaction
 
 	^ transactions includes: aTransaction 
 ! !
+
+!ReceptiveAccount methodsFor: 'testing' stamp: 'AS 10/13/2022 21:44:07'!
+isNowAddedTo: aPortfolio 
+	portfoliosIAmAddedTo add: aPortfolio.! !

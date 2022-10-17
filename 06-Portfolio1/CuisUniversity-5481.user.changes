@@ -1839,3 +1839,1564 @@ PASSED!
 PASSED!
 
 ----SNAPSHOT----(11 October 2022 17:05:06) CuisUniversity-5481.image priorSource: 7124600!
+
+----QUIT----(11 October 2022 23:31:32) CuisUniversity-5481.image priorSource: 7137622!
+
+----STARTUP---- (13 October 2022 19:55:19) as /home/andisici/Documents/2022/ing-2c2022/cuisPortfolio/CuisUniversity-5481.image!
+
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/13/2022 20:45:31'!
+test09CanNotAddToPortfolioSameAccountMoreThanOnce
+
+	| account portfolio  |
+	
+	portfolio := Portfolio new.
+	account := ReceptiveAccount new.
+	portfolio add: account.
+	
+	self should:  [portfolio add: account]
+		raise:  Error - MessageNotUnderstood
+		withMessageText: Portfolio accountAlreadyInPortfolioErrorMessage.
+	
+	! !
+
+!testRun: #PortfolioTest #test09CanNotAddToPortfolioSameAccountMoreThanOnce stamp: 'AS 10/13/2022 20:45:33'!
+ERROR!
+!Portfolio class methodsFor: 'error message' stamp: 'AS 10/13/2022 20:45:44'!
+accountAlreadyInPortfolioErrorMessage
+	self shouldBeImplemented.! !
+!Portfolio class methodsFor: 'error message' stamp: 'AS 10/13/2022 20:46:05' prior: 50554728!
+accountAlreadyInPortfolioErrorMessage
+	^'Account already in portfolio!!'! !
+
+!testRun: #PortfolioTest #test09CanNotAddToPortfolioSameAccountMoreThanOnce stamp: 'AS 10/13/2022 20:46:06'!
+FAILURE!
+!Portfolio methodsFor: 'adding' stamp: 'AS 10/13/2022 20:48:02' prior: 50554409!
+add: aFinancialAccount
+	(financialAccounts includes: aFinancialAccount) ifTrue: [self error: self class accountAlreadyInPortfolioErrorMessage].
+	financialAccounts add: aFinancialAccount.! !
+
+!testRun: #PortfolioTest #test09CanNotAddToPortfolioSameAccountMoreThanOnce stamp: 'AS 10/13/2022 20:48:05'!
+PASSED!
+
+!testRun: #PortfolioTest #test01EmptyPortfolioHasZeroBalance stamp: 'AS 10/13/2022 20:48:05'!
+PASSED!
+
+!testRun: #PortfolioTest #test02PortfolioHasAddedAccountsBalance stamp: 'AS 10/13/2022 20:48:05'!
+PASSED!
+
+!testRun: #PortfolioTest #test03PortfolioHasAddedPortfoliosBalance stamp: 'AS 10/13/2022 20:48:05'!
+PASSED!
+
+!testRun: #PortfolioTest #test04EmptyPortfolioHasNoRegisteredTransactions stamp: 'AS 10/13/2022 20:48:05'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasAddedAccountsTransactionRegistered stamp: 'AS 10/13/2022 20:48:05'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioHasAddedPortfoliosTransactionRegistered stamp: 'AS 10/13/2022 20:48:05'!
+PASSED!
+
+!testRun: #PortfolioTest #test07CanAskPortfolioForAddedAccountsTransactions stamp: 'AS 10/13/2022 20:48:05'!
+PASSED!
+
+!testRun: #PortfolioTest #test08CanAskPortfolioForAddedPortfoliosTransactions stamp: 'AS 10/13/2022 20:48:05'!
+PASSED!
+
+!testRun: #PortfolioTest #test09CanNotAddToPortfolioSameAccountMoreThanOnce stamp: 'AS 10/13/2022 20:48:05'!
+PASSED!
+
+!testRun: #PortfolioTest #test09CanNotAddToPortfolioSameAccountMoreThanOnce stamp: 'AS 10/13/2022 20:48:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test01EmptyPortfolioHasZeroBalance stamp: 'AS 10/13/2022 20:48:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test02PortfolioHasAddedAccountsBalance stamp: 'AS 10/13/2022 20:48:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test03PortfolioHasAddedPortfoliosBalance stamp: 'AS 10/13/2022 20:48:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test04EmptyPortfolioHasNoRegisteredTransactions stamp: 'AS 10/13/2022 20:48:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasAddedAccountsTransactionRegistered stamp: 'AS 10/13/2022 20:48:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioHasAddedPortfoliosTransactionRegistered stamp: 'AS 10/13/2022 20:48:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test07CanAskPortfolioForAddedAccountsTransactions stamp: 'AS 10/13/2022 20:48:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test08CanAskPortfolioForAddedPortfoliosTransactions stamp: 'AS 10/13/2022 20:48:10'!
+PASSED!
+
+!testRun: #PortfolioTest #test09CanNotAddToPortfolioSameAccountMoreThanOnce stamp: 'AS 10/13/2022 20:48:10'!
+PASSED!
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/13/2022 20:48:45'!
+test09CanNotAddToPortfolioSameFinancialAccountMoreThanOnce
+
+	| account portfolio  |
+	
+	portfolio := Portfolio new.
+	account := ReceptiveAccount new.
+	portfolio add: account.
+	
+	self should:  [portfolio add: account]
+		raise:  Error - MessageNotUnderstood
+		withMessageText: Portfolio accountAlreadyInPortfolioErrorMessage.
+	
+	! !
+
+!methodRemoval: PortfolioTest #test09CanNotAddToPortfolioSameAccountMoreThanOnce stamp: 'AS 10/13/2022 20:48:45'!
+test09CanNotAddToPortfolioSameAccountMoreThanOnce
+
+	| account portfolio  |
+	
+	portfolio := Portfolio new.
+	account := ReceptiveAccount new.
+	portfolio add: account.
+	
+	self should:  [portfolio add: account]
+		raise:  Error - MessageNotUnderstood
+		withMessageText: Portfolio accountAlreadyInPortfolioErrorMessage.
+	
+	!
+!Portfolio methodsFor: 'adding' stamp: 'AS 10/13/2022 20:49:12'!
+accountAlreadyInPortfolioErrorSignal
+
+	^ self error: self class accountAlreadyInPortfolioErrorMessage! !
+!Portfolio methodsFor: 'adding' stamp: 'AS 10/13/2022 20:49:12' prior: 50554743!
+add: aFinancialAccount
+	(financialAccounts includes: aFinancialAccount) ifTrue: [self accountAlreadyInPortfolioErrorSignal].
+	financialAccounts add: aFinancialAccount.! !
+!Portfolio methodsFor: 'adding' stamp: 'AS 10/13/2022 20:49:34'!
+assertNotInPortfolio: aFinancialAccount
+
+	^ (financialAccounts includes: aFinancialAccount) ifTrue: [self accountAlreadyInPortfolioErrorSignal]! !
+!Portfolio methodsFor: 'adding' stamp: 'AS 10/13/2022 20:49:34' prior: 50554856!
+add: aFinancialAccount
+	self assertNotInPortfolio: aFinancialAccount.
+	financialAccounts add: aFinancialAccount.! !
+
+!testRun: #PortfolioTest #test01EmptyPortfolioHasZeroBalance stamp: 'AS 10/13/2022 20:49:38'!
+PASSED!
+
+!testRun: #PortfolioTest #test02PortfolioHasAddedAccountsBalance stamp: 'AS 10/13/2022 20:49:38'!
+PASSED!
+
+!testRun: #PortfolioTest #test03PortfolioHasAddedPortfoliosBalance stamp: 'AS 10/13/2022 20:49:38'!
+PASSED!
+
+!testRun: #PortfolioTest #test04EmptyPortfolioHasNoRegisteredTransactions stamp: 'AS 10/13/2022 20:49:38'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasAddedAccountsTransactionRegistered stamp: 'AS 10/13/2022 20:49:38'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioHasAddedPortfoliosTransactionRegistered stamp: 'AS 10/13/2022 20:49:38'!
+PASSED!
+
+!testRun: #PortfolioTest #test07CanAskPortfolioForAddedAccountsTransactions stamp: 'AS 10/13/2022 20:49:38'!
+PASSED!
+
+!testRun: #PortfolioTest #test08CanAskPortfolioForAddedPortfoliosTransactions stamp: 'AS 10/13/2022 20:49:38'!
+PASSED!
+
+!testRun: #PortfolioTest #test09CanNotAddToPortfolioSameFinancialAccountMoreThanOnce stamp: 'AS 10/13/2022 20:49:38'!
+PASSED!
+
+----SNAPSHOT----(13 October 2022 20:49:45) CuisUniversity-5481.image priorSource: 7137714!
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/13/2022 20:56:00'!
+test10CanNotAddToPortfolioAPortfolioWithAlreadyAddedFinancialAccount
+
+	| account portfolio1 portfolio2  |
+	
+	account := ReceptiveAccount new.
+	portfolio1 := Portfolio new.
+	portfolio1 add: account.
+	portfolio2 := Portfolio new.
+	portfolio2 add: account.
+	
+	self should:  [portfolio1 add: portfolio2]
+		raise:  Error - MessageNotUnderstood
+		withMessageText: Portfolio accountAlreadyInPortfolioErrorMessage.
+	
+	! !
+
+!testRun: #PortfolioTest #test10CanNotAddToPortfolioAPortfolioWithAlreadyAddedFinancialAccount stamp: 'AS 10/13/2022 20:56:00'!
+FAILURE!
+!Portfolio methodsFor: 'adding' stamp: 'AS 10/13/2022 21:00:58' prior: 50554872!
+add: aFinancialAccount
+	self assertNotInPortfolio: aFinancialAccount.
+	financialAccounts do: [:financialAccount | financialAccount assertNotInPortfolio: aFinancialAccount].
+	financialAccounts add: aFinancialAccount.! !
+!Portfolio methodsFor: 'adding' stamp: 'AS 10/13/2022 21:02:07' prior: 50554934!
+add: aFinancialAccount
+	self assertNotInPortfolio: aFinancialAccount.
+	financialAccounts do: [:financialAccount | aFinancialAccount assertNotInPortfolio: financialAccount].
+	financialAccounts add: aFinancialAccount.! !
+
+!testRun: #PortfolioTest #test10CanNotAddToPortfolioAPortfolioWithAlreadyAddedFinancialAccount stamp: 'AS 10/13/2022 21:02:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test01EmptyPortfolioHasZeroBalance stamp: 'AS 10/13/2022 21:02:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test02PortfolioHasAddedAccountsBalance stamp: 'AS 10/13/2022 21:02:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test03PortfolioHasAddedPortfoliosBalance stamp: 'AS 10/13/2022 21:02:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test04EmptyPortfolioHasNoRegisteredTransactions stamp: 'AS 10/13/2022 21:02:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasAddedAccountsTransactionRegistered stamp: 'AS 10/13/2022 21:02:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioHasAddedPortfoliosTransactionRegistered stamp: 'AS 10/13/2022 21:02:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test07CanAskPortfolioForAddedAccountsTransactions stamp: 'AS 10/13/2022 21:02:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test08CanAskPortfolioForAddedPortfoliosTransactions stamp: 'AS 10/13/2022 21:02:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test09CanNotAddToPortfolioSameFinancialAccountMoreThanOnce stamp: 'AS 10/13/2022 21:02:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test10CanNotAddToPortfolioAPortfolioWithAlreadyAddedFinancialAccount stamp: 'AS 10/13/2022 21:02:27'!
+PASSED!
+
+----SNAPSHOT----(13 October 2022 21:02:40) CuisUniversity-5481.image priorSource: 7144327!
+!Portfolio methodsFor: 'adding' stamp: 'AS 10/13/2022 21:03:10' prior: 50554944!
+add: aFinancialAccountToBeAdded
+	self assertNotInPortfolio: aFinancialAccountToBeAdded.
+	financialAccounts do: [:financialAccount | aFinancialAccountToBeAdded assertNotInPortfolio: financialAccount].
+	financialAccounts add: aFinancialAccountToBeAdded.! !
+!Portfolio methodsFor: 'assertions' stamp: 'AS 10/13/2022 21:09:04'!
+assertNotDirectlyInPortfolio: aFinancialAccount
+
+	^ (financialAccounts includes: aFinancialAccount) ifTrue: [self accountAlreadyInPortfolioErrorSignal]! !
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'AS 10/13/2022 21:09:04' prior: 50554998!
+add: aFinancialAccountToBeAdded
+	self assertNotDirectlyInPortfolio: aFinancialAccountToBeAdded.
+	financialAccounts do: [:financialAccount | aFinancialAccountToBeAdded assertNotInPortfolio: financialAccount].
+	financialAccounts add: aFinancialAccountToBeAdded.! !
+
+!methodRemoval: Portfolio #assertNotInPortfolio: stamp: 'AS 10/13/2022 21:09:04'!
+assertNotInPortfolio: aFinancialAccount
+
+	^ (financialAccounts includes: aFinancialAccount) ifTrue: [self accountAlreadyInPortfolioErrorSignal]!
+
+| account portfolio1 portfolio2 portfolio3 |
+	
+	account := ReceptiveAccount new.
+	portfolio1 := Portfolio new.
+	portfolio1 add: account.
+	
+	portfolio2 := Portfolio new.
+	portfolio3 := Portfolio new.
+	portfolio3 add: account.
+	
+	portfolio2 add: portfolio3.
+	
+	portfolio1 add: portfolio2!
+!Portfolio methodsFor: 'adding' stamp: 'AS 10/13/2022 21:14:35' prior: 50555017!
+add: aFinancialAccountToBeAdded
+	self assertNotDirectlyInPortfolio: aFinancialAccountToBeAdded.
+	financialAccounts do: [:financialAccount | aFinancialAccountToBeAdded assertNotDirectlyInPortfolio: financialAccount].
+	financialAccounts add: aFinancialAccountToBeAdded.! !
+
+| account portfolio1 portfolio2 portfolio3 |
+	
+	account := ReceptiveAccount new.
+	portfolio1 := Portfolio new.
+	portfolio1 add: account.
+	
+	portfolio2 := Portfolio new.
+	portfolio3 := Portfolio new.
+	portfolio3 add: account.
+	
+	portfolio2 add: portfolio3.
+	
+	portfolio1 add: portfolio2!
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/13/2022 21:15:32'!
+test10CanNotAddToPortfolioAPortfolioWithAlreadyAddedReceptiveAccount
+
+	| account portfolio1 portfolio2  |
+	
+	account := ReceptiveAccount new.
+	portfolio1 := Portfolio new.
+	portfolio1 add: account.
+	portfolio2 := Portfolio new.
+	portfolio2 add: account.
+	
+	self should:  [portfolio1 add: portfolio2]
+		raise:  Error - MessageNotUnderstood
+		withMessageText: Portfolio accountAlreadyInPortfolioErrorMessage.
+	
+	! !
+
+!methodRemoval: PortfolioTest #test10CanNotAddToPortfolioAPortfolioWithAlreadyAddedFinancialAccount stamp: 'AS 10/13/2022 21:15:32'!
+test10CanNotAddToPortfolioAPortfolioWithAlreadyAddedFinancialAccount
+
+	| account portfolio1 portfolio2  |
+	
+	account := ReceptiveAccount new.
+	portfolio1 := Portfolio new.
+	portfolio1 add: account.
+	portfolio2 := Portfolio new.
+	portfolio2 add: account.
+	
+	self should:  [portfolio1 add: portfolio2]
+		raise:  Error - MessageNotUnderstood
+		withMessageText: Portfolio accountAlreadyInPortfolioErrorMessage.
+	
+	!
+
+----SNAPSHOT----(13 October 2022 21:25:10) CuisUniversity-5481.image priorSource: 7147008!
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/13/2022 21:29:45'!
+test09CanNotAddToPortfolioSameReceptiveAccountMoreThanOnce
+
+	| account portfolio  |
+	
+	portfolio := Portfolio new.
+	account := ReceptiveAccount new.
+	portfolio add: account.
+	
+	self should:  [portfolio add: account]
+		raise:  Error - MessageNotUnderstood
+		withMessageText: Portfolio accountAlreadyInPortfolioErrorMessage.
+	
+	! !
+
+!methodRemoval: PortfolioTest #test09CanNotAddToPortfolioSameFinancialAccountMoreThanOnce stamp: 'AS 10/13/2022 21:29:45'!
+test09CanNotAddToPortfolioSameFinancialAccountMoreThanOnce
+
+	| account portfolio  |
+	
+	portfolio := Portfolio new.
+	account := ReceptiveAccount new.
+	portfolio add: account.
+	
+	self should:  [portfolio add: account]
+		raise:  Error - MessageNotUnderstood
+		withMessageText: Portfolio accountAlreadyInPortfolioErrorMessage.
+	
+	!
+
+!methodRemoval: PortfolioTest #test10CanNotAddToPortfolioAPortfolioWithAlreadyAddedReceptiveAccount stamp: 'AS 10/13/2022 21:30:16'!
+test10CanNotAddToPortfolioAPortfolioWithAlreadyAddedReceptiveAccount
+
+	| account portfolio1 portfolio2  |
+	
+	account := ReceptiveAccount new.
+	portfolio1 := Portfolio new.
+	portfolio1 add: account.
+	portfolio2 := Portfolio new.
+	portfolio2 add: account.
+	
+	self should:  [portfolio1 add: portfolio2]
+		raise:  Error - MessageNotUnderstood
+		withMessageText: Portfolio accountAlreadyInPortfolioErrorMessage.
+	
+	!
+!Portfolio methodsFor: 'adding' stamp: 'AS 10/13/2022 21:31:27' prior: 50555044!
+add: aFinancialAccountToBeAdded
+	self assertNotDirectlyInPortfolio: aFinancialAccountToBeAdded.
+	financialAccounts add: aFinancialAccountToBeAdded.! !
+
+!testRun: #PortfolioTest #test01EmptyPortfolioHasZeroBalance stamp: 'AS 10/13/2022 21:31:28'!
+PASSED!
+
+!testRun: #PortfolioTest #test02PortfolioHasAddedAccountsBalance stamp: 'AS 10/13/2022 21:31:28'!
+PASSED!
+
+!testRun: #PortfolioTest #test03PortfolioHasAddedPortfoliosBalance stamp: 'AS 10/13/2022 21:31:28'!
+PASSED!
+
+!testRun: #PortfolioTest #test04EmptyPortfolioHasNoRegisteredTransactions stamp: 'AS 10/13/2022 21:31:28'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasAddedAccountsTransactionRegistered stamp: 'AS 10/13/2022 21:31:28'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioHasAddedPortfoliosTransactionRegistered stamp: 'AS 10/13/2022 21:31:28'!
+PASSED!
+
+!testRun: #PortfolioTest #test07CanAskPortfolioForAddedAccountsTransactions stamp: 'AS 10/13/2022 21:31:28'!
+PASSED!
+
+!testRun: #PortfolioTest #test08CanAskPortfolioForAddedPortfoliosTransactions stamp: 'AS 10/13/2022 21:31:28'!
+PASSED!
+
+!testRun: #PortfolioTest #test09CanNotAddToPortfolioSameReceptiveAccountMoreThanOnce stamp: 'AS 10/13/2022 21:31:28'!
+PASSED!
+!Portfolio methodsFor: 'adding' stamp: 'AS 10/13/2022 21:31:34' prior: 50555144!
+add: aFinancialAccountToBeAdded
+	financialAccounts add: aFinancialAccountToBeAdded.! !
+
+!testRun: #PortfolioTest #test01EmptyPortfolioHasZeroBalance stamp: 'AS 10/13/2022 21:31:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test02PortfolioHasAddedAccountsBalance stamp: 'AS 10/13/2022 21:31:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test03PortfolioHasAddedPortfoliosBalance stamp: 'AS 10/13/2022 21:31:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test04EmptyPortfolioHasNoRegisteredTransactions stamp: 'AS 10/13/2022 21:31:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasAddedAccountsTransactionRegistered stamp: 'AS 10/13/2022 21:31:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioHasAddedPortfoliosTransactionRegistered stamp: 'AS 10/13/2022 21:31:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test07CanAskPortfolioForAddedAccountsTransactions stamp: 'AS 10/13/2022 21:31:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test08CanAskPortfolioForAddedPortfoliosTransactions stamp: 'AS 10/13/2022 21:31:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test09CanNotAddToPortfolioSameReceptiveAccountMoreThanOnce stamp: 'AS 10/13/2022 21:31:34'!
+FAILURE!
+
+!testRun: #PortfolioTest #test09CanNotAddToPortfolioSameReceptiveAccountMoreThanOnce stamp: 'AS 10/13/2022 21:31:34'!
+FAILURE!
+
+!testRun: #PortfolioTest #test01EmptyPortfolioHasZeroBalance stamp: 'AS 10/13/2022 21:31:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test02PortfolioHasAddedAccountsBalance stamp: 'AS 10/13/2022 21:31:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test03PortfolioHasAddedPortfoliosBalance stamp: 'AS 10/13/2022 21:31:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test04EmptyPortfolioHasNoRegisteredTransactions stamp: 'AS 10/13/2022 21:31:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasAddedAccountsTransactionRegistered stamp: 'AS 10/13/2022 21:31:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioHasAddedPortfoliosTransactionRegistered stamp: 'AS 10/13/2022 21:31:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test07CanAskPortfolioForAddedAccountsTransactions stamp: 'AS 10/13/2022 21:31:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test08CanAskPortfolioForAddedPortfoliosTransactions stamp: 'AS 10/13/2022 21:31:40'!
+PASSED!
+
+!testRun: #PortfolioTest #test09CanNotAddToPortfolioSameReceptiveAccountMoreThanOnce stamp: 'AS 10/13/2022 21:31:40'!
+FAILURE!
+
+!testRun: #PortfolioTest #test09CanNotAddToPortfolioSameReceptiveAccountMoreThanOnce stamp: 'AS 10/13/2022 21:31:40'!
+FAILURE!
+!Portfolio methodsFor: 'adding' stamp: 'AS 10/13/2022 21:31:27' prior: 50555184!
+add: aFinancialAccountToBeAdded
+	self assertNotDirectlyInPortfolio: aFinancialAccountToBeAdded.
+	financialAccounts add: aFinancialAccountToBeAdded.! !
+
+!testRun: #PortfolioTest #test01EmptyPortfolioHasZeroBalance stamp: 'AS 10/13/2022 21:31:50'!
+PASSED!
+
+!testRun: #PortfolioTest #test02PortfolioHasAddedAccountsBalance stamp: 'AS 10/13/2022 21:31:50'!
+PASSED!
+
+!testRun: #PortfolioTest #test03PortfolioHasAddedPortfoliosBalance stamp: 'AS 10/13/2022 21:31:50'!
+PASSED!
+
+!testRun: #PortfolioTest #test04EmptyPortfolioHasNoRegisteredTransactions stamp: 'AS 10/13/2022 21:31:50'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasAddedAccountsTransactionRegistered stamp: 'AS 10/13/2022 21:31:50'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioHasAddedPortfoliosTransactionRegistered stamp: 'AS 10/13/2022 21:31:50'!
+PASSED!
+
+!testRun: #PortfolioTest #test07CanAskPortfolioForAddedAccountsTransactions stamp: 'AS 10/13/2022 21:31:50'!
+PASSED!
+
+!testRun: #PortfolioTest #test08CanAskPortfolioForAddedPortfoliosTransactions stamp: 'AS 10/13/2022 21:31:50'!
+PASSED!
+
+!testRun: #PortfolioTest #test09CanNotAddToPortfolioSameReceptiveAccountMoreThanOnce stamp: 'AS 10/13/2022 21:31:50'!
+PASSED!
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/13/2022 21:32:44'!
+test10CanNotAddToPortfolioInPortfolioAlreadyAddedReceptiveAccount
+
+	| account portfolio1 portfolio2  |
+	
+	account := ReceptiveAccount new.
+	portfolio1 := Portfolio new.
+	portfolio1 add: account.
+	portfolio2 := Portfolio new.
+	portfolio1 add: portfolio2.
+	
+	self should:  [portfolio2 add: account]
+		raise:  Error - MessageNotUnderstood
+		withMessageText: Portfolio accountAlreadyInPortfolioErrorMessage.! !
+
+!testRun: #PortfolioTest #test10CanNotAddToPortfolioInPortfolioAlreadyAddedReceptiveAccount stamp: 'AS 10/13/2022 21:32:46'!
+FAILURE!
+
+!classDefinition: #Portfolio category: 'Portfolio-Ejercicio' stamp: 'AS 10/13/2022 21:35:58'!
+FinancialAccount subclass: #Portfolio
+	instanceVariableNames: 'financialAccounts portfoliosIAmAddedTo'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+!Portfolio methodsFor: 'adding' stamp: 'AS 10/13/2022 21:35:55' prior: 50555263!
+add: aFinancialAccountToBeAdded
+	self assertNotDirectlyInPortfolio: aFinancialAccountToBeAdded.
+	portfoliosIAmAddedTo do: [:portfolio | portfolio assertNotDirectlyInPortfolio: aFinancialAccountToBeAdded].
+	financialAccounts add: aFinancialAccountToBeAdded.! !
+
+!testRun: #PortfolioTest #test10CanNotAddToPortfolioInPortfolioAlreadyAddedReceptiveAccount stamp: 'AS 10/13/2022 21:36:00'!
+ERROR!
+!Portfolio methodsFor: 'adding' stamp: 'AS 10/13/2022 21:36:54' prior: 50555332!
+add: aFinancialAccountToBeAdded
+	self assertNotDirectlyInPortfolio: aFinancialAccountToBeAdded.
+	portfoliosIAmAddedTo do: [:portfolio | portfolio assertNotDirectlyInPortfolio: aFinancialAccountToBeAdded].
+	financialAccounts add: aFinancialAccountToBeAdded.
+	aFinancialAccountToBeAdded isAddedTo: self.! !
+
+!testRun: #PortfolioTest #test01EmptyPortfolioHasZeroBalance stamp: 'AS 10/13/2022 21:37:02'!
+PASSED!
+
+!testRun: #PortfolioTest #test02PortfolioHasAddedAccountsBalance stamp: 'AS 10/13/2022 21:37:02'!
+ERROR!
+
+!testRun: #PortfolioTest #test03PortfolioHasAddedPortfoliosBalance stamp: 'AS 10/13/2022 21:37:02'!
+ERROR!
+
+!testRun: #PortfolioTest #test04EmptyPortfolioHasNoRegisteredTransactions stamp: 'AS 10/13/2022 21:37:02'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasAddedAccountsTransactionRegistered stamp: 'AS 10/13/2022 21:37:02'!
+ERROR!
+
+!testRun: #PortfolioTest #test06PortfolioHasAddedPortfoliosTransactionRegistered stamp: 'AS 10/13/2022 21:37:02'!
+ERROR!
+
+!testRun: #PortfolioTest #test07CanAskPortfolioForAddedAccountsTransactions stamp: 'AS 10/13/2022 21:37:02'!
+ERROR!
+
+!testRun: #PortfolioTest #test08CanAskPortfolioForAddedPortfoliosTransactions stamp: 'AS 10/13/2022 21:37:02'!
+ERROR!
+
+!testRun: #PortfolioTest #test09CanNotAddToPortfolioSameReceptiveAccountMoreThanOnce stamp: 'AS 10/13/2022 21:37:02'!
+ERROR!
+
+!testRun: #PortfolioTest #test10CanNotAddToPortfolioInPortfolioAlreadyAddedReceptiveAccount stamp: 'AS 10/13/2022 21:37:02'!
+ERROR!
+
+!testRun: #PortfolioTest #test02PortfolioHasAddedAccountsBalance stamp: 'AS 10/13/2022 21:37:06'!
+ERROR!
+!Portfolio methodsFor: 'initialization' stamp: 'AS 10/13/2022 21:37:47' prior: 50554568 overrides: 16920235!
+initialize
+	financialAccounts := OrderedCollection new.
+	portfoliosIAmAddedTo := OrderedCollection new.! !
+
+!testRun: #PortfolioTest #test01EmptyPortfolioHasZeroBalance stamp: 'AS 10/13/2022 21:37:57'!
+PASSED!
+
+!testRun: #PortfolioTest #test02PortfolioHasAddedAccountsBalance stamp: 'AS 10/13/2022 21:37:57'!
+ERROR!
+
+!testRun: #PortfolioTest #test03PortfolioHasAddedPortfoliosBalance stamp: 'AS 10/13/2022 21:37:57'!
+ERROR!
+
+!testRun: #PortfolioTest #test04EmptyPortfolioHasNoRegisteredTransactions stamp: 'AS 10/13/2022 21:37:57'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasAddedAccountsTransactionRegistered stamp: 'AS 10/13/2022 21:37:57'!
+ERROR!
+
+!testRun: #PortfolioTest #test06PortfolioHasAddedPortfoliosTransactionRegistered stamp: 'AS 10/13/2022 21:37:57'!
+ERROR!
+
+!testRun: #PortfolioTest #test07CanAskPortfolioForAddedAccountsTransactions stamp: 'AS 10/13/2022 21:37:57'!
+ERROR!
+
+!testRun: #PortfolioTest #test08CanAskPortfolioForAddedPortfoliosTransactions stamp: 'AS 10/13/2022 21:37:57'!
+ERROR!
+
+!testRun: #PortfolioTest #test09CanNotAddToPortfolioSameReceptiveAccountMoreThanOnce stamp: 'AS 10/13/2022 21:37:57'!
+ERROR!
+
+!testRun: #PortfolioTest #test10CanNotAddToPortfolioInPortfolioAlreadyAddedReceptiveAccount stamp: 'AS 10/13/2022 21:37:57'!
+ERROR!
+
+!testRun: #PortfolioTest #test02PortfolioHasAddedAccountsBalance stamp: 'AS 10/13/2022 21:38:06'!
+ERROR!
+!ReceptiveAccount methodsFor: 'testing' stamp: 'AS 10/13/2022 21:38:22'!
+isAddedTo: aPortfolio 
+	self shouldBeImplemented.! !
+
+!methodRemoval: ReceptiveAccount #isAddedTo: stamp: 'AS 10/13/2022 21:38:52'!
+isAddedTo: aPortfolio 
+	self shouldBeImplemented.!
+
+!testRun: #PortfolioTest #test10CanNotAddToPortfolioInPortfolioAlreadyAddedReceptiveAccount stamp: 'AS 10/13/2022 21:38:57'!
+ERROR!
+!Portfolio methodsFor: 'adding' stamp: 'AS 10/13/2022 21:39:13' prior: 50555347!
+add: aFinancialAccountToBeAdded
+	self assertNotDirectlyInPortfolio: aFinancialAccountToBeAdded.
+	portfoliosIAmAddedTo do: [:portfolio | portfolio assertNotDirectlyInPortfolio: aFinancialAccountToBeAdded].
+	financialAccounts add: aFinancialAccountToBeAdded.
+	aFinancialAccountToBeAdded isNowAddedTo: self.! !
+
+!testRun: #PortfolioTest #test01EmptyPortfolioHasZeroBalance stamp: 'AS 10/13/2022 21:39:15'!
+PASSED!
+
+!testRun: #PortfolioTest #test02PortfolioHasAddedAccountsBalance stamp: 'AS 10/13/2022 21:39:15'!
+ERROR!
+
+!testRun: #PortfolioTest #test03PortfolioHasAddedPortfoliosBalance stamp: 'AS 10/13/2022 21:39:15'!
+ERROR!
+
+!testRun: #PortfolioTest #test04EmptyPortfolioHasNoRegisteredTransactions stamp: 'AS 10/13/2022 21:39:15'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasAddedAccountsTransactionRegistered stamp: 'AS 10/13/2022 21:39:15'!
+ERROR!
+
+!testRun: #PortfolioTest #test06PortfolioHasAddedPortfoliosTransactionRegistered stamp: 'AS 10/13/2022 21:39:15'!
+ERROR!
+
+!testRun: #PortfolioTest #test07CanAskPortfolioForAddedAccountsTransactions stamp: 'AS 10/13/2022 21:39:15'!
+ERROR!
+
+!testRun: #PortfolioTest #test08CanAskPortfolioForAddedPortfoliosTransactions stamp: 'AS 10/13/2022 21:39:15'!
+ERROR!
+
+!testRun: #PortfolioTest #test09CanNotAddToPortfolioSameReceptiveAccountMoreThanOnce stamp: 'AS 10/13/2022 21:39:15'!
+ERROR!
+
+!testRun: #PortfolioTest #test10CanNotAddToPortfolioInPortfolioAlreadyAddedReceptiveAccount stamp: 'AS 10/13/2022 21:39:15'!
+ERROR!
+
+!testRun: #PortfolioTest #test02PortfolioHasAddedAccountsBalance stamp: 'AS 10/13/2022 21:39:18'!
+ERROR!
+!ReceptiveAccount methodsFor: 'testing' stamp: 'AS 10/13/2022 21:39:22'!
+isNowAddedTo: aPortfolio 
+	self shouldBeImplemented.! !
+
+!classDefinition: #ReceptiveAccount category: 'Portfolio-Ejercicio' stamp: 'AS 10/13/2022 21:40:39'!
+FinancialAccount subclass: #ReceptiveAccount
+	instanceVariableNames: 'transactions portfoliosIAmAddedTo'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+!ReceptiveAccount methodsFor: 'initialization' stamp: 'AS 10/13/2022 21:40:37' prior: 50552471 overrides: 16920235!
+initialize
+
+	transactions := OrderedCollection new.
+	portfoliosIAmAddedTo := OrderedCollection new.! !
+
+!testRun: #PortfolioTest #test10CanNotAddToPortfolioInPortfolioAlreadyAddedReceptiveAccount stamp: 'AS 10/13/2022 21:40:58'!
+ERROR!
+!ReceptiveAccount methodsFor: 'testing' stamp: 'AS 10/13/2022 21:41:16' prior: 50555511!
+isNowAddedTo: aPortfolio 
+	^portfoliosIAmAddedTo includes: aPortfolio.! !
+
+!testRun: #PortfolioTest #test10CanNotAddToPortfolioInPortfolioAlreadyAddedReceptiveAccount stamp: 'AS 10/13/2022 21:41:17'!
+ERROR!
+!Portfolio methodsFor: 'testing' stamp: 'AS 10/13/2022 21:41:35'!
+isNowAddedTo: aPortfolio 
+	self shouldBeImplemented.! !
+!Portfolio methodsFor: 'testing' stamp: 'AS 10/13/2022 21:41:53' prior: 50555546!
+isNowAddedTo: aPortfolio 
+	portfoliosIAmAddedTo includes: aPortfolio.! !
+
+!testRun: #PortfolioTest #test10CanNotAddToPortfolioInPortfolioAlreadyAddedReceptiveAccount stamp: 'AS 10/13/2022 21:41:55'!
+FAILURE!
+!Portfolio methodsFor: 'testing' stamp: 'AS 10/13/2022 21:43:50' prior: 50555551!
+isNowAddedTo: aPortfolio 
+	portfoliosIAmAddedTo add: aPortfolio.! !
+!ReceptiveAccount methodsFor: 'testing' stamp: 'AS 10/13/2022 21:44:01' prior: 50555537!
+isNowAddedTo: aPortfolio 
+	^portfoliosIAmAddedTo add: aPortfolio.! !
+!ReceptiveAccount methodsFor: 'testing' stamp: 'AS 10/13/2022 21:44:07' prior: 50555566!
+isNowAddedTo: aPortfolio 
+	portfoliosIAmAddedTo add: aPortfolio.! !
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'AS 10/13/2022 21:44:09'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'AS 10/13/2022 21:44:09'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'AS 10/13/2022 21:44:09'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'AS 10/13/2022 21:44:09'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'AS 10/13/2022 21:44:09'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'AS 10/13/2022 21:44:09'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'AS 10/13/2022 21:44:09'!
+PASSED!
+
+!testRun: #PortfolioTest #test01EmptyPortfolioHasZeroBalance stamp: 'AS 10/13/2022 21:44:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test02PortfolioHasAddedAccountsBalance stamp: 'AS 10/13/2022 21:44:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test03PortfolioHasAddedPortfoliosBalance stamp: 'AS 10/13/2022 21:44:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test04EmptyPortfolioHasNoRegisteredTransactions stamp: 'AS 10/13/2022 21:44:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasAddedAccountsTransactionRegistered stamp: 'AS 10/13/2022 21:44:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioHasAddedPortfoliosTransactionRegistered stamp: 'AS 10/13/2022 21:44:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test07CanAskPortfolioForAddedAccountsTransactions stamp: 'AS 10/13/2022 21:44:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test08CanAskPortfolioForAddedPortfoliosTransactions stamp: 'AS 10/13/2022 21:44:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test09CanNotAddToPortfolioSameReceptiveAccountMoreThanOnce stamp: 'AS 10/13/2022 21:44:14'!
+PASSED!
+
+!testRun: #PortfolioTest #test10CanNotAddToPortfolioInPortfolioAlreadyAddedReceptiveAccount stamp: 'AS 10/13/2022 21:44:14'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'AS 10/13/2022 21:44:14'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'AS 10/13/2022 21:44:14'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'AS 10/13/2022 21:44:14'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'AS 10/13/2022 21:44:14'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'AS 10/13/2022 21:44:14'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'AS 10/13/2022 21:44:14'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'AS 10/13/2022 21:44:14'!
+PASSED!
+
+----SNAPSHOT----(13 October 2022 21:44:30) CuisUniversity-5481.image priorSource: 7150271!
+
+!classDefinition: #Portfolio category: 'Portfolio-Ejercicio' stamp: 'AS 10/13/2022 21:45:22'!
+FinancialAccount subclass: #Portfolio
+	instanceVariableNames: 'financialAccounts'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+
+!classDefinition: #ReceptiveAccount category: 'Portfolio-Ejercicio' stamp: 'AS 10/13/2022 21:45:22'!
+FinancialAccount subclass: #ReceptiveAccount
+	instanceVariableNames: 'transactions'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+
+!classDefinition: #FinancialAccount category: 'Portfolio-Ejercicio' stamp: 'AS 10/13/2022 21:45:22'!
+Object subclass: #FinancialAccount
+	instanceVariableNames: 'portfoliosIAmAddedTo'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Ejercicio'!
+!FinancialAccount methodsFor: 'testing' stamp: 'AS 10/13/2022 21:45:39'!
+isNowAddedTo: aPortfolio 
+	portfoliosIAmAddedTo add: aPortfolio.! !
+
+!methodRemoval: Portfolio #isNowAddedTo: stamp: 'AS 10/13/2022 21:45:39'!
+isNowAddedTo: aPortfolio 
+	portfoliosIAmAddedTo add: aPortfolio.!
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'AS 10/13/2022 21:45:44'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'AS 10/13/2022 21:45:44'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'AS 10/13/2022 21:45:44'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'AS 10/13/2022 21:45:44'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'AS 10/13/2022 21:45:44'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'AS 10/13/2022 21:45:44'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'AS 10/13/2022 21:45:44'!
+PASSED!
+
+!methodRemoval: ReceptiveAccount #isNowAddedTo: stamp: 'AS 10/13/2022 21:45:48'!
+isNowAddedTo: aPortfolio 
+	portfoliosIAmAddedTo add: aPortfolio.!
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'AS 10/13/2022 21:45:50'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'AS 10/13/2022 21:45:50'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'AS 10/13/2022 21:45:50'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'AS 10/13/2022 21:45:50'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'AS 10/13/2022 21:45:50'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'AS 10/13/2022 21:45:50'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'AS 10/13/2022 21:45:50'!
+PASSED!
+
+!testRun: #PortfolioTest #test01EmptyPortfolioHasZeroBalance stamp: 'AS 10/13/2022 21:45:53'!
+PASSED!
+
+!testRun: #PortfolioTest #test02PortfolioHasAddedAccountsBalance stamp: 'AS 10/13/2022 21:45:53'!
+PASSED!
+
+!testRun: #PortfolioTest #test03PortfolioHasAddedPortfoliosBalance stamp: 'AS 10/13/2022 21:45:53'!
+PASSED!
+
+!testRun: #PortfolioTest #test04EmptyPortfolioHasNoRegisteredTransactions stamp: 'AS 10/13/2022 21:45:53'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasAddedAccountsTransactionRegistered stamp: 'AS 10/13/2022 21:45:53'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioHasAddedPortfoliosTransactionRegistered stamp: 'AS 10/13/2022 21:45:53'!
+PASSED!
+
+!testRun: #PortfolioTest #test07CanAskPortfolioForAddedAccountsTransactions stamp: 'AS 10/13/2022 21:45:53'!
+PASSED!
+
+!testRun: #PortfolioTest #test08CanAskPortfolioForAddedPortfoliosTransactions stamp: 'AS 10/13/2022 21:45:53'!
+PASSED!
+
+!testRun: #PortfolioTest #test09CanNotAddToPortfolioSameReceptiveAccountMoreThanOnce stamp: 'AS 10/13/2022 21:45:53'!
+PASSED!
+
+!testRun: #PortfolioTest #test10CanNotAddToPortfolioInPortfolioAlreadyAddedReceptiveAccount stamp: 'AS 10/13/2022 21:45:53'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'AS 10/13/2022 21:45:53'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'AS 10/13/2022 21:45:53'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'AS 10/13/2022 21:45:53'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'AS 10/13/2022 21:45:53'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'AS 10/13/2022 21:45:53'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'AS 10/13/2022 21:45:53'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'AS 10/13/2022 21:45:53'!
+PASSED!
+
+!testRun: #PortfolioTest #test10CanNotAddToPortfolioInPortfolioAlreadyAddedReceptiveAccount stamp: 'AS 10/13/2022 21:46:44'!
+PASSED!
+
+!testRun: #PortfolioTest #test01EmptyPortfolioHasZeroBalance stamp: 'AS 10/13/2022 21:46:44'!
+PASSED!
+
+!testRun: #PortfolioTest #test02PortfolioHasAddedAccountsBalance stamp: 'AS 10/13/2022 21:46:44'!
+PASSED!
+
+!testRun: #PortfolioTest #test03PortfolioHasAddedPortfoliosBalance stamp: 'AS 10/13/2022 21:46:44'!
+PASSED!
+
+!testRun: #PortfolioTest #test04EmptyPortfolioHasNoRegisteredTransactions stamp: 'AS 10/13/2022 21:46:44'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasAddedAccountsTransactionRegistered stamp: 'AS 10/13/2022 21:46:44'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioHasAddedPortfoliosTransactionRegistered stamp: 'AS 10/13/2022 21:46:44'!
+PASSED!
+
+!testRun: #PortfolioTest #test07CanAskPortfolioForAddedAccountsTransactions stamp: 'AS 10/13/2022 21:46:44'!
+PASSED!
+
+!testRun: #PortfolioTest #test08CanAskPortfolioForAddedPortfoliosTransactions stamp: 'AS 10/13/2022 21:46:44'!
+PASSED!
+
+!testRun: #PortfolioTest #test09CanNotAddToPortfolioSameReceptiveAccountMoreThanOnce stamp: 'AS 10/13/2022 21:46:44'!
+PASSED!
+
+!testRun: #PortfolioTest #test10CanNotAddToPortfolioInPortfolioAlreadyAddedReceptiveAccount stamp: 'AS 10/13/2022 21:46:44'!
+PASSED!
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/13/2022 21:51:49'!
+test11CanNotAddToPortfolioInPortfolioInPortfolioAlreadyAddedReceptiveAccount
+
+	| account portfolio1 portfolio2 portfolio3|
+	
+	account := ReceptiveAccount new.
+	portfolio1 := Portfolio new.
+	portfolio1 add: account.
+	
+	portfolio2 := Portfolio new.
+	portfolio1 add: portfolio2.
+	portfolio3 := Portfolio new.
+	portfolio2 add: portfolio3.
+	
+	self should:  [portfolio3 add: account]
+		raise:  Error - MessageNotUnderstood
+		withMessageText: Portfolio accountAlreadyInPortfolioErrorMessage.! !
+
+!testRun: #PortfolioTest #test11CanNotAddToPortfolioInPortfolioInPortfolioAlreadyAddedReceptiveAccount stamp: 'AS 10/13/2022 21:51:51'!
+FAILURE!
+!Portfolio methodsFor: 'adding' stamp: 'AS 10/13/2022 21:54:30'!
+assertNotInPortfoliosIAmAddedTo: aFinancialAccountToBeAdded
+
+	^ portfoliosIAmAddedTo do: [:portfolio | portfolio assertNotDirectlyInPortfolio: aFinancialAccountToBeAdded]! !
+!Portfolio methodsFor: 'adding' stamp: 'AS 10/13/2022 21:54:30' prior: 50555459!
+add: aFinancialAccountToBeAdded
+	self assertNotDirectlyInPortfolio: aFinancialAccountToBeAdded.
+	self assertNotInPortfoliosIAmAddedTo: aFinancialAccountToBeAdded.
+	financialAccounts add: aFinancialAccountToBeAdded.
+	aFinancialAccountToBeAdded isNowAddedTo: self.! !
+
+----STARTUP---- (13 October 2022 21:55:00) as /home/andisici/Documents/2022/ing-2c2022/cuisPortfolio/CuisUniversity-5481.image!
+
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/13/2022 21:55:45'!
+test10CanNotAddToPortfolioInPortfolioInPortfolioAlreadyAddedReceptiveAccount
+
+	| account portfolio1 portfolio2 portfolio3 |
+	
+	account := ReceptiveAccount new.
+	portfolio1 := Portfolio new.
+	portfolio1 add: account.
+	portfolio2 := Portfolio new.
+	portfolio1 add: portfolio2.
+	portfolio3 := Portfolio new.
+	portfolio2 add: portfolio3.
+	
+	self should:  [portfolio3 add: account]
+		raise:  Error - MessageNotUnderstood
+		withMessageText: Portfolio accountAlreadyInPortfolioErrorMessage.! !
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/13/2022 21:55:52'!
+test11CanNotAddToPortfolioInPortfolioInPortfolioAlreadyAddedReceptiveAccount
+
+	| account portfolio1 portfolio2 portfolio3 |
+	
+	account := ReceptiveAccount new.
+	portfolio1 := Portfolio new.
+	portfolio1 add: account.
+	portfolio2 := Portfolio new.
+	portfolio1 add: portfolio2.
+	portfolio3 := Portfolio new.
+	portfolio2 add: portfolio3.
+	
+	self should:  [portfolio3 add: account]
+		raise:  Error - MessageNotUnderstood
+		withMessageText: Portfolio accountAlreadyInPortfolioErrorMessage.! !
+
+!methodRemoval: PortfolioTest #test10CanNotAddToPortfolioInPortfolioInPortfolioAlreadyAddedReceptiveAccount stamp: 'AS 10/13/2022 21:55:52'!
+test10CanNotAddToPortfolioInPortfolioInPortfolioAlreadyAddedReceptiveAccount
+
+	| account portfolio1 portfolio2 portfolio3 |
+	
+	account := ReceptiveAccount new.
+	portfolio1 := Portfolio new.
+	portfolio1 add: account.
+	portfolio2 := Portfolio new.
+	portfolio1 add: portfolio2.
+	portfolio3 := Portfolio new.
+	portfolio2 add: portfolio3.
+	
+	self should:  [portfolio3 add: account]
+		raise:  Error - MessageNotUnderstood
+		withMessageText: Portfolio accountAlreadyInPortfolioErrorMessage.!
+
+!testRun: #PortfolioTest #test11CanNotAddToPortfolioInPortfolioInPortfolioAlreadyAddedReceptiveAccount stamp: 'AS 10/13/2022 21:55:54'!
+FAILURE!
+!Portfolio methodsFor: 'adding' stamp: 'AS 10/13/2022 21:56:37'!
+assertNotInPortfoliosIAmAddedTo: aFinancialAccountToBeAdded
+
+	^ portfoliosIAmAddedTo do: [:portfolio | portfolio assertNotDirectlyInPortfolio: aFinancialAccountToBeAdded]! !
+!Portfolio methodsFor: 'adding' stamp: 'AS 10/13/2022 21:56:37' prior: 50555459!
+add: aFinancialAccountToBeAdded
+	self assertNotDirectlyInPortfolio: aFinancialAccountToBeAdded.
+	self assertNotInPortfoliosIAmAddedTo: aFinancialAccountToBeAdded.
+	financialAccounts add: aFinancialAccountToBeAdded.
+	aFinancialAccountToBeAdded isNowAddedTo: self.! !
+
+!testRun: #PortfolioTest #test01EmptyPortfolioHasZeroBalance stamp: 'AS 10/13/2022 21:56:42'!
+PASSED!
+
+!testRun: #PortfolioTest #test02PortfolioHasAddedAccountsBalance stamp: 'AS 10/13/2022 21:56:42'!
+PASSED!
+
+!testRun: #PortfolioTest #test03PortfolioHasAddedPortfoliosBalance stamp: 'AS 10/13/2022 21:56:42'!
+PASSED!
+
+!testRun: #PortfolioTest #test04EmptyPortfolioHasNoRegisteredTransactions stamp: 'AS 10/13/2022 21:56:42'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasAddedAccountsTransactionRegistered stamp: 'AS 10/13/2022 21:56:42'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioHasAddedPortfoliosTransactionRegistered stamp: 'AS 10/13/2022 21:56:42'!
+PASSED!
+
+!testRun: #PortfolioTest #test07CanAskPortfolioForAddedAccountsTransactions stamp: 'AS 10/13/2022 21:56:42'!
+PASSED!
+
+!testRun: #PortfolioTest #test08CanAskPortfolioForAddedPortfoliosTransactions stamp: 'AS 10/13/2022 21:56:42'!
+PASSED!
+
+!testRun: #PortfolioTest #test09CanNotAddToPortfolioSameReceptiveAccountMoreThanOnce stamp: 'AS 10/13/2022 21:56:42'!
+PASSED!
+
+!testRun: #PortfolioTest #test10CanNotAddToPortfolioInPortfolioAlreadyAddedReceptiveAccount stamp: 'AS 10/13/2022 21:56:42'!
+PASSED!
+
+!testRun: #PortfolioTest #test11CanNotAddToPortfolioInPortfolioInPortfolioAlreadyAddedReceptiveAccount stamp: 'AS 10/13/2022 21:56:42'!
+FAILURE!
+
+!testRun: #PortfolioTest #test11CanNotAddToPortfolioInPortfolioInPortfolioAlreadyAddedReceptiveAccount stamp: 'AS 10/13/2022 21:56:42'!
+FAILURE!
+!Portfolio methodsFor: 'adding' stamp: 'AS 10/13/2022 21:57:10' prior: 50555969!
+assertNotInPortfoliosIAmAddedTo: aFinancialAccountToBeAdded
+
+	^ portfoliosIAmAddedTo do: [:portfolio | portfolio assertNotInPortfoliosIAmAddedTo: aFinancialAccountToBeAdded]! !
+
+!testRun: #PortfolioTest #test01EmptyPortfolioHasZeroBalance stamp: 'AS 10/13/2022 21:57:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test02PortfolioHasAddedAccountsBalance stamp: 'AS 10/13/2022 21:57:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test03PortfolioHasAddedPortfoliosBalance stamp: 'AS 10/13/2022 21:57:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test04EmptyPortfolioHasNoRegisteredTransactions stamp: 'AS 10/13/2022 21:57:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasAddedAccountsTransactionRegistered stamp: 'AS 10/13/2022 21:57:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioHasAddedPortfoliosTransactionRegistered stamp: 'AS 10/13/2022 21:57:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test07CanAskPortfolioForAddedAccountsTransactions stamp: 'AS 10/13/2022 21:57:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test08CanAskPortfolioForAddedPortfoliosTransactions stamp: 'AS 10/13/2022 21:57:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test09CanNotAddToPortfolioSameReceptiveAccountMoreThanOnce stamp: 'AS 10/13/2022 21:57:41'!
+PASSED!
+
+!testRun: #PortfolioTest #test10CanNotAddToPortfolioInPortfolioAlreadyAddedReceptiveAccount stamp: 'AS 10/13/2022 21:57:41'!
+FAILURE!
+
+!testRun: #PortfolioTest #test11CanNotAddToPortfolioInPortfolioInPortfolioAlreadyAddedReceptiveAccount stamp: 'AS 10/13/2022 21:57:41'!
+FAILURE!
+
+!testRun: #PortfolioTest #test10CanNotAddToPortfolioInPortfolioAlreadyAddedReceptiveAccount stamp: 'AS 10/13/2022 21:57:51'!
+FAILURE!
+!Portfolio methodsFor: 'adding' stamp: 'AS 10/13/2022 21:56:37' prior: 50556034!
+assertNotInPortfoliosIAmAddedTo: aFinancialAccountToBeAdded
+
+	^ portfoliosIAmAddedTo do: [:portfolio | portfolio assertNotDirectlyInPortfolio: aFinancialAccountToBeAdded]! !
+
+!testRun: #PortfolioTest #test01EmptyPortfolioHasZeroBalance stamp: 'AS 10/13/2022 21:58:12'!
+PASSED!
+
+!testRun: #PortfolioTest #test02PortfolioHasAddedAccountsBalance stamp: 'AS 10/13/2022 21:58:12'!
+PASSED!
+
+!testRun: #PortfolioTest #test03PortfolioHasAddedPortfoliosBalance stamp: 'AS 10/13/2022 21:58:12'!
+PASSED!
+
+!testRun: #PortfolioTest #test04EmptyPortfolioHasNoRegisteredTransactions stamp: 'AS 10/13/2022 21:58:12'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasAddedAccountsTransactionRegistered stamp: 'AS 10/13/2022 21:58:12'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioHasAddedPortfoliosTransactionRegistered stamp: 'AS 10/13/2022 21:58:12'!
+PASSED!
+
+!testRun: #PortfolioTest #test07CanAskPortfolioForAddedAccountsTransactions stamp: 'AS 10/13/2022 21:58:12'!
+PASSED!
+
+!testRun: #PortfolioTest #test08CanAskPortfolioForAddedPortfoliosTransactions stamp: 'AS 10/13/2022 21:58:12'!
+PASSED!
+
+!testRun: #PortfolioTest #test09CanNotAddToPortfolioSameReceptiveAccountMoreThanOnce stamp: 'AS 10/13/2022 21:58:12'!
+PASSED!
+
+!testRun: #PortfolioTest #test10CanNotAddToPortfolioInPortfolioAlreadyAddedReceptiveAccount stamp: 'AS 10/13/2022 21:58:12'!
+PASSED!
+
+!testRun: #PortfolioTest #test11CanNotAddToPortfolioInPortfolioInPortfolioAlreadyAddedReceptiveAccount stamp: 'AS 10/13/2022 21:58:12'!
+FAILURE!
+
+!testRun: #PortfolioTest #test11CanNotAddToPortfolioInPortfolioInPortfolioAlreadyAddedReceptiveAccount stamp: 'AS 10/13/2022 21:58:12'!
+FAILURE!
+!Portfolio methodsFor: 'adding' stamp: 'AS 10/13/2022 21:58:45'!
+assertNotDirectlyInPortfoliosIAmAddedTo: aFinancialAccountToBeAdded
+
+	^ portfoliosIAmAddedTo do: [:portfolio | portfolio assertNotDirectlyInPortfolio: aFinancialAccountToBeAdded]! !
+!Portfolio methodsFor: 'as yet unclassified' stamp: 'AS 10/13/2022 21:58:45' prior: 50555977!
+add: aFinancialAccountToBeAdded
+	self assertNotDirectlyInPortfolio: aFinancialAccountToBeAdded.
+	self assertNotDirectlyInPortfoliosIAmAddedTo: aFinancialAccountToBeAdded.
+	financialAccounts add: aFinancialAccountToBeAdded.
+	aFinancialAccountToBeAdded isNowAddedTo: self.! !
+
+!methodRemoval: Portfolio #assertNotInPortfoliosIAmAddedTo: stamp: 'AS 10/13/2022 21:58:45'!
+assertNotInPortfoliosIAmAddedTo: aFinancialAccountToBeAdded
+
+	^ portfoliosIAmAddedTo do: [:portfolio | portfolio assertNotDirectlyInPortfolio: aFinancialAccountToBeAdded]!
+
+!testRun: #PortfolioTest #test01EmptyPortfolioHasZeroBalance stamp: 'AS 10/13/2022 21:58:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test02PortfolioHasAddedAccountsBalance stamp: 'AS 10/13/2022 21:58:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test03PortfolioHasAddedPortfoliosBalance stamp: 'AS 10/13/2022 21:58:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test04EmptyPortfolioHasNoRegisteredTransactions stamp: 'AS 10/13/2022 21:58:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasAddedAccountsTransactionRegistered stamp: 'AS 10/13/2022 21:58:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioHasAddedPortfoliosTransactionRegistered stamp: 'AS 10/13/2022 21:58:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test07CanAskPortfolioForAddedAccountsTransactions stamp: 'AS 10/13/2022 21:58:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test08CanAskPortfolioForAddedPortfoliosTransactions stamp: 'AS 10/13/2022 21:58:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test09CanNotAddToPortfolioSameReceptiveAccountMoreThanOnce stamp: 'AS 10/13/2022 21:58:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test10CanNotAddToPortfolioInPortfolioAlreadyAddedReceptiveAccount stamp: 'AS 10/13/2022 21:58:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test11CanNotAddToPortfolioInPortfolioInPortfolioAlreadyAddedReceptiveAccount stamp: 'AS 10/13/2022 21:58:47'!
+FAILURE!
+
+!testRun: #PortfolioTest #test11CanNotAddToPortfolioInPortfolioInPortfolioAlreadyAddedReceptiveAccount stamp: 'AS 10/13/2022 21:58:47'!
+FAILURE!
+!Portfolio methodsFor: 'adding' stamp: 'AS 10/13/2022 21:59:27' prior: 50556151!
+add: aFinancialAccountToBeAdded
+	self assertNotDirectlyInPortfolio: aFinancialAccountToBeAdded.
+	self assertNotDirectlyInPortfoliosIAmAddedTo: aFinancialAccountToBeAdded.
+	portfoliosIAmAddedTo do: [:portfolio | portfolio assertNotDirectlyInPortfoliosIAmAddedTo: aFinancialAccountToBeAdded].
+	financialAccounts add: aFinancialAccountToBeAdded.
+	aFinancialAccountToBeAdded isNowAddedTo: self.! !
+
+!testRun: #PortfolioTest #test01EmptyPortfolioHasZeroBalance stamp: 'AS 10/13/2022 21:59:29'!
+PASSED!
+
+!testRun: #PortfolioTest #test02PortfolioHasAddedAccountsBalance stamp: 'AS 10/13/2022 21:59:29'!
+PASSED!
+
+!testRun: #PortfolioTest #test03PortfolioHasAddedPortfoliosBalance stamp: 'AS 10/13/2022 21:59:29'!
+PASSED!
+
+!testRun: #PortfolioTest #test04EmptyPortfolioHasNoRegisteredTransactions stamp: 'AS 10/13/2022 21:59:29'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasAddedAccountsTransactionRegistered stamp: 'AS 10/13/2022 21:59:29'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioHasAddedPortfoliosTransactionRegistered stamp: 'AS 10/13/2022 21:59:29'!
+PASSED!
+
+!testRun: #PortfolioTest #test07CanAskPortfolioForAddedAccountsTransactions stamp: 'AS 10/13/2022 21:59:29'!
+PASSED!
+
+!testRun: #PortfolioTest #test08CanAskPortfolioForAddedPortfoliosTransactions stamp: 'AS 10/13/2022 21:59:29'!
+PASSED!
+
+!testRun: #PortfolioTest #test09CanNotAddToPortfolioSameReceptiveAccountMoreThanOnce stamp: 'AS 10/13/2022 21:59:29'!
+PASSED!
+
+!testRun: #PortfolioTest #test10CanNotAddToPortfolioInPortfolioAlreadyAddedReceptiveAccount stamp: 'AS 10/13/2022 21:59:29'!
+PASSED!
+
+!testRun: #PortfolioTest #test11CanNotAddToPortfolioInPortfolioInPortfolioAlreadyAddedReceptiveAccount stamp: 'AS 10/13/2022 21:59:29'!
+PASSED!
+!Portfolio methodsFor: 'adding' stamp: 'AS 10/13/2022 21:59:56'!
+assertNotInPortfoliosIAmAddedTo: aFinancialAccountToBeAdded
+
+	^ portfoliosIAmAddedTo do: [:portfolio | portfolio assertNotDirectlyInPortfoliosIAmAddedTo: aFinancialAccountToBeAdded]! !
+!Portfolio methodsFor: 'adding' stamp: 'AS 10/13/2022 21:59:56' prior: 50556217!
+add: aFinancialAccountToBeAdded
+	self assertNotDirectlyInPortfolio: aFinancialAccountToBeAdded.
+	self assertNotDirectlyInPortfoliosIAmAddedTo: aFinancialAccountToBeAdded.
+	self assertNotInPortfoliosIAmAddedTo: aFinancialAccountToBeAdded.
+	financialAccounts add: aFinancialAccountToBeAdded.
+	aFinancialAccountToBeAdded isNowAddedTo: self.! !
+
+----SNAPSHOT----(13 October 2022 22:02:57) CuisUniversity-5481.image priorSource: 7168477!
+
+----STARTUP---- (16 October 2022 16:15:34) as /home/andisici/Documents/2022/ing-2c2022/cuisPortfolio/CuisUniversity-5481.image!
+
+
+!testRun: #PortfolioTest #test10CanNotAddToPortfolioInPortfolioAlreadyAddedReceptiveAccount stamp: 'AS 10/16/2022 16:15:38'!
+PASSED!
+
+!testRun: #PortfolioTest #test11CanNotAddToPortfolioInPortfolioInPortfolioAlreadyAddedReceptiveAccount stamp: 'AS 10/16/2022 16:15:38'!
+PASSED!
+
+!testRun: #PortfolioTest #test01EmptyPortfolioHasZeroBalance stamp: 'AS 10/16/2022 16:15:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test02PortfolioHasAddedAccountsBalance stamp: 'AS 10/16/2022 16:15:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test03PortfolioHasAddedPortfoliosBalance stamp: 'AS 10/16/2022 16:15:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test04EmptyPortfolioHasNoRegisteredTransactions stamp: 'AS 10/16/2022 16:15:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasAddedAccountsTransactionRegistered stamp: 'AS 10/16/2022 16:15:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioHasAddedPortfoliosTransactionRegistered stamp: 'AS 10/16/2022 16:15:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test07CanAskPortfolioForAddedAccountsTransactions stamp: 'AS 10/16/2022 16:15:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test08CanAskPortfolioForAddedPortfoliosTransactions stamp: 'AS 10/16/2022 16:15:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test09CanNotAddToPortfolioSameReceptiveAccountMoreThanOnce stamp: 'AS 10/16/2022 16:15:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test10CanNotAddToPortfolioInPortfolioAlreadyAddedReceptiveAccount stamp: 'AS 10/16/2022 16:15:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test11CanNotAddToPortfolioInPortfolioInPortfolioAlreadyAddedReceptiveAccount stamp: 'AS 10/16/2022 16:15:43'!
+PASSED!
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/16/2022 16:16:39'!
+test12
+
+	| account portfolio1 portfolio2 portfolio3 portfolio4 |
+	
+	account := ReceptiveAccount new.
+	portfolio1 := Portfolio new.
+	portfolio1 add: account.
+	portfolio2 := Portfolio new.
+	portfolio1 add: portfolio2.
+	portfolio3 := Portfolio new.
+	portfolio2 add: portfolio3.
+	portfolio4 := Portfolio new.
+	portfolio3 add: portfolio4.
+	
+	self should:  [portfolio4 add: account]
+		raise:  Error - MessageNotUnderstood
+		withMessageText: Portfolio accountAlreadyInPortfolioErrorMessage.! !
+
+!testRun: #PortfolioTest #test12 stamp: 'AS 10/16/2022 16:16:44'!
+FAILURE!
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/16/2022 18:17:27'!
+test10CanNotAddToPortfolioAReceptiveAccountThatIsAlreadyAddedToPortfolioPortfolioIsAddedTo
+
+	| account portfolio1 portfolio2  |
+	
+	account := ReceptiveAccount new.
+	portfolio1 := Portfolio new.
+	portfolio1 add: account.
+	portfolio2 := Portfolio new.
+	portfolio1 add: portfolio2.
+	
+	self should:  [portfolio2 add: account]
+		raise:  Error - MessageNotUnderstood
+		withMessageText: Portfolio accountAlreadyInPortfolioErrorMessage.! !
+
+!methodRemoval: PortfolioTest #test10CanNotAddToPortfolioInPortfolioAlreadyAddedReceptiveAccount stamp: 'AS 10/16/2022 18:17:27'!
+test10CanNotAddToPortfolioInPortfolioAlreadyAddedReceptiveAccount
+
+	| account portfolio1 portfolio2  |
+	
+	account := ReceptiveAccount new.
+	portfolio1 := Portfolio new.
+	portfolio1 add: account.
+	portfolio2 := Portfolio new.
+	portfolio1 add: portfolio2.
+	
+	self should:  [portfolio2 add: account]
+		raise:  Error - MessageNotUnderstood
+		withMessageText: Portfolio accountAlreadyInPortfolioErrorMessage.!
+
+!methodRemoval: PortfolioTest #test12 stamp: 'AS 10/16/2022 18:18:18'!
+test12
+
+	| account portfolio1 portfolio2 portfolio3 portfolio4 |
+	
+	account := ReceptiveAccount new.
+	portfolio1 := Portfolio new.
+	portfolio1 add: account.
+	portfolio2 := Portfolio new.
+	portfolio1 add: portfolio2.
+	portfolio3 := Portfolio new.
+	portfolio2 add: portfolio3.
+	portfolio4 := Portfolio new.
+	portfolio3 add: portfolio4.
+	
+	self should:  [portfolio4 add: account]
+		raise:  Error - MessageNotUnderstood
+		withMessageText: Portfolio accountAlreadyInPortfolioErrorMessage.!
+!Portfolio methodsFor: 'adding' stamp: 'AS 10/16/2022 18:18:28' prior: 50556282!
+add: aFinancialAccountToBeAdded
+	self assertNotDirectlyInPortfolio: aFinancialAccountToBeAdded.
+	self assertNotDirectlyInPortfoliosIAmAddedTo: aFinancialAccountToBeAdded.
+	financialAccounts add: aFinancialAccountToBeAdded.
+	aFinancialAccountToBeAdded isNowAddedTo: self.! !
+
+!testRun: #PortfolioTest #test01EmptyPortfolioHasZeroBalance stamp: 'AS 10/16/2022 18:18:29'!
+PASSED!
+
+!testRun: #PortfolioTest #test02PortfolioHasAddedAccountsBalance stamp: 'AS 10/16/2022 18:18:29'!
+PASSED!
+
+!testRun: #PortfolioTest #test03PortfolioHasAddedPortfoliosBalance stamp: 'AS 10/16/2022 18:18:29'!
+PASSED!
+
+!testRun: #PortfolioTest #test04EmptyPortfolioHasNoRegisteredTransactions stamp: 'AS 10/16/2022 18:18:29'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasAddedAccountsTransactionRegistered stamp: 'AS 10/16/2022 18:18:29'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioHasAddedPortfoliosTransactionRegistered stamp: 'AS 10/16/2022 18:18:29'!
+PASSED!
+
+!testRun: #PortfolioTest #test07CanAskPortfolioForAddedAccountsTransactions stamp: 'AS 10/16/2022 18:18:29'!
+PASSED!
+
+!testRun: #PortfolioTest #test08CanAskPortfolioForAddedPortfoliosTransactions stamp: 'AS 10/16/2022 18:18:29'!
+PASSED!
+
+!testRun: #PortfolioTest #test09CanNotAddToPortfolioSameReceptiveAccountMoreThanOnce stamp: 'AS 10/16/2022 18:18:29'!
+PASSED!
+
+!testRun: #PortfolioTest #test10CanNotAddToPortfolioAReceptiveAccountThatIsAlreadyAddedToPortfolioPortfolioIsAddedTo stamp: 'AS 10/16/2022 18:18:29'!
+PASSED!
+
+!testRun: #PortfolioTest #test11CanNotAddToPortfolioInPortfolioInPortfolioAlreadyAddedReceptiveAccount stamp: 'AS 10/16/2022 18:18:29'!
+FAILURE!
+
+!testRun: #PortfolioTest #test11CanNotAddToPortfolioInPortfolioInPortfolioAlreadyAddedReceptiveAccount stamp: 'AS 10/16/2022 18:18:29'!
+FAILURE!
+
+!methodRemoval: PortfolioTest #test11CanNotAddToPortfolioInPortfolioInPortfolioAlreadyAddedReceptiveAccount stamp: 'AS 10/16/2022 18:19:56'!
+test11CanNotAddToPortfolioInPortfolioInPortfolioAlreadyAddedReceptiveAccount
+
+	| account portfolio1 portfolio2 portfolio3 |
+	
+	account := ReceptiveAccount new.
+	portfolio1 := Portfolio new.
+	portfolio1 add: account.
+	portfolio2 := Portfolio new.
+	portfolio1 add: portfolio2.
+	portfolio3 := Portfolio new.
+	portfolio2 add: portfolio3.
+	
+	self should:  [portfolio3 add: account]
+		raise:  Error - MessageNotUnderstood
+		withMessageText: Portfolio accountAlreadyInPortfolioErrorMessage.!
+
+----QUIT----(17 October 2022 00:07:54) CuisUniversity-5481.image priorSource: 7188628!
+
+----STARTUP---- (17 October 2022 15:23:44) as /home/andisici/Documents/2022/ing-2c2022/cuisPortfolio/CuisUniversity-5481.image!
+
+
+!testRun: #PortfolioTest #test10CanNotAddToPortfolioAReceptiveAccountThatIsAlreadyAddedToPortfolioPortfolioIsAddedTo stamp: 'AS 10/17/2022 16:30:18'!
+PASSED!
+
+!testRun: #PortfolioTest #test01EmptyPortfolioHasZeroBalance stamp: 'AS 10/17/2022 16:30:18'!
+PASSED!
+
+!testRun: #PortfolioTest #test02PortfolioHasAddedAccountsBalance stamp: 'AS 10/17/2022 16:30:18'!
+PASSED!
+
+!testRun: #PortfolioTest #test03PortfolioHasAddedPortfoliosBalance stamp: 'AS 10/17/2022 16:30:18'!
+PASSED!
+
+!testRun: #PortfolioTest #test04EmptyPortfolioHasNoRegisteredTransactions stamp: 'AS 10/17/2022 16:30:18'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasAddedAccountsTransactionRegistered stamp: 'AS 10/17/2022 16:30:18'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioHasAddedPortfoliosTransactionRegistered stamp: 'AS 10/17/2022 16:30:18'!
+PASSED!
+
+!testRun: #PortfolioTest #test07CanAskPortfolioForAddedAccountsTransactions stamp: 'AS 10/17/2022 16:30:18'!
+PASSED!
+
+!testRun: #PortfolioTest #test08CanAskPortfolioForAddedPortfoliosTransactions stamp: 'AS 10/17/2022 16:30:18'!
+PASSED!
+
+!testRun: #PortfolioTest #test09CanNotAddToPortfolioSameReceptiveAccountMoreThanOnce stamp: 'AS 10/17/2022 16:30:18'!
+PASSED!
+
+!testRun: #PortfolioTest #test10CanNotAddToPortfolioAReceptiveAccountThatIsAlreadyAddedToPortfolioPortfolioIsAddedTo stamp: 'AS 10/17/2022 16:30:18'!
+PASSED!
+!Portfolio methodsFor: 'adding' stamp: 'AS 10/17/2022 16:30:56' prior: 50556423!
+add: aFinancialAccountToBeAdded
+	 (financialAccounts includes: aFinancialAccountToBeAdded) ifTrue: [self accountAlreadyInPortfolioErrorSignal].
+	self assertNotDirectlyInPortfoliosIAmAddedTo: aFinancialAccountToBeAdded.
+	financialAccounts add: aFinancialAccountToBeAdded.
+	aFinancialAccountToBeAdded isNowAddedTo: self.! !
+!Portfolio methodsFor: 'adding' stamp: 'AS 10/17/2022 16:31:12' prior: 50556550!
+add: aFinancialAccountToBeAdded
+	 (financialAccounts includes: aFinancialAccountToBeAdded) ifTrue: [self accountAlreadyInPortfolioErrorSignal].
+	 portfoliosIAmAddedTo do: [:portfolio | portfolio assertNotDirectlyInPortfolio: aFinancialAccountToBeAdded].
+	financialAccounts add: aFinancialAccountToBeAdded.
+	aFinancialAccountToBeAdded isNowAddedTo: self.! !
+
+!testRun: #PortfolioTest #test01EmptyPortfolioHasZeroBalance stamp: 'AS 10/17/2022 16:31:16'!
+PASSED!
+
+!testRun: #PortfolioTest #test02PortfolioHasAddedAccountsBalance stamp: 'AS 10/17/2022 16:31:16'!
+PASSED!
+
+!testRun: #PortfolioTest #test03PortfolioHasAddedPortfoliosBalance stamp: 'AS 10/17/2022 16:31:16'!
+PASSED!
+
+!testRun: #PortfolioTest #test04EmptyPortfolioHasNoRegisteredTransactions stamp: 'AS 10/17/2022 16:31:16'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasAddedAccountsTransactionRegistered stamp: 'AS 10/17/2022 16:31:16'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioHasAddedPortfoliosTransactionRegistered stamp: 'AS 10/17/2022 16:31:16'!
+PASSED!
+
+!testRun: #PortfolioTest #test07CanAskPortfolioForAddedAccountsTransactions stamp: 'AS 10/17/2022 16:31:16'!
+PASSED!
+
+!testRun: #PortfolioTest #test08CanAskPortfolioForAddedPortfoliosTransactions stamp: 'AS 10/17/2022 16:31:16'!
+PASSED!
+
+!testRun: #PortfolioTest #test09CanNotAddToPortfolioSameReceptiveAccountMoreThanOnce stamp: 'AS 10/17/2022 16:31:16'!
+PASSED!
+
+!testRun: #PortfolioTest #test10CanNotAddToPortfolioAReceptiveAccountThatIsAlreadyAddedToPortfolioPortfolioIsAddedTo stamp: 'AS 10/17/2022 16:31:16'!
+PASSED!
+!Portfolio methodsFor: 'adding' stamp: 'AS 10/17/2022 16:31:32' prior: 50556563!
+add: aFinancialAccountToBeAdded
+	 (financialAccounts includes: aFinancialAccountToBeAdded) ifTrue: [self accountAlreadyInPortfolioErrorSignal].
+	 portfoliosIAmAddedTo do: [:portfolio | portfolio assertNotDirectlyInPortfolio: aFinancialAccountToBeAdded].
+	financialAccounts add: aFinancialAccountToBeAdded.
+	aFinancialAccountToBeAdded isNowAddedTo: self.! !
+
+!testRun: #PortfolioTest #test01EmptyPortfolioHasZeroBalance stamp: 'AS 10/17/2022 16:31:33'!
+PASSED!
+
+!testRun: #PortfolioTest #test02PortfolioHasAddedAccountsBalance stamp: 'AS 10/17/2022 16:31:33'!
+PASSED!
+
+!testRun: #PortfolioTest #test03PortfolioHasAddedPortfoliosBalance stamp: 'AS 10/17/2022 16:31:33'!
+PASSED!
+
+!testRun: #PortfolioTest #test04EmptyPortfolioHasNoRegisteredTransactions stamp: 'AS 10/17/2022 16:31:33'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasAddedAccountsTransactionRegistered stamp: 'AS 10/17/2022 16:31:33'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioHasAddedPortfoliosTransactionRegistered stamp: 'AS 10/17/2022 16:31:33'!
+PASSED!
+
+!testRun: #PortfolioTest #test07CanAskPortfolioForAddedAccountsTransactions stamp: 'AS 10/17/2022 16:31:33'!
+PASSED!
+
+!testRun: #PortfolioTest #test08CanAskPortfolioForAddedPortfoliosTransactions stamp: 'AS 10/17/2022 16:31:33'!
+PASSED!
+
+!testRun: #PortfolioTest #test09CanNotAddToPortfolioSameReceptiveAccountMoreThanOnce stamp: 'AS 10/17/2022 16:31:33'!
+PASSED!
+
+!testRun: #PortfolioTest #test10CanNotAddToPortfolioAReceptiveAccountThatIsAlreadyAddedToPortfolioPortfolioIsAddedTo stamp: 'AS 10/17/2022 16:31:33'!
+PASSED!
+!Portfolio methodsFor: 'adding' stamp: 'AS 10/16/2022 18:18:28' prior: 50556615!
+add: aFinancialAccountToBeAdded
+	self assertNotDirectlyInPortfolio: aFinancialAccountToBeAdded.
+	self assertNotDirectlyInPortfoliosIAmAddedTo: aFinancialAccountToBeAdded.
+	financialAccounts add: aFinancialAccountToBeAdded.
+	aFinancialAccountToBeAdded isNowAddedTo: self.! !
+
+!testRun: #PortfolioTest #test01EmptyPortfolioHasZeroBalance stamp: 'AS 10/17/2022 16:47:39'!
+PASSED!
+
+!testRun: #PortfolioTest #test02PortfolioHasAddedAccountsBalance stamp: 'AS 10/17/2022 16:47:39'!
+PASSED!
+
+!testRun: #PortfolioTest #test03PortfolioHasAddedPortfoliosBalance stamp: 'AS 10/17/2022 16:47:39'!
+PASSED!
+
+!testRun: #PortfolioTest #test04EmptyPortfolioHasNoRegisteredTransactions stamp: 'AS 10/17/2022 16:47:39'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasAddedAccountsTransactionRegistered stamp: 'AS 10/17/2022 16:47:39'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioHasAddedPortfoliosTransactionRegistered stamp: 'AS 10/17/2022 16:47:39'!
+PASSED!
+
+!testRun: #PortfolioTest #test07CanAskPortfolioForAddedAccountsTransactions stamp: 'AS 10/17/2022 16:47:39'!
+PASSED!
+
+!testRun: #PortfolioTest #test08CanAskPortfolioForAddedPortfoliosTransactions stamp: 'AS 10/17/2022 16:47:39'!
+PASSED!
+
+!testRun: #PortfolioTest #test09CanNotAddToPortfolioSameReceptiveAccountMoreThanOnce stamp: 'AS 10/17/2022 16:47:39'!
+PASSED!
+
+!testRun: #PortfolioTest #test10CanNotAddToPortfolioAReceptiveAccountThatIsAlreadyAddedToPortfolioPortfolioIsAddedTo stamp: 'AS 10/17/2022 16:47:39'!
+PASSED!
+
+----SNAPSHOT----(17 October 2022 16:48:01) CuisUniversity-5481.image priorSource: 7195195!
