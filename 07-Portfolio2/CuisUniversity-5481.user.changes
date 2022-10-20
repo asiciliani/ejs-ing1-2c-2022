@@ -1926,3 +1926,217 @@ originLeg
 PASSED!
 
 ----SNAPSHOT----(20 October 2022 16:42:02) CuisUniversity-5481.image priorSource: 7125209!
+
+!testRun: #TransfersTest #test01BalanceIsAffectedAfterTransfer stamp: 'AS 10/20/2022 19:30:40'!
+PASSED!
+
+!testRun: #TransfersTest #test01BalanceIsAffectedAfterTransfer stamp: 'AS 10/20/2022 19:30:40'!
+PASSED!
+
+!testRun: #TransfersTest #test02CanNotTransferFromAndToSameAccount stamp: 'AS 10/20/2022 19:30:40'!
+PASSED!
+
+!testRun: #TransfersTest #test03CanNavigateToAndFromBothTransferLegs stamp: 'AS 10/20/2022 19:30:40'!
+PASSED!
+!TransfersTest methodsFor: 'tests' stamp: 'AS 10/20/2022 19:33:53' prior: 50554116!
+test01BalanceIsAffectedAfterTransfer
+
+	| account11 account22 |
+	account11 := ReceptiveAccount new.
+	account22 := ReceptiveAccount new.
+	
+	Transfer for: 20 from: account1 to: account2.
+	
+	self assert: -20 equals: account1 balance.
+	self assert: 20 equals: account2 balance.! !
+!TransfersTest methodsFor: 'tests' stamp: 'AS 10/20/2022 19:34:02' prior: 50554279!
+test02CanNotTransferFromAndToSameAccount
+
+	| account11 |
+	account11 := ReceptiveAccount new.
+	
+	self should: [Transfer for: 20 from: account1 to: account1.]
+		 raise: Error - MessageNotUnderstood 
+		 withExceptionDo: [:anError | self assert: 0 equals: account1 balance.
+							    self assert: Transfer canNotTransferFromAndToSameAccountErrorMessage equals: anError messageText].! !
+!TransfersTest methodsFor: 'tests' stamp: 'AS 10/20/2022 19:34:20' prior: 50554090!
+test03CanNavigateToAndFromBothTransferLegs
+
+	| account11 account22 |
+	account11:= ReceptiveAccount new.
+	account22 := ReceptiveAccount new.
+	
+	transfer := Transfer for: 20 from: account11 to: account22.
+	
+	self assert: (transfer destinyLeg) associatedTransfer equals: (transfer originLeg) associatedTransfer.! !
+!TransfersTest methodsFor: 'tests' stamp: 'AS 10/20/2022 19:34:33' prior: 50555493!
+test01BalanceIsAffectedAfterTransfer
+
+	| account11 account22 |
+	account11 := ReceptiveAccount new.
+	account22 := ReceptiveAccount new.
+	
+	Transfer for: 20 from: account11 to: account22.
+	
+	self assert: -20 equals: account11 balance.
+	self assert: 20 equals: account22 balance.! !
+!TransfersTest methodsFor: 'tests' stamp: 'AS 10/20/2022 19:34:40' prior: 50555505!
+test02CanNotTransferFromAndToSameAccount
+
+	| account11 |
+	account11 := ReceptiveAccount new.
+	
+	self should: [Transfer for: 20 from: account11 to: account11.]
+		 raise: Error - MessageNotUnderstood 
+		 withExceptionDo: [:anError | self assert: 0 equals: account11 balance.
+							    self assert: Transfer canNotTransferFromAndToSameAccountErrorMessage equals: anError messageText].! !
+
+!classDefinition: #TransfersTest category: 'Portfolio-Solucion' stamp: 'AS 10/20/2022 19:34:48'!
+TestCase subclass: #TransfersTest
+	instanceVariableNames: 'account2 transfer'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classDefinition: #TransfersTest category: 'Portfolio-Solucion' stamp: 'AS 10/20/2022 19:34:48'!
+TestCase subclass: #TransfersTest
+	instanceVariableNames: 'transfer'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+!TransfersTest methodsFor: 'tests' stamp: 'AS 10/20/2022 19:35:49' prior: 50555533!
+test01BalanceIsAffectedAfterTransfer
+
+	| account1 account22 |
+	account1 := ReceptiveAccount new.
+	account22 := ReceptiveAccount new.
+	
+	Transfer for: 20 from: account1 to: account22.
+	
+	self assert: -20 equals: account1 balance.
+	self assert: 20 equals: account22 balance.! !
+!TransfersTest methodsFor: 'tests' stamp: 'AS 10/20/2022 19:36:06' prior: 50555576!
+test01BalanceIsAffectedAfterTransfer
+
+	| account1 account2 |
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	
+	Transfer for: 20 from: account1 to: account2.
+	
+	self assert: -20 equals: account1 balance.
+	self assert: 20 equals: account2 balance.! !
+!TransfersTest methodsFor: 'tests' stamp: 'AS 10/20/2022 19:36:15' prior: 50555545!
+test02CanNotTransferFromAndToSameAccount
+
+	| account1 |
+	account1 := ReceptiveAccount new.
+	
+	self should: [Transfer for: 20 from: account1 to: account1.]
+		 raise: Error - MessageNotUnderstood 
+		 withExceptionDo: [:anError | self assert: 0 equals: account1 balance.
+							    self assert: Transfer canNotTransferFromAndToSameAccountErrorMessage equals: anError messageText].! !
+!TransfersTest methodsFor: 'tests' stamp: 'AS 10/20/2022 19:36:20' prior: 50555520!
+test03CanNavigateToAndFromBothTransferLegs
+
+	| account1 account22 |
+	account1:= ReceptiveAccount new.
+	account22 := ReceptiveAccount new.
+	
+	transfer := Transfer for: 20 from: account1 to: account22.
+	
+	self assert: (transfer destinyLeg) associatedTransfer equals: (transfer originLeg) associatedTransfer.! !
+!TransfersTest methodsFor: 'tests' stamp: 'AS 10/20/2022 19:36:22' prior: 50555615!
+test03CanNavigateToAndFromBothTransferLegs
+
+	| account1 account2 |
+	account1:= ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	
+	transfer := Transfer for: 20 from: account1 to: account2.
+	
+	self assert: (transfer destinyLeg) associatedTransfer equals: (transfer originLeg) associatedTransfer.! !
+
+!testRun: #TransfersTest #test03CanNavigateToAndFromBothTransferLegs stamp: 'AS 10/20/2022 19:36:24'!
+PASSED!
+
+!testRun: #TransfersTest #test01BalanceIsAffectedAfterTransfer stamp: 'AS 10/20/2022 19:36:24'!
+PASSED!
+
+!testRun: #TransfersTest #test02CanNotTransferFromAndToSameAccount stamp: 'AS 10/20/2022 19:36:24'!
+PASSED!
+
+!testRun: #TransfersTest #test03CanNavigateToAndFromBothTransferLegs stamp: 'AS 10/20/2022 19:36:24'!
+PASSED!
+!TransfersTest methodsFor: 'tests' stamp: 'AS 10/20/2022 19:37:12' prior: 50555628!
+test03CanNavigateToAndFromBothTransferLegs
+
+	| account1 account2 transfer1 |
+	account1:= ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	
+	transfer1 := Transfer for: 20 from: account1 to: account2.
+	
+	self assert: (transfer1 destinyLeg) associatedTransfer equals: (transfer originLeg) associatedTransfer.! !
+!TransfersTest methodsFor: 'tests' stamp: 'AS 10/20/2022 19:37:52' prior: 50555654!
+test03CanNavigateToAndFromBothTransferLegs
+
+	| account1 account2 transfer1 |
+	account1:= ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	
+	transfer1 := Transfer for: 20 from: account1 to: account2.
+	
+	self assert: (transfer1 destinyLeg) associatedTransfer equals: (transfer1 originLeg) associatedTransfer.! !
+
+!classDefinition: #TransfersTest category: 'Portfolio-Solucion' stamp: 'AS 10/20/2022 19:37:56'!
+TestCase subclass: #TransfersTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+!TransfersTest methodsFor: 'tests' stamp: 'AS 10/20/2022 19:38:06' prior: 50555667!
+test03CanNavigateToAndFromBothTransferLegs
+
+	| account1 account2 transfer |
+	account1:= ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	
+	transfer := Transfer for: 20 from: account1 to: account2.
+	
+	self assert: (transfer destinyLeg) associatedTransfer equals: (transfer originLeg) associatedTransfer.! !
+
+!testRun: #TransfersTest #test03CanNavigateToAndFromBothTransferLegs stamp: 'AS 10/20/2022 19:38:07'!
+PASSED!
+
+!testRun: #TransfersTest #test01BalanceIsAffectedAfterTransfer stamp: 'AS 10/20/2022 19:38:07'!
+PASSED!
+
+!testRun: #TransfersTest #test02CanNotTransferFromAndToSameAccount stamp: 'AS 10/20/2022 19:38:07'!
+PASSED!
+
+!testRun: #TransfersTest #test03CanNavigateToAndFromBothTransferLegs stamp: 'AS 10/20/2022 19:38:07'!
+PASSED!
+
+!classDefinition: #ReportsTest category: 'Portfolio-Solucion' stamp: 'AS 10/20/2022 19:38:21'!
+TestCase subclass: #ReportsTest
+	instanceVariableNames: 'account2 transfer'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classDefinition: #ReportsTest category: 'Portfolio-Solucion' stamp: 'AS 10/20/2022 19:38:21'!
+TestCase subclass: #ReportsTest
+	instanceVariableNames: 'transfer'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classDefinition: #ReportsTest category: 'Portfolio-Solucion' stamp: 'AS 10/20/2022 19:38:21'!
+TestCase subclass: #ReportsTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+----SNAPSHOT----(20 October 2022 19:38:29) CuisUniversity-5481.image priorSource: 7162403!

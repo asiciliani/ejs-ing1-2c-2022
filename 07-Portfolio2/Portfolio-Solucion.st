@@ -307,12 +307,12 @@ test07AccountKnowsItsTransactions
 
 !classDefinition: #ReportsTest category: 'Portfolio-Solucion'!
 TestCase subclass: #ReportsTest
-	instanceVariableNames: 'account1 account2 transfer'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Portfolio-Solucion'!
 
-!ReportsTest methodsFor: 'as yet unclassified' stamp: 'AS 10/20/2022 16:25:45'!
+!ReportsTest methodsFor: 'tests' stamp: 'AS 10/20/2022 16:25:45'!
 test01EmptyAccountOnlyHasZeroBalanceInSummaryReport
 
 	| account |
@@ -323,14 +323,15 @@ test01EmptyAccountOnlyHasZeroBalanceInSummaryReport
 
 !classDefinition: #TransfersTest category: 'Portfolio-Solucion'!
 TestCase subclass: #TransfersTest
-	instanceVariableNames: 'account1 account2 transfer'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Portfolio-Solucion'!
 
-!TransfersTest methodsFor: 'as yet unclassified' stamp: 'AS 10/20/2022 16:12:58'!
+!TransfersTest methodsFor: 'tests' stamp: 'AS 10/20/2022 19:36:06'!
 test01BalanceIsAffectedAfterTransfer
 
+	| account1 account2 |
 	account1 := ReceptiveAccount new.
 	account2 := ReceptiveAccount new.
 	
@@ -339,9 +340,10 @@ test01BalanceIsAffectedAfterTransfer
 	self assert: -20 equals: account1 balance.
 	self assert: 20 equals: account2 balance.! !
 
-!TransfersTest methodsFor: 'as yet unclassified' stamp: 'AS 10/20/2022 16:16:11'!
+!TransfersTest methodsFor: 'tests' stamp: 'AS 10/20/2022 19:36:15'!
 test02CanNotTransferFromAndToSameAccount
 
+	| account1 |
 	account1 := ReceptiveAccount new.
 	
 	self should: [Transfer for: 20 from: account1 to: account1.]
@@ -349,10 +351,11 @@ test02CanNotTransferFromAndToSameAccount
 		 withExceptionDo: [:anError | self assert: 0 equals: account1 balance.
 							    self assert: Transfer canNotTransferFromAndToSameAccountErrorMessage equals: anError messageText].! !
 
-!TransfersTest methodsFor: 'as yet unclassified' stamp: 'AS 10/20/2022 16:12:28'!
+!TransfersTest methodsFor: 'tests' stamp: 'AS 10/20/2022 19:38:06'!
 test03CanNavigateToAndFromBothTransferLegs
 
-	account1 := ReceptiveAccount new.
+	| account1 account2 transfer |
+	account1:= ReceptiveAccount new.
 	account2 := ReceptiveAccount new.
 	
 	transfer := Transfer for: 20 from: account1 to: account2.
