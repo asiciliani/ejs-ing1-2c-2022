@@ -312,13 +312,13 @@ TestCase subclass: #ReportsTest
 	poolDictionaries: ''
 	category: 'Portfolio-Solucion'!
 
-!ReportsTest methodsFor: 'tests' stamp: 'AS 10/20/2022 16:25:45'!
+!ReportsTest methodsFor: 'tests' stamp: 'AS 10/20/2022 20:09:19'!
 test01EmptyAccountOnlyHasZeroBalanceInSummaryReport
 
 	| account |
 	account := ReceptiveAccount new.
 	
-	self assert: 'Balance = 0' equals: (AccountSummaryReport of: account).! !
+	self assert: 'Balance = 0' equals: account summaryReport first.! !
 
 
 !classDefinition: #TransfersTest category: 'Portfolio-Solucion'!
@@ -361,6 +361,18 @@ test03CanNavigateToAndFromBothTransferLegs
 	transfer := Transfer for: 20 from: account1 to: account2.
 	
 	self assert: (transfer destinyLeg) associatedTransfer equals: (transfer originLeg) associatedTransfer.! !
+
+!TransfersTest methodsFor: 'tests' stamp: 'AS 10/20/2022 20:04:23'!
+test04OriginAndDestinyHaveRegisteredWithdrawAndDepositRespectively
+
+	| account1 account2 transfer |
+	account1:= ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	
+	transfer := Transfer for: 20 from: account1 to: account2.
+	
+	self assert: (account1 hasRegistered: transfer originLeg associatedTransaction).
+	self assert: (account2 hasRegistered: transfer destinyLeg associatedTransaction).! !
 
 
 !classDefinition: #Account category: 'Portfolio-Solucion'!
@@ -599,34 +611,10 @@ addedTo: aPortfolio
 	! !
 
 
-
-!classDefinition: #AccountSummaryReport category: 'Portfolio-Solucion'!
-Object subclass: #AccountSummaryReport
-	instanceVariableNames: 'account'
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'Portfolio-Solucion'!
 
-!AccountSummaryReport methodsFor: 'instance creation' stamp: 'AS 10/20/2022 16:28:18'!
-initializeFor: anAccount 
-
-	account := anAccount.
-	^self makeReport.! !
-
-
-!AccountSummaryReport methodsFor: 'make' stamp: 'AS 10/20/2022 16:28:00'!
-makeReport
-	^'Balance = 0'! !
-
-"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
-
-!classDefinition: 'AccountSummaryReport class' category: 'Portfolio-Solucion'!
-AccountSummaryReport class
-	instanceVariableNames: ''!
-
-!AccountSummaryReport class methodsFor: 'instance creation' stamp: 'AS 10/20/2022 16:26:46'!
-of: anAccount 
-	^self new initializeFor: anAccount ! !
+!ReceptiveAccount methodsFor: 'report' stamp: 'AS 10/20/2022 20:09:05'!
+summaryReport
+	^(OrderedCollection with: 'Balance = 0')! !
 
 
 !classDefinition: #AccountTransaction category: 'Portfolio-Solucion'!
@@ -765,9 +753,14 @@ originLeg
 Transfer class
 	instanceVariableNames: ''!
 
-!Transfer class methodsFor: 'instance creation' stamp: 'AS 10/20/2022 16:14:59'!
+!Transfer class methodsFor: 'instance creation' stamp: 'AS 10/20/2022 19:44:10'!
+assertIsNotSameAccount: anOriginReceptiveAccount as: aDestinyReceptiveAccount
+
+	^ anOriginReceptiveAccount = aDestinyReceptiveAccount ifTrue: [self error: self canNotTransferFromAndToSameAccountErrorMessage]! !
+
+!Transfer class methodsFor: 'instance creation' stamp: 'AS 10/20/2022 19:44:10'!
 for: anAmountToTransfer from: anOriginReceptiveAccount to: aDestinyReceptiveAccount
-	anOriginReceptiveAccount = aDestinyReceptiveAccount ifTrue: [self error: self canNotTransferFromAndToSameAccountErrorMessage].
+	self assertIsNotSameAccount: anOriginReceptiveAccount as: aDestinyReceptiveAccount.
 	^self new initializeFor: anAmountToTransfer from: anOriginReceptiveAccount to: aDestinyReceptiveAccount. ! !
 
 
@@ -791,6 +784,11 @@ initializeWithTransaction: anAccountTransaction
 !TransferLeg methodsFor: 'transfer' stamp: 'AS 10/20/2022 16:05:58'!
 associatedTransfer
 	^transfer! !
+
+
+!TransferLeg methodsFor: 'transaction' stamp: 'AS 10/20/2022 20:04:48'!
+associatedTransaction
+	^transaction ! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
