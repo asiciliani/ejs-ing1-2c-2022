@@ -488,3 +488,177 @@ transfer
 Smalltalk renameClassNamed: #TransferTest as: #TransfersTest!
 
 ----SNAPSHOT----(20 October 2022 16:08:06) CuisUniversity-5481.image priorSource: 7117053!
+
+!testRun: #TransfersTest #test01BalanceIsAffectedAfterTransfer stamp: 'AS 10/20/2022 16:11:57'!
+PASSED!
+
+!testRun: #TransfersTest #test01BalanceIsAffectedAfterTransfer stamp: 'AS 10/20/2022 16:11:57'!
+PASSED!
+
+!testRun: #TransfersTest #test02CanNotTransferFromAndToSameAccount stamp: 'AS 10/20/2022 16:11:57'!
+PASSED!
+
+!testRun: #TransfersTest #test03CanNavigateToAndFromBothTransferLegs stamp: 'AS 10/20/2022 16:11:57'!
+ERROR!
+
+!testRun: #TransfersTest #test03CanNavigateToAndFromBothTransferLegs stamp: 'AS 10/20/2022 16:11:57'!
+ERROR!
+
+!testRun: #TransfersTest #test03CanNavigateToAndFromBothTransferLegs stamp: 'AS 10/20/2022 16:12:14'!
+ERROR!
+!TransfersTest methodsFor: 'as yet unclassified' stamp: 'AS 10/20/2022 16:12:28' prior: 50553718!
+test03CanNavigateToAndFromBothTransferLegs
+
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	
+	transfer := Transfer for: 20 from: account1 to: account2.
+	
+	self assert: (transfer destinyLeg) associatedTransfer equals: (transfer originLeg) associatedTransfer.! !
+
+!testRun: #TransfersTest #test03CanNavigateToAndFromBothTransferLegs stamp: 'AS 10/20/2022 16:12:29'!
+PASSED!
+
+!testRun: #TransfersTest #test01BalanceIsAffectedAfterTransfer stamp: 'AS 10/20/2022 16:12:29'!
+PASSED!
+
+!testRun: #TransfersTest #test02CanNotTransferFromAndToSameAccount stamp: 'AS 10/20/2022 16:12:29'!
+PASSED!
+
+!testRun: #TransfersTest #test03CanNavigateToAndFromBothTransferLegs stamp: 'AS 10/20/2022 16:12:29'!
+PASSED!
+!TransfersTest methodsFor: 'as yet unclassified' stamp: 'AS 10/20/2022 16:12:58' prior: 50553589!
+test01BalanceIsAffectedAfterTransfer
+
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	
+	Transfer for: 20 from: account1 to: account2.
+	
+	self assert: -20 equals: account1 balance.
+	self assert: 20 equals: account2 balance.! !
+
+!testRun: #TransfersTest #test01BalanceIsAffectedAfterTransfer stamp: 'AS 10/20/2022 16:12:58'!
+PASSED!
+
+!testRun: #TransfersTest #test01BalanceIsAffectedAfterTransfer stamp: 'AS 10/20/2022 16:12:58'!
+PASSED!
+
+!testRun: #TransfersTest #test02CanNotTransferFromAndToSameAccount stamp: 'AS 10/20/2022 16:12:58'!
+PASSED!
+
+!testRun: #TransfersTest #test03CanNavigateToAndFromBothTransferLegs stamp: 'AS 10/20/2022 16:12:58'!
+PASSED!
+!TransfersTest methodsFor: 'as yet unclassified' stamp: 'AS 10/20/2022 16:13:07' prior: 50553606!
+test02CanNotTransferFromAndToSameAccount
+
+	account1 := ReceptiveAccount new.
+	
+	self should: [Transfer for: 20 from: account1 to: account2.]
+		 raise: Error - MessageNotUnderstood 
+		 withExceptionDo: [:anError | self assert: 0 equals: account1 balance.
+							    self assert: ReceptiveAccount canNotTransferFromAndToSameAccountErrorMessage equals: anError messageText].! !
+
+!testRun: #TransfersTest #test02CanNotTransferFromAndToSameAccount stamp: 'AS 10/20/2022 16:13:07'!
+ERROR!
+!TransfersTest methodsFor: 'as yet unclassified' stamp: 'AS 10/20/2022 16:13:21' prior: 50554141!
+test02CanNotTransferFromAndToSameAccount
+
+	account1 := ReceptiveAccount new.
+	
+	self should: [Transfer for: 20 from: account1 to: account1.]
+		 raise: Error - MessageNotUnderstood 
+		 withExceptionDo: [:anError | self assert: 0 equals: account1 balance.
+							    self assert: ReceptiveAccount canNotTransferFromAndToSameAccountErrorMessage equals: anError messageText].! !
+
+!testRun: #TransfersTest #test02CanNotTransferFromAndToSameAccount stamp: 'AS 10/20/2022 16:13:22'!
+FAILURE!
+
+!testRun: #TransfersTest #test02CanNotTransferFromAndToSameAccount stamp: 'AS 10/20/2022 16:13:46'!
+FAILURE!
+!Transfer class methodsFor: 'instance creation' stamp: 'AS 10/20/2022 16:14:16' prior: 50553744!
+for: anAmountToTransfer from: anOriginReceptiveAccount to: aDestinyReceptiveAccount
+	anOriginReceptiveAccount = aDestinyReceptiveAccount ifTrue: [self error: self class canNotTransferFromAndToSameAccountErrorMessage].
+	^self new initializeFor: anAmountToTransfer from: anOriginReceptiveAccount to: aDestinyReceptiveAccount. ! !
+
+!testRun: #TransfersTest #test02CanNotTransferFromAndToSameAccount stamp: 'AS 10/20/2022 16:14:18'!
+ERROR!
+!Transfer class methodsFor: 'instance creation' stamp: 'AS 10/20/2022 16:14:59' prior: 50554182!
+for: anAmountToTransfer from: anOriginReceptiveAccount to: aDestinyReceptiveAccount
+	anOriginReceptiveAccount = aDestinyReceptiveAccount ifTrue: [self error: self canNotTransferFromAndToSameAccountErrorMessage].
+	^self new initializeFor: anAmountToTransfer from: anOriginReceptiveAccount to: aDestinyReceptiveAccount. ! !
+
+!testRun: #TransfersTest #test02CanNotTransferFromAndToSameAccount stamp: 'AS 10/20/2022 16:15:10'!
+ERROR!
+!Transfer class methodsFor: 'error message' stamp: 'AS 10/20/2022 16:15:17'!
+canNotTransferFromAndToSameAccountErrorMessage
+	self shouldBeImplemented.! !
+!Transfer class methodsFor: 'error message' stamp: 'AS 10/20/2022 16:15:22' prior: 50554215!
+canNotTransferFromAndToSameAccountErrorMessage
+	^'Can not transfer from and to same account!!'! !
+
+!testRun: #TransfersTest #test02CanNotTransferFromAndToSameAccount stamp: 'AS 10/20/2022 16:15:23'!
+PASSED!
+
+!testRun: #TransfersTest #test01BalanceIsAffectedAfterTransfer stamp: 'AS 10/20/2022 16:15:23'!
+PASSED!
+
+!testRun: #TransfersTest #test02CanNotTransferFromAndToSameAccount stamp: 'AS 10/20/2022 16:15:23'!
+PASSED!
+
+!testRun: #TransfersTest #test03CanNavigateToAndFromBothTransferLegs stamp: 'AS 10/20/2022 16:15:23'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'AS 10/20/2022 16:15:33'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'AS 10/20/2022 16:15:33'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'AS 10/20/2022 16:15:33'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'AS 10/20/2022 16:15:33'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'AS 10/20/2022 16:15:33'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'AS 10/20/2022 16:15:33'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'AS 10/20/2022 16:15:33'!
+PASSED!
+
+!methodRemoval: ReceptiveAccount #transfer:to: stamp: 'AS 10/20/2022 16:15:42'!
+transfer: anAmountToTransfer to: aReceptiveAccount
+	aReceptiveAccount = self ifTrue: [self error: self class canNotTransferFromAndToSameAccountErrorMessage].
+	self register: (Withdraw for: anAmountToTransfer).
+	aReceptiveAccount register: (Deposit for: anAmountToTransfer).!
+!TransfersTest methodsFor: 'as yet unclassified' stamp: 'AS 10/20/2022 16:16:11' prior: 50554160!
+test02CanNotTransferFromAndToSameAccount
+
+	account1 := ReceptiveAccount new.
+	
+	self should: [Transfer for: 20 from: account1 to: account1.]
+		 raise: Error - MessageNotUnderstood 
+		 withExceptionDo: [:anError | self assert: 0 equals: account1 balance.
+							    self assert: Transfer canNotTransferFromAndToSameAccountErrorMessage equals: anError messageText].! !
+
+!testRun: #TransfersTest #test02CanNotTransferFromAndToSameAccount stamp: 'AS 10/20/2022 16:16:12'!
+PASSED!
+
+!testRun: #TransfersTest #test01BalanceIsAffectedAfterTransfer stamp: 'AS 10/20/2022 16:16:12'!
+PASSED!
+
+!testRun: #TransfersTest #test02CanNotTransferFromAndToSameAccount stamp: 'AS 10/20/2022 16:16:12'!
+PASSED!
+
+!testRun: #TransfersTest #test03CanNavigateToAndFromBothTransferLegs stamp: 'AS 10/20/2022 16:16:12'!
+PASSED!
+
+!methodRemoval: ReceptiveAccount class #canNotTransferFromAndToSameAccountErrorMessage stamp: 'AS 10/20/2022 16:16:17'!
+canNotTransferFromAndToSameAccountErrorMessage
+	^'Can not transfer from and to same account!!'!
+
+----SNAPSHOT----(20 October 2022 16:16:42) CuisUniversity-5481.image priorSource: 7117289!

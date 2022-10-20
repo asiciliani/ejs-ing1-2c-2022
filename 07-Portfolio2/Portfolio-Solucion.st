@@ -312,28 +312,28 @@ TestCase subclass: #TransfersTest
 	poolDictionaries: ''
 	category: 'Portfolio-Solucion'!
 
-!TransfersTest methodsFor: 'as yet unclassified' stamp: 'AS 10/20/2022 15:05:57'!
+!TransfersTest methodsFor: 'as yet unclassified' stamp: 'AS 10/20/2022 16:12:58'!
 test01BalanceIsAffectedAfterTransfer
 
 	account1 := ReceptiveAccount new.
 	account2 := ReceptiveAccount new.
 	
-	account1 transfer: 20 to: account2.
+	Transfer for: 20 from: account1 to: account2.
 	
 	self assert: -20 equals: account1 balance.
 	self assert: 20 equals: account2 balance.! !
 
-!TransfersTest methodsFor: 'as yet unclassified' stamp: 'AS 10/20/2022 15:10:43'!
+!TransfersTest methodsFor: 'as yet unclassified' stamp: 'AS 10/20/2022 16:16:11'!
 test02CanNotTransferFromAndToSameAccount
 
 	account1 := ReceptiveAccount new.
 	
-	self should: [account1 transfer: 20 to: account1.]
+	self should: [Transfer for: 20 from: account1 to: account1.]
 		 raise: Error - MessageNotUnderstood 
 		 withExceptionDo: [:anError | self assert: 0 equals: account1 balance.
-							    self assert: ReceptiveAccount canNotTransferFromAndToSameAccountErrorMessage equals: anError messageText].! !
+							    self assert: Transfer canNotTransferFromAndToSameAccountErrorMessage equals: anError messageText].! !
 
-!TransfersTest methodsFor: 'as yet unclassified' stamp: 'AS 10/20/2022 15:42:34'!
+!TransfersTest methodsFor: 'as yet unclassified' stamp: 'AS 10/20/2022 16:12:28'!
 test03CanNavigateToAndFromBothTransferLegs
 
 	account1 := ReceptiveAccount new.
@@ -341,7 +341,7 @@ test03CanNavigateToAndFromBothTransferLegs
 	
 	transfer := Transfer for: 20 from: account1 to: account2.
 	
-	self assert: (transfer destinyLeg) transfer equals: (transfer originLeg) transfer.! !
+	self assert: (transfer destinyLeg) associatedTransfer equals: (transfer originLeg) associatedTransfer.! !
 
 
 !classDefinition: #Account category: 'Portfolio-Solucion'!
@@ -580,22 +580,6 @@ addedTo: aPortfolio
 	! !
 
 
-!ReceptiveAccount methodsFor: 'transfers' stamp: 'AS 10/20/2022 15:11:47'!
-transfer: anAmountToTransfer to: aReceptiveAccount
-	aReceptiveAccount = self ifTrue: [self error: self class canNotTransferFromAndToSameAccountErrorMessage].
-	self register: (Withdraw for: anAmountToTransfer).
-	aReceptiveAccount register: (Deposit for: anAmountToTransfer).! !
-
-"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
-
-!classDefinition: 'ReceptiveAccount class' category: 'Portfolio-Solucion'!
-ReceptiveAccount class
-	instanceVariableNames: ''!
-
-!ReceptiveAccount class methodsFor: 'error message' stamp: 'AS 10/20/2022 15:12:38'!
-canNotTransferFromAndToSameAccountErrorMessage
-	^'Can not transfer from and to same account!!'! !
-
 
 !classDefinition: #AccountTransaction category: 'Portfolio-Solucion'!
 Object subclass: #AccountTransaction
@@ -733,10 +717,15 @@ originLeg
 Transfer class
 	instanceVariableNames: ''!
 
-!Transfer class methodsFor: 'instance creation' stamp: 'AS 10/20/2022 15:43:25'!
+!Transfer class methodsFor: 'instance creation' stamp: 'AS 10/20/2022 16:14:59'!
 for: anAmountToTransfer from: anOriginReceptiveAccount to: aDestinyReceptiveAccount
-
+	anOriginReceptiveAccount = aDestinyReceptiveAccount ifTrue: [self error: self canNotTransferFromAndToSameAccountErrorMessage].
 	^self new initializeFor: anAmountToTransfer from: anOriginReceptiveAccount to: aDestinyReceptiveAccount. ! !
+
+
+!Transfer class methodsFor: 'error message' stamp: 'AS 10/20/2022 16:15:22'!
+canNotTransferFromAndToSameAccountErrorMessage
+	^'Can not transfer from and to same account!!'! !
 
 
 !classDefinition: #TransferLeg category: 'Portfolio-Solucion'!
