@@ -320,6 +320,30 @@ test01EmptyAccountOnlyHasZeroBalanceInSummaryReport
 	
 	self assert: 'Balance = 0' equals: account summaryReport first.! !
 
+!ReportsTest methodsFor: 'tests' stamp: 'AS 10/20/2022 20:23:36'!
+test02AccountSummaryReportHasDeposits
+
+	| account summaryReport |
+	account := ReceptiveAccount new.
+	Deposit register: 20 on: account.
+	
+	summaryReport := account summaryReport.
+	self assert: 'Depósito por 20.' equals: summaryReport first.
+	self assert: 'Balance = 20' equals: summaryReport second.! !
+
+!ReportsTest methodsFor: 'tests' stamp: 'AS 10/20/2022 20:30:45'!
+test03AccountSummaryReportHasWithdraws
+
+	| account summaryReport |
+	account := ReceptiveAccount new.
+	Deposit register: 20 on: account.
+	Withdraw register: 5 on: account.
+	
+	summaryReport := account summaryReport.
+	self assert: 'Depósito por 20.' equals: summaryReport first.
+	self assert: 'Extracción por 5.' equals: summaryReport second.
+	self assert: 'Balance = 15' equals: summaryReport third.! !
+
 
 !classDefinition: #TransfersTest category: 'Portfolio-Solucion'!
 TestCase subclass: #TransfersTest
@@ -612,9 +636,19 @@ addedTo: aPortfolio
 
 
 
-!ReceptiveAccount methodsFor: 'report' stamp: 'AS 10/20/2022 20:09:05'!
+!ReceptiveAccount methodsFor: 'report' stamp: 'AS 10/20/2022 20:33:54'!
 summaryReport
-	^(OrderedCollection with: 'Balance = 0')! !
+
+	| summaryReport line |
+	
+	summaryReport := OrderedCollection new.
+	transactions do: [:aTransaction | line := ''.
+							(aTransaction isKindOf: Deposit) ifTrue: [line := line append: 'Depósito por '].
+							(aTransaction isKindOf: Withdraw ) ifTrue: [line := line append: 'Extracción por '].
+							line := line append: aTransaction value asString ,'.'.
+							summaryReport addLast: line.].
+	summaryReport addLast: 'Balance = ', self balance asString.
+	^summaryReport ! !
 
 
 !classDefinition: #AccountTransaction category: 'Portfolio-Solucion'!
