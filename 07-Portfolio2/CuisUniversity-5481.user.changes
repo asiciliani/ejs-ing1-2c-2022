@@ -662,3 +662,1267 @@ canNotTransferFromAndToSameAccountErrorMessage
 	^'Can not transfer from and to same account!!'!
 
 ----SNAPSHOT----(20 October 2022 16:16:42) CuisUniversity-5481.image priorSource: 7117289!
+
+TestCase subclass: #ReportsTest
+	instanceVariableNames: 'account1 account2 transfer'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classDefinition: #ReportsTest category: 'Portfolio-Solucion' stamp: 'AS 10/20/2022 16:19:14'!
+TestCase subclass: #ReportsTest
+	instanceVariableNames: 'account1 account2 transfer'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+!ReportsTest methodsFor: 'nil' stamp: 'AS 10/20/2022 16:24:49'!
+test01EmptyAccountOnlyHasZeroBalanceInSummaryReport
+
+	| account |
+	account := ReceptiveAccount new.
+	
+	self assert: 'Balance = 0' equals: account summaryReport.! !
+
+!testRun: #ReportsTest #test01EmptyAccountOnlyHasZeroBalanceInSummaryReport stamp: 'AS 10/20/2022 16:25:03'!
+ERROR!
+
+!methodRemoval: ReportsTest #test01EmptyAccountOnlyHasZeroBalanceInSummaryReport stamp: 'AS 10/20/2022 16:25:18'!
+test01EmptyAccountOnlyHasZeroBalanceInSummaryReport
+
+	| account |
+	account := ReceptiveAccount new.
+	
+	self assert: 'Balance = 0' equals: account summaryReport.!
+
+!classDefinition: #AccountSummaryReport category: 'Portfolio-Solucion' stamp: 'AS 10/20/2022 16:25:50'!
+Object subclass: #AccountSummaryReport
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+!ReportsTest methodsFor: 'nil' stamp: 'AS 10/20/2022 16:25:45'!
+test01EmptyAccountOnlyHasZeroBalanceInSummaryReport
+
+	| account |
+	account := ReceptiveAccount new.
+	
+	self assert: 'Balance = 0' equals: (AccountSummaryReport of: account).! !
+
+!testRun: #ReportsTest #test01EmptyAccountOnlyHasZeroBalanceInSummaryReport stamp: 'AS 10/20/2022 16:25:52'!
+ERROR!
+!AccountSummaryReport class methodsFor: 'instance creation' stamp: 'AS 10/20/2022 16:25:57'!
+of: aReceptiveAccount 
+	"DO NOT FORGET TO RENAME COLLABORATORS AND REMOVE THIS COMMENT!!!!"
+	self shouldBeImplemented.
+	^self new initializeOf: aReceptiveAccount ! !
+!AccountSummaryReport class methodsFor: 'instance creation' stamp: 'AS 10/20/2022 16:26:14' prior: 50554370!
+of: anAccount 
+	^self new initializeOf: anAccount ! !
+
+!testRun: #ReportsTest #test01EmptyAccountOnlyHasZeroBalanceInSummaryReport stamp: 'AS 10/20/2022 16:26:19'!
+ERROR!
+!AccountSummaryReport class methodsFor: 'instance creation' stamp: 'AS 10/20/2022 16:26:46' prior: 50554379!
+of: anAccount 
+	^self new initializeFor: anAccount ! !
+
+!testRun: #ReportsTest #test01EmptyAccountOnlyHasZeroBalanceInSummaryReport stamp: 'AS 10/20/2022 16:26:47'!
+ERROR!
+
+!testRun: #ReportsTest #test01EmptyAccountOnlyHasZeroBalanceInSummaryReport stamp: 'AS 10/20/2022 16:26:47'!
+ERROR!
+
+!classDefinition: #AccountSummaryReport category: 'Portfolio-Solucion' stamp: 'AS 10/20/2022 16:26:58'!
+Object subclass: #AccountSummaryReport
+	instanceVariableNames: 'account'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+!AccountSummaryReport methodsFor: 'instance creation' stamp: 'AS 10/20/2022 16:26:58'!
+initializeFor: anAccount 
+	self shouldBeImplemented.
+	account := anAccount.! !
+!AccountSummaryReport methodsFor: 'instance creation' stamp: 'AS 10/20/2022 16:27:07' prior: 50554408!
+initializeFor: anAccount 
+
+	account := anAccount.! !
+!AccountSummaryReport methodsFor: 'instance creation' stamp: 'AS 10/20/2022 16:27:30' prior: 50554414!
+initializeFor: anAccount 
+
+	account := anAccount.
+	self makeReport.! !
+
+!testRun: #ReportsTest #test01EmptyAccountOnlyHasZeroBalanceInSummaryReport stamp: 'AS 10/20/2022 16:27:33'!
+ERROR!
+!AccountSummaryReport methodsFor: 'make' stamp: 'AS 10/20/2022 16:27:43'!
+makeReport
+	self shouldBeImplemented.! !
+!AccountSummaryReport methodsFor: 'make' stamp: 'AS 10/20/2022 16:28:00' prior: 50554428!
+makeReport
+	^'Balance = 0'! !
+
+!testRun: #ReportsTest #test01EmptyAccountOnlyHasZeroBalanceInSummaryReport stamp: 'AS 10/20/2022 16:28:01'!
+FAILURE!
+!AccountSummaryReport methodsFor: 'instance creation' stamp: 'AS 10/20/2022 16:28:18' prior: 50554419!
+initializeFor: anAccount 
+
+	account := anAccount.
+	^self makeReport.! !
+
+!testRun: #ReportsTest #test01EmptyAccountOnlyHasZeroBalanceInSummaryReport stamp: 'AS 10/20/2022 16:28:19'!
+PASSED!
+
+!testRun: #ReportsTest #test01EmptyAccountOnlyHasZeroBalanceInSummaryReport stamp: 'AS 10/20/2022 16:28:22'!
+PASSED!
+
+!testRun: #PortfolioTest #test01BalanceOfPortfolioWithoutAccountsIsZero stamp: 'AS 10/20/2022 16:28:25'!
+PASSED!
+
+!testRun: #PortfolioTest #test02BalanceOfPortfolioWithAccountsIsSumOfAccountsBalance stamp: 'AS 10/20/2022 16:28:25'!
+PASSED!
+
+!testRun: #PortfolioTest #test03BalanceOfPortfolioIsCalculatedRecursivelyOnPortfolios stamp: 'AS 10/20/2022 16:28:25'!
+PASSED!
+
+!testRun: #PortfolioTest #test04PortfolioWithoutAccountsHasNoRegisteredTransaction stamp: 'AS 10/20/2022 16:28:25'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasRegisteredItsAccountsTransactions stamp: 'AS 10/20/2022 16:28:25'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioLooksForRegisteredTransactionsRecursively stamp: 'AS 10/20/2022 16:28:25'!
+PASSED!
+
+!testRun: #PortfolioTest #test07PortfolioHasNoTransactionWhenHasNoAccounts stamp: 'AS 10/20/2022 16:28:25'!
+PASSED!
+
+!testRun: #PortfolioTest #test08PortfolioTransactionsIncludesAllItsAccountsTransactions stamp: 'AS 10/20/2022 16:28:25'!
+PASSED!
+
+!testRun: #PortfolioTest #test09PortfolioTransactionsAreCalculatedRecursively stamp: 'AS 10/20/2022 16:28:25'!
+PASSED!
+
+!testRun: #PortfolioTest #test10PortfolioCanNotIncludeTheSameAccountMoreThanOnce stamp: 'AS 10/20/2022 16:28:25'!
+PASSED!
+
+!testRun: #PortfolioTest #test11PortfolioCanNotIncludeAccountOfItsPortfolios stamp: 'AS 10/20/2022 16:28:25'!
+PASSED!
+
+!testRun: #PortfolioTest #test12PortfolioCanNotIncludeItself stamp: 'AS 10/20/2022 16:28:25'!
+PASSED!
+
+!testRun: #PortfolioTest #test13ComposedPortfolioCanNotHaveParentPortfolioAccount stamp: 'AS 10/20/2022 16:28:25'!
+PASSED!
+
+!testRun: #PortfolioTest #test14ComposedPortfolioCanNotHaveAccountOfAnyRootParentRecursively stamp: 'AS 10/20/2022 16:28:25'!
+PASSED!
+
+!testRun: #PortfolioTest #test15PortfolioCanNotIncludeAnyOfTheComposedAccountOfPortfolioToAdd stamp: 'AS 10/20/2022 16:28:25'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'AS 10/20/2022 16:28:25'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'AS 10/20/2022 16:28:25'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'AS 10/20/2022 16:28:25'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'AS 10/20/2022 16:28:25'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'AS 10/20/2022 16:28:25'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'AS 10/20/2022 16:28:25'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'AS 10/20/2022 16:28:25'!
+PASSED!
+
+!testRun: #ReportsTest #test01EmptyAccountOnlyHasZeroBalanceInSummaryReport stamp: 'AS 10/20/2022 16:28:25'!
+PASSED!
+
+!testRun: #TransfersTest #test01BalanceIsAffectedAfterTransfer stamp: 'AS 10/20/2022 16:28:25'!
+PASSED!
+
+!testRun: #TransfersTest #test02CanNotTransferFromAndToSameAccount stamp: 'AS 10/20/2022 16:28:25'!
+PASSED!
+
+!testRun: #TransfersTest #test03CanNavigateToAndFromBothTransferLegs stamp: 'AS 10/20/2022 16:28:25'!
+PASSED!
+!Behavior method!
+initialize
+	#_coverageTracker6246947_ markAsExecuted.
+	#_coverageTracker6246947_
+		cover: (14 to: 21)
+		declaredAt: (14 to: 21)
+		by:
+			(accounts _ #_coverageTracker6246947_
+				coverAll:
+					{44 to: 46}
+				evaluating: [
+					(#_coverageTracker6246947_
+						coverAll:
+							{26 to: 42}
+						by: OrderedCollection) new ]).
+	#_coverageTracker6246947_
+		cover: (50 to: 56)
+		declaredAt: (50 to: 56)
+		by:
+			(parents _ #_coverageTracker6246947_
+				coverAll:
+					{79 to: 81}
+				evaluating: [
+					(#_coverageTracker6246947_
+						coverAll:
+							{61 to: 77}
+						by: OrderedCollection) new ]).! !
+!Behavior method!
+balance
+	#_coverageTracker6246910_ markAsExecuted.
+	^ #_coverageTracker6246910_
+		coverAll:
+			{22 to: 25. 62 to: 69}
+		evaluating: [
+			(#_coverageTracker6246910_
+				cover: (13 to: 20)
+				declaredAt: (13 to: 20)
+				by: accounts)
+				sum: [ :anAccount |
+					#_coverageTracker6246910_
+						coverAll:
+							{52 to: 58}
+						evaluating: [
+							(#_coverageTracker6246910_
+								cover: (42 to: 50)
+								declaredAt: (30 to: 38)
+								by: anAccount) balance ]]
+				ifEmpty: [
+					#_coverageTracker6246910_
+						coverAll:
+							{73 to: 73}
+						byLiteralOrPseudoVariable: 0 ]].! !
+
+!testRun: #PortfolioTest #test01BalanceOfPortfolioWithoutAccountsIsZero stamp: 'AS 10/20/2022 16:28:29'!
+PASSED!
+!Behavior method!
+initialize
+	#_coverageTracker6247091_ markAsExecuted.
+	#_coverageTracker6247091_
+		coverAll:
+			{20 to: 29}
+		evaluating: [ super initialize ].
+	#_coverageTracker6247091_
+		cover: (33 to: 44)
+		declaredAt: (33 to: 44)
+		by:
+			(transactions _ #_coverageTracker6247091_
+				coverAll:
+					{67 to: 69}
+				evaluating: [
+					(#_coverageTracker6247091_
+						coverAll:
+							{49 to: 65}
+						by: OrderedCollection) new ]).! !
+!Behavior method!
+register: aValue on: account
+	| transaction |
+	#_coverageTracker6246972_ markAsExecuted.
+	#_coverageTracker6246972_
+		cover: (51 to: 61)
+		declaredAt: (34 to: 44)
+		by:
+			(transaction _ #_coverageTracker6246972_
+				coverAll:
+					{71 to: 74}
+				evaluating: [
+					(#_coverageTracker6246972_
+						coverAll:
+							{66 to: 69}
+						byLiteralOrPseudoVariable: self) for:
+						(#_coverageTracker6246972_
+							cover: (76 to: 81)
+							declaredAt: (11 to: 16)
+							by: aValue) ]).
+	#_coverageTracker6246972_
+		coverAll:
+			{93 to: 101}
+		evaluating: [
+			(#_coverageTracker6246972_
+				cover: (85 to: 91)
+				declaredAt: (22 to: 28)
+				by: account) register:
+				(#_coverageTracker6246972_
+					cover: (103 to: 113)
+					declaredAt: (34 to: 44)
+					by: transaction) ].
+	^ #_coverageTracker6246972_
+		cover: (122 to: 132)
+		declaredAt: (34 to: 44)
+		by: transaction.! !
+!Behavior method!
+for: aValue
+	#_coverageTracker6246674_ markAsExecuted.
+	^ #_coverageTracker6246674_
+		coverAll:
+			{26 to: 39}
+		evaluating: [
+			(#_coverageTracker6246674_
+				coverAll:
+					{22 to: 24}
+				evaluating: [
+					(#_coverageTracker6246674_
+						coverAll:
+							{17 to: 20}
+						byLiteralOrPseudoVariable: self) new ]) initializeFor:
+				(#_coverageTracker6246674_
+					cover: (41 to: 46)
+					declaredAt: (6 to: 11)
+					by: aValue) ].! !
+!Behavior method!
+initializeFor: aValue
+	#_coverageTracker6246731_ markAsExecuted.
+	#_coverageTracker6246731_
+		cover: (25 to: 29)
+		declaredAt: (25 to: 29)
+		by:
+			(value _ #_coverageTracker6246731_
+				cover: (34 to: 39)
+				declaredAt: (16 to: 21)
+				by: aValue).! !
+!Behavior method!
+register: aTransaction
+	#_coverageTracker6247059_ markAsExecuted.
+	#_coverageTracker6247059_
+		coverAll:
+			{39 to: 42}
+		evaluating: [
+			(#_coverageTracker6247059_
+				cover: (26 to: 37)
+				declaredAt: (26 to: 37)
+				by: transactions) add:
+				(#_coverageTracker6247059_
+					cover: (44 to: 55)
+					declaredAt: (11 to: 22)
+					by: aTransaction) ].! !
+!Behavior method!
+with: anAccount
+	#_coverageTracker6246668_ markAsExecuted.
+	^ [ | cascadeReceiver |
+	cascadeReceiver _ #_coverageTracker6246668_
+		coverAll:
+			{25 to: 27}
+		evaluating: [
+			(#_coverageTracker6246668_
+				coverAll:
+					{20 to: 23}
+				byLiteralOrPseudoVariable: self) new ].
+	#_coverageTracker6246668_
+		coverAll:
+			{32 to: 35}
+		evaluating: [
+			cascadeReceiver add:
+				(#_coverageTracker6246668_
+					cover: (37 to: 45)
+					declaredAt: (7 to: 15)
+					by: anAccount) ].
+	#_coverageTracker6246668_
+		coverAll:
+			{50 to: 57}
+		evaluating: [ cascadeReceiver yourself ]] value.! !
+!Behavior method!
+add: accountToAdd
+	#_coverageTracker6246877_ markAsExecuted.
+	#_coverageTracker6246877_
+		coverAll:
+			{26 to: 38}
+		evaluating: [
+			(#_coverageTracker6246877_
+				coverAll:
+					{21 to: 24}
+				byLiteralOrPseudoVariable: self) assertCanAdd:
+				(#_coverageTracker6246877_
+					cover: (40 to: 51)
+					declaredAt: (6 to: 17)
+					by: accountToAdd) ].
+	#_coverageTracker6246877_
+		coverAll:
+			{67 to: 70}
+		evaluating: [
+			(#_coverageTracker6246877_
+				cover: (58 to: 65)
+				declaredAt: (58 to: 65)
+				by: accounts) add:
+				(#_coverageTracker6246877_
+					cover: (72 to: 83)
+					declaredAt: (6 to: 17)
+					by: accountToAdd) ].
+	#_coverageTracker6246877_
+		coverAll:
+			{100 to: 107}
+		evaluating: [
+			(#_coverageTracker6246877_
+				cover: (87 to: 98)
+				declaredAt: (6 to: 17)
+				by: accountToAdd) addedTo:
+				(#_coverageTracker6246877_
+					coverAll:
+						{109 to: 112}
+					byLiteralOrPseudoVariable: self) ].! !
+!Behavior method!
+assertCanAdd: accountToAdd
+	#_coverageTracker6246802_ markAsExecuted.
+	#_coverageTracker6246802_
+		coverAll:
+			{77 to: 83}
+		evaluating: [
+			(#_coverageTracker6246802_
+				coverAll:
+					{36 to: 61}
+				evaluating: [
+					(#_coverageTracker6246802_
+						coverAll:
+							{31 to: 34}
+						byLiteralOrPseudoVariable: self) anyRootParentIsComposedBy:
+						(#_coverageTracker6246802_
+							cover: (63 to: 74)
+							declaredAt: (15 to: 26)
+							by: accountToAdd) ]) ifTrue: [
+				#_coverageTracker6246802_
+					coverAll:
+						{92 to: 113}
+					evaluating: [
+						(#_coverageTracker6246802_
+							coverAll:
+								{87 to: 90}
+							byLiteralOrPseudoVariable: self) signalCanNotAddAccount ]]].! !
+!Behavior method!
+anyRootParentIsComposedBy: accountToAdd
+	#_coverageTracker6247020_ markAsExecuted.
+	^ #_coverageTracker6247020_
+		coverAll:
+			{61 to: 71}
+		evaluating: [
+			(#_coverageTracker6247020_
+				coverAll:
+					{49 to: 59}
+				evaluating: [
+					(#_coverageTracker6247020_
+						coverAll:
+							{44 to: 47}
+						byLiteralOrPseudoVariable: self) rootParents ]) anySatisfy: [ :aParent |
+				#_coverageTracker6247020_
+					coverAll:
+						{94 to: 106}
+					evaluating: [
+						(#_coverageTracker6247020_
+							cover: (86 to: 92)
+							declaredAt: (76 to: 82)
+							by: aParent) isComposedBy:
+							(#_coverageTracker6247020_
+								cover: (108 to: 119)
+								declaredAt: (28 to: 39)
+								by: accountToAdd) ]]].! !
+!Behavior method!
+rootParents
+	| rootParents |
+	#_coverageTracker6247049_ markAsExecuted.
+	#_coverageTracker6247049_
+		cover: (35 to: 45)
+		declaredAt: (18 to: 28)
+		by:
+			(rootParents _ #_coverageTracker6247049_
+				coverAll:
+					{54 to: 56}
+				evaluating: [
+					(#_coverageTracker6247049_
+						coverAll:
+							{50 to: 52}
+						by: Set) new ]).
+	#_coverageTracker6247049_
+		coverAll:
+			{65 to: 81}
+		evaluating: [
+			(#_coverageTracker6247049_
+				coverAll:
+					{60 to: 63}
+				byLiteralOrPseudoVariable: self) addRootParentsTo:
+				(#_coverageTracker6247049_
+					cover: (83 to: 93)
+					declaredAt: (18 to: 28)
+					by: rootParents) ].
+	^ #_coverageTracker6247049_
+		cover: (101 to: 111)
+		declaredAt: (18 to: 28)
+		by: rootParents.! !
+!Behavior method!
+addRootParentsTo: rootParents
+	#_coverageTracker6246999_ markAsExecuted.
+	#_coverageTracker6246999_
+		coverAll:
+			{44 to: 51. 82 to: 92}
+		evaluating: [
+			(#_coverageTracker6246999_
+				cover: (33 to: 39)
+				declaredAt: (33 to: 39)
+				by: parents)
+				ifEmpty: [
+					#_coverageTracker6246999_
+						coverAll:
+							{67 to: 70}
+						evaluating: [
+							(#_coverageTracker6246999_
+								cover: (55 to: 65)
+								declaredAt: (19 to: 29)
+								by: rootParents) add:
+								(#_coverageTracker6246999_
+									coverAll:
+										{72 to: 75}
+									byLiteralOrPseudoVariable: self) ]]
+				ifNotEmpty: [
+					#_coverageTracker6246999_
+						coverAll:
+							{104 to: 106}
+						evaluating: [
+							(#_coverageTracker6246999_
+								cover: (96 to: 102)
+								declaredAt: (33 to: 39)
+								by: parents) do: [ :aParent |
+								#_coverageTracker6246999_
+									coverAll:
+										{129 to: 145}
+									evaluating: [
+										(#_coverageTracker6246999_
+											cover: (121 to: 127)
+											declaredAt: (111 to: 117)
+											by: aParent) addRootParentsTo:
+											(#_coverageTracker6246999_
+												cover: (147 to: 157)
+												declaredAt: (19 to: 29)
+												by: rootParents) ]]]]].! !
+!Behavior method!
+isComposedBy: anAccount
+	#_coverageTracker6246739_ markAsExecuted.
+	^ #_coverageTracker6246739_
+		coverAll:
+			{46 to: 48}
+		evaluating: [
+			(#_coverageTracker6246739_
+				coverAll:
+					{34 to: 34}
+				evaluating: [
+					(#_coverageTracker6246739_
+						coverAll:
+							{29 to: 32}
+						byLiteralOrPseudoVariable: self) =
+						(#_coverageTracker6246739_
+							cover: (36 to: 44)
+							declaredAt: (15 to: 23)
+							by: anAccount) ]) or: [
+				#_coverageTracker6246739_
+					coverAll:
+						{61 to: 71}
+					evaluating: [
+						(#_coverageTracker6246739_
+							cover: (52 to: 59)
+							declaredAt: (52 to: 59)
+							by: accounts) anySatisfy: [ :composedAccount |
+							#_coverageTracker6246739_
+								coverAll:
+									{136 to: 138}
+								evaluating: [
+									(#_coverageTracker6246739_
+										coverAll:
+											{111 to: 123}
+										evaluating: [
+											(#_coverageTracker6246739_
+												cover: (95 to: 109)
+												declaredAt: (76 to: 90)
+												by: composedAccount) isComposedBy:
+												(#_coverageTracker6246739_
+													cover: (125 to: 133)
+													declaredAt: (15 to: 23)
+													by: anAccount) ]) or: [
+										#_coverageTracker6246739_
+											coverAll:
+												{152 to: 164}
+											evaluating: [
+												(#_coverageTracker6246739_
+													cover: (142 to: 150)
+													declaredAt: (15 to: 23)
+													by: anAccount) isComposedBy:
+													(#_coverageTracker6246739_
+														cover: (166 to: 180)
+														declaredAt: (76 to: 90)
+														by: composedAccount) ]]]]]]].! !
+!Behavior method!
+addedTo: aPortfolio
+	#_coverageTracker6246666_ markAsExecuted.! !
+!Behavior method!
+balance
+	#_coverageTracker6246930_ markAsExecuted.
+	^ #_coverageTracker6246930_
+		coverAll:
+			{28 to: 34. 40 to: 44}
+		evaluating: [
+			(#_coverageTracker6246930_
+				cover: (12 to: 23)
+				declaredAt: (12 to: 23)
+				by: transactions)
+				inject:
+					(#_coverageTracker6246930_
+						coverAll:
+							{36 to: 36}
+						byLiteralOrPseudoVariable: 0)
+				into: [ :currentBalance :transaction |
+					#_coverageTracker6246930_
+						coverAll:
+							{91 to: 104}
+						evaluating: [
+							(#_coverageTracker6246930_
+								cover: (79 to: 89)
+								declaredAt: (65 to: 75)
+								by: transaction) affectBalance:
+								(#_coverageTracker6246930_
+									cover: (106 to: 119)
+									declaredAt: (49 to: 62)
+									by: currentBalance) ]]].! !
+!Behavior method!
+affectBalance: aBalance
+	#_coverageTracker6246953_ markAsExecuted.
+	^ #_coverageTracker6246953_
+		coverAll:
+			{37 to: 37}
+		evaluating: [
+			(#_coverageTracker6246953_
+				cover: (28 to: 35)
+				declaredAt: (16 to: 23)
+				by: aBalance) +
+				(#_coverageTracker6246953_
+					cover: (39 to: 43)
+					declaredAt: (39 to: 43)
+					by: value) ].! !
+
+!testRun: #PortfolioTest #test02BalanceOfPortfolioWithAccountsIsSumOfAccountsBalance stamp: 'AS 10/20/2022 16:28:29'!
+PASSED!
+!Behavior method!
+for: aValue
+	#_coverageTracker6246957_ markAsExecuted.
+	^ #_coverageTracker6246957_
+		coverAll:
+			{26 to: 39}
+		evaluating: [
+			(#_coverageTracker6246957_
+				coverAll:
+					{22 to: 24}
+				evaluating: [
+					(#_coverageTracker6246957_
+						coverAll:
+							{17 to: 20}
+						byLiteralOrPseudoVariable: self) new ]) initializeFor:
+				(#_coverageTracker6246957_
+					cover: (41 to: 46)
+					declaredAt: (6 to: 11)
+					by: aValue) ].! !
+!Behavior method!
+initializeFor: aValue
+	#_coverageTracker6246672_ markAsExecuted.
+	#_coverageTracker6246672_
+		cover: (25 to: 29)
+		declaredAt: (25 to: 29)
+		by:
+			(value _ #_coverageTracker6246672_
+				cover: (34 to: 39)
+				declaredAt: (16 to: 21)
+				by: aValue).! !
+!Behavior method!
+with: anAccount with: anotherAccount
+	#_coverageTracker6247076_ markAsExecuted.
+	^ [ | cascadeReceiver |
+	cascadeReceiver _ #_coverageTracker6247076_
+		coverAll:
+			{46 to: 48}
+		evaluating: [
+			(#_coverageTracker6247076_
+				coverAll:
+					{41 to: 44}
+				byLiteralOrPseudoVariable: self) new ].
+	#_coverageTracker6247076_
+		coverAll:
+			{53 to: 56}
+		evaluating: [
+			cascadeReceiver add:
+				(#_coverageTracker6247076_
+					cover: (58 to: 66)
+					declaredAt: (7 to: 15)
+					by: anAccount) ].
+	#_coverageTracker6247076_
+		coverAll:
+			{71 to: 74}
+		evaluating: [
+			cascadeReceiver add:
+				(#_coverageTracker6247076_
+					cover: (76 to: 89)
+					declaredAt: (23 to: 36)
+					by: anotherAccount) ].
+	#_coverageTracker6247076_
+		coverAll:
+			{94 to: 101}
+		evaluating: [ cascadeReceiver yourself ]] value.! !
+!Behavior method!
+addedTo: aPortfolio
+	#_coverageTracker6246995_ markAsExecuted.
+	#_coverageTracker6246995_
+		coverAll:
+			{33 to: 36}
+		evaluating: [
+			(#_coverageTracker6246995_
+				cover: (25 to: 31)
+				declaredAt: (25 to: 31)
+				by: parents) add:
+				(#_coverageTracker6246995_
+					cover: (38 to: 47)
+					declaredAt: (10 to: 19)
+					by: aPortfolio) ].! !
+!Behavior method!
+isComposedBy: anAccount
+	#_coverageTracker6246827_ markAsExecuted.
+	^ #_coverageTracker6246827_
+		coverAll:
+			{33 to: 33}
+		evaluating: [
+			(#_coverageTracker6246827_
+				coverAll:
+					{28 to: 31}
+				byLiteralOrPseudoVariable: self) =
+				(#_coverageTracker6246827_
+					cover: (35 to: 43)
+					declaredAt: (15 to: 23)
+					by: anAccount) ].! !
+!Behavior method!
+affectBalance: aBalance
+	#_coverageTracker6246986_ markAsExecuted.
+	^ #_coverageTracker6246986_
+		coverAll:
+			{37 to: 37}
+		evaluating: [
+			(#_coverageTracker6246986_
+				cover: (28 to: 35)
+				declaredAt: (16 to: 23)
+				by: aBalance) -
+				(#_coverageTracker6246986_
+					cover: (39 to: 43)
+					declaredAt: (39 to: 43)
+					by: value) ].! !
+
+!testRun: #PortfolioTest #test03BalanceOfPortfolioIsCalculatedRecursivelyOnPortfolios stamp: 'AS 10/20/2022 16:28:29'!
+PASSED!
+!Behavior method!
+hasRegistered: aTransaction
+	#_coverageTracker6246773_ markAsExecuted.
+	^ #_coverageTracker6246773_
+		coverAll:
+			{41 to: 51}
+		evaluating: [
+			(#_coverageTracker6246773_
+				cover: (32 to: 39)
+				declaredAt: (32 to: 39)
+				by: accounts) anySatisfy: [ :anAccount |
+				#_coverageTracker6246773_
+					coverAll:
+						{78 to: 91}
+					evaluating: [
+						(#_coverageTracker6246773_
+							cover: (68 to: 76)
+							declaredAt: (56 to: 64)
+							by: anAccount) hasRegistered:
+							(#_coverageTracker6246773_
+								cover: (93 to: 104)
+								declaredAt: (16 to: 27)
+								by: aTransaction) ]]].! !
+
+!testRun: #PortfolioTest #test04PortfolioWithoutAccountsHasNoRegisteredTransaction stamp: 'AS 10/20/2022 16:28:29'!
+PASSED!
+!Behavior method!
+hasRegistered: aTransaction
+	#_coverageTracker6246885_ markAsExecuted.
+	^ #_coverageTracker6246885_
+		coverAll:
+			{46 to: 54}
+		evaluating: [
+			(#_coverageTracker6246885_
+				cover: (33 to: 44)
+				declaredAt: (33 to: 44)
+				by: transactions) includes:
+				(#_coverageTracker6246885_
+					cover: (56 to: 67)
+					declaredAt: (16 to: 27)
+					by: aTransaction) ].! !
+
+!testRun: #PortfolioTest #test05PortfolioHasRegisteredItsAccountsTransactions stamp: 'AS 10/20/2022 16:28:29'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioLooksForRegisteredTransactionsRecursively stamp: 'AS 10/20/2022 16:28:29'!
+PASSED!
+!Behavior method!
+transactions
+	| transactions |
+	#_coverageTracker6246777_ markAsExecuted.
+	#_coverageTracker6246777_
+		cover: (37 to: 48)
+		declaredAt: (19 to: 30)
+		by:
+			(transactions _ #_coverageTracker6246777_
+				coverAll:
+					{71 to: 73}
+				evaluating: [
+					(#_coverageTracker6246777_
+						coverAll:
+							{53 to: 69}
+						by: OrderedCollection) new ]).
+	#_coverageTracker6246777_
+		coverAll:
+			{86 to: 88}
+		evaluating: [
+			(#_coverageTracker6246777_
+				cover: (77 to: 84)
+				declaredAt: (77 to: 84)
+				by: accounts) do: [ :anAccount |
+				#_coverageTracker6246777_
+					coverAll:
+						{115 to: 132}
+					evaluating: [
+						(#_coverageTracker6246777_
+							cover: (105 to: 113)
+							declaredAt: (93 to: 101)
+							by: anAccount) addTransactionsTo:
+							(#_coverageTracker6246777_
+								cover: (134 to: 145)
+								declaredAt: (19 to: 30)
+								by: transactions) ]]].
+	^ #_coverageTracker6246777_
+		cover: (154 to: 165)
+		declaredAt: (19 to: 30)
+		by: transactions.! !
+
+!testRun: #PortfolioTest #test07PortfolioHasNoTransactionWhenHasNoAccounts stamp: 'AS 10/20/2022 16:28:29'!
+PASSED!
+!Behavior method!
+addTransactionsTo: aCollectionOfTransactions
+	#_coverageTracker6247028_ markAsExecuted.
+	#_coverageTracker6247028_
+		coverAll:
+			{74 to: 80}
+		evaluating: [
+			(#_coverageTracker6247028_
+				cover: (48 to: 72)
+				declaredAt: (20 to: 44)
+				by: aCollectionOfTransactions) addAll:
+				(#_coverageTracker6247028_
+					cover: (82 to: 93)
+					declaredAt: (82 to: 93)
+					by: transactions) ].! !
+
+!testRun: #PortfolioTest #test08PortfolioTransactionsIncludesAllItsAccountsTransactions stamp: 'AS 10/20/2022 16:28:29'!
+PASSED!
+!Behavior method!
+addTransactionsTo: aCollectionOfTransactions
+	#_coverageTracker6246914_ markAsExecuted.
+	#_coverageTracker6246914_
+		coverAll:
+			{57 to: 59}
+		evaluating: [
+			(#_coverageTracker6246914_
+				cover: (48 to: 55)
+				declaredAt: (48 to: 55)
+				by: accounts) do: [ :anAccount |
+				#_coverageTracker6246914_
+					coverAll:
+						{86 to: 103}
+					evaluating: [
+						(#_coverageTracker6246914_
+							cover: (76 to: 84)
+							declaredAt: (64 to: 72)
+							by: anAccount) addTransactionsTo:
+							(#_coverageTracker6246914_
+								cover: (105 to: 129)
+								declaredAt: (20 to: 44)
+								by: aCollectionOfTransactions) ]]].! !
+
+!testRun: #PortfolioTest #test09PortfolioTransactionsAreCalculatedRecursively stamp: 'AS 10/20/2022 16:28:29'!
+PASSED!
+!Behavior method!
+signalCanNotAddAccount
+	#_coverageTracker6247043_ markAsExecuted.
+	#_coverageTracker6247043_
+		coverAll:
+			{32 to: 37}
+		evaluating: [
+			(#_coverageTracker6247043_
+				coverAll:
+					{27 to: 30}
+				byLiteralOrPseudoVariable: self) error:
+				(#_coverageTracker6247043_
+					coverAll:
+						{50 to: 77}
+					evaluating: [
+						(#_coverageTracker6247043_
+							coverAll:
+								{44 to: 48}
+							evaluating: [
+								(#_coverageTracker6247043_
+									coverAll:
+										{39 to: 42}
+									byLiteralOrPseudoVariable: self) class ]) canNotAddAccountErrorMessage ]) ].! !
+!Behavior method!
+canNotAddAccountErrorMessage
+	#_coverageTracker6246928_ markAsExecuted.
+	^ #_coverageTracker6246928_
+		coverAll:
+			{34 to: 78}
+		byLiteralOrPseudoVariable: 'Can not add repeated account to a portfolio'.! !
+!Behavior method!
+accountsSize
+	#_coverageTracker6246982_ markAsExecuted.
+	^ #_coverageTracker6246982_
+		coverAll:
+			{27 to: 30}
+		evaluating: [
+			(#_coverageTracker6246982_
+				cover: (18 to: 25)
+				declaredAt: (18 to: 25)
+				by: accounts) size ].! !
+!Behavior method!
+accountsIncludes: anAccount
+	#_coverageTracker6247026_ markAsExecuted.
+	^ #_coverageTracker6247026_
+		coverAll:
+			{41 to: 49}
+		evaluating: [
+			(#_coverageTracker6247026_
+				cover: (32 to: 39)
+				declaredAt: (32 to: 39)
+				by: accounts) includes:
+				(#_coverageTracker6247026_
+					cover: (51 to: 59)
+					declaredAt: (19 to: 27)
+					by: anAccount) ].! !
+
+!testRun: #PortfolioTest #test10PortfolioCanNotIncludeTheSameAccountMoreThanOnce stamp: 'AS 10/20/2022 16:28:29'!
+PASSED!
+
+!testRun: #PortfolioTest #test11PortfolioCanNotIncludeAccountOfItsPortfolios stamp: 'AS 10/20/2022 16:28:29'!
+PASSED!
+
+!testRun: #PortfolioTest #test12PortfolioCanNotIncludeItself stamp: 'AS 10/20/2022 16:28:29'!
+PASSED!
+!Behavior method!
+accountsIsEmpty
+	#_coverageTracker6247074_ markAsExecuted.
+	^ #_coverageTracker6247074_
+		coverAll:
+			{30 to: 36}
+		evaluating: [
+			(#_coverageTracker6247074_
+				cover: (21 to: 28)
+				declaredAt: (21 to: 28)
+				by: accounts) isEmpty ].! !
+
+!testRun: #PortfolioTest #test13ComposedPortfolioCanNotHaveParentPortfolioAccount stamp: 'AS 10/20/2022 16:28:29'!
+PASSED!
+
+!testRun: #PortfolioTest #test14ComposedPortfolioCanNotHaveAccountOfAnyRootParentRecursively stamp: 'AS 10/20/2022 16:28:29'!
+PASSED!
+
+!testRun: #PortfolioTest #test15PortfolioCanNotIncludeAnyOfTheComposedAccountOfPortfolioToAdd stamp: 'AS 10/20/2022 16:28:29'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'AS 10/20/2022 16:28:29'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'AS 10/20/2022 16:28:29'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'AS 10/20/2022 16:28:29'!
+PASSED!
+!Behavior method!
+value
+	#_coverageTracker6246895_ markAsExecuted.
+	^ #_coverageTracker6246895_
+		cover: (11 to: 15)
+		declaredAt: (11 to: 15)
+		by: value.! !
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'AS 10/20/2022 16:28:29'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'AS 10/20/2022 16:28:29'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'AS 10/20/2022 16:28:29'!
+PASSED!
+!Behavior method!
+transactions
+	#_coverageTracker6247107_ markAsExecuted.
+	^ #_coverageTracker6247107_
+		coverAll:
+			{32 to: 35}
+		evaluating: [
+			(#_coverageTracker6247107_
+				cover: (19 to: 30)
+				declaredAt: (19 to: 30)
+				by: transactions) copy ].! !
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'AS 10/20/2022 16:28:29'!
+PASSED!
+!Behavior method!
+of: anAccount
+	#_coverageTracker6246733_ markAsExecuted.
+	^ #_coverageTracker6246733_
+		coverAll:
+			{27 to: 40}
+		evaluating: [
+			(#_coverageTracker6246733_
+				coverAll:
+					{23 to: 25}
+				evaluating: [
+					(#_coverageTracker6246733_
+						coverAll:
+							{18 to: 21}
+						byLiteralOrPseudoVariable: self) new ]) initializeFor:
+				(#_coverageTracker6246733_
+					cover: (42 to: 50)
+					declaredAt: (5 to: 13)
+					by: anAccount) ].! !
+!Behavior method!
+initializeFor: anAccount
+	#_coverageTracker6246862_ markAsExecuted.
+	#_coverageTracker6246862_
+		cover: (29 to: 35)
+		declaredAt: (29 to: 35)
+		by:
+			(account _ #_coverageTracker6246862_
+				cover: (40 to: 48)
+				declaredAt: (16 to: 24)
+				by: anAccount).
+	^ #_coverageTracker6246862_
+		coverAll:
+			{58 to: 67}
+		evaluating: [
+			(#_coverageTracker6246862_
+				coverAll:
+					{53 to: 56}
+				byLiteralOrPseudoVariable: self) makeReport ].! !
+!Behavior method!
+makeReport
+	#_coverageTracker6246825_ markAsExecuted.
+	^ #_coverageTracker6246825_
+		coverAll:
+			{14 to: 26}
+		byLiteralOrPseudoVariable: 'Balance = 0'.! !
+
+!testRun: #ReportsTest #test01EmptyAccountOnlyHasZeroBalanceInSummaryReport stamp: 'AS 10/20/2022 16:28:29'!
+PASSED!
+!Behavior method!
+for: anAmountToTransfer from: anOriginReceptiveAccount to: aDestinyReceptiveAccount
+	#_coverageTracker6246833_ markAsExecuted.
+	#_coverageTracker6246833_
+		coverAll:
+			{138 to: 144}
+		evaluating: [
+			(#_coverageTracker6246833_
+				coverAll:
+					{111 to: 111}
+				evaluating: [
+					(#_coverageTracker6246833_
+						cover: (86 to: 109)
+						declaredAt: (31 to: 54)
+						by: anOriginReceptiveAccount) =
+						(#_coverageTracker6246833_
+							cover: (113 to: 136)
+							declaredAt: (60 to: 83)
+							by: aDestinyReceptiveAccount) ]) ifTrue: [
+				#_coverageTracker6246833_
+					coverAll:
+						{152 to: 157}
+					evaluating: [
+						(#_coverageTracker6246833_
+							coverAll:
+								{147 to: 150}
+							byLiteralOrPseudoVariable: self) error:
+							(#_coverageTracker6246833_
+								coverAll:
+									{164 to: 209}
+								evaluating: [
+									(#_coverageTracker6246833_
+										coverAll:
+											{159 to: 162}
+										byLiteralOrPseudoVariable: self) canNotTransferFromAndToSameAccountErrorMessage ]) ]]].
+	^ #_coverageTracker6246833_
+		coverAll:
+			{224 to: 237. 258 to: 262. 289 to: 291}
+		evaluating: [
+			(#_coverageTracker6246833_
+				coverAll:
+					{220 to: 222}
+				evaluating: [
+					(#_coverageTracker6246833_
+						coverAll:
+							{215 to: 218}
+						byLiteralOrPseudoVariable: self) new ])
+				initializeFor:
+					(#_coverageTracker6246833_
+						cover: (239 to: 256)
+						declaredAt: (6 to: 23)
+						by: anAmountToTransfer)
+				from:
+					(#_coverageTracker6246833_
+						cover: (264 to: 287)
+						declaredAt: (31 to: 54)
+						by: anOriginReceptiveAccount)
+				to:
+					(#_coverageTracker6246833_
+						cover: (293 to: 316)
+						declaredAt: (60 to: 83)
+						by: aDestinyReceptiveAccount) ].! !
+!Behavior method!
+initializeFor: anAmountToTransfer from: anOriginReceptiveAccount to: aDestinyReceptiveAccount
+	#_coverageTracker6246693_ markAsExecuted.
+	#_coverageTracker6246693_
+		cover: (97 to: 110)
+		declaredAt: (97 to: 110)
+		by:
+			(transferAmount _ #_coverageTracker6246693_
+				cover: (115 to: 132)
+				declaredAt: (16 to: 33)
+				by: anAmountToTransfer).
+	#_coverageTracker6246693_
+		cover: (136 to: 144)
+		declaredAt: (136 to: 144)
+		by:
+			(originLeg _ #_coverageTracker6246693_
+				coverAll:
+					{161 to: 176}
+				evaluating: [
+					(#_coverageTracker6246693_
+						coverAll:
+							{149 to: 159}
+						by: TransferLeg) withTransaction:
+						(#_coverageTracker6246693_
+							coverAll:
+								{188 to: 196. 213 to: 215}
+							evaluating: [
+								(#_coverageTracker6246693_
+									coverAll:
+										{179 to: 186}
+									by: Withdraw)
+									register:
+										(#_coverageTracker6246693_
+											cover: (198 to: 211)
+											declaredAt: (97 to: 110)
+											by: transferAmount)
+									on:
+										(#_coverageTracker6246693_
+											cover: (217 to: 240)
+											declaredAt: (41 to: 64)
+											by: anOriginReceptiveAccount) ]) ]).
+	#_coverageTracker6246693_
+		cover: (245 to: 254)
+		declaredAt: (245 to: 254)
+		by:
+			(destinyLeg _ #_coverageTracker6246693_
+				coverAll:
+					{271 to: 286}
+				evaluating: [
+					(#_coverageTracker6246693_
+						coverAll:
+							{259 to: 269}
+						by: TransferLeg) withTransaction:
+						(#_coverageTracker6246693_
+							coverAll:
+								{297 to: 305. 322 to: 324}
+							evaluating: [
+								(#_coverageTracker6246693_
+									coverAll:
+										{289 to: 295}
+									by: Deposit)
+									register:
+										(#_coverageTracker6246693_
+											cover: (307 to: 320)
+											declaredAt: (97 to: 110)
+											by: transferAmount)
+									on:
+										(#_coverageTracker6246693_
+											cover: (326 to: 349)
+											declaredAt: (70 to: 93)
+											by: aDestinyReceptiveAccount) ]) ]).! !
+!Behavior method!
+withTransaction: anAccountTransaction
+	#_coverageTracker6246798_ markAsExecuted.
+	^ #_coverageTracker6246798_
+		coverAll:
+			{50 to: 75}
+		evaluating: [
+			(#_coverageTracker6246798_
+				coverAll:
+					{46 to: 48}
+				evaluating: [
+					(#_coverageTracker6246798_
+						coverAll:
+							{41 to: 44}
+						byLiteralOrPseudoVariable: self) new ]) initializeWithTransaction:
+				(#_coverageTracker6246798_
+					cover: (77 to: 96)
+					declaredAt: (18 to: 37)
+					by: anAccountTransaction) ].! !
+!Behavior method!
+initializeWithTransaction: anAccountTransaction
+	#_coverageTracker6246860_ markAsExecuted.
+	#_coverageTracker6246860_
+		cover: (50 to: 60)
+		declaredAt: (50 to: 60)
+		by:
+			(transaction _ #_coverageTracker6246860_
+				cover: (65 to: 84)
+				declaredAt: (28 to: 47)
+				by: anAccountTransaction).! !
+
+!testRun: #TransfersTest #test01BalanceIsAffectedAfterTransfer stamp: 'AS 10/20/2022 16:28:29'!
+PASSED!
+!Behavior method!
+canNotTransferFromAndToSameAccountErrorMessage
+	#_coverageTracker6246691_ markAsExecuted.
+	^ #_coverageTracker6246691_
+		coverAll:
+			{50 to: 93}
+		byLiteralOrPseudoVariable: 'Can not transfer from and to same account!!'.! !
+
+!testRun: #TransfersTest #test02CanNotTransferFromAndToSameAccount stamp: 'AS 10/20/2022 16:28:29'!
+PASSED!
+!Behavior method!
+destinyLeg
+	#_coverageTracker6246984_ markAsExecuted.
+	^ #_coverageTracker6246984_
+		cover: (14 to: 23)
+		declaredAt: (14 to: 23)
+		by: destinyLeg.! !
+!Behavior method!
+associatedTransfer
+	#_coverageTracker6246993_ markAsExecuted.
+	^ #_coverageTracker6246993_
+		cover: (22 to: 29)
+		declaredAt: (22 to: 29)
+		by: transfer.! !
+!Behavior method!
+originLeg
+	#_coverageTracker6247089_ markAsExecuted.
+	^ #_coverageTracker6247089_
+		cover: (13 to: 21)
+		declaredAt: (13 to: 21)
+		by: originLeg.! !
+
+!testRun: #TransfersTest #test03CanNavigateToAndFromBothTransferLegs stamp: 'AS 10/20/2022 16:28:29'!
+PASSED!
+
+----SNAPSHOT----(20 October 2022 16:42:02) CuisUniversity-5481.image priorSource: 7125209!

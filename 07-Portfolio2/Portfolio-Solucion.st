@@ -305,6 +305,22 @@ test07AccountKnowsItsTransactions
 ! !
 
 
+!classDefinition: #ReportsTest category: 'Portfolio-Solucion'!
+TestCase subclass: #ReportsTest
+	instanceVariableNames: 'account1 account2 transfer'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!ReportsTest methodsFor: 'as yet unclassified' stamp: 'AS 10/20/2022 16:25:45'!
+test01EmptyAccountOnlyHasZeroBalanceInSummaryReport
+
+	| account |
+	account := ReceptiveAccount new.
+	
+	self assert: 'Balance = 0' equals: (AccountSummaryReport of: account).! !
+
+
 !classDefinition: #TransfersTest category: 'Portfolio-Solucion'!
 TestCase subclass: #TransfersTest
 	instanceVariableNames: 'account1 account2 transfer'
@@ -579,6 +595,35 @@ addedTo: aPortfolio
 	
 	! !
 
+
+
+!classDefinition: #AccountSummaryReport category: 'Portfolio-Solucion'!
+Object subclass: #AccountSummaryReport
+	instanceVariableNames: 'account'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!AccountSummaryReport methodsFor: 'instance creation' stamp: 'AS 10/20/2022 16:28:18'!
+initializeFor: anAccount 
+
+	account := anAccount.
+	^self makeReport.! !
+
+
+!AccountSummaryReport methodsFor: 'make' stamp: 'AS 10/20/2022 16:28:00'!
+makeReport
+	^'Balance = 0'! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'AccountSummaryReport class' category: 'Portfolio-Solucion'!
+AccountSummaryReport class
+	instanceVariableNames: ''!
+
+!AccountSummaryReport class methodsFor: 'instance creation' stamp: 'AS 10/20/2022 16:26:46'!
+of: anAccount 
+	^self new initializeFor: anAccount ! !
 
 
 !classDefinition: #AccountTransaction category: 'Portfolio-Solucion'!
