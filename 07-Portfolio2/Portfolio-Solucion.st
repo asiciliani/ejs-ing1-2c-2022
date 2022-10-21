@@ -398,6 +398,36 @@ test04OriginAndDestinyHaveRegisteredWithdrawAndDepositRespectively
 	self assert: (account1 hasRegistered: transfer originLeg associatedTransaction).
 	self assert: (account2 hasRegistered: transfer destinyLeg associatedTransaction).! !
 
+!TransfersTest methodsFor: 'tests' stamp: 'AS 10/20/2022 21:54:49'!
+test05TransferAmountShouldNotBeZero
+
+	| account1 account2 |
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	
+	self should: [Transfer for: 0 from: account1 to: account2.]
+		 raise: Error - MessageNotUnderstood 
+		 withExceptionDo: [:anError | self assert: 0 equals: account1 balance.
+							     self assert: account1 transactions isEmpty.
+							     self assert: 0 equals: account2 balance.
+							     self assert: account2 transactions isEmpty.
+							    self assert: Transfer transferAmountShouldBeStrictlyPositiveErrorMessage equals: anError messageText].! !
+
+!TransfersTest methodsFor: 'tests' stamp: 'AS 10/20/2022 21:55:32'!
+test06TransferAmountShouldNotBeNegative
+
+	| account1 account2 |
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	
+	self should: [Transfer for: -1 from: account1 to: account2.]
+		 raise: Error - MessageNotUnderstood 
+		 withExceptionDo: [:anError | self assert: 0 equals: account1 balance.
+							     self assert: account1 transactions isEmpty.
+							     self assert: 0 equals: account2 balance.
+							     self assert: account2 transactions isEmpty.
+							    self assert: Transfer transferAmountShouldBeStrictlyPositiveErrorMessage equals: anError messageText].! !
+
 
 !classDefinition: #Account category: 'Portfolio-Solucion'!
 Object subclass: #Account
@@ -787,13 +817,10 @@ originLeg
 Transfer class
 	instanceVariableNames: ''!
 
-!Transfer class methodsFor: 'instance creation' stamp: 'AS 10/20/2022 19:44:10'!
-assertIsNotSameAccount: anOriginReceptiveAccount as: aDestinyReceptiveAccount
-
-	^ anOriginReceptiveAccount = aDestinyReceptiveAccount ifTrue: [self error: self canNotTransferFromAndToSameAccountErrorMessage]! !
-
-!Transfer class methodsFor: 'instance creation' stamp: 'AS 10/20/2022 19:44:10'!
+!Transfer class methodsFor: 'instance creation' stamp: 'AS 10/20/2022 21:57:12'!
 for: anAmountToTransfer from: anOriginReceptiveAccount to: aDestinyReceptiveAccount
+
+	self assertIsStrictlyPositive: anAmountToTransfer.
 	self assertIsNotSameAccount: anOriginReceptiveAccount as: aDestinyReceptiveAccount.
 	^self new initializeFor: anAmountToTransfer from: anOriginReceptiveAccount to: aDestinyReceptiveAccount. ! !
 
@@ -801,6 +828,32 @@ for: anAmountToTransfer from: anOriginReceptiveAccount to: aDestinyReceptiveAcco
 !Transfer class methodsFor: 'error message' stamp: 'AS 10/20/2022 16:15:22'!
 canNotTransferFromAndToSameAccountErrorMessage
 	^'Can not transfer from and to same account!!'! !
+
+!Transfer class methodsFor: 'error message' stamp: 'AS 10/20/2022 21:54:48'!
+transferAmountShouldBeStrictlyPositiveErrorMessage
+	^'Transfer amount should be strictly positive!!'.! !
+
+
+!Transfer class methodsFor: 'assertions' stamp: 'AS 10/20/2022 21:56:50'!
+assertIsNotNegative: anAmountToTransfer
+
+	^ anAmountToTransfer < 0 ifTrue: [self error: self transferAmountShouldBeStrictlyPositiveErrorMessage]! !
+
+!Transfer class methodsFor: 'assertions' stamp: 'AS 10/20/2022 19:44:10'!
+assertIsNotSameAccount: anOriginReceptiveAccount as: aDestinyReceptiveAccount
+
+	^ anOriginReceptiveAccount = aDestinyReceptiveAccount ifTrue: [self error: self canNotTransferFromAndToSameAccountErrorMessage]! !
+
+!Transfer class methodsFor: 'assertions' stamp: 'AS 10/20/2022 21:56:39'!
+assertIsNotZero: anAmountToTransfer
+
+	^ anAmountToTransfer = 0 ifTrue: [self error: self transferAmountShouldBeStrictlyPositiveErrorMessage]! !
+
+!Transfer class methodsFor: 'assertions' stamp: 'AS 10/20/2022 21:57:07'!
+assertIsStrictlyPositive: anAmountToTransfer
+
+	self assertIsNotZero: anAmountToTransfer.
+	self assertIsNotNegative: anAmountToTransfer! !
 
 
 !classDefinition: #TransferLeg category: 'Portfolio-Solucion'!

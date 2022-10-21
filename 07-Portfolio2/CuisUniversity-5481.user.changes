@@ -5965,3 +5965,238 @@ PASSED!
 PASSED!
 
 ----SNAPSHOT----(20 October 2022 20:35:59) CuisUniversity-5481.image priorSource: 7200988!
+!TransfersTest methodsFor: 'tests' stamp: 'AS 10/20/2022 21:51:50'!
+test05TransferAmountShouldNotBeZero
+
+	| account1 account2 |
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	
+	self should: [Transfer for: 0 from: account1 to: account2.]
+		 raise: Error - MessageNotUnderstood 
+		 withExceptionDo: [:anError | self assert: 0 equals: account1 balance.
+							     self assert: account1 transactions isEmpty.
+							     self assert: 0 equals: account2 balance.
+							     self assert: account2 transactions isEmpty.
+							    self assert: Transfer transferAmountShouldBeStrictlyPositive equals: anError messageText].! !
+
+!testRun: #TransfersTest #test05TransferAmountShouldNotBeZero stamp: 'AS 10/20/2022 21:51:55'!
+FAILURE!
+
+!testRun: #TransfersTest #test05TransferAmountShouldNotBeZero stamp: 'AS 10/20/2022 21:51:59'!
+FAILURE!
+
+!testRun: #TransfersTest #test05TransferAmountShouldNotBeZero stamp: 'AS 10/20/2022 21:52:21'!
+FAILURE!
+
+!testRun: #TransfersTest #test05TransferAmountShouldNotBeZero stamp: 'AS 10/20/2022 21:52:52'!
+FAILURE!
+
+!testRun: #TransfersTest #test05TransferAmountShouldNotBeZero stamp: 'AS 10/20/2022 21:52:59'!
+FAILURE!
+!Transfer class methodsFor: 'instance creation' stamp: 'AS 10/20/2022 21:54:05' prior: 50556085!
+for: anAmountToTransfer from: anOriginReceptiveAccount to: aDestinyReceptiveAccount
+	
+	anAmountToTransfer = 0 ifTrue: [self error: self transferAmountShouldBeStrictlyPositive].
+	self assertIsNotSameAccount: anOriginReceptiveAccount as: aDestinyReceptiveAccount.
+	^self new initializeFor: anAmountToTransfer from: anOriginReceptiveAccount to: aDestinyReceptiveAccount. ! !
+
+!testRun: #TransfersTest #test01BalanceIsAffectedAfterTransfer stamp: 'AS 10/20/2022 21:54:07'!
+PASSED!
+
+!testRun: #TransfersTest #test02CanNotTransferFromAndToSameAccount stamp: 'AS 10/20/2022 21:54:07'!
+PASSED!
+
+!testRun: #TransfersTest #test03CanNavigateToAndFromBothTransferLegs stamp: 'AS 10/20/2022 21:54:07'!
+PASSED!
+
+!testRun: #TransfersTest #test04OriginAndDestinyHaveRegisteredWithdrawAndDepositRespectively stamp: 'AS 10/20/2022 21:54:07'!
+PASSED!
+
+!testRun: #TransfersTest #test05TransferAmountShouldNotBeZero stamp: 'AS 10/20/2022 21:54:07'!
+ERROR!
+
+!testRun: #TransfersTest #test05TransferAmountShouldNotBeZero stamp: 'AS 10/20/2022 21:54:07'!
+ERROR!
+
+!testRun: #TransfersTest #test05TransferAmountShouldNotBeZero stamp: 'AS 10/20/2022 21:54:10'!
+ERROR!
+!Transfer class methodsFor: 'error message' stamp: 'AS 10/20/2022 21:54:15'!
+transferAmountShouldBeStrictlyPositive
+	self shouldBeImplemented.! !
+!Transfer class methodsFor: 'error message' stamp: 'AS 10/20/2022 21:54:32' prior: 50559547!
+transferAmountShouldBeStrictlyPositive
+	^'Transfer amount should be strictly positive!!'.! !
+
+!testRun: #TransfersTest #test05TransferAmountShouldNotBeZero stamp: 'AS 10/20/2022 21:54:33'!
+PASSED!
+
+!testRun: #TransfersTest #test01BalanceIsAffectedAfterTransfer stamp: 'AS 10/20/2022 21:54:33'!
+PASSED!
+
+!testRun: #TransfersTest #test02CanNotTransferFromAndToSameAccount stamp: 'AS 10/20/2022 21:54:33'!
+PASSED!
+
+!testRun: #TransfersTest #test03CanNavigateToAndFromBothTransferLegs stamp: 'AS 10/20/2022 21:54:33'!
+PASSED!
+
+!testRun: #TransfersTest #test04OriginAndDestinyHaveRegisteredWithdrawAndDepositRespectively stamp: 'AS 10/20/2022 21:54:33'!
+PASSED!
+
+!testRun: #TransfersTest #test05TransferAmountShouldNotBeZero stamp: 'AS 10/20/2022 21:54:33'!
+PASSED!
+!Transfer class methodsFor: 'error message' stamp: 'AS 10/20/2022 21:54:48'!
+transferAmountShouldBeStrictlyPositiveErrorMessage
+	^'Transfer amount should be strictly positive!!'.! !
+!Transfer class methodsFor: 'as yet unclassified' stamp: 'AS 10/20/2022 21:54:48' prior: 50559508!
+for: anAmountToTransfer from: anOriginReceptiveAccount to: aDestinyReceptiveAccount
+	
+	anAmountToTransfer = 0 ifTrue: [self error: self transferAmountShouldBeStrictlyPositiveErrorMessage].
+	self assertIsNotSameAccount: anOriginReceptiveAccount as: aDestinyReceptiveAccount.
+	^self new initializeFor: anAmountToTransfer from: anOriginReceptiveAccount to: aDestinyReceptiveAccount. ! !
+!TransfersTest methodsFor: 'as yet unclassified' stamp: 'AS 10/20/2022 21:54:49' prior: 50559470!
+test05TransferAmountShouldNotBeZero
+
+	| account1 account2 |
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	
+	self should: [Transfer for: 0 from: account1 to: account2.]
+		 raise: Error - MessageNotUnderstood 
+		 withExceptionDo: [:anError | self assert: 0 equals: account1 balance.
+							     self assert: account1 transactions isEmpty.
+							     self assert: 0 equals: account2 balance.
+							     self assert: account2 transactions isEmpty.
+							    self assert: Transfer transferAmountShouldBeStrictlyPositiveErrorMessage equals: anError messageText].! !
+
+!methodRemoval: Transfer class #transferAmountShouldBeStrictlyPositive stamp: 'AS 10/20/2022 21:54:49'!
+transferAmountShouldBeStrictlyPositive
+	^'Transfer amount should be strictly positive!!'.!
+
+!testRun: #TransfersTest #test05TransferAmountShouldNotBeZero stamp: 'AS 10/20/2022 21:54:50'!
+PASSED!
+
+!testRun: #TransfersTest #test01BalanceIsAffectedAfterTransfer stamp: 'AS 10/20/2022 21:54:50'!
+PASSED!
+
+!testRun: #TransfersTest #test02CanNotTransferFromAndToSameAccount stamp: 'AS 10/20/2022 21:54:50'!
+PASSED!
+
+!testRun: #TransfersTest #test03CanNavigateToAndFromBothTransferLegs stamp: 'AS 10/20/2022 21:54:50'!
+PASSED!
+
+!testRun: #TransfersTest #test04OriginAndDestinyHaveRegisteredWithdrawAndDepositRespectively stamp: 'AS 10/20/2022 21:54:50'!
+PASSED!
+
+!testRun: #TransfersTest #test05TransferAmountShouldNotBeZero stamp: 'AS 10/20/2022 21:54:50'!
+PASSED!
+!TransfersTest methodsFor: 'tests' stamp: 'AS 10/20/2022 21:55:32'!
+test06TransferAmountShouldNotBeNegative
+
+	| account1 account2 |
+	account1 := ReceptiveAccount new.
+	account2 := ReceptiveAccount new.
+	
+	self should: [Transfer for: -1 from: account1 to: account2.]
+		 raise: Error - MessageNotUnderstood 
+		 withExceptionDo: [:anError | self assert: 0 equals: account1 balance.
+							     self assert: account1 transactions isEmpty.
+							     self assert: 0 equals: account2 balance.
+							     self assert: account2 transactions isEmpty.
+							    self assert: Transfer transferAmountShouldBeStrictlyPositiveErrorMessage equals: anError messageText].! !
+
+!testRun: #TransfersTest #test06TransferAmountShouldNotBeNegative stamp: 'AS 10/20/2022 21:55:35'!
+FAILURE!
+
+!testRun: #TransfersTest #test06TransferAmountShouldNotBeNegative stamp: 'AS 10/20/2022 21:55:54'!
+FAILURE!
+!Transfer class methodsFor: 'instance creation' stamp: 'AS 10/20/2022 21:56:12' prior: 50559587!
+for: anAmountToTransfer from: anOriginReceptiveAccount to: aDestinyReceptiveAccount
+	
+	anAmountToTransfer = 0 ifTrue: [self error: self transferAmountShouldBeStrictlyPositiveErrorMessage].
+	anAmountToTransfer < 0 ifTrue: [self error: self transferAmountShouldBeStrictlyPositiveErrorMessage].
+	self assertIsNotSameAccount: anOriginReceptiveAccount as: aDestinyReceptiveAccount.
+	^self new initializeFor: anAmountToTransfer from: anOriginReceptiveAccount to: aDestinyReceptiveAccount. ! !
+
+!testRun: #TransfersTest #test06TransferAmountShouldNotBeNegative stamp: 'AS 10/20/2022 21:56:13'!
+PASSED!
+
+!testRun: #TransfersTest #test01BalanceIsAffectedAfterTransfer stamp: 'AS 10/20/2022 21:56:13'!
+PASSED!
+
+!testRun: #TransfersTest #test02CanNotTransferFromAndToSameAccount stamp: 'AS 10/20/2022 21:56:13'!
+PASSED!
+
+!testRun: #TransfersTest #test03CanNavigateToAndFromBothTransferLegs stamp: 'AS 10/20/2022 21:56:13'!
+PASSED!
+
+!testRun: #TransfersTest #test04OriginAndDestinyHaveRegisteredWithdrawAndDepositRespectively stamp: 'AS 10/20/2022 21:56:13'!
+PASSED!
+
+!testRun: #TransfersTest #test05TransferAmountShouldNotBeZero stamp: 'AS 10/20/2022 21:56:13'!
+PASSED!
+
+!testRun: #TransfersTest #test06TransferAmountShouldNotBeNegative stamp: 'AS 10/20/2022 21:56:13'!
+PASSED!
+!Transfer class methodsFor: 'instance creation' stamp: 'AS 10/20/2022 21:56:39'!
+assertIsNotZero: anAmountToTransfer
+
+	^ anAmountToTransfer = 0 ifTrue: [self error: self transferAmountShouldBeStrictlyPositiveErrorMessage]! !
+!Transfer class methodsFor: 'instance creation' stamp: 'AS 10/20/2022 21:56:39' prior: 50559680!
+for: anAmountToTransfer from: anOriginReceptiveAccount to: aDestinyReceptiveAccount
+	
+	self assertIsNotZero: anAmountToTransfer.
+	anAmountToTransfer < 0 ifTrue: [self error: self transferAmountShouldBeStrictlyPositiveErrorMessage].
+	self assertIsNotSameAccount: anOriginReceptiveAccount as: aDestinyReceptiveAccount.
+	^self new initializeFor: anAmountToTransfer from: anOriginReceptiveAccount to: aDestinyReceptiveAccount. ! !
+!Transfer class methodsFor: 'instance creation' stamp: 'AS 10/20/2022 21:56:50'!
+assertIsNotNegative: anAmountToTransfer
+
+	^ anAmountToTransfer < 0 ifTrue: [self error: self transferAmountShouldBeStrictlyPositiveErrorMessage]! !
+!Transfer class methodsFor: 'instance creation' stamp: 'AS 10/20/2022 21:56:50' prior: 50559731!
+for: anAmountToTransfer from: anOriginReceptiveAccount to: aDestinyReceptiveAccount
+	
+	self assertIsNotZero: anAmountToTransfer.
+	self assertIsNotNegative: anAmountToTransfer.
+	self assertIsNotSameAccount: anOriginReceptiveAccount as: aDestinyReceptiveAccount.
+	^self new initializeFor: anAmountToTransfer from: anOriginReceptiveAccount to: aDestinyReceptiveAccount. ! !
+!Transfer class methodsFor: 'instance creation' stamp: 'AS 10/20/2022 21:57:07'!
+assertIsStrictlyPositive: anAmountToTransfer
+
+	self assertIsNotZero: anAmountToTransfer.
+	self assertIsNotNegative: anAmountToTransfer! !
+!Transfer class methodsFor: 'instance creation' stamp: 'AS 10/20/2022 21:57:07' prior: 50559755!
+for: anAmountToTransfer from: anOriginReceptiveAccount to: aDestinyReceptiveAccount
+	
+	self assertIsStrictlyPositive: anAmountToTransfer.
+	self assertIsNotSameAccount: anOriginReceptiveAccount as: aDestinyReceptiveAccount.
+	^self new initializeFor: anAmountToTransfer from: anOriginReceptiveAccount to: aDestinyReceptiveAccount. ! !
+!Transfer class methodsFor: 'instance creation' stamp: 'AS 10/20/2022 21:57:12' prior: 50559778!
+for: anAmountToTransfer from: anOriginReceptiveAccount to: aDestinyReceptiveAccount
+
+	self assertIsStrictlyPositive: anAmountToTransfer.
+	self assertIsNotSameAccount: anOriginReceptiveAccount as: aDestinyReceptiveAccount.
+	^self new initializeFor: anAmountToTransfer from: anOriginReceptiveAccount to: aDestinyReceptiveAccount. ! !
+
+!testRun: #TransfersTest #test06TransferAmountShouldNotBeNegative stamp: 'AS 10/20/2022 21:57:34'!
+PASSED!
+
+!testRun: #TransfersTest #test01BalanceIsAffectedAfterTransfer stamp: 'AS 10/20/2022 21:57:34'!
+PASSED!
+
+!testRun: #TransfersTest #test02CanNotTransferFromAndToSameAccount stamp: 'AS 10/20/2022 21:57:34'!
+PASSED!
+
+!testRun: #TransfersTest #test03CanNavigateToAndFromBothTransferLegs stamp: 'AS 10/20/2022 21:57:34'!
+PASSED!
+
+!testRun: #TransfersTest #test04OriginAndDestinyHaveRegisteredWithdrawAndDepositRespectively stamp: 'AS 10/20/2022 21:57:34'!
+PASSED!
+
+!testRun: #TransfersTest #test05TransferAmountShouldNotBeZero stamp: 'AS 10/20/2022 21:57:34'!
+PASSED!
+
+!testRun: #TransfersTest #test06TransferAmountShouldNotBeNegative stamp: 'AS 10/20/2022 21:57:34'!
+PASSED!
+
+----SNAPSHOT----(20 October 2022 21:57:45) CuisUniversity-5481.image priorSource: 7290114!
