@@ -6200,3 +6200,1000 @@ PASSED!
 PASSED!
 
 ----SNAPSHOT----(20 October 2022 21:57:45) CuisUniversity-5481.image priorSource: 7290114!
+
+----STARTUP---- (21 October 2022 20:50:28) as /home/andisici/Documents/2022/ing-2c2022/cuisPortfolio2/CuisUniversity-5481.image!
+
+!ReportsTest methodsFor: 'tests' stamp: 'AS 10/21/2022 21:08:16'!
+test04AccountSummaryReportHasTransferExit
+
+	| account summaryReport |
+	account := ReceptiveAccount new.
+	Deposit register: 20 on: account.
+	Withdraw register: 5 on: account.
+	Transfer for: 10 from: account to: ReceptiveAccount new.
+	
+	summaryReport := account summaryReport.
+	self assert: 'Depósito por 20.' equals: summaryReport first.
+	self assert: 'Extracción por 5.' equals: summaryReport second.
+	self assert: 'Salida por transferencia de 20.' equals: summaryReport third.
+	self assert: 'Balance = -5' equals: summaryReport fourth.! !
+
+!testRun: #ReportsTest #test04AccountSummaryReportHasTransferExit stamp: 'AS 10/21/2022 21:08:33'!
+FAILURE!
+
+!methodRemoval: ReportsTest #test04AccountSummaryReportHasTransferExit stamp: 'AS 10/21/2022 21:10:00'!
+test04AccountSummaryReportHasTransferExit
+
+	| account summaryReport |
+	account := ReceptiveAccount new.
+	Deposit register: 20 on: account.
+	Withdraw register: 5 on: account.
+	Transfer for: 10 from: account to: ReceptiveAccount new.
+	
+	summaryReport := account summaryReport.
+	self assert: 'Depósito por 20.' equals: summaryReport first.
+	self assert: 'Extracción por 5.' equals: summaryReport second.
+	self assert: 'Salida por transferencia de 20.' equals: summaryReport third.
+	self assert: 'Balance = -5' equals: summaryReport fourth.!
+
+!testRun: #PortfolioTest #test01BalanceOfPortfolioWithoutAccountsIsZero stamp: 'AS 10/21/2022 21:10:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test02BalanceOfPortfolioWithAccountsIsSumOfAccountsBalance stamp: 'AS 10/21/2022 21:10:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test03BalanceOfPortfolioIsCalculatedRecursivelyOnPortfolios stamp: 'AS 10/21/2022 21:10:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test04PortfolioWithoutAccountsHasNoRegisteredTransaction stamp: 'AS 10/21/2022 21:10:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasRegisteredItsAccountsTransactions stamp: 'AS 10/21/2022 21:10:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioLooksForRegisteredTransactionsRecursively stamp: 'AS 10/21/2022 21:10:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test07PortfolioHasNoTransactionWhenHasNoAccounts stamp: 'AS 10/21/2022 21:10:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test08PortfolioTransactionsIncludesAllItsAccountsTransactions stamp: 'AS 10/21/2022 21:10:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test09PortfolioTransactionsAreCalculatedRecursively stamp: 'AS 10/21/2022 21:10:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test10PortfolioCanNotIncludeTheSameAccountMoreThanOnce stamp: 'AS 10/21/2022 21:10:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test11PortfolioCanNotIncludeAccountOfItsPortfolios stamp: 'AS 10/21/2022 21:10:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test12PortfolioCanNotIncludeItself stamp: 'AS 10/21/2022 21:10:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test13ComposedPortfolioCanNotHaveParentPortfolioAccount stamp: 'AS 10/21/2022 21:10:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test14ComposedPortfolioCanNotHaveAccountOfAnyRootParentRecursively stamp: 'AS 10/21/2022 21:10:03'!
+PASSED!
+
+!testRun: #PortfolioTest #test15PortfolioCanNotIncludeAnyOfTheComposedAccountOfPortfolioToAdd stamp: 'AS 10/21/2022 21:10:03'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'AS 10/21/2022 21:10:03'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'AS 10/21/2022 21:10:03'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'AS 10/21/2022 21:10:03'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'AS 10/21/2022 21:10:03'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'AS 10/21/2022 21:10:03'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'AS 10/21/2022 21:10:03'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'AS 10/21/2022 21:10:03'!
+PASSED!
+
+!testRun: #ReportsTest #test01EmptyAccountOnlyHasZeroBalanceInSummaryReport stamp: 'AS 10/21/2022 21:10:03'!
+PASSED!
+
+!testRun: #ReportsTest #test02AccountSummaryReportHasDeposits stamp: 'AS 10/21/2022 21:10:03'!
+PASSED!
+
+!testRun: #ReportsTest #test03AccountSummaryReportHasWithdraws stamp: 'AS 10/21/2022 21:10:03'!
+PASSED!
+
+!testRun: #TransfersTest #test01BalanceIsAffectedAfterTransfer stamp: 'AS 10/21/2022 21:10:03'!
+PASSED!
+
+!testRun: #TransfersTest #test02CanNotTransferFromAndToSameAccount stamp: 'AS 10/21/2022 21:10:03'!
+PASSED!
+
+!testRun: #TransfersTest #test03CanNavigateToAndFromBothTransferLegs stamp: 'AS 10/21/2022 21:10:03'!
+PASSED!
+
+!testRun: #TransfersTest #test04OriginAndDestinyHaveRegisteredWithdrawAndDepositRespectively stamp: 'AS 10/21/2022 21:10:03'!
+PASSED!
+
+!testRun: #TransfersTest #test05TransferAmountShouldNotBeZero stamp: 'AS 10/21/2022 21:10:03'!
+PASSED!
+
+!testRun: #TransfersTest #test06TransferAmountShouldNotBeNegative stamp: 'AS 10/21/2022 21:10:03'!
+PASSED!
+!ReceptiveAccount methodsFor: 'report' stamp: 'AS 10/20/2022 20:22:48' prior: 50559340!
+summaryReport
+
+	| summaryReport |
+	
+	summaryReport := OrderedCollection new.
+	transactions do: [:aTransaction | (aTransaction isKindOf: Deposit) ifTrue: [summaryReport addLast: 'Depósito por ', aTransaction value asString ,'.'].
+							  (aTransaction isKindOf: Withdraw ) ifTrue: [summaryReport addLast: 'Extracción por ', aTransaction value asString ,'.']].
+	summaryReport addLast: 'Balance = ', self balance asString.
+	^summaryReport ! !
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'AS 10/21/2022 21:10:39'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'AS 10/21/2022 21:10:39'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'AS 10/21/2022 21:10:39'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'AS 10/21/2022 21:10:39'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'AS 10/21/2022 21:10:39'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'AS 10/21/2022 21:10:39'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'AS 10/21/2022 21:10:39'!
+PASSED!
+
+!testRun: #PortfolioTest #test01BalanceOfPortfolioWithoutAccountsIsZero stamp: 'AS 10/21/2022 21:10:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test02BalanceOfPortfolioWithAccountsIsSumOfAccountsBalance stamp: 'AS 10/21/2022 21:10:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test03BalanceOfPortfolioIsCalculatedRecursivelyOnPortfolios stamp: 'AS 10/21/2022 21:10:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test04PortfolioWithoutAccountsHasNoRegisteredTransaction stamp: 'AS 10/21/2022 21:10:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasRegisteredItsAccountsTransactions stamp: 'AS 10/21/2022 21:10:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioLooksForRegisteredTransactionsRecursively stamp: 'AS 10/21/2022 21:10:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test07PortfolioHasNoTransactionWhenHasNoAccounts stamp: 'AS 10/21/2022 21:10:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test08PortfolioTransactionsIncludesAllItsAccountsTransactions stamp: 'AS 10/21/2022 21:10:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test09PortfolioTransactionsAreCalculatedRecursively stamp: 'AS 10/21/2022 21:10:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test10PortfolioCanNotIncludeTheSameAccountMoreThanOnce stamp: 'AS 10/21/2022 21:10:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test11PortfolioCanNotIncludeAccountOfItsPortfolios stamp: 'AS 10/21/2022 21:10:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test12PortfolioCanNotIncludeItself stamp: 'AS 10/21/2022 21:10:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test13ComposedPortfolioCanNotHaveParentPortfolioAccount stamp: 'AS 10/21/2022 21:10:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test14ComposedPortfolioCanNotHaveAccountOfAnyRootParentRecursively stamp: 'AS 10/21/2022 21:10:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test15PortfolioCanNotIncludeAnyOfTheComposedAccountOfPortfolioToAdd stamp: 'AS 10/21/2022 21:10:43'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'AS 10/21/2022 21:10:43'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'AS 10/21/2022 21:10:43'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'AS 10/21/2022 21:10:43'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'AS 10/21/2022 21:10:43'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'AS 10/21/2022 21:10:43'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'AS 10/21/2022 21:10:43'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'AS 10/21/2022 21:10:43'!
+PASSED!
+
+!testRun: #ReportsTest #test01EmptyAccountOnlyHasZeroBalanceInSummaryReport stamp: 'AS 10/21/2022 21:10:43'!
+PASSED!
+
+!testRun: #ReportsTest #test02AccountSummaryReportHasDeposits stamp: 'AS 10/21/2022 21:10:43'!
+PASSED!
+
+!testRun: #ReportsTest #test03AccountSummaryReportHasWithdraws stamp: 'AS 10/21/2022 21:10:43'!
+PASSED!
+
+!testRun: #TransfersTest #test01BalanceIsAffectedAfterTransfer stamp: 'AS 10/21/2022 21:10:43'!
+PASSED!
+
+!testRun: #TransfersTest #test02CanNotTransferFromAndToSameAccount stamp: 'AS 10/21/2022 21:10:43'!
+PASSED!
+
+!testRun: #TransfersTest #test03CanNavigateToAndFromBothTransferLegs stamp: 'AS 10/21/2022 21:10:43'!
+PASSED!
+
+!testRun: #TransfersTest #test04OriginAndDestinyHaveRegisteredWithdrawAndDepositRespectively stamp: 'AS 10/21/2022 21:10:43'!
+PASSED!
+
+!testRun: #TransfersTest #test05TransferAmountShouldNotBeZero stamp: 'AS 10/21/2022 21:10:43'!
+PASSED!
+
+!testRun: #TransfersTest #test06TransferAmountShouldNotBeNegative stamp: 'AS 10/21/2022 21:10:43'!
+PASSED!
+!ReportsTest methodsFor: 'tests' stamp: 'AS 10/21/2022 21:10:49'!
+test04AccountSummaryReportHasTransferExit
+
+	| account summaryReport |
+	account := ReceptiveAccount new.
+	Deposit register: 20 on: account.
+	Withdraw register: 5 on: account.
+	Transfer for: 10 from: account to: ReceptiveAccount new.
+	
+	summaryReport := account summaryReport.
+	self assert: 'Depósito por 20.' equals: summaryReport first.
+	self assert: 'Extracción por 5.' equals: summaryReport second.
+	self assert: 'Salida por transferencia de 20.' equals: summaryReport third.
+	self assert: 'Balance = -5' equals: summaryReport fourth.! !
+
+!testRun: #ReportsTest #test04AccountSummaryReportHasTransferExit stamp: 'AS 10/21/2022 21:10:49'!
+FAILURE!
+!ReceptiveAccount methodsFor: 'report' stamp: 'AS 10/21/2022 21:13:14' prior: 50559995!
+summaryReport
+
+	| summaryReport |
+	
+	summaryReport := OrderedCollection new.
+	transactions do: [:aTransaction | (aTransaction isKindOf: Deposit) ifTrue: [summaryReport addLast: 'Depósito por ', aTransaction value asString ,'.'].
+							  (aTransaction isKindOf: Withdraw ) ifTrue: [summaryReport addLast: 'Extracción por ', aTransaction value asString ,'.']
+							ifFalse: [summaryReport addLast: 'Salida por transferencia de ', aTransaction value asString ,'.']].
+							
+	summaryReport addLast: 'Balance = ', self balance asString.
+	^summaryReport ! !
+
+!testRun: #ReportsTest #test04AccountSummaryReportHasTransferExit stamp: 'AS 10/21/2022 21:13:16'!
+FAILURE!
+
+!testRun: #ReportsTest #test01EmptyAccountOnlyHasZeroBalanceInSummaryReport stamp: 'AS 10/21/2022 21:28:53'!
+PASSED!
+
+!testRun: #ReportsTest #test02AccountSummaryReportHasDeposits stamp: 'AS 10/21/2022 21:28:53'!
+FAILURE!
+
+!testRun: #ReportsTest #test03AccountSummaryReportHasWithdraws stamp: 'AS 10/21/2022 21:28:53'!
+FAILURE!
+
+!testRun: #ReportsTest #test04AccountSummaryReportHasTransferExit stamp: 'AS 10/21/2022 21:28:53'!
+FAILURE!
+
+!testRun: #TransfersTest #test01BalanceIsAffectedAfterTransfer stamp: 'AS 10/21/2022 21:28:53'!
+PASSED!
+
+!testRun: #TransfersTest #test02CanNotTransferFromAndToSameAccount stamp: 'AS 10/21/2022 21:28:53'!
+PASSED!
+
+!testRun: #TransfersTest #test03CanNavigateToAndFromBothTransferLegs stamp: 'AS 10/21/2022 21:28:53'!
+PASSED!
+
+!testRun: #TransfersTest #test04OriginAndDestinyHaveRegisteredWithdrawAndDepositRespectively stamp: 'AS 10/21/2022 21:28:53'!
+PASSED!
+
+!testRun: #TransfersTest #test05TransferAmountShouldNotBeZero stamp: 'AS 10/21/2022 21:28:53'!
+PASSED!
+
+!testRun: #TransfersTest #test06TransferAmountShouldNotBeNegative stamp: 'AS 10/21/2022 21:28:53'!
+PASSED!
+
+!testRun: #ReportsTest #test02AccountSummaryReportHasDeposits stamp: 'AS 10/21/2022 21:28:57'!
+FAILURE!
+
+!classDefinition: #TransferWithdraw category: 'Portfolio-Solucion' stamp: 'AS 10/21/2022 21:30:20'!
+AccountTransaction subclass: #TransferWithdraw
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+!Transfer methodsFor: 'instance creation' stamp: 'AS 10/21/2022 21:29:58' prior: 50553893!
+initializeFor: anAmountToTransfer from: anOriginReceptiveAccount to: aDestinyReceptiveAccount 
+	transferAmount := anAmountToTransfer.
+	originLeg := TransferLeg withTransaction: (TransferWithdraw register: transferAmount on: anOriginReceptiveAccount).
+	destinyLeg := TransferLeg withTransaction: (Deposit register: transferAmount on: aDestinyReceptiveAccount).! !
+
+Withdraw subclass: #TransferWithdraw
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classDefinition: #TransferWithdraw category: 'Portfolio-Solucion' stamp: 'AS 10/21/2022 21:31:05'!
+Withdraw subclass: #TransferWithdraw
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!testRun: #ReportsTest #test01EmptyAccountOnlyHasZeroBalanceInSummaryReport stamp: 'AS 10/21/2022 21:31:22'!
+PASSED!
+
+!testRun: #ReportsTest #test02AccountSummaryReportHasDeposits stamp: 'AS 10/21/2022 21:31:22'!
+FAILURE!
+
+!testRun: #ReportsTest #test03AccountSummaryReportHasWithdraws stamp: 'AS 10/21/2022 21:31:22'!
+FAILURE!
+
+!testRun: #ReportsTest #test04AccountSummaryReportHasTransferExit stamp: 'AS 10/21/2022 21:31:22'!
+FAILURE!
+
+!testRun: #PortfolioTest #test01BalanceOfPortfolioWithoutAccountsIsZero stamp: 'AS 10/21/2022 21:31:22'!
+PASSED!
+
+!testRun: #PortfolioTest #test02BalanceOfPortfolioWithAccountsIsSumOfAccountsBalance stamp: 'AS 10/21/2022 21:31:22'!
+PASSED!
+
+!testRun: #PortfolioTest #test03BalanceOfPortfolioIsCalculatedRecursivelyOnPortfolios stamp: 'AS 10/21/2022 21:31:22'!
+PASSED!
+
+!testRun: #PortfolioTest #test04PortfolioWithoutAccountsHasNoRegisteredTransaction stamp: 'AS 10/21/2022 21:31:22'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasRegisteredItsAccountsTransactions stamp: 'AS 10/21/2022 21:31:22'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioLooksForRegisteredTransactionsRecursively stamp: 'AS 10/21/2022 21:31:22'!
+PASSED!
+
+!testRun: #PortfolioTest #test07PortfolioHasNoTransactionWhenHasNoAccounts stamp: 'AS 10/21/2022 21:31:22'!
+PASSED!
+
+!testRun: #PortfolioTest #test08PortfolioTransactionsIncludesAllItsAccountsTransactions stamp: 'AS 10/21/2022 21:31:22'!
+PASSED!
+
+!testRun: #PortfolioTest #test09PortfolioTransactionsAreCalculatedRecursively stamp: 'AS 10/21/2022 21:31:22'!
+PASSED!
+
+!testRun: #PortfolioTest #test10PortfolioCanNotIncludeTheSameAccountMoreThanOnce stamp: 'AS 10/21/2022 21:31:22'!
+PASSED!
+
+!testRun: #PortfolioTest #test11PortfolioCanNotIncludeAccountOfItsPortfolios stamp: 'AS 10/21/2022 21:31:22'!
+PASSED!
+
+!testRun: #PortfolioTest #test12PortfolioCanNotIncludeItself stamp: 'AS 10/21/2022 21:31:22'!
+PASSED!
+
+!testRun: #PortfolioTest #test13ComposedPortfolioCanNotHaveParentPortfolioAccount stamp: 'AS 10/21/2022 21:31:22'!
+PASSED!
+
+!testRun: #PortfolioTest #test14ComposedPortfolioCanNotHaveAccountOfAnyRootParentRecursively stamp: 'AS 10/21/2022 21:31:22'!
+PASSED!
+
+!testRun: #PortfolioTest #test15PortfolioCanNotIncludeAnyOfTheComposedAccountOfPortfolioToAdd stamp: 'AS 10/21/2022 21:31:22'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'AS 10/21/2022 21:31:22'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'AS 10/21/2022 21:31:22'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'AS 10/21/2022 21:31:22'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'AS 10/21/2022 21:31:22'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'AS 10/21/2022 21:31:22'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'AS 10/21/2022 21:31:22'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'AS 10/21/2022 21:31:22'!
+PASSED!
+
+!testRun: #ReportsTest #test02AccountSummaryReportHasDeposits stamp: 'AS 10/21/2022 21:31:25'!
+FAILURE!
+
+!testRun: #ReportsTest #test02AccountSummaryReportHasDeposits stamp: 'AS 10/21/2022 21:31:36'!
+FAILURE!
+!ReceptiveAccount methodsFor: 'report' stamp: 'AS 10/21/2022 21:32:37' prior: 50560177!
+summaryReport
+
+	| summaryReport |
+	
+	summaryReport := OrderedCollection new.
+	transactions do: [:aTransaction | (aTransaction isKindOf: Deposit) ifTrue: [summaryReport addLast: 'Depósito por ', aTransaction value asString ,'.'].
+							  (aTransaction isKindOf: Withdraw ) ifTrue: [summaryReport addLast: 'Extracción por ', aTransaction value asString ,'.'].
+					(aTransaction isKindOf: TransferWithdraw) ifTrue: [summaryReport addLast: 'Salida por transferencia de ', aTransaction value asString ,'.']].
+							
+	summaryReport addLast: 'Balance = ', self balance asString.
+	^summaryReport ! !
+
+!testRun: #ReportsTest #test02AccountSummaryReportHasDeposits stamp: 'AS 10/21/2022 21:32:40'!
+PASSED!
+
+!testRun: #ReportsTest #test03AccountSummaryReportHasWithdraws stamp: 'AS 10/21/2022 21:32:41'!
+PASSED!
+
+!testRun: #ReportsTest #test04AccountSummaryReportHasTransferExit stamp: 'AS 10/21/2022 21:32:42'!
+FAILURE!
+
+AccountTransaction subclass: #TransferWithdraw
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classDefinition: #TransferWithdraw category: 'Portfolio-Solucion' stamp: 'AS 10/21/2022 21:35:26'!
+AccountTransaction subclass: #TransferWithdraw
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!testRun: #PortfolioTest #test01BalanceOfPortfolioWithoutAccountsIsZero stamp: 'AS 10/21/2022 21:35:30'!
+PASSED!
+
+!testRun: #PortfolioTest #test02BalanceOfPortfolioWithAccountsIsSumOfAccountsBalance stamp: 'AS 10/21/2022 21:35:30'!
+PASSED!
+
+!testRun: #PortfolioTest #test03BalanceOfPortfolioIsCalculatedRecursivelyOnPortfolios stamp: 'AS 10/21/2022 21:35:30'!
+PASSED!
+
+!testRun: #PortfolioTest #test04PortfolioWithoutAccountsHasNoRegisteredTransaction stamp: 'AS 10/21/2022 21:35:30'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasRegisteredItsAccountsTransactions stamp: 'AS 10/21/2022 21:35:30'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioLooksForRegisteredTransactionsRecursively stamp: 'AS 10/21/2022 21:35:30'!
+PASSED!
+
+!testRun: #PortfolioTest #test07PortfolioHasNoTransactionWhenHasNoAccounts stamp: 'AS 10/21/2022 21:35:30'!
+PASSED!
+
+!testRun: #PortfolioTest #test08PortfolioTransactionsIncludesAllItsAccountsTransactions stamp: 'AS 10/21/2022 21:35:30'!
+PASSED!
+
+!testRun: #PortfolioTest #test09PortfolioTransactionsAreCalculatedRecursively stamp: 'AS 10/21/2022 21:35:30'!
+PASSED!
+
+!testRun: #PortfolioTest #test10PortfolioCanNotIncludeTheSameAccountMoreThanOnce stamp: 'AS 10/21/2022 21:35:30'!
+PASSED!
+
+!testRun: #PortfolioTest #test11PortfolioCanNotIncludeAccountOfItsPortfolios stamp: 'AS 10/21/2022 21:35:30'!
+PASSED!
+
+!testRun: #PortfolioTest #test12PortfolioCanNotIncludeItself stamp: 'AS 10/21/2022 21:35:30'!
+PASSED!
+
+!testRun: #PortfolioTest #test13ComposedPortfolioCanNotHaveParentPortfolioAccount stamp: 'AS 10/21/2022 21:35:30'!
+PASSED!
+
+!testRun: #PortfolioTest #test14ComposedPortfolioCanNotHaveAccountOfAnyRootParentRecursively stamp: 'AS 10/21/2022 21:35:30'!
+PASSED!
+
+!testRun: #PortfolioTest #test15PortfolioCanNotIncludeAnyOfTheComposedAccountOfPortfolioToAdd stamp: 'AS 10/21/2022 21:35:30'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'AS 10/21/2022 21:35:30'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'AS 10/21/2022 21:35:30'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'AS 10/21/2022 21:35:30'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'AS 10/21/2022 21:35:30'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'AS 10/21/2022 21:35:30'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'AS 10/21/2022 21:35:30'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'AS 10/21/2022 21:35:30'!
+PASSED!
+
+!testRun: #ReportsTest #test01EmptyAccountOnlyHasZeroBalanceInSummaryReport stamp: 'AS 10/21/2022 21:35:30'!
+PASSED!
+
+!testRun: #ReportsTest #test02AccountSummaryReportHasDeposits stamp: 'AS 10/21/2022 21:35:30'!
+PASSED!
+
+!testRun: #ReportsTest #test03AccountSummaryReportHasWithdraws stamp: 'AS 10/21/2022 21:35:30'!
+PASSED!
+
+!testRun: #ReportsTest #test04AccountSummaryReportHasTransferExit stamp: 'AS 10/21/2022 21:35:30'!
+ERROR!
+
+!testRun: #TransfersTest #test01BalanceIsAffectedAfterTransfer stamp: 'AS 10/21/2022 21:35:30'!
+ERROR!
+
+!testRun: #TransfersTest #test02CanNotTransferFromAndToSameAccount stamp: 'AS 10/21/2022 21:35:30'!
+PASSED!
+
+!testRun: #TransfersTest #test03CanNavigateToAndFromBothTransferLegs stamp: 'AS 10/21/2022 21:35:30'!
+ERROR!
+
+!testRun: #TransfersTest #test04OriginAndDestinyHaveRegisteredWithdrawAndDepositRespectively stamp: 'AS 10/21/2022 21:35:30'!
+ERROR!
+
+!testRun: #TransfersTest #test05TransferAmountShouldNotBeZero stamp: 'AS 10/21/2022 21:35:30'!
+PASSED!
+
+!testRun: #TransfersTest #test06TransferAmountShouldNotBeNegative stamp: 'AS 10/21/2022 21:35:30'!
+PASSED!
+
+!classDefinition: #TransferWithdraw category: 'Portfolio-Solucion' stamp: 'AS 10/21/2022 21:36:13'!
+AccountTransaction subclass: #TransferWithdraw
+	instanceVariableNames: 'value'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+!TransferWithdraw methodsFor: 'no messages' stamp: 'AS 10/21/2022 21:36:11' overrides: 50553417!
+affectBalance: aBalance
+
+	^aBalance - value! !
+!TransferWithdraw methodsFor: 'as yet unclassified' stamp: 'AS 10/21/2022 21:36:22' overrides: 50553413!
+value
+
+	^ value! !
+!TransferWithdraw methodsFor: 'as yet unclassified' stamp: 'AS 10/21/2022 21:37:35'!
+initializeFor: aValue
+
+	value := aValue ! !
+
+!testRun: #PortfolioTest #test01BalanceOfPortfolioWithoutAccountsIsZero stamp: 'AS 10/21/2022 21:37:39'!
+PASSED!
+
+!testRun: #PortfolioTest #test02BalanceOfPortfolioWithAccountsIsSumOfAccountsBalance stamp: 'AS 10/21/2022 21:37:39'!
+PASSED!
+
+!testRun: #PortfolioTest #test03BalanceOfPortfolioIsCalculatedRecursivelyOnPortfolios stamp: 'AS 10/21/2022 21:37:39'!
+PASSED!
+
+!testRun: #PortfolioTest #test04PortfolioWithoutAccountsHasNoRegisteredTransaction stamp: 'AS 10/21/2022 21:37:39'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasRegisteredItsAccountsTransactions stamp: 'AS 10/21/2022 21:37:39'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioLooksForRegisteredTransactionsRecursively stamp: 'AS 10/21/2022 21:37:39'!
+PASSED!
+
+!testRun: #PortfolioTest #test07PortfolioHasNoTransactionWhenHasNoAccounts stamp: 'AS 10/21/2022 21:37:39'!
+PASSED!
+
+!testRun: #PortfolioTest #test08PortfolioTransactionsIncludesAllItsAccountsTransactions stamp: 'AS 10/21/2022 21:37:39'!
+PASSED!
+
+!testRun: #PortfolioTest #test09PortfolioTransactionsAreCalculatedRecursively stamp: 'AS 10/21/2022 21:37:39'!
+PASSED!
+
+!testRun: #PortfolioTest #test10PortfolioCanNotIncludeTheSameAccountMoreThanOnce stamp: 'AS 10/21/2022 21:37:39'!
+PASSED!
+
+!testRun: #PortfolioTest #test11PortfolioCanNotIncludeAccountOfItsPortfolios stamp: 'AS 10/21/2022 21:37:39'!
+PASSED!
+
+!testRun: #PortfolioTest #test12PortfolioCanNotIncludeItself stamp: 'AS 10/21/2022 21:37:39'!
+PASSED!
+
+!testRun: #PortfolioTest #test13ComposedPortfolioCanNotHaveParentPortfolioAccount stamp: 'AS 10/21/2022 21:37:39'!
+PASSED!
+
+!testRun: #PortfolioTest #test14ComposedPortfolioCanNotHaveAccountOfAnyRootParentRecursively stamp: 'AS 10/21/2022 21:37:39'!
+PASSED!
+
+!testRun: #PortfolioTest #test15PortfolioCanNotIncludeAnyOfTheComposedAccountOfPortfolioToAdd stamp: 'AS 10/21/2022 21:37:39'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'AS 10/21/2022 21:37:39'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'AS 10/21/2022 21:37:39'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'AS 10/21/2022 21:37:39'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'AS 10/21/2022 21:37:39'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'AS 10/21/2022 21:37:39'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'AS 10/21/2022 21:37:39'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'AS 10/21/2022 21:37:39'!
+PASSED!
+
+!testRun: #ReportsTest #test01EmptyAccountOnlyHasZeroBalanceInSummaryReport stamp: 'AS 10/21/2022 21:37:39'!
+PASSED!
+
+!testRun: #ReportsTest #test02AccountSummaryReportHasDeposits stamp: 'AS 10/21/2022 21:37:39'!
+PASSED!
+
+!testRun: #ReportsTest #test03AccountSummaryReportHasWithdraws stamp: 'AS 10/21/2022 21:37:39'!
+PASSED!
+
+!testRun: #ReportsTest #test04AccountSummaryReportHasTransferExit stamp: 'AS 10/21/2022 21:37:39'!
+ERROR!
+
+!testRun: #TransfersTest #test01BalanceIsAffectedAfterTransfer stamp: 'AS 10/21/2022 21:37:39'!
+ERROR!
+
+!testRun: #TransfersTest #test02CanNotTransferFromAndToSameAccount stamp: 'AS 10/21/2022 21:37:39'!
+PASSED!
+
+!testRun: #TransfersTest #test03CanNavigateToAndFromBothTransferLegs stamp: 'AS 10/21/2022 21:37:39'!
+ERROR!
+
+!testRun: #TransfersTest #test04OriginAndDestinyHaveRegisteredWithdrawAndDepositRespectively stamp: 'AS 10/21/2022 21:37:39'!
+ERROR!
+
+!testRun: #TransfersTest #test05TransferAmountShouldNotBeZero stamp: 'AS 10/21/2022 21:37:39'!
+PASSED!
+
+!testRun: #TransfersTest #test06TransferAmountShouldNotBeNegative stamp: 'AS 10/21/2022 21:37:39'!
+PASSED!
+
+!testRun: #ReportsTest #test04AccountSummaryReportHasTransferExit stamp: 'AS 10/21/2022 21:37:41'!
+ERROR!
+!TransferWithdraw class methodsFor: 'nil' stamp: 'AS 10/21/2022 21:37:56'!
+for: aValue
+
+	^ self new initializeFor: aValue ! !
+
+!testRun: #PortfolioTest #test01BalanceOfPortfolioWithoutAccountsIsZero stamp: 'AS 10/21/2022 21:38:01'!
+PASSED!
+
+!testRun: #PortfolioTest #test02BalanceOfPortfolioWithAccountsIsSumOfAccountsBalance stamp: 'AS 10/21/2022 21:38:01'!
+PASSED!
+
+!testRun: #PortfolioTest #test03BalanceOfPortfolioIsCalculatedRecursivelyOnPortfolios stamp: 'AS 10/21/2022 21:38:01'!
+PASSED!
+
+!testRun: #PortfolioTest #test04PortfolioWithoutAccountsHasNoRegisteredTransaction stamp: 'AS 10/21/2022 21:38:01'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasRegisteredItsAccountsTransactions stamp: 'AS 10/21/2022 21:38:01'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioLooksForRegisteredTransactionsRecursively stamp: 'AS 10/21/2022 21:38:01'!
+PASSED!
+
+!testRun: #PortfolioTest #test07PortfolioHasNoTransactionWhenHasNoAccounts stamp: 'AS 10/21/2022 21:38:01'!
+PASSED!
+
+!testRun: #PortfolioTest #test08PortfolioTransactionsIncludesAllItsAccountsTransactions stamp: 'AS 10/21/2022 21:38:01'!
+PASSED!
+
+!testRun: #PortfolioTest #test09PortfolioTransactionsAreCalculatedRecursively stamp: 'AS 10/21/2022 21:38:01'!
+PASSED!
+
+!testRun: #PortfolioTest #test10PortfolioCanNotIncludeTheSameAccountMoreThanOnce stamp: 'AS 10/21/2022 21:38:01'!
+PASSED!
+
+!testRun: #PortfolioTest #test11PortfolioCanNotIncludeAccountOfItsPortfolios stamp: 'AS 10/21/2022 21:38:01'!
+PASSED!
+
+!testRun: #PortfolioTest #test12PortfolioCanNotIncludeItself stamp: 'AS 10/21/2022 21:38:01'!
+PASSED!
+
+!testRun: #PortfolioTest #test13ComposedPortfolioCanNotHaveParentPortfolioAccount stamp: 'AS 10/21/2022 21:38:01'!
+PASSED!
+
+!testRun: #PortfolioTest #test14ComposedPortfolioCanNotHaveAccountOfAnyRootParentRecursively stamp: 'AS 10/21/2022 21:38:01'!
+PASSED!
+
+!testRun: #PortfolioTest #test15PortfolioCanNotIncludeAnyOfTheComposedAccountOfPortfolioToAdd stamp: 'AS 10/21/2022 21:38:01'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'AS 10/21/2022 21:38:01'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'AS 10/21/2022 21:38:01'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'AS 10/21/2022 21:38:01'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'AS 10/21/2022 21:38:01'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'AS 10/21/2022 21:38:01'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'AS 10/21/2022 21:38:01'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'AS 10/21/2022 21:38:01'!
+PASSED!
+
+!testRun: #ReportsTest #test01EmptyAccountOnlyHasZeroBalanceInSummaryReport stamp: 'AS 10/21/2022 21:38:01'!
+PASSED!
+
+!testRun: #ReportsTest #test02AccountSummaryReportHasDeposits stamp: 'AS 10/21/2022 21:38:01'!
+PASSED!
+
+!testRun: #ReportsTest #test03AccountSummaryReportHasWithdraws stamp: 'AS 10/21/2022 21:38:01'!
+PASSED!
+
+!testRun: #ReportsTest #test04AccountSummaryReportHasTransferExit stamp: 'AS 10/21/2022 21:38:01'!
+FAILURE!
+
+!testRun: #TransfersTest #test01BalanceIsAffectedAfterTransfer stamp: 'AS 10/21/2022 21:38:01'!
+PASSED!
+
+!testRun: #TransfersTest #test02CanNotTransferFromAndToSameAccount stamp: 'AS 10/21/2022 21:38:01'!
+PASSED!
+
+!testRun: #TransfersTest #test03CanNavigateToAndFromBothTransferLegs stamp: 'AS 10/21/2022 21:38:01'!
+PASSED!
+
+!testRun: #TransfersTest #test04OriginAndDestinyHaveRegisteredWithdrawAndDepositRespectively stamp: 'AS 10/21/2022 21:38:01'!
+PASSED!
+
+!testRun: #TransfersTest #test05TransferAmountShouldNotBeZero stamp: 'AS 10/21/2022 21:38:01'!
+PASSED!
+
+!testRun: #TransfersTest #test06TransferAmountShouldNotBeNegative stamp: 'AS 10/21/2022 21:38:01'!
+PASSED!
+
+!testRun: #ReportsTest #test04AccountSummaryReportHasTransferExit stamp: 'AS 10/21/2022 21:38:01'!
+FAILURE!
+!ReportsTest methodsFor: 'tests' stamp: 'AS 10/21/2022 21:38:09' prior: 50560153!
+test04AccountSummaryReportHasTransferExit
+
+	| account summaryReport |
+	account := ReceptiveAccount new.
+	Deposit register: 20 on: account.
+	Withdraw register: 5 on: account.
+	Transfer for: 10 from: account to: ReceptiveAccount new.
+	
+	summaryReport := account summaryReport.
+	self assert: 'Depósito por 20.' equals: summaryReport first.
+	self assert: 'Extracción por 5.' equals: summaryReport second.
+	self assert: 'Salida por transferencia de 10.' equals: summaryReport third.
+	self assert: 'Balance = -5' equals: summaryReport fourth.! !
+
+!testRun: #ReportsTest #test04AccountSummaryReportHasTransferExit stamp: 'AS 10/21/2022 21:38:10'!
+FAILURE!
+!ReportsTest methodsFor: 'tests' stamp: 'AS 10/21/2022 21:38:21' prior: 50560812!
+test04AccountSummaryReportHasTransferExit
+
+	| account summaryReport |
+	account := ReceptiveAccount new.
+	Deposit register: 20 on: account.
+	Withdraw register: 5 on: account.
+	Transfer for: 10 from: account to: ReceptiveAccount new.
+	
+	summaryReport := account summaryReport.
+	self assert: 'Depósito por 20.' equals: summaryReport first.
+	self assert: 'Extracción por 5.' equals: summaryReport second.
+	self assert: 'Salida por transferencia de 10.' equals: summaryReport third.
+	self assert: 'Balance = 5' equals: summaryReport fourth.! !
+
+!testRun: #ReportsTest #test04AccountSummaryReportHasTransferExit stamp: 'AS 10/21/2022 21:38:22'!
+PASSED!
+
+!testRun: #PortfolioTest #test01BalanceOfPortfolioWithoutAccountsIsZero stamp: 'AS 10/21/2022 21:38:25'!
+PASSED!
+
+!testRun: #PortfolioTest #test02BalanceOfPortfolioWithAccountsIsSumOfAccountsBalance stamp: 'AS 10/21/2022 21:38:25'!
+PASSED!
+
+!testRun: #PortfolioTest #test03BalanceOfPortfolioIsCalculatedRecursivelyOnPortfolios stamp: 'AS 10/21/2022 21:38:25'!
+PASSED!
+
+!testRun: #PortfolioTest #test04PortfolioWithoutAccountsHasNoRegisteredTransaction stamp: 'AS 10/21/2022 21:38:25'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasRegisteredItsAccountsTransactions stamp: 'AS 10/21/2022 21:38:25'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioLooksForRegisteredTransactionsRecursively stamp: 'AS 10/21/2022 21:38:25'!
+PASSED!
+
+!testRun: #PortfolioTest #test07PortfolioHasNoTransactionWhenHasNoAccounts stamp: 'AS 10/21/2022 21:38:25'!
+PASSED!
+
+!testRun: #PortfolioTest #test08PortfolioTransactionsIncludesAllItsAccountsTransactions stamp: 'AS 10/21/2022 21:38:25'!
+PASSED!
+
+!testRun: #PortfolioTest #test09PortfolioTransactionsAreCalculatedRecursively stamp: 'AS 10/21/2022 21:38:25'!
+PASSED!
+
+!testRun: #PortfolioTest #test10PortfolioCanNotIncludeTheSameAccountMoreThanOnce stamp: 'AS 10/21/2022 21:38:25'!
+PASSED!
+
+!testRun: #PortfolioTest #test11PortfolioCanNotIncludeAccountOfItsPortfolios stamp: 'AS 10/21/2022 21:38:25'!
+PASSED!
+
+!testRun: #PortfolioTest #test12PortfolioCanNotIncludeItself stamp: 'AS 10/21/2022 21:38:25'!
+PASSED!
+
+!testRun: #PortfolioTest #test13ComposedPortfolioCanNotHaveParentPortfolioAccount stamp: 'AS 10/21/2022 21:38:25'!
+PASSED!
+
+!testRun: #PortfolioTest #test14ComposedPortfolioCanNotHaveAccountOfAnyRootParentRecursively stamp: 'AS 10/21/2022 21:38:25'!
+PASSED!
+
+!testRun: #PortfolioTest #test15PortfolioCanNotIncludeAnyOfTheComposedAccountOfPortfolioToAdd stamp: 'AS 10/21/2022 21:38:25'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'AS 10/21/2022 21:38:25'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'AS 10/21/2022 21:38:25'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'AS 10/21/2022 21:38:25'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'AS 10/21/2022 21:38:25'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'AS 10/21/2022 21:38:25'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'AS 10/21/2022 21:38:25'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'AS 10/21/2022 21:38:25'!
+PASSED!
+
+!testRun: #ReportsTest #test01EmptyAccountOnlyHasZeroBalanceInSummaryReport stamp: 'AS 10/21/2022 21:38:25'!
+PASSED!
+
+!testRun: #ReportsTest #test02AccountSummaryReportHasDeposits stamp: 'AS 10/21/2022 21:38:25'!
+PASSED!
+
+!testRun: #ReportsTest #test03AccountSummaryReportHasWithdraws stamp: 'AS 10/21/2022 21:38:25'!
+PASSED!
+
+!testRun: #ReportsTest #test04AccountSummaryReportHasTransferExit stamp: 'AS 10/21/2022 21:38:25'!
+PASSED!
+
+!testRun: #TransfersTest #test01BalanceIsAffectedAfterTransfer stamp: 'AS 10/21/2022 21:38:25'!
+PASSED!
+
+!testRun: #TransfersTest #test02CanNotTransferFromAndToSameAccount stamp: 'AS 10/21/2022 21:38:25'!
+PASSED!
+
+!testRun: #TransfersTest #test03CanNavigateToAndFromBothTransferLegs stamp: 'AS 10/21/2022 21:38:25'!
+PASSED!
+
+!testRun: #TransfersTest #test04OriginAndDestinyHaveRegisteredWithdrawAndDepositRespectively stamp: 'AS 10/21/2022 21:38:25'!
+PASSED!
+
+!testRun: #TransfersTest #test05TransferAmountShouldNotBeZero stamp: 'AS 10/21/2022 21:38:25'!
+PASSED!
+
+!testRun: #TransfersTest #test06TransferAmountShouldNotBeNegative stamp: 'AS 10/21/2022 21:38:25'!
+PASSED!
+!ReportsTest methodsFor: 'tests' stamp: 'AS 10/21/2022 21:41:31'!
+test05AccountSummaryReportHasTransferEntrance
+
+	| account summaryReport |
+	account := ReceptiveAccount new.
+	Deposit register: 20 on: account.
+	Withdraw register: 5 on: account.
+	Transfer for: 10 from: account to: ReceptiveAccount new.
+	Transfer for: 27 from: ReceptiveAccount new to: account.
+	
+	summaryReport := account summaryReport.
+	self assert: 'Depósito por 20.' equals: summaryReport first.
+	self assert: 'Extracción por 5.' equals: summaryReport second.
+	self assert: 'Salida por transferencia de 10.' equals: summaryReport third.
+	self assert: 'Entrada por transferencia de 27.' equals: summaryReport fourth.
+	self assert: 'Balance = 32' equals: summaryReport fifth.! !
+
+!testRun: #ReportsTest #test05AccountSummaryReportHasTransferEntrance stamp: 'AS 10/21/2022 21:44:25'!
+FAILURE!
+
+!classDefinition: #TransferDeposit category: 'Portfolio-Solucion' stamp: 'AS 10/21/2022 21:44:50'!
+AccountTransaction subclass: #TransferDeposit
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+!Transfer methodsFor: 'instance creation' stamp: 'AS 10/21/2022 21:44:41' prior: 50560247!
+initializeFor: anAmountToTransfer from: anOriginReceptiveAccount to: aDestinyReceptiveAccount 
+	transferAmount := anAmountToTransfer.
+	originLeg := TransferLeg withTransaction: (TransferWithdraw register: transferAmount on: anOriginReceptiveAccount).
+	destinyLeg := TransferLeg withTransaction: (TransferDeposit register: transferAmount on: aDestinyReceptiveAccount).! !
+
+!classDefinition: #TransferDeposit category: 'Portfolio-Solucion' stamp: 'AS 10/21/2022 21:45:10'!
+AccountTransaction subclass: #TransferDeposit
+	instanceVariableNames: 'value'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+!TransferDeposit methodsFor: 'nil' stamp: 'AS 10/21/2022 21:45:08' overrides: 50553417!
+affectBalance: aBalance
+
+	^aBalance + value ! !
+!TransferDeposit methodsFor: 'as yet unclassified' stamp: 'AS 10/21/2022 21:45:18' overrides: 50553413!
+value
+
+	^ value! !
+!TransferDeposit methodsFor: 'as yet unclassified' stamp: 'AS 10/21/2022 21:45:24'!
+initializeFor: aValue
+
+	value := aValue ! !
+!TransferDeposit class methodsFor: 'nil' stamp: 'AS 10/21/2022 21:45:33'!
+for: aValue
+
+	^ self new initializeFor: aValue ! !
+
+!testRun: #ReportsTest #test05AccountSummaryReportHasTransferEntrance stamp: 'AS 10/21/2022 21:45:55'!
+FAILURE!
+!ReceptiveAccount methodsFor: 'report' stamp: 'AS 10/21/2022 21:46:24' prior: 50560378!
+summaryReport
+
+	| summaryReport |
+	
+	summaryReport := OrderedCollection new.
+	transactions do: [:aTransaction | (aTransaction isKindOf: Deposit) ifTrue: [summaryReport addLast: 'Depósito por ', aTransaction value asString ,'.'].
+							  (aTransaction isKindOf: Withdraw ) ifTrue: [summaryReport addLast: 'Extracción por ', aTransaction value asString ,'.'].
+					(aTransaction isKindOf: TransferWithdraw) ifTrue: [summaryReport addLast: 'Salida por transferencia de ', aTransaction value asString ,'.'].
+					(aTransaction isKindOf: TransferDeposit) ifTrue: [summaryReport addLast: 'Entrada por transferencia de ', aTransaction value asString ,'.']].
+							
+	summaryReport addLast: 'Balance = ', self balance asString.
+	^summaryReport ! !
+
+!testRun: #ReportsTest #test05AccountSummaryReportHasTransferEntrance stamp: 'AS 10/21/2022 21:46:26'!
+PASSED!
+
+!testRun: #ReportsTest #test01EmptyAccountOnlyHasZeroBalanceInSummaryReport stamp: 'AS 10/21/2022 21:46:26'!
+PASSED!
+
+!testRun: #ReportsTest #test02AccountSummaryReportHasDeposits stamp: 'AS 10/21/2022 21:46:26'!
+PASSED!
+
+!testRun: #ReportsTest #test03AccountSummaryReportHasWithdraws stamp: 'AS 10/21/2022 21:46:26'!
+PASSED!
+
+!testRun: #ReportsTest #test04AccountSummaryReportHasTransferExit stamp: 'AS 10/21/2022 21:46:26'!
+PASSED!
+
+!testRun: #ReportsTest #test05AccountSummaryReportHasTransferEntrance stamp: 'AS 10/21/2022 21:46:26'!
+PASSED!
+
+----SNAPSHOT----(21 October 2022 21:48:11) CuisUniversity-5481.image priorSource: 7301719!

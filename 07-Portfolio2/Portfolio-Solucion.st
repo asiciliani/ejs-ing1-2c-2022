@@ -344,6 +344,38 @@ test03AccountSummaryReportHasWithdraws
 	self assert: 'Extracción por 5.' equals: summaryReport second.
 	self assert: 'Balance = 15' equals: summaryReport third.! !
 
+!ReportsTest methodsFor: 'tests' stamp: 'AS 10/21/2022 21:38:21'!
+test04AccountSummaryReportHasTransferExit
+
+	| account summaryReport |
+	account := ReceptiveAccount new.
+	Deposit register: 20 on: account.
+	Withdraw register: 5 on: account.
+	Transfer for: 10 from: account to: ReceptiveAccount new.
+	
+	summaryReport := account summaryReport.
+	self assert: 'Depósito por 20.' equals: summaryReport first.
+	self assert: 'Extracción por 5.' equals: summaryReport second.
+	self assert: 'Salida por transferencia de 10.' equals: summaryReport third.
+	self assert: 'Balance = 5' equals: summaryReport fourth.! !
+
+!ReportsTest methodsFor: 'tests' stamp: 'AS 10/21/2022 21:41:31'!
+test05AccountSummaryReportHasTransferEntrance
+
+	| account summaryReport |
+	account := ReceptiveAccount new.
+	Deposit register: 20 on: account.
+	Withdraw register: 5 on: account.
+	Transfer for: 10 from: account to: ReceptiveAccount new.
+	Transfer for: 27 from: ReceptiveAccount new to: account.
+	
+	summaryReport := account summaryReport.
+	self assert: 'Depósito por 20.' equals: summaryReport first.
+	self assert: 'Extracción por 5.' equals: summaryReport second.
+	self assert: 'Salida por transferencia de 10.' equals: summaryReport third.
+	self assert: 'Entrada por transferencia de 27.' equals: summaryReport fourth.
+	self assert: 'Balance = 32' equals: summaryReport fifth.! !
+
 
 !classDefinition: #TransfersTest category: 'Portfolio-Solucion'!
 TestCase subclass: #TransfersTest
@@ -666,17 +698,17 @@ addedTo: aPortfolio
 
 
 
-!ReceptiveAccount methodsFor: 'report' stamp: 'AS 10/20/2022 20:33:54'!
+!ReceptiveAccount methodsFor: 'report' stamp: 'AS 10/21/2022 21:46:24'!
 summaryReport
 
-	| summaryReport line |
+	| summaryReport |
 	
 	summaryReport := OrderedCollection new.
-	transactions do: [:aTransaction | line := ''.
-							(aTransaction isKindOf: Deposit) ifTrue: [line := line append: 'Depósito por '].
-							(aTransaction isKindOf: Withdraw ) ifTrue: [line := line append: 'Extracción por '].
-							line := line append: aTransaction value asString ,'.'.
-							summaryReport addLast: line.].
+	transactions do: [:aTransaction | (aTransaction isKindOf: Deposit) ifTrue: [summaryReport addLast: 'Depósito por ', aTransaction value asString ,'.'].
+							  (aTransaction isKindOf: Withdraw ) ifTrue: [summaryReport addLast: 'Extracción por ', aTransaction value asString ,'.'].
+					(aTransaction isKindOf: TransferWithdraw) ifTrue: [summaryReport addLast: 'Salida por transferencia de ', aTransaction value asString ,'.'].
+					(aTransaction isKindOf: TransferDeposit) ifTrue: [summaryReport addLast: 'Entrada por transferencia de ', aTransaction value asString ,'.']].
+							
 	summaryReport addLast: 'Balance = ', self balance asString.
 	^summaryReport ! !
 
@@ -753,6 +785,74 @@ for: aValue
 	^ self new initializeFor: aValue ! !
 
 
+!classDefinition: #TransferDeposit category: 'Portfolio-Solucion'!
+AccountTransaction subclass: #TransferDeposit
+	instanceVariableNames: 'value'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!TransferDeposit methodsFor: 'as yet unclassified' stamp: 'AS 10/21/2022 21:45:08'!
+affectBalance: aBalance
+
+	^aBalance + value ! !
+
+!TransferDeposit methodsFor: 'as yet unclassified' stamp: 'AS 10/21/2022 21:45:24'!
+initializeFor: aValue
+
+	value := aValue ! !
+
+!TransferDeposit methodsFor: 'as yet unclassified' stamp: 'AS 10/21/2022 21:45:18'!
+value
+
+	^ value! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'TransferDeposit class' category: 'Portfolio-Solucion'!
+TransferDeposit class
+	instanceVariableNames: ''!
+
+!TransferDeposit class methodsFor: 'as yet unclassified' stamp: 'AS 10/21/2022 21:45:33'!
+for: aValue
+
+	^ self new initializeFor: aValue ! !
+
+
+!classDefinition: #TransferWithdraw category: 'Portfolio-Solucion'!
+AccountTransaction subclass: #TransferWithdraw
+	instanceVariableNames: 'value'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!TransferWithdraw methodsFor: 'as yet unclassified' stamp: 'AS 10/21/2022 21:36:11'!
+affectBalance: aBalance
+
+	^aBalance - value! !
+
+!TransferWithdraw methodsFor: 'as yet unclassified' stamp: 'AS 10/21/2022 21:37:35'!
+initializeFor: aValue
+
+	value := aValue ! !
+
+!TransferWithdraw methodsFor: 'as yet unclassified' stamp: 'AS 10/21/2022 21:36:22'!
+value
+
+	^ value! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'TransferWithdraw class' category: 'Portfolio-Solucion'!
+TransferWithdraw class
+	instanceVariableNames: ''!
+
+!TransferWithdraw class methodsFor: 'as yet unclassified' stamp: 'AS 10/21/2022 21:37:56'!
+for: aValue
+
+	^ self new initializeFor: aValue ! !
+
+
 !classDefinition: #Withdraw category: 'Portfolio-Solucion'!
 AccountTransaction subclass: #Withdraw
 	instanceVariableNames: 'value'
@@ -796,11 +896,11 @@ Object subclass: #Transfer
 	poolDictionaries: ''
 	category: 'Portfolio-Solucion'!
 
-!Transfer methodsFor: 'instance creation' stamp: 'AS 10/20/2022 16:01:58'!
+!Transfer methodsFor: 'instance creation' stamp: 'AS 10/21/2022 21:44:41'!
 initializeFor: anAmountToTransfer from: anOriginReceptiveAccount to: aDestinyReceptiveAccount 
 	transferAmount := anAmountToTransfer.
-	originLeg := TransferLeg withTransaction: (Withdraw register: transferAmount on: anOriginReceptiveAccount).
-	destinyLeg := TransferLeg withTransaction: (Deposit register: transferAmount on: aDestinyReceptiveAccount).! !
+	originLeg := TransferLeg withTransaction: (TransferWithdraw register: transferAmount on: anOriginReceptiveAccount).
+	destinyLeg := TransferLeg withTransaction: (TransferDeposit register: transferAmount on: aDestinyReceptiveAccount).! !
 
 
 !Transfer methodsFor: 'legs' stamp: 'AS 10/20/2022 15:45:18'!
