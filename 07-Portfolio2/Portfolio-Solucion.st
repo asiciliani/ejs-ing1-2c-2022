@@ -724,15 +724,18 @@ addedTo: aPortfolio
 
 
 
-!ReceptiveAccount methodsFor: 'report' stamp: 'AS 10/23/2022 17:25:59'!
+!ReceptiveAccount methodsFor: 'report' stamp: 'AS 10/23/2022 18:09:29'!
 summaryReport
 
-	^(transactions inject: OrderedCollection new : [:summaryReport :aTransaction | aTransaction addLineForSummaryReportTo: summaryReport]) 
-	addLast: 'Balance = ', self balance asString.! !
+	| report |
+	report := OrderedCollection new.
+	transactions do: [ :aTransaction | report addLast: aTransaction lineForSummaryReport] .
+	report addLast: 'Balance = ', self balance asString.
+	^report! !
 
-!ReceptiveAccount methodsFor: 'report' stamp: 'AS 10/23/2022 17:31:51'!
+!ReceptiveAccount methodsFor: 'report' stamp: 'AS 10/23/2022 18:10:45'!
 transferNetReport
-	^'Transfer net = ', (transactions inject: 0 into: [:transferNet :aTransaction | aTransaction affectTransferNet: transferNet ]) , '.'! !
+	^'Transfer net = ', (transactions inject: 0 into: [:transferNet :aTransaction | aTransaction affectTransferNet: transferNet ]) asString , '.'! !
 
 
 !classDefinition: #AccountTransaction category: 'Portfolio-Solucion'!
@@ -742,16 +745,11 @@ Object subclass: #AccountTransaction
 	poolDictionaries: ''
 	category: 'Portfolio-Solucion'!
 
-!AccountTransaction methodsFor: 'value' stamp: 'AS 10/21/2022 21:49:12'!
+!AccountTransaction methodsFor: 'value' stamp: 'AS 10/23/2022 17:34:54'!
 value
 
-	^ value! !
-
-
-!AccountTransaction methodsFor: 'balance' stamp: 'AS 10/23/2022 17:23:43'!
-addLineForSummaryReportTo: aSummaryReport
-
 	self subclassResponsibility ! !
+
 
 !AccountTransaction methodsFor: 'balance' stamp: 'HAW 5/25/2019 11:25:39'!
 affectBalance: aBalance
@@ -760,6 +758,11 @@ affectBalance: aBalance
 
 !AccountTransaction methodsFor: 'balance' stamp: 'AS 10/23/2022 17:30:34'!
 affectTransferNet: aTransferNet
+
+	self subclassResponsibility ! !
+
+!AccountTransaction methodsFor: 'balance' stamp: 'AS 10/23/2022 18:09:29'!
+lineForSummaryReport
 
 	self subclassResponsibility ! !
 
@@ -792,8 +795,36 @@ register: aValueOrATransfer on: account
 	^ transaction! !
 
 
+!classDefinition: #RegularTransaction category: 'Portfolio-Solucion'!
+AccountTransaction subclass: #RegularTransaction
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!RegularTransaction methodsFor: 'balance' stamp: 'AS 10/23/2022 17:35:56'!
+affectBalance: aBalance
+
+	self subclassResponsibility ! !
+
+!RegularTransaction methodsFor: 'balance' stamp: 'AS 10/23/2022 17:34:16'!
+affectTransferNet: aTransferNet
+
+	^0 ! !
+
+!RegularTransaction methodsFor: 'balance' stamp: 'AS 10/23/2022 18:11:17'!
+lineForSummaryReport
+
+	self subclassResponsibility ! !
+
+!RegularTransaction methodsFor: 'balance' stamp: 'AS 10/23/2022 17:35:10'!
+value
+
+	^value ! !
+
+
 !classDefinition: #Deposit category: 'Portfolio-Solucion'!
-AccountTransaction subclass: #Deposit
+RegularTransaction subclass: #Deposit
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -801,20 +832,35 @@ AccountTransaction subclass: #Deposit
 
 
 
-!Deposit methodsFor: 'balance' stamp: 'AS 10/23/2022 17:23:36'!
-addLineForSummaryReportTo: aSummaryReport
-
-	^aSummaryReport addLast: 'Depósito por ', self value asString ,'.'! !
-
 !Deposit methodsFor: 'balance' stamp: 'HAW 5/25/2019 11:25:02'!
 affectBalance: aBalance
 
 	^aBalance + value ! !
 
-!Deposit methodsFor: 'balance' stamp: 'AS 10/23/2022 17:30:47'!
-affectTransferNet: aTransferNet
+!Deposit methodsFor: 'balance' stamp: 'AS 10/23/2022 18:09:29'!
+lineForSummaryReport
 
-	^0 ! !
+	^'Depósito por ', self value asString ,'.'! !
+
+
+!classDefinition: #Withdraw category: 'Portfolio-Solucion'!
+RegularTransaction subclass: #Withdraw
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+
+
+!Withdraw methodsFor: 'balance' stamp: 'HAW 5/25/2019 11:25:15'!
+affectBalance: aBalance
+
+	^aBalance - value! !
+
+!Withdraw methodsFor: 'balance' stamp: 'AS 10/23/2022 18:09:29'!
+lineForSummaryReport
+
+	^'Extracción por ', self value asString ,'.'! !
 
 
 !classDefinition: #TransferTransaction category: 'Portfolio-Solucion'!
@@ -829,11 +875,6 @@ associatedTransfer
 	^transfer! !
 
 
-!TransferTransaction methodsFor: 'balance' stamp: 'AS 10/23/2022 17:23:30'!
-addLineForSummaryReportTo: aSummaryReport
-	
-	self subclassResponsibility ! !
-
 !TransferTransaction methodsFor: 'balance' stamp: 'AS 10/23/2022 15:03:52'!
 affectBalance: aBalance
 	
@@ -841,6 +882,11 @@ affectBalance: aBalance
 
 !TransferTransaction methodsFor: 'balance' stamp: 'AS 10/23/2022 17:30:39'!
 affectTransferNet: aTransferNet
+	
+	self subclassResponsibility ! !
+
+!TransferTransaction methodsFor: 'balance' stamp: 'AS 10/23/2022 18:09:29'!
+lineForSummaryReport
 	
 	self subclassResponsibility ! !
 
@@ -864,11 +910,6 @@ TransferTransaction subclass: #TransferDeposit
 	poolDictionaries: ''
 	category: 'Portfolio-Solucion'!
 
-!TransferDeposit methodsFor: 'balance' stamp: 'AS 10/23/2022 17:23:25'!
-addLineForSummaryReportTo: aSummaryReport
-
-	^aSummaryReport addLast: 'Entrada por transferencia de ', self value asString ,'.'! !
-
 !TransferDeposit methodsFor: 'balance' stamp: 'AS 10/23/2022 14:39:37'!
 affectBalance: aBalance
 	^aBalance + self value ! !
@@ -878,6 +919,11 @@ affectTransferNet: aTransferNet
 
 	^self affectBalance: aTransferNet ! !
 
+!TransferDeposit methodsFor: 'balance' stamp: 'AS 10/23/2022 18:09:29'!
+lineForSummaryReport
+
+	^'Entrada por transferencia de ', self value asString ,'.'! !
+
 
 !classDefinition: #TransferWithdraw category: 'Portfolio-Solucion'!
 TransferTransaction subclass: #TransferWithdraw
@@ -885,11 +931,6 @@ TransferTransaction subclass: #TransferWithdraw
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Portfolio-Solucion'!
-
-!TransferWithdraw methodsFor: 'balance' stamp: 'AS 10/23/2022 17:23:11'!
-addLineForSummaryReportTo: aSummaryReport
-
-	^aSummaryReport addLast: 'Salida por transferencia de ', self value asString ,'.'! !
 
 !TransferWithdraw methodsFor: 'balance' stamp: 'AS 10/23/2022 14:40:33'!
 affectBalance: aBalance
@@ -901,30 +942,10 @@ affectTransferNet: aTransferNet
 
 	^self affectBalance: aTransferNet! !
 
-
-!classDefinition: #Withdraw category: 'Portfolio-Solucion'!
-AccountTransaction subclass: #Withdraw
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'Portfolio-Solucion'!
+!TransferWithdraw methodsFor: 'balance' stamp: 'AS 10/23/2022 18:09:29'!
+lineForSummaryReport
 
-
-
-!Withdraw methodsFor: 'balance' stamp: 'AS 10/23/2022 17:23:18'!
-addLineForSummaryReportTo: aSummaryReport
-
-	^aSummaryReport addLast: 'Extracción por ', self value asString ,'.'! !
-
-!Withdraw methodsFor: 'balance' stamp: 'HAW 5/25/2019 11:25:15'!
-affectBalance: aBalance
-
-	^aBalance - value! !
-
-!Withdraw methodsFor: 'balance' stamp: 'AS 10/23/2022 17:31:06'!
-affectTransferNet: aTransferNet
-
-	^0! !
+	^'Salida por transferencia de ', self value asString ,'.'! !
 
 
 !classDefinition: #Transfer category: 'Portfolio-Solucion'!
