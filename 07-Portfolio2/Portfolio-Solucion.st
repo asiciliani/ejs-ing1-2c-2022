@@ -376,6 +376,31 @@ test05AccountSummaryReportHasTransferEntrance
 	self assert: 'Entrada por transferencia de 27.' equals: summaryReport fourth.
 	self assert: 'Balance = 32' equals: summaryReport fifth.! !
 
+!ReportsTest methodsFor: 'tests' stamp: 'AS 10/23/2022 17:00:54'!
+test06TransferNetReportConsidersTransferExit
+
+	| account |
+	
+	account := ReceptiveAccount new.
+	
+	Transfer for: 10 from: account to: ReceptiveAccount new.
+	Transfer for: 7 from: account to: ReceptiveAccount new.
+	
+	self assert: 'Transfer net = -17.' equals: account transferNetReport.! !
+
+!ReportsTest methodsFor: 'tests' stamp: 'AS 10/23/2022 17:07:08'!
+test07TransferNetReportConsidersTransferEntrance
+
+	| account |
+	
+	account := ReceptiveAccount new.
+	
+	Transfer for: 10 from: account to: ReceptiveAccount new.
+	Transfer for: 7 from: account to: ReceptiveAccount new.
+	Transfer for: 30 from: ReceptiveAccount new to: account.
+	
+	self assert: 'Transfer net = 13.' equals: account transferNetReport.! !
+
 
 !classDefinition: #TransfersTest category: 'Portfolio-Solucion'!
 TestCase subclass: #TransfersTest
@@ -713,6 +738,14 @@ summaryReport
 	summaryReport addLast: 'Balance = ', self balance asString.
 	^summaryReport ! !
 
+!ReceptiveAccount methodsFor: 'report' stamp: 'AS 10/23/2022 17:12:41'!
+transferNetReport
+	^'Transfer net = ',
+	(transactions inject: 0 into: [:transferNet :aTransaction | 
+					(aTransaction isKindOf: TransferWithdraw) ifTrue: [transferNet - aTransaction value] 
+				ifFalse: [(aTransaction isKindOf: TransferDeposit ) ifTrue: [transferNet + aTransaction value] 
+				ifFalse: [0]]]) asString , '.'! !
+
 
 !classDefinition: #AccountTransaction category: 'Portfolio-Solucion'!
 Object subclass: #AccountTransaction
@@ -783,20 +816,27 @@ AccountTransaction subclass: #TransferTransaction
 	poolDictionaries: ''
 	category: 'Portfolio-Solucion'!
 
-!TransferTransaction methodsFor: 'as yet unclassified' stamp: 'AS 10/23/2022 14:59:23'!
+!TransferTransaction methodsFor: 'transfer' stamp: 'AS 10/23/2022 14:59:31'!
+associatedTransfer
+	^transfer! !
+
+
+!TransferTransaction methodsFor: 'balance' stamp: 'AS 10/23/2022 15:03:52'!
+affectBalance: aBalance
+	
+	self subclassResponsibility ! !
+
+
+!TransferTransaction methodsFor: 'initialization' stamp: 'AS 10/23/2022 14:59:23'!
 initializeFor: aTransfer
 
 	transfer := aTransfer ! !
 
-!TransferTransaction methodsFor: 'as yet unclassified' stamp: 'AS 10/23/2022 14:59:28'!
+
+!TransferTransaction methodsFor: 'value' stamp: 'AS 10/23/2022 14:59:28'!
 value
 
 	^transfer value! !
-
-
-!TransferTransaction methodsFor: 'transfer' stamp: 'AS 10/23/2022 14:59:31'!
-associatedTransfer
-	^transfer! !
 
 
 !classDefinition: #TransferDeposit category: 'Portfolio-Solucion'!
@@ -806,10 +846,9 @@ TransferTransaction subclass: #TransferDeposit
 	poolDictionaries: ''
 	category: 'Portfolio-Solucion'!
 
-!TransferDeposit methodsFor: 'as yet unclassified' stamp: 'AS 10/23/2022 14:39:37'!
+!TransferDeposit methodsFor: 'balance' stamp: 'AS 10/23/2022 14:39:37'!
 affectBalance: aBalance
 	^aBalance + self value ! !
-
 
 
 !classDefinition: #TransferWithdraw category: 'Portfolio-Solucion'!
@@ -819,11 +858,10 @@ TransferTransaction subclass: #TransferWithdraw
 	poolDictionaries: ''
 	category: 'Portfolio-Solucion'!
 
-!TransferWithdraw methodsFor: 'as yet unclassified' stamp: 'AS 10/23/2022 14:40:33'!
+!TransferWithdraw methodsFor: 'balance' stamp: 'AS 10/23/2022 14:40:33'!
 affectBalance: aBalance
 	
 	^aBalance - self value! !
-
 
 
 !classDefinition: #Withdraw category: 'Portfolio-Solucion'!
