@@ -11464,3 +11464,244 @@ PASSED!
 PASSED!
 
 ----SNAPSHOT----(23 October 2022 17:17:04) CuisUniversity-5481.image priorSource: 7432574!
+!Deposit methodsFor: 'balance' stamp: 'AS 10/23/2022 17:20:35'!
+addLineForSummaryReportTo: summaryReport
+
+	^summaryReport addLast: 'Depósito por ', self value asString ,'.'! !
+!Withdraw methodsFor: 'balance' stamp: 'AS 10/23/2022 17:21:06'!
+addLineForSummaryReportTo: summaryReport
+
+	^summaryReport addLast: 'Extracción por ', self value asString ,'.'! !
+!AccountTransaction methodsFor: 'balance' stamp: 'AS 10/23/2022 17:21:17'!
+addLineForSummaryReportTo: summaryReport
+
+	self subclassResponsibility ! !
+!TransferTransaction methodsFor: 'balance' stamp: 'AS 10/23/2022 17:21:30' overrides: 50565850!
+addLineForSummaryReportTo: summaryReport
+	
+	self subclassResponsibility ! !
+!TransferDeposit methodsFor: 'balance' stamp: 'AS 10/23/2022 17:22:42' overrides: 50565856!
+addLineForSummaryReportTo: summaryReport
+
+	^summaryReport addLast: 'Entrada por transferencia de ', self value asString ,'.'! !
+!TransferWithdraw methodsFor: 'balance' stamp: 'AS 10/23/2022 17:22:55' overrides: 50565856!
+addLineForSummaryReportTo: summaryReport
+
+	^summaryReport addLast: 'Salida por transferencia de ', self value asString ,'.'! !
+!TransferWithdraw methodsFor: 'balance' stamp: 'AS 10/23/2022 17:23:11' prior: 50565869 overrides: 50565856!
+addLineForSummaryReportTo: aSummaryReport
+
+	^aSummaryReport addLast: 'Salida por transferencia de ', self value asString ,'.'! !
+!Withdraw methodsFor: 'balance' stamp: 'AS 10/23/2022 17:23:18' prior: 50565844 overrides: 50565850!
+addLineForSummaryReportTo: aSummaryReport
+
+	^aSummaryReport addLast: 'Extracción por ', self value asString ,'.'! !
+!TransferDeposit methodsFor: 'balance' stamp: 'AS 10/23/2022 17:23:25' prior: 50565862 overrides: 50565856!
+addLineForSummaryReportTo: aSummaryReport
+
+	^aSummaryReport addLast: 'Entrada por transferencia de ', self value asString ,'.'! !
+!TransferTransaction methodsFor: 'balance' stamp: 'AS 10/23/2022 17:23:30' prior: 50565856 overrides: 50565850!
+addLineForSummaryReportTo: aSummaryReport
+	
+	self subclassResponsibility ! !
+!Deposit methodsFor: 'balance' stamp: 'AS 10/23/2022 17:23:36' prior: 50565838 overrides: 50565850!
+addLineForSummaryReportTo: aSummaryReport
+
+	^aSummaryReport addLast: 'Depósito por ', self value asString ,'.'! !
+!AccountTransaction methodsFor: 'balance' stamp: 'AS 10/23/2022 17:23:43' prior: 50565850!
+addLineForSummaryReportTo: aSummaryReport
+
+	self subclassResponsibility ! !
+
+!testRun: #PortfolioTest #test01BalanceOfPortfolioWithoutAccountsIsZero stamp: 'AS 10/23/2022 17:23:46'!
+PASSED!
+
+!testRun: #PortfolioTest #test02BalanceOfPortfolioWithAccountsIsSumOfAccountsBalance stamp: 'AS 10/23/2022 17:23:46'!
+PASSED!
+
+!testRun: #PortfolioTest #test03BalanceOfPortfolioIsCalculatedRecursivelyOnPortfolios stamp: 'AS 10/23/2022 17:23:46'!
+PASSED!
+
+!testRun: #PortfolioTest #test04PortfolioWithoutAccountsHasNoRegisteredTransaction stamp: 'AS 10/23/2022 17:23:46'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasRegisteredItsAccountsTransactions stamp: 'AS 10/23/2022 17:23:46'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioLooksForRegisteredTransactionsRecursively stamp: 'AS 10/23/2022 17:23:46'!
+PASSED!
+
+!testRun: #PortfolioTest #test07PortfolioHasNoTransactionWhenHasNoAccounts stamp: 'AS 10/23/2022 17:23:46'!
+PASSED!
+
+!testRun: #PortfolioTest #test08PortfolioTransactionsIncludesAllItsAccountsTransactions stamp: 'AS 10/23/2022 17:23:46'!
+PASSED!
+
+!testRun: #PortfolioTest #test09PortfolioTransactionsAreCalculatedRecursively stamp: 'AS 10/23/2022 17:23:46'!
+PASSED!
+
+!testRun: #PortfolioTest #test10PortfolioCanNotIncludeTheSameAccountMoreThanOnce stamp: 'AS 10/23/2022 17:23:46'!
+PASSED!
+
+!testRun: #PortfolioTest #test11PortfolioCanNotIncludeAccountOfItsPortfolios stamp: 'AS 10/23/2022 17:23:46'!
+PASSED!
+
+!testRun: #PortfolioTest #test12PortfolioCanNotIncludeItself stamp: 'AS 10/23/2022 17:23:46'!
+PASSED!
+
+!testRun: #PortfolioTest #test13ComposedPortfolioCanNotHaveParentPortfolioAccount stamp: 'AS 10/23/2022 17:23:46'!
+PASSED!
+
+!testRun: #PortfolioTest #test14ComposedPortfolioCanNotHaveAccountOfAnyRootParentRecursively stamp: 'AS 10/23/2022 17:23:46'!
+PASSED!
+
+!testRun: #PortfolioTest #test15PortfolioCanNotIncludeAnyOfTheComposedAccountOfPortfolioToAdd stamp: 'AS 10/23/2022 17:23:46'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'AS 10/23/2022 17:23:46'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'AS 10/23/2022 17:23:46'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'AS 10/23/2022 17:23:46'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'AS 10/23/2022 17:23:46'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'AS 10/23/2022 17:23:46'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'AS 10/23/2022 17:23:46'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'AS 10/23/2022 17:23:46'!
+PASSED!
+
+!testRun: #ReportsTest #test01EmptyAccountOnlyHasZeroBalanceInSummaryReport stamp: 'AS 10/23/2022 17:23:46'!
+PASSED!
+
+!testRun: #ReportsTest #test02AccountSummaryReportHasDeposits stamp: 'AS 10/23/2022 17:23:46'!
+PASSED!
+
+!testRun: #ReportsTest #test03AccountSummaryReportHasWithdraws stamp: 'AS 10/23/2022 17:23:46'!
+PASSED!
+
+!testRun: #ReportsTest #test04AccountSummaryReportHasTransferExit stamp: 'AS 10/23/2022 17:23:46'!
+PASSED!
+
+!testRun: #ReportsTest #test05AccountSummaryReportHasTransferEntrance stamp: 'AS 10/23/2022 17:23:46'!
+PASSED!
+
+!testRun: #ReportsTest #test06TransferNetReportConsidersTransferExit stamp: 'AS 10/23/2022 17:23:46'!
+PASSED!
+
+!testRun: #ReportsTest #test07TransferNetReportConsidersTransferEntrance stamp: 'AS 10/23/2022 17:23:46'!
+PASSED!
+
+!testRun: #TransfersTest #test01BalanceIsAffectedAfterTransfer stamp: 'AS 10/23/2022 17:23:46'!
+PASSED!
+
+!testRun: #TransfersTest #test02CanNotTransferFromAndToSameAccount stamp: 'AS 10/23/2022 17:23:46'!
+PASSED!
+
+!testRun: #TransfersTest #test03CanNavigateToAndFromBothTransferLegs stamp: 'AS 10/23/2022 17:23:46'!
+PASSED!
+
+!testRun: #TransfersTest #test04OriginAndDestinyHaveRegisteredWithdrawAndDepositRespectively stamp: 'AS 10/23/2022 17:23:46'!
+PASSED!
+
+!testRun: #TransfersTest #test05TransferAmountShouldNotBeZero stamp: 'AS 10/23/2022 17:23:46'!
+PASSED!
+
+!testRun: #TransfersTest #test06TransferAmountShouldNotBeNegative stamp: 'AS 10/23/2022 17:23:46'!
+PASSED!
+!ReceptiveAccount methodsFor: 'report' stamp: 'AS 10/23/2022 17:25:59' prior: 50561057!
+summaryReport
+
+	^(transactions inject: OrderedCollection new : [:summaryReport :aTransaction | aTransaction addLineForSummaryReportTo: summaryReport]) 
+	addLast: 'Balance = ', self balance asString.! !
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'AS 10/23/2022 17:26:00'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'AS 10/23/2022 17:26:00'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'AS 10/23/2022 17:26:00'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'AS 10/23/2022 17:26:00'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'AS 10/23/2022 17:26:00'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'AS 10/23/2022 17:26:00'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'AS 10/23/2022 17:26:00'!
+PASSED!
+
+----SNAPSHOT----(23 October 2022 17:27:33) CuisUniversity-5481.image priorSource: 7493893!
+!TransferDeposit methodsFor: 'balance' stamp: 'AS 10/23/2022 17:29:20'!
+affectTransferNet: aTransferNet
+	^aTransferNet + self value ! !
+!TransferWithdraw methodsFor: 'balance' stamp: 'AS 10/23/2022 17:29:32'!
+affectTransferNet: aTransferNet
+	^aTransferNet - self value! !
+!TransferWithdraw methodsFor: 'balance' stamp: 'AS 10/23/2022 17:29:40' prior: 50566091!
+affectTransferNet: aTransferNet
+
+	^aTransferNet - self value! !
+!TransferWithdraw methodsFor: 'balance' stamp: 'AS 10/23/2022 17:29:59' prior: 50566096!
+affectTransferNet: aTransferNet
+
+	^self affectBalance: aTransferNet! !
+!TransferDeposit methodsFor: 'balance' stamp: 'AS 10/23/2022 17:30:13' prior: 50566086!
+affectTransferNet: aTransferNet
+
+	^self affectBalance: aTransferNet ! !
+!AccountTransaction methodsFor: 'balance' stamp: 'AS 10/23/2022 17:30:34'!
+affectTransferNet: aTransferNet
+
+	self subclassResponsibility ! !
+!TransferTransaction methodsFor: 'balance' stamp: 'AS 10/23/2022 17:30:39' overrides: 50566111!
+affectTransferNet: aTransferNet
+	
+	self subclassResponsibility ! !
+!Deposit methodsFor: 'balance' stamp: 'AS 10/23/2022 17:30:47' overrides: 50566111!
+affectTransferNet: aTransferNet
+
+	^0 ! !
+!Withdraw methodsFor: 'balance' stamp: 'AS 10/23/2022 17:31:06' overrides: 50566111!
+affectTransferNet: aTransferNet
+
+	^0! !
+!ReceptiveAccount methodsFor: 'report' stamp: 'AS 10/23/2022 17:31:51' prior: 50565556!
+transferNetReport
+	^'Transfer net = ', (transactions inject: 0 into: [:transferNet :aTransaction | aTransaction affectTransferNet: transferNet ]) , '.'! !
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'AS 10/23/2022 17:31:52'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'AS 10/23/2022 17:31:52'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'AS 10/23/2022 17:31:52'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'AS 10/23/2022 17:31:52'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'AS 10/23/2022 17:31:52'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'AS 10/23/2022 17:31:52'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'AS 10/23/2022 17:31:52'!
+PASSED!
+
+----SNAPSHOT----(23 October 2022 17:32:09) CuisUniversity-5481.image priorSource: 7501849!
