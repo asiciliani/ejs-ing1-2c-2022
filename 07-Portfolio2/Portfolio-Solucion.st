@@ -776,9 +776,32 @@ affectBalance: aBalance
 	^aBalance + value ! !
 
 
-!classDefinition: #TransferDeposit category: 'Portfolio-Solucion'!
-AccountTransaction subclass: #TransferDeposit
+!classDefinition: #TransferTransaction category: 'Portfolio-Solucion'!
+AccountTransaction subclass: #TransferTransaction
 	instanceVariableNames: 'transfer'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!TransferTransaction methodsFor: 'as yet unclassified' stamp: 'AS 10/23/2022 14:59:23'!
+initializeFor: aTransfer
+
+	transfer := aTransfer ! !
+
+!TransferTransaction methodsFor: 'as yet unclassified' stamp: 'AS 10/23/2022 14:59:28'!
+value
+
+	^transfer value! !
+
+
+!TransferTransaction methodsFor: 'transfer' stamp: 'AS 10/23/2022 14:59:31'!
+associatedTransfer
+	^transfer! !
+
+
+!classDefinition: #TransferDeposit category: 'Portfolio-Solucion'!
+TransferTransaction subclass: #TransferDeposit
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Portfolio-Solucion'!
@@ -787,25 +810,11 @@ AccountTransaction subclass: #TransferDeposit
 affectBalance: aBalance
 	^aBalance + self value ! !
 
-!TransferDeposit methodsFor: 'as yet unclassified' stamp: 'AS 10/23/2022 14:33:16'!
-initializeFor: aTransfer
-
-	transfer := aTransfer ! !
-
-!TransferDeposit methodsFor: 'as yet unclassified' stamp: 'AS 10/23/2022 14:36:33'!
-value
-
-	^transfer value! !
-
-
-!TransferDeposit methodsFor: 'transfer' stamp: 'AS 10/21/2022 21:58:56'!
-associatedTransfer
-	^transfer! !
 
 
 !classDefinition: #TransferWithdraw category: 'Portfolio-Solucion'!
-AccountTransaction subclass: #TransferWithdraw
-	instanceVariableNames: 'transfer'
+TransferTransaction subclass: #TransferWithdraw
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Portfolio-Solucion'!
@@ -815,20 +824,6 @@ affectBalance: aBalance
 	
 	^aBalance - self value! !
 
-!TransferWithdraw methodsFor: 'as yet unclassified' stamp: 'AS 10/23/2022 14:33:24'!
-initializeFor: aTransfer
-
-	transfer := aTransfer ! !
-
-!TransferWithdraw methodsFor: 'as yet unclassified' stamp: 'AS 10/23/2022 14:36:38'!
-value
-
-	^transfer value! !
-
-
-!TransferWithdraw methodsFor: 'transfer' stamp: 'AS 10/23/2022 14:40:53'!
-associatedTransfer
-	^transfer ! !
 
 
 !classDefinition: #Withdraw category: 'Portfolio-Solucion'!
@@ -916,36 +911,3 @@ assertIsStrictlyPositive: anAmountToTransfer
 
 	self assertIsNotZero: anAmountToTransfer.
 	self assertIsNotNegative: anAmountToTransfer! !
-
-
-!classDefinition: #TransferLeg category: 'Portfolio-Solucion'!
-Object subclass: #TransferLeg
-	instanceVariableNames: 'transfer transaction'
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'Portfolio-Solucion'!
-
-!TransferLeg methodsFor: 'instance creation' stamp: 'AS 10/23/2022 14:16:30'!
-initializeWithTransaction: anAccountTransaction forTransfer: anAssociatedTransfer 
-	transaction := anAccountTransaction.
-	transfer := anAssociatedTransfer.! !
-
-
-!TransferLeg methodsFor: 'transfer' stamp: 'AS 10/23/2022 14:10:54'!
-associatedTransfer
-	^transfer! !
-
-
-!TransferLeg methodsFor: 'transaction' stamp: 'AS 10/20/2022 20:04:48'!
-associatedTransaction
-	^transaction ! !
-
-"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
-
-!classDefinition: 'TransferLeg class' category: 'Portfolio-Solucion'!
-TransferLeg class
-	instanceVariableNames: ''!
-
-!TransferLeg class methodsFor: 'instance creation' stamp: 'AS 10/23/2022 14:16:12'!
-forTransfer: anAssociatedTransfer withTransaction: anAccountTransaction
-	^self new initializeWithTransaction: anAccountTransaction forTransfer: anAssociatedTransfer. ! !
