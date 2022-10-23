@@ -407,7 +407,7 @@ test02CanNotTransferFromAndToSameAccount
 		 withExceptionDo: [:anError | self assert: 0 equals: account1 balance.
 							    self assert: Transfer canNotTransferFromAndToSameAccountErrorMessage equals: anError messageText].! !
 
-!TransfersTest methodsFor: 'tests' stamp: 'AS 10/20/2022 19:38:06'!
+!TransfersTest methodsFor: 'tests' stamp: 'AS 10/23/2022 14:11:30'!
 test03CanNavigateToAndFromBothTransferLegs
 
 	| account1 account2 transfer |
@@ -416,9 +416,10 @@ test03CanNavigateToAndFromBothTransferLegs
 	
 	transfer := Transfer for: 20 from: account1 to: account2.
 	
-	self assert: (transfer destinyLeg) associatedTransfer equals: (transfer originLeg) associatedTransfer.! !
+	self assert: transfer equals: (transfer originLeg) associatedTransfer.
+	self assert: transfer equals: (transfer destinyLeg) associatedTransfer! !
 
-!TransfersTest methodsFor: 'tests' stamp: 'AS 10/20/2022 20:04:23'!
+!TransfersTest methodsFor: 'tests' stamp: 'AS 10/23/2022 14:41:29'!
 test04OriginAndDestinyHaveRegisteredWithdrawAndDepositRespectively
 
 	| account1 account2 transfer |
@@ -427,8 +428,8 @@ test04OriginAndDestinyHaveRegisteredWithdrawAndDepositRespectively
 	
 	transfer := Transfer for: 20 from: account1 to: account2.
 	
-	self assert: (account1 hasRegistered: transfer originLeg associatedTransaction).
-	self assert: (account2 hasRegistered: transfer destinyLeg associatedTransaction).! !
+	self assert: (account1 hasRegistered: transfer originLeg).
+	self assert: (account2 hasRegistered: transfer destinyLeg).! !
 
 !TransfersTest methodsFor: 'tests' stamp: 'AS 10/20/2022 21:54:49'!
 test05TransferAmountShouldNotBeZero
@@ -715,15 +716,15 @@ summaryReport
 
 !classDefinition: #AccountTransaction category: 'Portfolio-Solucion'!
 Object subclass: #AccountTransaction
-	instanceVariableNames: ''
+	instanceVariableNames: 'value'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Portfolio-Solucion'!
 
-!AccountTransaction methodsFor: 'value' stamp: 'HernanWilkinson 9/12/2011 12:25'!
-value 
+!AccountTransaction methodsFor: 'value' stamp: 'AS 10/21/2022 21:49:12'!
+value
 
-	self subclassResponsibility ! !
+	^ value! !
 
 
 !AccountTransaction methodsFor: 'balance' stamp: 'HAW 5/25/2019 11:25:39'!
@@ -732,18 +733,29 @@ affectBalance: aBalance
 	self subclassResponsibility ! !
 
 
+
+!AccountTransaction methodsFor: 'initialization' stamp: 'AS 10/21/2022 21:49:18'!
+initializeFor: aValue
+
+	value := aValue ! !
+
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
 !classDefinition: 'AccountTransaction class' category: 'Portfolio-Solucion'!
 AccountTransaction class
 	instanceVariableNames: ''!
 
-!AccountTransaction class methodsFor: 'instance creation' stamp: 'NR 10/21/2019 18:54:27'!
-register: aValue on: account
+!AccountTransaction class methodsFor: 'instance creation' stamp: 'AS 10/23/2022 14:28:17'!
+for: aValueOrATransfer
+
+	^ self new initializeFor: aValueOrATransfer ! !
+
+!AccountTransaction class methodsFor: 'instance creation' stamp: 'AS 10/23/2022 14:28:03'!
+register: aValueOrATransfer on: account
 
 	| transaction |
 	
-	transaction := self for: aValue.
+	transaction := self for: aValueOrATransfer.
 	account register: transaction.
 		
 	^ transaction! !
@@ -751,21 +763,11 @@ register: aValue on: account
 
 !classDefinition: #Deposit category: 'Portfolio-Solucion'!
 AccountTransaction subclass: #Deposit
-	instanceVariableNames: 'value'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Portfolio-Solucion'!
 
-!Deposit methodsFor: 'initialization' stamp: 'HernanWilkinson 7/13/2011 18:45'!
-initializeFor: aValue
-
-	value := aValue ! !
-
-
-!Deposit methodsFor: 'value' stamp: 'HernanWilkinson 7/13/2011 18:38'!
-value
-
-	^ value! !
 
 
 !Deposit methodsFor: 'balance' stamp: 'HAW 5/25/2019 11:25:02'!
@@ -773,120 +775,75 @@ affectBalance: aBalance
 
 	^aBalance + value ! !
 
-"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
-
-!classDefinition: 'Deposit class' category: 'Portfolio-Solucion'!
-Deposit class
-	instanceVariableNames: ''!
-
-!Deposit class methodsFor: 'instance creation' stamp: 'HernanWilkinson 7/13/2011 18:38'!
-for: aValue
-
-	^ self new initializeFor: aValue ! !
-
 
 !classDefinition: #TransferDeposit category: 'Portfolio-Solucion'!
 AccountTransaction subclass: #TransferDeposit
-	instanceVariableNames: 'value'
+	instanceVariableNames: 'transfer'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Portfolio-Solucion'!
 
-!TransferDeposit methodsFor: 'as yet unclassified' stamp: 'AS 10/21/2022 21:45:08'!
+!TransferDeposit methodsFor: 'as yet unclassified' stamp: 'AS 10/23/2022 14:39:37'!
 affectBalance: aBalance
+	^aBalance + self value ! !
 
-	^aBalance + value ! !
+!TransferDeposit methodsFor: 'as yet unclassified' stamp: 'AS 10/23/2022 14:33:16'!
+initializeFor: aTransfer
 
-!TransferDeposit methodsFor: 'as yet unclassified' stamp: 'AS 10/21/2022 21:45:24'!
-initializeFor: aValue
+	transfer := aTransfer ! !
 
-	value := aValue ! !
-
-!TransferDeposit methodsFor: 'as yet unclassified' stamp: 'AS 10/21/2022 21:45:18'!
+!TransferDeposit methodsFor: 'as yet unclassified' stamp: 'AS 10/23/2022 14:36:33'!
 value
 
-	^ value! !
+	^transfer value! !
 
-"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'TransferDeposit class' category: 'Portfolio-Solucion'!
-TransferDeposit class
-	instanceVariableNames: ''!
-
-!TransferDeposit class methodsFor: 'as yet unclassified' stamp: 'AS 10/21/2022 21:45:33'!
-for: aValue
-
-	^ self new initializeFor: aValue ! !
+!TransferDeposit methodsFor: 'transfer' stamp: 'AS 10/21/2022 21:58:56'!
+associatedTransfer
+	^transfer! !
 
 
 !classDefinition: #TransferWithdraw category: 'Portfolio-Solucion'!
 AccountTransaction subclass: #TransferWithdraw
-	instanceVariableNames: 'value'
+	instanceVariableNames: 'transfer'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Portfolio-Solucion'!
 
-!TransferWithdraw methodsFor: 'as yet unclassified' stamp: 'AS 10/21/2022 21:36:11'!
+!TransferWithdraw methodsFor: 'as yet unclassified' stamp: 'AS 10/23/2022 14:40:33'!
 affectBalance: aBalance
+	
+	^aBalance - self value! !
 
-	^aBalance - value! !
+!TransferWithdraw methodsFor: 'as yet unclassified' stamp: 'AS 10/23/2022 14:33:24'!
+initializeFor: aTransfer
 
-!TransferWithdraw methodsFor: 'as yet unclassified' stamp: 'AS 10/21/2022 21:37:35'!
-initializeFor: aValue
+	transfer := aTransfer ! !
 
-	value := aValue ! !
-
-!TransferWithdraw methodsFor: 'as yet unclassified' stamp: 'AS 10/21/2022 21:36:22'!
+!TransferWithdraw methodsFor: 'as yet unclassified' stamp: 'AS 10/23/2022 14:36:38'!
 value
 
-	^ value! !
+	^transfer value! !
 
-"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'TransferWithdraw class' category: 'Portfolio-Solucion'!
-TransferWithdraw class
-	instanceVariableNames: ''!
-
-!TransferWithdraw class methodsFor: 'as yet unclassified' stamp: 'AS 10/21/2022 21:37:56'!
-for: aValue
-
-	^ self new initializeFor: aValue ! !
+!TransferWithdraw methodsFor: 'transfer' stamp: 'AS 10/23/2022 14:40:53'!
+associatedTransfer
+	^transfer ! !
 
 
 !classDefinition: #Withdraw category: 'Portfolio-Solucion'!
 AccountTransaction subclass: #Withdraw
-	instanceVariableNames: 'value'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Portfolio-Solucion'!
 
-!Withdraw methodsFor: 'initialization' stamp: 'HernanWilkinson 7/13/2011 18:46'!
-initializeFor: aValue
-
-	value := aValue ! !
-
-
-!Withdraw methodsFor: 'value' stamp: 'HernanWilkinson 7/13/2011 18:33'!
-value
-
-	^ value! !
 
 
 !Withdraw methodsFor: 'balance' stamp: 'HAW 5/25/2019 11:25:15'!
 affectBalance: aBalance
 
 	^aBalance - value! !
-
-"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
-
-!classDefinition: 'Withdraw class' category: 'Portfolio-Solucion'!
-Withdraw class
-	instanceVariableNames: ''!
-
-!Withdraw class methodsFor: 'instance creation' stamp: 'HernanWilkinson 7/13/2011 18:33'!
-for: aValue
-
-	^ self new initializeFor: aValue ! !
 
 
 !classDefinition: #Transfer category: 'Portfolio-Solucion'!
@@ -896,11 +853,16 @@ Object subclass: #Transfer
 	poolDictionaries: ''
 	category: 'Portfolio-Solucion'!
 
-!Transfer methodsFor: 'instance creation' stamp: 'AS 10/21/2022 21:44:41'!
+!Transfer methodsFor: 'instance creation' stamp: 'AS 10/23/2022 14:24:16'!
 initializeFor: anAmountToTransfer from: anOriginReceptiveAccount to: aDestinyReceptiveAccount 
 	transferAmount := anAmountToTransfer.
-	originLeg := TransferLeg withTransaction: (TransferWithdraw register: transferAmount on: anOriginReceptiveAccount).
-	destinyLeg := TransferLeg withTransaction: (TransferDeposit register: transferAmount on: aDestinyReceptiveAccount).! !
+	originLeg := TransferWithdraw register: self on: anOriginReceptiveAccount.
+	destinyLeg := TransferDeposit register: self on: aDestinyReceptiveAccount.! !
+
+!Transfer methodsFor: 'instance creation' stamp: 'AS 10/23/2022 14:40:22'!
+value
+
+	^transferAmount ! !
 
 
 !Transfer methodsFor: 'legs' stamp: 'AS 10/20/2022 15:45:18'!
@@ -963,12 +925,13 @@ Object subclass: #TransferLeg
 	poolDictionaries: ''
 	category: 'Portfolio-Solucion'!
 
-!TransferLeg methodsFor: 'instance creation' stamp: 'AS 10/20/2022 16:03:43'!
-initializeWithTransaction: anAccountTransaction
-	transaction := anAccountTransaction.! !
+!TransferLeg methodsFor: 'instance creation' stamp: 'AS 10/23/2022 14:16:30'!
+initializeWithTransaction: anAccountTransaction forTransfer: anAssociatedTransfer 
+	transaction := anAccountTransaction.
+	transfer := anAssociatedTransfer.! !
 
 
-!TransferLeg methodsFor: 'transfer' stamp: 'AS 10/20/2022 16:05:58'!
+!TransferLeg methodsFor: 'transfer' stamp: 'AS 10/23/2022 14:10:54'!
 associatedTransfer
 	^transfer! !
 
@@ -983,6 +946,6 @@ associatedTransaction
 TransferLeg class
 	instanceVariableNames: ''!
 
-!TransferLeg class methodsFor: 'instance creation' stamp: 'AS 10/20/2022 16:02:42'!
-withTransaction: anAccountTransaction
-	^self new initializeWithTransaction: anAccountTransaction. ! !
+!TransferLeg class methodsFor: 'instance creation' stamp: 'AS 10/23/2022 14:16:12'!
+forTransfer: anAssociatedTransfer withTransaction: anAccountTransaction
+	^self new initializeWithTransaction: anAccountTransaction forTransfer: anAssociatedTransfer. ! !
