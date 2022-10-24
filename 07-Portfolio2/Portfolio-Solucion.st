@@ -312,26 +312,26 @@ TestCase subclass: #ReportsTest
 	poolDictionaries: ''
 	category: 'Portfolio-Solucion'!
 
-!ReportsTest methodsFor: 'tests' stamp: 'AS 10/24/2022 15:42:53'!
+!ReportsTest methodsFor: 'tests' stamp: 'AS 10/24/2022 16:26:11'!
 test01EmptyAccountOnlyHasZeroBalanceInSummaryReport
 
 	| account |
 	account := ReceptiveAccount new.
 	
-	self assert: 'Balance = 0' equals: (SummaryReport with: account ) make first.! !
+	self assert: 'Balance = 0' equals: (SummaryReport for: account ) make first.! !
 
-!ReportsTest methodsFor: 'tests' stamp: 'AS 10/24/2022 15:42:53'!
+!ReportsTest methodsFor: 'tests' stamp: 'AS 10/24/2022 16:26:11'!
 test02AccountSummaryReportHasDeposits
 
 	| account summaryReport |
 	account := ReceptiveAccount new.
 	Deposit register: 20 on: account.
 	
-	summaryReport := (SummaryReport with: account ) make.
+	summaryReport := (SummaryReport for: account ) make.
 	self assert: 'Depósito por 20.' equals: summaryReport first.
 	self assert: 'Balance = 20' equals: summaryReport second.! !
 
-!ReportsTest methodsFor: 'tests' stamp: 'AS 10/24/2022 15:42:53'!
+!ReportsTest methodsFor: 'tests' stamp: 'AS 10/24/2022 16:26:11'!
 test03AccountSummaryReportHasWithdraws
 
 	| account summaryReport |
@@ -339,12 +339,12 @@ test03AccountSummaryReportHasWithdraws
 	Deposit register: 20 on: account.
 	Withdraw register: 5 on: account.
 	
-	summaryReport := (SummaryReport with: account ) make.
+	summaryReport := (SummaryReport for: account ) make.
 	self assert: 'Depósito por 20.' equals: summaryReport first.
 	self assert: 'Extracción por 5.' equals: summaryReport second.
 	self assert: 'Balance = 15' equals: summaryReport third.! !
 
-!ReportsTest methodsFor: 'tests' stamp: 'AS 10/24/2022 15:42:53'!
+!ReportsTest methodsFor: 'tests' stamp: 'AS 10/24/2022 16:26:11'!
 test04AccountSummaryReportHasTransferExit
 
 	| account summaryReport |
@@ -353,13 +353,13 @@ test04AccountSummaryReportHasTransferExit
 	Withdraw register: 5 on: account.
 	Transfer for: 10 from: account to: ReceptiveAccount new.
 	
-	summaryReport := (SummaryReport with: account ) make.
+	summaryReport := (SummaryReport for: account ) make.
 	self assert: 'Depósito por 20.' equals: summaryReport first.
 	self assert: 'Extracción por 5.' equals: summaryReport second.
 	self assert: 'Salida por transferencia de 10.' equals: summaryReport third.
 	self assert: 'Balance = 5' equals: summaryReport fourth.! !
 
-!ReportsTest methodsFor: 'tests' stamp: 'AS 10/24/2022 15:42:53'!
+!ReportsTest methodsFor: 'tests' stamp: 'AS 10/24/2022 16:26:11'!
 test05AccountSummaryReportHasTransferEntrance
 
 	| account summaryReport |
@@ -369,7 +369,7 @@ test05AccountSummaryReportHasTransferEntrance
 	Transfer for: 10 from: account to: ReceptiveAccount new.
 	Transfer for: 27 from: ReceptiveAccount new to: account.
 	
-	summaryReport := (SummaryReport with: account ) make.
+	summaryReport := (SummaryReport for: account ) make.
 	self assert: 'Depósito por 20.' equals: summaryReport first.
 	self assert: 'Extracción por 5.' equals: summaryReport second.
 	self assert: 'Salida por transferencia de 10.' equals: summaryReport third.
@@ -404,6 +404,23 @@ test07TransferNetReportConsidersTransferEntrance
 	Transfer for: 30 from: ReceptiveAccount new to: account.
 	
 	self assert: 'Transfer net = 13.' equals: (TransferNetReport for: account) make.! !
+
+!ReportsTest methodsFor: 'tests' stamp: 'AS 10/24/2022 16:29:14'!
+test08CanAlsoAskPortfolioForTransferNetReport
+
+	| account portfolio |
+	
+	account := ReceptiveAccount new.
+	portfolio := Portfolio new.
+	portfolio add: account.
+	
+	Deposit register: 20 on: account.
+	Withdraw register: 5 on: account.
+	Transfer for: 10 from: account to: ReceptiveAccount new.
+	Transfer for: 7 from: account to: ReceptiveAccount new.
+	Transfer for: 30 from: ReceptiveAccount new to: account.
+	
+	self assert: 'Transfer net = 13.' equals: (TransferNetReport for: portfolio) make.! !
 
 
 !classDefinition: #TransfersTest category: 'Portfolio-Solucion'!
@@ -643,6 +660,11 @@ signalCanNotAddAccount
 	
 	self error: self class canNotAddAccountErrorMessage! !
 
+
+!Portfolio methodsFor: 'report' stamp: 'AS 10/24/2022 16:31:07'!
+makeReport: aReport 
+	accounts do: [:anAccount | anAccount makeReport: aReport ]! !
+
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
 !classDefinition: 'Portfolio class' category: 'Portfolio-Solucion'!
@@ -772,6 +794,16 @@ make
 	
 	self subclassResponsibility ! !
 
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'AccountReport class' category: 'Portfolio-Solucion'!
+AccountReport class
+	instanceVariableNames: ''!
+
+!AccountReport class methodsFor: 'instance creation' stamp: 'AS 10/24/2022 16:26:25'!
+for: anAccount
+	^self new initializeFor: anAccount! !
+
 
 !classDefinition: #SummaryReport category: 'Portfolio-Solucion'!
 AccountReport subclass: #SummaryReport
@@ -811,16 +843,6 @@ addTransferWithdraw: aTransferWithdrawToAddToReport
 addWithdraw: aWithdrawToAddToReport
 	summaryReport add: 'Extracción por ', aWithdrawToAddToReport value asString ,'.'! !
 
-"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
-
-!classDefinition: 'SummaryReport class' category: 'Portfolio-Solucion'!
-SummaryReport class
-	instanceVariableNames: ''!
-
-!SummaryReport class methodsFor: 'instance creation' stamp: 'AS 10/24/2022 15:42:53'!
-with: anAccount 
-	^self new initializeFor: anAccount ! !
-
 
 !classDefinition: #TransferNetReport category: 'Portfolio-Solucion'!
 AccountReport subclass: #TransferNetReport
@@ -856,16 +878,6 @@ addTransferWithdraw: aTransferWithdrawToAddToReport
 !TransferNetReport methodsFor: 'add' stamp: 'AS 10/24/2022 16:15:46'!
 addWithdraw: aWithdrawToAddToReport
 	transferNet := transferNet + (aWithdrawToAddToReport valueForTransferNet).! !
-
-"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
-
-!classDefinition: 'TransferNetReport class' category: 'Portfolio-Solucion'!
-TransferNetReport class
-	instanceVariableNames: ''!
-
-!TransferNetReport class methodsFor: 'instance creation' stamp: 'AS 10/24/2022 15:53:30'!
-for: anAccount
-	^self new initializeFor: anAccount! !
 
 
 !classDefinition: #AccountTransaction category: 'Portfolio-Solucion'!
