@@ -15133,3 +15133,4494 @@ PASSED!
 PASSED!
 
 ----SNAPSHOT----(24 October 2022 15:36:15) CuisUniversity-5481.image priorSource: 7620416!
+!SummaryReport methodsFor: 'initialization' stamp: 'AS 10/24/2022 15:38:36' prior: 50569934!
+initializeFor: anAccount 
+	account := anAccount.
+	report := OrderedCollection new.! !
+
+!methodRemoval: SummaryReport #initialize stamp: 'AS 10/24/2022 15:38:41'!
+initialize
+
+	report := OrderedCollection new.!
+
+!testRun: #PortfolioTest #test01BalanceOfPortfolioWithoutAccountsIsZero stamp: 'AS 10/24/2022 15:38:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test02BalanceOfPortfolioWithAccountsIsSumOfAccountsBalance stamp: 'AS 10/24/2022 15:38:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test03BalanceOfPortfolioIsCalculatedRecursivelyOnPortfolios stamp: 'AS 10/24/2022 15:38:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test04PortfolioWithoutAccountsHasNoRegisteredTransaction stamp: 'AS 10/24/2022 15:38:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasRegisteredItsAccountsTransactions stamp: 'AS 10/24/2022 15:38:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioLooksForRegisteredTransactionsRecursively stamp: 'AS 10/24/2022 15:38:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test07PortfolioHasNoTransactionWhenHasNoAccounts stamp: 'AS 10/24/2022 15:38:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test08PortfolioTransactionsIncludesAllItsAccountsTransactions stamp: 'AS 10/24/2022 15:38:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test09PortfolioTransactionsAreCalculatedRecursively stamp: 'AS 10/24/2022 15:38:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test10PortfolioCanNotIncludeTheSameAccountMoreThanOnce stamp: 'AS 10/24/2022 15:38:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test11PortfolioCanNotIncludeAccountOfItsPortfolios stamp: 'AS 10/24/2022 15:38:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test12PortfolioCanNotIncludeItself stamp: 'AS 10/24/2022 15:38:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test13ComposedPortfolioCanNotHaveParentPortfolioAccount stamp: 'AS 10/24/2022 15:38:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test14ComposedPortfolioCanNotHaveAccountOfAnyRootParentRecursively stamp: 'AS 10/24/2022 15:38:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test15PortfolioCanNotIncludeAnyOfTheComposedAccountOfPortfolioToAdd stamp: 'AS 10/24/2022 15:38:43'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'AS 10/24/2022 15:38:43'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'AS 10/24/2022 15:38:43'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'AS 10/24/2022 15:38:43'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'AS 10/24/2022 15:38:43'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'AS 10/24/2022 15:38:43'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'AS 10/24/2022 15:38:43'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'AS 10/24/2022 15:38:43'!
+PASSED!
+
+!testRun: #ReportsTest #test01EmptyAccountOnlyHasZeroBalanceInSummaryReport stamp: 'AS 10/24/2022 15:38:43'!
+PASSED!
+
+!testRun: #ReportsTest #test02AccountSummaryReportHasDeposits stamp: 'AS 10/24/2022 15:38:43'!
+PASSED!
+
+!testRun: #ReportsTest #test03AccountSummaryReportHasWithdraws stamp: 'AS 10/24/2022 15:38:43'!
+PASSED!
+
+!testRun: #ReportsTest #test04AccountSummaryReportHasTransferExit stamp: 'AS 10/24/2022 15:38:43'!
+PASSED!
+
+!testRun: #ReportsTest #test05AccountSummaryReportHasTransferEntrance stamp: 'AS 10/24/2022 15:38:43'!
+PASSED!
+
+!testRun: #ReportsTest #test06TransferNetReportConsidersTransferExit stamp: 'AS 10/24/2022 15:38:43'!
+PASSED!
+
+!testRun: #ReportsTest #test07TransferNetReportConsidersTransferEntrance stamp: 'AS 10/24/2022 15:38:43'!
+PASSED!
+
+!testRun: #TransfersTest #test01BalanceIsAffectedAfterTransfer stamp: 'AS 10/24/2022 15:38:43'!
+PASSED!
+
+!testRun: #TransfersTest #test02CanNotTransferFromAndToSameAccount stamp: 'AS 10/24/2022 15:38:43'!
+PASSED!
+
+!testRun: #TransfersTest #test03CanNavigateToAndFromBothTransferLegs stamp: 'AS 10/24/2022 15:38:43'!
+PASSED!
+
+!testRun: #TransfersTest #test04OriginAndDestinyHaveRegisteredWithdrawAndDepositRespectively stamp: 'AS 10/24/2022 15:38:43'!
+PASSED!
+
+!testRun: #TransfersTest #test05TransferAmountShouldNotBeZero stamp: 'AS 10/24/2022 15:38:44'!
+PASSED!
+
+!testRun: #TransfersTest #test06TransferAmountShouldNotBeNegative stamp: 'AS 10/24/2022 15:38:44'!
+PASSED!
+!ReportsTest methodsFor: 'tests' stamp: 'AS 10/24/2022 15:41:32' prior: 50568910!
+test06TransferNetReportConsidersTransferExit
+
+	| account |
+	
+	account := ReceptiveAccount new.
+	
+	Transfer for: 10 from: account to: ReceptiveAccount new.
+	Transfer for: 7 from: account to: ReceptiveAccount new.
+	
+	self assert: 'Transfer net = -17.' equals: (TransferNetReport with: account) make .! !
+!ReportsTest methodsFor: 'tests' stamp: 'AS 10/24/2022 15:41:37' prior: 50568951!
+test07TransferNetReportConsidersTransferEntrance
+
+	| account |
+	
+	account := ReceptiveAccount new.
+	
+	Transfer for: 10 from: account to: ReceptiveAccount new.
+	Transfer for: 7 from: account to: ReceptiveAccount new.
+	Transfer for: 30 from: ReceptiveAccount new to: account.
+	
+	self assert: 'Transfer net = 13.' equals: (TransferNetReport with: account) make.! !
+!Portfolio class methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 15:41:48'!
+for: anAccount
+
+	^self new 
+		add: anAccount;
+		yourself! !
+!TransferNetReport class methodsFor: 'instance creation' stamp: 'AS 10/24/2022 15:41:48'!
+for: aTransactions
+	^self new initializeWith: aTransactions! !
+!ReportsTest methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 15:41:48' prior: 50570456!
+test07TransferNetReportConsidersTransferEntrance
+
+	| account |
+	
+	account := ReceptiveAccount new.
+	
+	Transfer for: 10 from: account to: ReceptiveAccount new.
+	Transfer for: 7 from: account to: ReceptiveAccount new.
+	Transfer for: 30 from: ReceptiveAccount new to: account.
+	
+	self assert: 'Transfer net = 13.' equals: (TransferNetReport for: account) make.! !
+!PortfolioTest methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 15:41:48' prior: 50552826!
+test03BalanceOfPortfolioIsCalculatedRecursivelyOnPortfolios
+
+	| simplePortfolioAccount simplePortfolio composedPortfolioAccount composedPortofolio |
+	
+	simplePortfolioAccount := ReceptiveAccount new.
+	Deposit register: 100 on: simplePortfolioAccount.
+	simplePortfolio := Portfolio for: simplePortfolioAccount.
+	
+	composedPortfolioAccount := ReceptiveAccount new.
+	Withdraw register: 50 on: composedPortfolioAccount.
+	composedPortofolio := Portfolio with: simplePortfolio with: composedPortfolioAccount.
+	
+	self assert: (composedPortfolioAccount balance + simplePortfolio balance) equals: composedPortofolio balance! !
+!PortfolioTest methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 15:41:48' prior: 50552899!
+test08PortfolioTransactionsIncludesAllItsAccountsTransactions
+
+	| account portfolio accountDeposit anotherAccount portfolioTransactions anotherAccountWithdraw |
+	
+	account := ReceptiveAccount new.
+	accountDeposit := Deposit register: 100 on: account.
+	anotherAccount := ReceptiveAccount new.
+	anotherAccountWithdraw := Withdraw register: 100 on: account.
+	portfolio := Portfolio for: account.
+	
+	portfolioTransactions := portfolio transactions.
+	
+	self assert: 2 equals: portfolioTransactions size.
+	self assert: (portfolioTransactions includes: accountDeposit).
+	self assert: (portfolioTransactions includes: anotherAccountWithdraw)! !
+!PortfolioTest methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 15:41:48' prior: 50552993!
+test12PortfolioCanNotIncludeItself
+
+	| account simplePortfolio |
+	
+	account := ReceptiveAccount new.
+	simplePortfolio := Portfolio for: account.
+	
+	self 
+		should: [ simplePortfolio add: simplePortfolio ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [ :anError |
+			self assert: Portfolio canNotAddAccountErrorMessage equals: anError messageText.
+			self assert: 1 equals: simplePortfolio accountsSize.
+			self assert: (simplePortfolio accountsIncludes: account) ]! !
+!PortfolioTest methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 15:41:48' prior: 50552955!
+test10PortfolioCanNotIncludeTheSameAccountMoreThanOnce
+
+	| account portfolio |
+	
+	account := ReceptiveAccount new.
+	portfolio := Portfolio for: account.
+	
+	self 
+		should: [ portfolio add: account ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [ :anError |
+			self assert: Portfolio canNotAddAccountErrorMessage equals: anError messageText.
+			self assert: 1 equals: portfolio accountsSize.
+			self assert: (portfolio accountsIncludes: account) ]! !
+!PortfolioTest methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 15:41:48' prior: 50552865!
+test06PortfolioLooksForRegisteredTransactionsRecursively
+
+	| simplePortfolioAccount simplePortfolio composedPortfolioAccount composedPortfolio composedPortfolioAccountWithdraw simplePortfolioAccountDeposit |
+	
+	simplePortfolioAccount := ReceptiveAccount new.
+	simplePortfolioAccountDeposit := Deposit register: 100 on: simplePortfolioAccount.
+	simplePortfolio := Portfolio for: simplePortfolioAccount.
+	
+	composedPortfolioAccount := ReceptiveAccount new.
+	composedPortfolioAccountWithdraw := Withdraw register: 50 on: composedPortfolioAccount.
+	composedPortfolio := Portfolio with: simplePortfolio with: composedPortfolioAccount.
+	
+	self assert: (composedPortfolio hasRegistered: simplePortfolioAccountDeposit).
+	self assert: (composedPortfolio hasRegistered: composedPortfolioAccountWithdraw)! !
+!PortfolioTest methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 15:41:48' prior: 50553030!
+test14ComposedPortfolioCanNotHaveAccountOfAnyRootParentRecursively
+
+	| account leftParentPortfolio leftRootParentPortfolio portfolio rightParentPortfolio rightRootParentPortfolio |
+	
+	account := ReceptiveAccount new.
+	portfolio := Portfolio new.
+	leftParentPortfolio := Portfolio for: portfolio .
+	leftRootParentPortfolio := Portfolio for: leftParentPortfolio.
+	leftRootParentPortfolio add: account.
+	
+	rightParentPortfolio := Portfolio for: portfolio .
+	rightRootParentPortfolio := Portfolio for: rightParentPortfolio.
+	rightRootParentPortfolio add: account.
+
+	self 
+		should: [ portfolio add: account ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [ :anError |
+			self assert: Portfolio canNotAddAccountErrorMessage equals: anError messageText.
+			self assert: portfolio accountsIsEmpty ]! !
+!PortfolioTest methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 15:41:48' prior: 50552972!
+test11PortfolioCanNotIncludeAccountOfItsPortfolios
+
+	| account simplePortfolio composedPortfolio |
+	
+	account := ReceptiveAccount new.
+	simplePortfolio := Portfolio for: account.
+	composedPortfolio := Portfolio for: simplePortfolio.
+	
+	self 
+		should: [ composedPortfolio add: account ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [ :anError |
+			self assert: Portfolio canNotAddAccountErrorMessage equals: anError messageText.
+			self assert: 1 equals: composedPortfolio accountsSize.
+			self assert: (composedPortfolio accountsIncludes: simplePortfolio) ]! !
+!PortfolioTest methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 15:41:48' prior: 50552815!
+test02BalanceOfPortfolioWithAccountsIsSumOfAccountsBalance
+
+	| account portfolio |
+	
+	account := ReceptiveAccount new.
+	Deposit register: 100 on: account.
+	portfolio := Portfolio for: account.
+	
+	self assert: account balance equals: portfolio balance! !
+!PortfolioTest methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 15:41:48' prior: 50552922!
+test09PortfolioTransactionsAreCalculatedRecursively
+
+	| simplePortfolioAccount simplePortfolio composedPortfolioAccount composedPortfolio composedPortfolioAccountWithdraw simplePortfolioAccountDeposit composedPortfolioTransactions |
+	
+	simplePortfolioAccount := ReceptiveAccount new.
+	simplePortfolioAccountDeposit := Deposit register: 100 on: simplePortfolioAccount.
+	simplePortfolio := Portfolio for: simplePortfolioAccount.
+	
+	composedPortfolioAccount := ReceptiveAccount new.
+	composedPortfolioAccountWithdraw := Withdraw register: 50 on: composedPortfolioAccount.
+	composedPortfolio := Portfolio with: simplePortfolio with: composedPortfolioAccount.
+	
+	composedPortfolioTransactions := composedPortfolio transactions.
+	self assert: 2 equals: composedPortfolioTransactions size.
+	self assert: (composedPortfolioTransactions includes: simplePortfolioAccountDeposit).
+	self assert: (composedPortfolioTransactions includes: composedPortfolioAccountWithdraw)! !
+!PortfolioTest methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 15:41:48' prior: 50552854!
+test05PortfolioHasRegisteredItsAccountsTransactions
+
+	| account portfolio deposit |
+	
+	account := ReceptiveAccount new.
+	deposit := Deposit register: 100 on: account.
+	portfolio := Portfolio for: account.
+	
+	self assert: (portfolio hasRegistered: deposit)! !
+!PortfolioTest methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 15:41:48' prior: 50553058!
+test15PortfolioCanNotIncludeAnyOfTheComposedAccountOfPortfolioToAdd
+
+	| portfolioToAdd portfolioToModify rootPortfolio sharedAccount |
+	
+	sharedAccount := ReceptiveAccount new.
+	portfolioToModify := Portfolio new.
+	rootPortfolio := Portfolio with: sharedAccount with: portfolioToModify.
+	portfolioToAdd := Portfolio for: sharedAccount.
+	
+	self 
+		should: [ portfolioToModify add: portfolioToAdd ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [ :anError | 
+			self assert: Portfolio canNotAddAccountErrorMessage equals: anError messageText.
+			self assert: portfolioToModify accountsIsEmpty ]! !
+!ReportsTest methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 15:41:48' prior: 50570444!
+test06TransferNetReportConsidersTransferExit
+
+	| account |
+	
+	account := ReceptiveAccount new.
+	
+	Transfer for: 10 from: account to: ReceptiveAccount new.
+	Transfer for: 7 from: account to: ReceptiveAccount new.
+	
+	self assert: 'Transfer net = -17.' equals: (TransferNetReport for: account) make .! !
+!PortfolioTest methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 15:41:48' prior: 50553011!
+test13ComposedPortfolioCanNotHaveParentPortfolioAccount
+
+	| account simplePortfolio composedPortfolio |
+	
+	account := ReceptiveAccount new.
+	simplePortfolio := Portfolio new.
+	composedPortfolio := Portfolio for: simplePortfolio.
+	composedPortfolio add: account.
+	
+	self 
+		should: [ simplePortfolio add: account ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [ :anError |
+			self assert: Portfolio canNotAddAccountErrorMessage equals: anError messageText.
+			self assert: simplePortfolio accountsIsEmpty ]! !
+
+!methodRemoval: Portfolio class #with: stamp: 'AS 10/24/2022 15:41:49'!
+with: anAccount
+
+	^self new 
+		add: anAccount;
+		yourself!
+
+!methodRemoval: TransferNetReport class #with: stamp: 'AS 10/24/2022 15:41:49'!
+with: aTransactions
+	^self new initializeWith: aTransactions!
+!Portfolio class methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 15:42:53'!
+with: anAccount
+
+	^self new 
+		add: anAccount;
+		yourself! !
+!AccountTransaction class methodsFor: 'instance creation' stamp: 'AS 10/24/2022 15:42:53'!
+with: aValueOrATransfer
+
+	^ self new initializeFor: aValueOrATransfer ! !
+!SummaryReport class methodsFor: 'instance creation' stamp: 'AS 10/24/2022 15:42:53'!
+with: anAccount 
+	^self new initializeFor: anAccount ! !
+!TransferNetReport class methodsFor: 'instance creation' stamp: 'AS 10/24/2022 15:42:53'!
+with: aTransactions
+	^self new initializeWith: aTransactions! !
+!PortfolioTest methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 15:42:53' prior: 50570541!
+test12PortfolioCanNotIncludeItself
+
+	| account simplePortfolio |
+	
+	account := ReceptiveAccount new.
+	simplePortfolio := Portfolio with: account.
+	
+	self 
+		should: [ simplePortfolio add: simplePortfolio ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [ :anError |
+			self assert: Portfolio canNotAddAccountErrorMessage equals: anError messageText.
+			self assert: 1 equals: simplePortfolio accountsSize.
+			self assert: (simplePortfolio accountsIncludes: account) ]! !
+!ReportsTest methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 15:42:53' prior: 50570121!
+test02AccountSummaryReportHasDeposits
+
+	| account summaryReport |
+	account := ReceptiveAccount new.
+	Deposit register: 20 on: account.
+	
+	summaryReport := (SummaryReport with: account ) make.
+	self assert: 'Depósito por 20.' equals: summaryReport first.
+	self assert: 'Balance = 20' equals: summaryReport second.! !
+!PortfolioTest methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 15:42:53' prior: 50570518!
+test08PortfolioTransactionsIncludesAllItsAccountsTransactions
+
+	| account portfolio accountDeposit anotherAccount portfolioTransactions anotherAccountWithdraw |
+	
+	account := ReceptiveAccount new.
+	accountDeposit := Deposit register: 100 on: account.
+	anotherAccount := ReceptiveAccount new.
+	anotherAccountWithdraw := Withdraw register: 100 on: account.
+	portfolio := Portfolio with: account.
+	
+	portfolioTransactions := portfolio transactions.
+	
+	self assert: 2 equals: portfolioTransactions size.
+	self assert: (portfolioTransactions includes: accountDeposit).
+	self assert: (portfolioTransactions includes: anotherAccountWithdraw)! !
+!AccountTransaction class methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 15:42:53' prior: 50562609!
+register: aValueOrATransfer on: account
+
+	| transaction |
+	
+	transaction := self with: aValueOrATransfer.
+	account register: transaction.
+		
+	^ transaction! !
+!PortfolioTest methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 15:42:53' prior: 50570668!
+test09PortfolioTransactionsAreCalculatedRecursively
+
+	| simplePortfolioAccount simplePortfolio composedPortfolioAccount composedPortfolio composedPortfolioAccountWithdraw simplePortfolioAccountDeposit composedPortfolioTransactions |
+	
+	simplePortfolioAccount := ReceptiveAccount new.
+	simplePortfolioAccountDeposit := Deposit register: 100 on: simplePortfolioAccount.
+	simplePortfolio := Portfolio with: simplePortfolioAccount.
+	
+	composedPortfolioAccount := ReceptiveAccount new.
+	composedPortfolioAccountWithdraw := Withdraw register: 50 on: composedPortfolioAccount.
+	composedPortfolio := Portfolio with: simplePortfolio with: composedPortfolioAccount.
+	
+	composedPortfolioTransactions := composedPortfolio transactions.
+	self assert: 2 equals: composedPortfolioTransactions size.
+	self assert: (composedPortfolioTransactions includes: simplePortfolioAccountDeposit).
+	self assert: (composedPortfolioTransactions includes: composedPortfolioAccountWithdraw)! !
+!PortfolioTest methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 15:42:53' prior: 50570606!
+test14ComposedPortfolioCanNotHaveAccountOfAnyRootParentRecursively
+
+	| account leftParentPortfolio leftRootParentPortfolio portfolio rightParentPortfolio rightRootParentPortfolio |
+	
+	account := ReceptiveAccount new.
+	portfolio := Portfolio new.
+	leftParentPortfolio := Portfolio with: portfolio .
+	leftRootParentPortfolio := Portfolio with: leftParentPortfolio.
+	leftRootParentPortfolio add: account.
+	
+	rightParentPortfolio := Portfolio with: portfolio .
+	rightRootParentPortfolio := Portfolio with: rightParentPortfolio.
+	rightRootParentPortfolio add: account.
+
+	self 
+		should: [ portfolio add: account ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [ :anError |
+			self assert: Portfolio canNotAddAccountErrorMessage equals: anError messageText.
+			self assert: portfolio accountsIsEmpty ]! !
+!ReportsTest methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 15:42:53' prior: 50570480!
+test07TransferNetReportConsidersTransferEntrance
+
+	| account |
+	
+	account := ReceptiveAccount new.
+	
+	Transfer for: 10 from: account to: ReceptiveAccount new.
+	Transfer for: 7 from: account to: ReceptiveAccount new.
+	Transfer for: 30 from: ReceptiveAccount new to: account.
+	
+	self assert: 'Transfer net = 13.' equals: (TransferNetReport with: account) make.! !
+!ReportsTest methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 15:42:53' prior: 50570736!
+test06TransferNetReportConsidersTransferExit
+
+	| account |
+	
+	account := ReceptiveAccount new.
+	
+	Transfer for: 10 from: account to: ReceptiveAccount new.
+	Transfer for: 7 from: account to: ReceptiveAccount new.
+	
+	self assert: 'Transfer net = -17.' equals: (TransferNetReport with: account) make .! !
+!PortfolioTest methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 15:42:53' prior: 50570657!
+test02BalanceOfPortfolioWithAccountsIsSumOfAccountsBalance
+
+	| account portfolio |
+	
+	account := ReceptiveAccount new.
+	Deposit register: 100 on: account.
+	portfolio := Portfolio with: account.
+	
+	self assert: account balance equals: portfolio balance! !
+!PortfolioTest methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 15:42:53' prior: 50552848!
+test04PortfolioWithoutAccountsHasNoRegisteredTransaction
+
+	self deny: (Portfolio new hasRegistered: (Deposit with: 100))! !
+!ReportsTest methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 15:42:53' prior: 50570084!
+test04AccountSummaryReportHasTransferExit
+
+	| account summaryReport |
+	account := ReceptiveAccount new.
+	Deposit register: 20 on: account.
+	Withdraw register: 5 on: account.
+	Transfer for: 10 from: account to: ReceptiveAccount new.
+	
+	summaryReport := (SummaryReport with: account ) make.
+	self assert: 'Depósito por 20.' equals: summaryReport first.
+	self assert: 'Extracción por 5.' equals: summaryReport second.
+	self assert: 'Salida por transferencia de 10.' equals: summaryReport third.
+	self assert: 'Balance = 5' equals: summaryReport fourth.! !
+!ReportsTest methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 15:42:53' prior: 50570134!
+test05AccountSummaryReportHasTransferEntrance
+
+	| account summaryReport |
+	account := ReceptiveAccount new.
+	Deposit register: 20 on: account.
+	Withdraw register: 5 on: account.
+	Transfer for: 10 from: account to: ReceptiveAccount new.
+	Transfer for: 27 from: ReceptiveAccount new to: account.
+	
+	summaryReport := (SummaryReport with: account ) make.
+	self assert: 'Depósito por 20.' equals: summaryReport first.
+	self assert: 'Extracción por 5.' equals: summaryReport second.
+	self assert: 'Salida por transferencia de 10.' equals: summaryReport third.
+	self assert: 'Entrada por transferencia de 27.' equals: summaryReport fourth.
+	self assert: 'Balance = 32' equals: summaryReport fifth.! !
+!ReportsTest methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 15:42:53' prior: 50570105!
+test03AccountSummaryReportHasWithdraws
+
+	| account summaryReport |
+	account := ReceptiveAccount new.
+	Deposit register: 20 on: account.
+	Withdraw register: 5 on: account.
+	
+	summaryReport := (SummaryReport with: account ) make.
+	self assert: 'Depósito por 20.' equals: summaryReport first.
+	self assert: 'Extracción por 5.' equals: summaryReport second.
+	self assert: 'Balance = 15' equals: summaryReport third.! !
+!PortfolioTest methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 15:42:53' prior: 50570635!
+test11PortfolioCanNotIncludeAccountOfItsPortfolios
+
+	| account simplePortfolio composedPortfolio |
+	
+	account := ReceptiveAccount new.
+	simplePortfolio := Portfolio with: account.
+	composedPortfolio := Portfolio with: simplePortfolio.
+	
+	self 
+		should: [ composedPortfolio add: account ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [ :anError |
+			self assert: Portfolio canNotAddAccountErrorMessage equals: anError messageText.
+			self assert: 1 equals: composedPortfolio accountsSize.
+			self assert: (composedPortfolio accountsIncludes: simplePortfolio) ]! !
+!PortfolioTest methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 15:42:53' prior: 50570749!
+test13ComposedPortfolioCanNotHaveParentPortfolioAccount
+
+	| account simplePortfolio composedPortfolio |
+	
+	account := ReceptiveAccount new.
+	simplePortfolio := Portfolio new.
+	composedPortfolio := Portfolio with: simplePortfolio.
+	composedPortfolio add: account.
+	
+	self 
+		should: [ simplePortfolio add: account ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [ :anError |
+			self assert: Portfolio canNotAddAccountErrorMessage equals: anError messageText.
+			self assert: simplePortfolio accountsIsEmpty ]! !
+!PortfolioTest methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 15:42:53' prior: 50570495!
+test03BalanceOfPortfolioIsCalculatedRecursivelyOnPortfolios
+
+	| simplePortfolioAccount simplePortfolio composedPortfolioAccount composedPortofolio |
+	
+	simplePortfolioAccount := ReceptiveAccount new.
+	Deposit register: 100 on: simplePortfolioAccount.
+	simplePortfolio := Portfolio with: simplePortfolioAccount.
+	
+	composedPortfolioAccount := ReceptiveAccount new.
+	Withdraw register: 50 on: composedPortfolioAccount.
+	composedPortofolio := Portfolio with: simplePortfolio with: composedPortfolioAccount.
+	
+	self assert: (composedPortfolioAccount balance + simplePortfolio balance) equals: composedPortofolio balance! !
+!ReceptiveAccountTest methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 15:42:53' prior: 50553141!
+test06ReceptiveAccountDoNotKnowNotRegisteredTransactions
+
+	| account deposit withdraw |
+	
+	account := ReceptiveAccount new.
+	deposit :=  Deposit with: 100.
+	withdraw := Withdraw with: 50.
+		
+	self deny: (account hasRegistered: deposit).
+	self deny: (account hasRegistered:withdraw).
+! !
+!PortfolioTest methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 15:42:53' prior: 50570560!
+test10PortfolioCanNotIncludeTheSameAccountMoreThanOnce
+
+	| account portfolio |
+	
+	account := ReceptiveAccount new.
+	portfolio := Portfolio with: account.
+	
+	self 
+		should: [ portfolio add: account ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [ :anError |
+			self assert: Portfolio canNotAddAccountErrorMessage equals: anError messageText.
+			self assert: 1 equals: portfolio accountsSize.
+			self assert: (portfolio accountsIncludes: account) ]! !
+!PortfolioTest methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 15:42:53' prior: 50570714!
+test15PortfolioCanNotIncludeAnyOfTheComposedAccountOfPortfolioToAdd
+
+	| portfolioToAdd portfolioToModify rootPortfolio sharedAccount |
+	
+	sharedAccount := ReceptiveAccount new.
+	portfolioToModify := Portfolio new.
+	rootPortfolio := Portfolio with: sharedAccount with: portfolioToModify.
+	portfolioToAdd := Portfolio with: sharedAccount.
+	
+	self 
+		should: [ portfolioToModify add: portfolioToAdd ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [ :anError | 
+			self assert: Portfolio canNotAddAccountErrorMessage equals: anError messageText.
+			self assert: portfolioToModify accountsIsEmpty ]! !
+!PortfolioTest methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 15:42:53' prior: 50570578!
+test06PortfolioLooksForRegisteredTransactionsRecursively
+
+	| simplePortfolioAccount simplePortfolio composedPortfolioAccount composedPortfolio composedPortfolioAccountWithdraw simplePortfolioAccountDeposit |
+	
+	simplePortfolioAccount := ReceptiveAccount new.
+	simplePortfolioAccountDeposit := Deposit register: 100 on: simplePortfolioAccount.
+	simplePortfolio := Portfolio with: simplePortfolioAccount.
+	
+	composedPortfolioAccount := ReceptiveAccount new.
+	composedPortfolioAccountWithdraw := Withdraw register: 50 on: composedPortfolioAccount.
+	composedPortfolio := Portfolio with: simplePortfolio with: composedPortfolioAccount.
+	
+	self assert: (composedPortfolio hasRegistered: simplePortfolioAccountDeposit).
+	self assert: (composedPortfolio hasRegistered: composedPortfolioAccountWithdraw)! !
+!ReportsTest methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 15:42:53' prior: 50570159!
+test01EmptyAccountOnlyHasZeroBalanceInSummaryReport
+
+	| account |
+	account := ReceptiveAccount new.
+	
+	self assert: 'Balance = 0' equals: (SummaryReport with: account ) make first.! !
+!PortfolioTest methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 15:42:53' prior: 50570702!
+test05PortfolioHasRegisteredItsAccountsTransactions
+
+	| account portfolio deposit |
+	
+	account := ReceptiveAccount new.
+	deposit := Deposit register: 100 on: account.
+	portfolio := Portfolio with: account.
+	
+	self assert: (portfolio hasRegistered: deposit)! !
+
+!methodRemoval: Portfolio class #for: stamp: 'AS 10/24/2022 15:42:53'!
+for: anAccount
+
+	^self new 
+		add: anAccount;
+		yourself!
+
+!methodRemoval: AccountTransaction class #for: stamp: 'AS 10/24/2022 15:42:53'!
+for: aValueOrATransfer
+
+	^ self new initializeFor: aValueOrATransfer !
+
+!methodRemoval: SummaryReport class #for: stamp: 'AS 10/24/2022 15:42:53'!
+for: anAccount 
+	^self new initializeFor: anAccount !
+
+!methodRemoval: TransferNetReport class #for: stamp: 'AS 10/24/2022 15:42:53'!
+for: aTransactions
+	^self new initializeWith: aTransactions!
+!ReportsTest methodsFor: 'tests' stamp: 'AS 10/24/2022 15:43:49' prior: 50570941!
+test06TransferNetReportConsidersTransferExit
+
+	| account |
+	
+	account := ReceptiveAccount new.
+	
+	Transfer for: 10 from: account to: ReceptiveAccount new.
+	Transfer for: 7 from: account to: ReceptiveAccount new.
+	
+	self assert: 'Transfer net = -17.' equals: (TransferNetReport with: account transactions ) make .! !
+!ReportsTest methodsFor: 'tests' stamp: 'AS 10/24/2022 15:43:54' prior: 50570926!
+test07TransferNetReportConsidersTransferEntrance
+
+	| account |
+	
+	account := ReceptiveAccount new.
+	
+	Transfer for: 10 from: account to: ReceptiveAccount new.
+	Transfer for: 7 from: account to: ReceptiveAccount new.
+	Transfer for: 30 from: ReceptiveAccount new to: account.
+	
+	self assert: 'Transfer net = 13.' equals: (TransferNetReport with: account transactions ) make.! !
+
+!testRun: #ReportsTest #test07TransferNetReportConsidersTransferEntrance stamp: 'AS 10/24/2022 15:43:55'!
+PASSED!
+
+!testRun: #ReportsTest #test01EmptyAccountOnlyHasZeroBalanceInSummaryReport stamp: 'AS 10/24/2022 15:43:55'!
+PASSED!
+
+!testRun: #ReportsTest #test02AccountSummaryReportHasDeposits stamp: 'AS 10/24/2022 15:43:55'!
+PASSED!
+
+!testRun: #ReportsTest #test03AccountSummaryReportHasWithdraws stamp: 'AS 10/24/2022 15:43:55'!
+PASSED!
+
+!testRun: #ReportsTest #test04AccountSummaryReportHasTransferExit stamp: 'AS 10/24/2022 15:43:55'!
+PASSED!
+
+!testRun: #ReportsTest #test05AccountSummaryReportHasTransferEntrance stamp: 'AS 10/24/2022 15:43:55'!
+PASSED!
+
+!testRun: #ReportsTest #test06TransferNetReportConsidersTransferExit stamp: 'AS 10/24/2022 15:43:55'!
+PASSED!
+
+!testRun: #ReportsTest #test07TransferNetReportConsidersTransferEntrance stamp: 'AS 10/24/2022 15:43:55'!
+PASSED!
+
+!testRun: #PortfolioTest #test01BalanceOfPortfolioWithoutAccountsIsZero stamp: 'AS 10/24/2022 15:43:58'!
+PASSED!
+
+!testRun: #PortfolioTest #test02BalanceOfPortfolioWithAccountsIsSumOfAccountsBalance stamp: 'AS 10/24/2022 15:43:58'!
+PASSED!
+
+!testRun: #PortfolioTest #test03BalanceOfPortfolioIsCalculatedRecursivelyOnPortfolios stamp: 'AS 10/24/2022 15:43:58'!
+PASSED!
+
+!testRun: #PortfolioTest #test04PortfolioWithoutAccountsHasNoRegisteredTransaction stamp: 'AS 10/24/2022 15:43:58'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasRegisteredItsAccountsTransactions stamp: 'AS 10/24/2022 15:43:58'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioLooksForRegisteredTransactionsRecursively stamp: 'AS 10/24/2022 15:43:58'!
+PASSED!
+
+!testRun: #PortfolioTest #test07PortfolioHasNoTransactionWhenHasNoAccounts stamp: 'AS 10/24/2022 15:43:58'!
+PASSED!
+
+!testRun: #PortfolioTest #test08PortfolioTransactionsIncludesAllItsAccountsTransactions stamp: 'AS 10/24/2022 15:43:58'!
+PASSED!
+
+!testRun: #PortfolioTest #test09PortfolioTransactionsAreCalculatedRecursively stamp: 'AS 10/24/2022 15:43:58'!
+PASSED!
+
+!testRun: #PortfolioTest #test10PortfolioCanNotIncludeTheSameAccountMoreThanOnce stamp: 'AS 10/24/2022 15:43:58'!
+PASSED!
+
+!testRun: #PortfolioTest #test11PortfolioCanNotIncludeAccountOfItsPortfolios stamp: 'AS 10/24/2022 15:43:58'!
+PASSED!
+
+!testRun: #PortfolioTest #test12PortfolioCanNotIncludeItself stamp: 'AS 10/24/2022 15:43:58'!
+PASSED!
+
+!testRun: #PortfolioTest #test13ComposedPortfolioCanNotHaveParentPortfolioAccount stamp: 'AS 10/24/2022 15:43:58'!
+PASSED!
+
+!testRun: #PortfolioTest #test14ComposedPortfolioCanNotHaveAccountOfAnyRootParentRecursively stamp: 'AS 10/24/2022 15:43:58'!
+PASSED!
+
+!testRun: #PortfolioTest #test15PortfolioCanNotIncludeAnyOfTheComposedAccountOfPortfolioToAdd stamp: 'AS 10/24/2022 15:43:58'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'AS 10/24/2022 15:43:58'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'AS 10/24/2022 15:43:58'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'AS 10/24/2022 15:43:58'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'AS 10/24/2022 15:43:58'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'AS 10/24/2022 15:43:58'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'AS 10/24/2022 15:43:58'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'AS 10/24/2022 15:43:58'!
+PASSED!
+
+!testRun: #ReportsTest #test01EmptyAccountOnlyHasZeroBalanceInSummaryReport stamp: 'AS 10/24/2022 15:43:58'!
+PASSED!
+
+!testRun: #ReportsTest #test02AccountSummaryReportHasDeposits stamp: 'AS 10/24/2022 15:43:58'!
+PASSED!
+
+!testRun: #ReportsTest #test03AccountSummaryReportHasWithdraws stamp: 'AS 10/24/2022 15:43:58'!
+PASSED!
+
+!testRun: #ReportsTest #test04AccountSummaryReportHasTransferExit stamp: 'AS 10/24/2022 15:43:58'!
+PASSED!
+
+!testRun: #ReportsTest #test05AccountSummaryReportHasTransferEntrance stamp: 'AS 10/24/2022 15:43:58'!
+PASSED!
+
+!testRun: #ReportsTest #test06TransferNetReportConsidersTransferExit stamp: 'AS 10/24/2022 15:43:59'!
+PASSED!
+
+!testRun: #ReportsTest #test07TransferNetReportConsidersTransferEntrance stamp: 'AS 10/24/2022 15:43:59'!
+PASSED!
+
+!testRun: #TransfersTest #test01BalanceIsAffectedAfterTransfer stamp: 'AS 10/24/2022 15:43:59'!
+PASSED!
+
+!testRun: #TransfersTest #test02CanNotTransferFromAndToSameAccount stamp: 'AS 10/24/2022 15:43:59'!
+PASSED!
+
+!testRun: #TransfersTest #test03CanNavigateToAndFromBothTransferLegs stamp: 'AS 10/24/2022 15:43:59'!
+PASSED!
+
+!testRun: #TransfersTest #test04OriginAndDestinyHaveRegisteredWithdrawAndDepositRespectively stamp: 'AS 10/24/2022 15:43:59'!
+PASSED!
+
+!testRun: #TransfersTest #test05TransferAmountShouldNotBeZero stamp: 'AS 10/24/2022 15:43:59'!
+PASSED!
+
+!testRun: #TransfersTest #test06TransferAmountShouldNotBeNegative stamp: 'AS 10/24/2022 15:43:59'!
+PASSED!
+!ReportsTest methodsFor: 'tests' stamp: 'AS 10/24/2022 15:50:15' prior: 50571233!
+test07TransferNetReportConsidersTransferEntrance
+
+	| account |
+	
+	account := ReceptiveAccount new.
+	
+	Transfer for: 10 from: account to: ReceptiveAccount new.
+	Transfer for: 7 from: account to: ReceptiveAccount new.
+	Transfer for: 30 from: ReceptiveAccount new to: account.
+	
+	self assert: 'Transfer net = 13.' equals: (TransferNetReport with: account ) make.! !
+!ReportsTest methodsFor: 'tests' stamp: 'AS 10/24/2022 15:50:18' prior: 50571220!
+test06TransferNetReportConsidersTransferExit
+
+	| account |
+	
+	account := ReceptiveAccount new.
+	
+	Transfer for: 10 from: account to: ReceptiveAccount new.
+	Transfer for: 7 from: account to: ReceptiveAccount new.
+	
+	self assert: 'Transfer net = -17.' equals: (TransferNetReport with: account ) make .! !
+!ReportsTest methodsFor: 'tests' stamp: 'AS 10/24/2022 15:50:21' prior: 50571419!
+test06TransferNetReportConsidersTransferExit
+
+	| account |
+	
+	account := ReceptiveAccount new.
+	
+	Transfer for: 10 from: account to: ReceptiveAccount new.
+	Transfer for: 7 from: account to: ReceptiveAccount new.
+	
+	self assert: 'Transfer net = -17.' equals: (TransferNetReport with: account) make .! !
+!ReportsTest methodsFor: 'tests' stamp: 'AS 10/24/2022 15:50:26' prior: 50571405!
+test07TransferNetReportConsidersTransferEntrance
+
+	| account |
+	
+	account := ReceptiveAccount new.
+	
+	Transfer for: 10 from: account to: ReceptiveAccount new.
+	Transfer for: 7 from: account to: ReceptiveAccount new.
+	Transfer for: 30 from: ReceptiveAccount new to: account.
+	
+	self assert: 'Transfer net = 13.' equals: (TransferNetReport with: account) make.! !
+!TransferNetReport class methodsFor: 'instance creation' stamp: 'AS 10/24/2022 15:51:12'!
+for: aTransactions
+	^self new initializeWith: aTransactions! !
+
+!methodRemoval: TransferNetReport class #with: stamp: 'AS 10/24/2022 15:51:12'!
+with: aTransactions
+	^self new initializeWith: aTransactions!
+!ReportsTest methodsFor: 'tests' stamp: 'AS 10/24/2022 15:51:36' prior: 50571432!
+test06TransferNetReportConsidersTransferExit
+
+	| account |
+	
+	account := ReceptiveAccount new.
+	
+	Transfer for: 10 from: account to: ReceptiveAccount new.
+	Transfer for: 7 from: account to: ReceptiveAccount new.
+	
+	self assert: 'Transfer net = -17.' equals: (TransferNetReport for: account) make .! !
+!ReportsTest methodsFor: 'tests' stamp: 'AS 10/24/2022 15:51:45' prior: 50571468!
+test06TransferNetReportConsidersTransferExit
+
+	| account |
+	
+	account := ReceptiveAccount new.
+	
+	Transfer for: 10 from: account to: ReceptiveAccount new.
+	Transfer for: 7 from: account to: ReceptiveAccount new.
+	
+	self assert: 'Transfer net = -17.' equals: (TransferNetReport for: account transactions ) make .! !
+
+!testRun: #ReportsTest #test06TransferNetReportConsidersTransferExit stamp: 'AS 10/24/2022 15:51:46'!
+PASSED!
+
+!testRun: #ReportsTest #test01EmptyAccountOnlyHasZeroBalanceInSummaryReport stamp: 'AS 10/24/2022 15:51:46'!
+PASSED!
+
+!testRun: #ReportsTest #test02AccountSummaryReportHasDeposits stamp: 'AS 10/24/2022 15:51:46'!
+PASSED!
+
+!testRun: #ReportsTest #test03AccountSummaryReportHasWithdraws stamp: 'AS 10/24/2022 15:51:46'!
+PASSED!
+
+!testRun: #ReportsTest #test04AccountSummaryReportHasTransferExit stamp: 'AS 10/24/2022 15:51:46'!
+PASSED!
+
+!testRun: #ReportsTest #test05AccountSummaryReportHasTransferEntrance stamp: 'AS 10/24/2022 15:51:46'!
+PASSED!
+
+!testRun: #ReportsTest #test06TransferNetReportConsidersTransferExit stamp: 'AS 10/24/2022 15:51:46'!
+PASSED!
+
+!testRun: #ReportsTest #test07TransferNetReportConsidersTransferEntrance stamp: 'AS 10/24/2022 15:51:46'!
+ERROR!
+
+!testRun: #ReportsTest #test07TransferNetReportConsidersTransferEntrance stamp: 'AS 10/24/2022 15:51:46'!
+ERROR!
+!ReportsTest methodsFor: 'tests' stamp: 'AS 10/24/2022 15:51:53' prior: 50571444!
+test07TransferNetReportConsidersTransferEntrance
+
+	| account |
+	
+	account := ReceptiveAccount new.
+	
+	Transfer for: 10 from: account to: ReceptiveAccount new.
+	Transfer for: 7 from: account to: ReceptiveAccount new.
+	Transfer for: 30 from: ReceptiveAccount new to: account.
+	
+	self assert: 'Transfer net = 13.' equals: (TransferNetReport for: account) make.! !
+
+!testRun: #ReportsTest #test07TransferNetReportConsidersTransferEntrance stamp: 'AS 10/24/2022 15:51:53'!
+ERROR!
+!ReportsTest methodsFor: 'tests' stamp: 'AS 10/24/2022 15:52:42' prior: 50571524!
+test07TransferNetReportConsidersTransferEntrance
+
+	| account |
+	
+	account := ReceptiveAccount new.
+	
+	Transfer for: 10 from: account to: ReceptiveAccount new.
+	Transfer for: 7 from: account to: ReceptiveAccount new.
+	Transfer for: 30 from: ReceptiveAccount new to: account.
+	
+	self assert: 'Transfer net = 13.' equals: (TransferNetReport for: account transactions ) make.! !
+
+!testRun: #ReportsTest #test07TransferNetReportConsidersTransferEntrance stamp: 'AS 10/24/2022 15:52:43'!
+PASSED!
+
+!testRun: #ReportsTest #test01EmptyAccountOnlyHasZeroBalanceInSummaryReport stamp: 'AS 10/24/2022 15:52:43'!
+PASSED!
+
+!testRun: #ReportsTest #test02AccountSummaryReportHasDeposits stamp: 'AS 10/24/2022 15:52:43'!
+PASSED!
+
+!testRun: #ReportsTest #test03AccountSummaryReportHasWithdraws stamp: 'AS 10/24/2022 15:52:43'!
+PASSED!
+
+!testRun: #ReportsTest #test04AccountSummaryReportHasTransferExit stamp: 'AS 10/24/2022 15:52:43'!
+PASSED!
+
+!testRun: #ReportsTest #test05AccountSummaryReportHasTransferEntrance stamp: 'AS 10/24/2022 15:52:43'!
+PASSED!
+
+!testRun: #ReportsTest #test06TransferNetReportConsidersTransferExit stamp: 'AS 10/24/2022 15:52:43'!
+PASSED!
+
+!testRun: #ReportsTest #test07TransferNetReportConsidersTransferEntrance stamp: 'AS 10/24/2022 15:52:43'!
+PASSED!
+
+!testRun: #PortfolioTest #test01BalanceOfPortfolioWithoutAccountsIsZero stamp: 'AS 10/24/2022 15:52:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test02BalanceOfPortfolioWithAccountsIsSumOfAccountsBalance stamp: 'AS 10/24/2022 15:52:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test03BalanceOfPortfolioIsCalculatedRecursivelyOnPortfolios stamp: 'AS 10/24/2022 15:52:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test04PortfolioWithoutAccountsHasNoRegisteredTransaction stamp: 'AS 10/24/2022 15:52:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasRegisteredItsAccountsTransactions stamp: 'AS 10/24/2022 15:52:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioLooksForRegisteredTransactionsRecursively stamp: 'AS 10/24/2022 15:52:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test07PortfolioHasNoTransactionWhenHasNoAccounts stamp: 'AS 10/24/2022 15:52:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test08PortfolioTransactionsIncludesAllItsAccountsTransactions stamp: 'AS 10/24/2022 15:52:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test09PortfolioTransactionsAreCalculatedRecursively stamp: 'AS 10/24/2022 15:52:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test10PortfolioCanNotIncludeTheSameAccountMoreThanOnce stamp: 'AS 10/24/2022 15:52:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test11PortfolioCanNotIncludeAccountOfItsPortfolios stamp: 'AS 10/24/2022 15:52:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test12PortfolioCanNotIncludeItself stamp: 'AS 10/24/2022 15:52:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test13ComposedPortfolioCanNotHaveParentPortfolioAccount stamp: 'AS 10/24/2022 15:52:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test14ComposedPortfolioCanNotHaveAccountOfAnyRootParentRecursively stamp: 'AS 10/24/2022 15:52:47'!
+PASSED!
+
+!testRun: #PortfolioTest #test15PortfolioCanNotIncludeAnyOfTheComposedAccountOfPortfolioToAdd stamp: 'AS 10/24/2022 15:52:47'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'AS 10/24/2022 15:52:47'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'AS 10/24/2022 15:52:47'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'AS 10/24/2022 15:52:47'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'AS 10/24/2022 15:52:47'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'AS 10/24/2022 15:52:47'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'AS 10/24/2022 15:52:47'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'AS 10/24/2022 15:52:47'!
+PASSED!
+
+!testRun: #ReportsTest #test01EmptyAccountOnlyHasZeroBalanceInSummaryReport stamp: 'AS 10/24/2022 15:52:47'!
+PASSED!
+
+!testRun: #ReportsTest #test02AccountSummaryReportHasDeposits stamp: 'AS 10/24/2022 15:52:47'!
+PASSED!
+
+!testRun: #ReportsTest #test03AccountSummaryReportHasWithdraws stamp: 'AS 10/24/2022 15:52:47'!
+PASSED!
+
+!testRun: #ReportsTest #test04AccountSummaryReportHasTransferExit stamp: 'AS 10/24/2022 15:52:47'!
+PASSED!
+
+!testRun: #ReportsTest #test05AccountSummaryReportHasTransferEntrance stamp: 'AS 10/24/2022 15:52:47'!
+PASSED!
+
+!testRun: #ReportsTest #test06TransferNetReportConsidersTransferExit stamp: 'AS 10/24/2022 15:52:48'!
+PASSED!
+
+!testRun: #ReportsTest #test07TransferNetReportConsidersTransferEntrance stamp: 'AS 10/24/2022 15:52:48'!
+PASSED!
+
+!testRun: #TransfersTest #test01BalanceIsAffectedAfterTransfer stamp: 'AS 10/24/2022 15:52:48'!
+PASSED!
+
+!testRun: #TransfersTest #test02CanNotTransferFromAndToSameAccount stamp: 'AS 10/24/2022 15:52:48'!
+PASSED!
+
+!testRun: #TransfersTest #test03CanNavigateToAndFromBothTransferLegs stamp: 'AS 10/24/2022 15:52:48'!
+PASSED!
+
+!testRun: #TransfersTest #test04OriginAndDestinyHaveRegisteredWithdrawAndDepositRespectively stamp: 'AS 10/24/2022 15:52:48'!
+PASSED!
+
+!testRun: #TransfersTest #test05TransferAmountShouldNotBeZero stamp: 'AS 10/24/2022 15:52:48'!
+PASSED!
+
+!testRun: #TransfersTest #test06TransferAmountShouldNotBeNegative stamp: 'AS 10/24/2022 15:52:48'!
+PASSED!
+!ReportsTest methodsFor: 'tests' stamp: 'AS 10/24/2022 15:52:52' prior: 50571480!
+test06TransferNetReportConsidersTransferExit
+
+	| account |
+	
+	account := ReceptiveAccount new.
+	
+	Transfer for: 10 from: account to: ReceptiveAccount new.
+	Transfer for: 7 from: account to: ReceptiveAccount new.
+	
+	self assert: 'Transfer net = -17.' equals: (TransferNetReport for: account) make .! !
+!ReportsTest methodsFor: 'tests' stamp: 'AS 10/24/2022 15:52:58' prior: 50571542!
+test07TransferNetReportConsidersTransferEntrance
+
+	| account |
+	
+	account := ReceptiveAccount new.
+	
+	Transfer for: 10 from: account to: ReceptiveAccount new.
+	Transfer for: 7 from: account to: ReceptiveAccount new.
+	Transfer for: 30 from: ReceptiveAccount new to: account.
+	
+	self assert: 'Transfer net = 13.' equals: (TransferNetReport for: account) make.! !
+!TransferNetReport methodsFor: 'initialization' stamp: 'AS 10/24/2022 15:53:15'!
+initializeFor: aTransactions
+	transactions := aTransactions.! !
+!TransferNetReport class methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 15:53:15' prior: 50571459!
+for: aTransactions
+	^self new initializeFor: aTransactions! !
+
+!methodRemoval: TransferNetReport #initializeWith: stamp: 'AS 10/24/2022 15:53:15'!
+initializeWith: aTransactions
+	transactions := aTransactions.!
+!TransferNetReport class methodsFor: 'instance creation' stamp: 'AS 10/24/2022 15:53:30' prior: 50571746!
+for: anAccount
+	^self new initializeFor: anAccount! !
+!TransferNetReport methodsFor: 'initialization' stamp: 'AS 10/24/2022 15:53:42' prior: 50571740!
+initializeFor: anAccount
+	transactions := anAccount.! !
+
+!classDefinition: #TransferNetReport category: 'Portfolio-Solucion' stamp: 'AS 10/24/2022 15:53:52'!
+Object subclass: #TransferNetReport
+	instanceVariableNames: 'transactions account'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+!TransferNetReport methodsFor: 'initialization' stamp: 'AS 10/24/2022 15:53:57' prior: 50571761!
+initializeFor: anAccount
+	account := anAccount.
+	transactions := anAccount.! !
+!TransferNetReport methodsFor: 'evaluating' stamp: 'AS 10/24/2022 15:54:49' prior: 50568528!
+make
+	account makeReport: self.
+	
+	^'Transfer net = ', (transactions inject: 0 into: [:transferNet :aTransaction | aTransaction affectTransferNet: transferNet ]) asString , '.'! !
+
+!classDefinition: #TransferNetReport category: 'Portfolio-Solucion' stamp: 'AS 10/24/2022 15:55:32'!
+Object subclass: #TransferNetReport
+	instanceVariableNames: 'transactions account report'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+!TransferNetReport methodsFor: 'initialization' stamp: 'AS 10/24/2022 15:55:30' prior: 50571775!
+initializeFor: anAccount
+	account := anAccount.
+	report := OrderedCollection new.! !
+
+!classDefinition: #TransferNetReport category: 'Portfolio-Solucion' stamp: 'AS 10/24/2022 15:56:49'!
+Object subclass: #TransferNetReport
+	instanceVariableNames: 'transactions account report transferNett'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+!TransferNetReport methodsFor: 'evaluating' stamp: 'AS 10/24/2022 15:56:47' prior: 50571781!
+make
+	account makeReport: self.
+	
+	^'Transfer net = ', transferNett! !
+!TransferNetReport methodsFor: 'initialization' stamp: 'AS 10/24/2022 15:57:18' prior: 50571799!
+initializeFor: anAccount
+	account := anAccount.
+	transferNett := 0.! !
+
+!testRun: #ReportsTest #test01EmptyAccountOnlyHasZeroBalanceInSummaryReport stamp: 'AS 10/24/2022 15:58:24'!
+PASSED!
+
+!testRun: #ReportsTest #test02AccountSummaryReportHasDeposits stamp: 'AS 10/24/2022 15:58:24'!
+PASSED!
+
+!testRun: #ReportsTest #test03AccountSummaryReportHasWithdraws stamp: 'AS 10/24/2022 15:58:24'!
+PASSED!
+
+!testRun: #ReportsTest #test04AccountSummaryReportHasTransferExit stamp: 'AS 10/24/2022 15:58:24'!
+PASSED!
+
+!testRun: #ReportsTest #test05AccountSummaryReportHasTransferEntrance stamp: 'AS 10/24/2022 15:58:24'!
+PASSED!
+
+!testRun: #ReportsTest #test06TransferNetReportConsidersTransferExit stamp: 'AS 10/24/2022 15:58:24'!
+ERROR!
+
+!testRun: #ReportsTest #test07TransferNetReportConsidersTransferEntrance stamp: 'AS 10/24/2022 15:58:24'!
+ERROR!
+
+!testRun: #ReportsTest #test06TransferNetReportConsidersTransferExit stamp: 'AS 10/24/2022 15:58:26'!
+ERROR!
+!TransferNetReport methodsFor: 'add' stamp: 'AS 10/24/2022 15:58:49'!
+addTransferWithdraw: aTransferWithdraw 
+	self shouldBeImplemented.! !
+!TransferNetReport methodsFor: 'add' stamp: 'AS 10/24/2022 16:00:18' prior: 50571852!
+addTransferWithdraw: aTransferWithdrawToAddToReport
+	transferNett := aTransferWithdrawToAddToReport affectTransferNet: transferNett.! !
+
+!testRun: #ReportsTest #test06TransferNetReportConsidersTransferExit stamp: 'AS 10/24/2022 16:00:40'!
+ERROR!
+!TransferNetReport methodsFor: 'evaluating' stamp: 'AS 10/24/2022 16:00:54' prior: 50571814!
+make
+	account makeReport: self.
+	
+	^'Transfer net = ', transferNett asString! !
+
+!testRun: #ReportsTest #test06TransferNetReportConsidersTransferExit stamp: 'AS 10/24/2022 16:00:55'!
+FAILURE!
+
+^aBalance - self value!
+
+^'Transfer net = ', transferNett asString!
+
+!testRun: #ReportsTest #test06TransferNetReportConsidersTransferExit stamp: 'AS 10/24/2022 16:02:18'!
+FAILURE!
+
+!testRun: #ReportsTest #test06TransferNetReportConsidersTransferExit stamp: 'AS 10/24/2022 16:02:21'!
+PASSED!
+
+!testRun: #PortfolioTest #test01BalanceOfPortfolioWithoutAccountsIsZero stamp: 'AS 10/24/2022 16:02:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test02BalanceOfPortfolioWithAccountsIsSumOfAccountsBalance stamp: 'AS 10/24/2022 16:02:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test03BalanceOfPortfolioIsCalculatedRecursivelyOnPortfolios stamp: 'AS 10/24/2022 16:02:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test04PortfolioWithoutAccountsHasNoRegisteredTransaction stamp: 'AS 10/24/2022 16:02:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasRegisteredItsAccountsTransactions stamp: 'AS 10/24/2022 16:02:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioLooksForRegisteredTransactionsRecursively stamp: 'AS 10/24/2022 16:02:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test07PortfolioHasNoTransactionWhenHasNoAccounts stamp: 'AS 10/24/2022 16:02:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test08PortfolioTransactionsIncludesAllItsAccountsTransactions stamp: 'AS 10/24/2022 16:02:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test09PortfolioTransactionsAreCalculatedRecursively stamp: 'AS 10/24/2022 16:02:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test10PortfolioCanNotIncludeTheSameAccountMoreThanOnce stamp: 'AS 10/24/2022 16:02:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test11PortfolioCanNotIncludeAccountOfItsPortfolios stamp: 'AS 10/24/2022 16:02:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test12PortfolioCanNotIncludeItself stamp: 'AS 10/24/2022 16:02:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test13ComposedPortfolioCanNotHaveParentPortfolioAccount stamp: 'AS 10/24/2022 16:02:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test14ComposedPortfolioCanNotHaveAccountOfAnyRootParentRecursively stamp: 'AS 10/24/2022 16:02:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test15PortfolioCanNotIncludeAnyOfTheComposedAccountOfPortfolioToAdd stamp: 'AS 10/24/2022 16:02:23'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'AS 10/24/2022 16:02:23'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'AS 10/24/2022 16:02:23'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'AS 10/24/2022 16:02:23'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'AS 10/24/2022 16:02:23'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'AS 10/24/2022 16:02:23'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'AS 10/24/2022 16:02:23'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'AS 10/24/2022 16:02:23'!
+PASSED!
+
+!testRun: #ReportsTest #test01EmptyAccountOnlyHasZeroBalanceInSummaryReport stamp: 'AS 10/24/2022 16:02:23'!
+PASSED!
+
+!testRun: #ReportsTest #test02AccountSummaryReportHasDeposits stamp: 'AS 10/24/2022 16:02:23'!
+PASSED!
+
+!testRun: #ReportsTest #test03AccountSummaryReportHasWithdraws stamp: 'AS 10/24/2022 16:02:23'!
+PASSED!
+
+!testRun: #ReportsTest #test04AccountSummaryReportHasTransferExit stamp: 'AS 10/24/2022 16:02:23'!
+PASSED!
+
+!testRun: #ReportsTest #test05AccountSummaryReportHasTransferEntrance stamp: 'AS 10/24/2022 16:02:23'!
+PASSED!
+
+!testRun: #ReportsTest #test06TransferNetReportConsidersTransferExit stamp: 'AS 10/24/2022 16:02:23'!
+FAILURE!
+
+!testRun: #ReportsTest #test07TransferNetReportConsidersTransferEntrance stamp: 'AS 10/24/2022 16:02:23'!
+ERROR!
+
+!testRun: #TransfersTest #test01BalanceIsAffectedAfterTransfer stamp: 'AS 10/24/2022 16:02:23'!
+PASSED!
+
+!testRun: #TransfersTest #test02CanNotTransferFromAndToSameAccount stamp: 'AS 10/24/2022 16:02:23'!
+PASSED!
+
+!testRun: #TransfersTest #test03CanNavigateToAndFromBothTransferLegs stamp: 'AS 10/24/2022 16:02:23'!
+PASSED!
+
+!testRun: #TransfersTest #test04OriginAndDestinyHaveRegisteredWithdrawAndDepositRespectively stamp: 'AS 10/24/2022 16:02:23'!
+PASSED!
+
+!testRun: #TransfersTest #test05TransferAmountShouldNotBeZero stamp: 'AS 10/24/2022 16:02:23'!
+PASSED!
+
+!testRun: #TransfersTest #test06TransferAmountShouldNotBeNegative stamp: 'AS 10/24/2022 16:02:23'!
+PASSED!
+
+!testRun: #PortfolioTest #test01BalanceOfPortfolioWithoutAccountsIsZero stamp: 'AS 10/24/2022 16:02:28'!
+PASSED!
+
+!testRun: #PortfolioTest #test02BalanceOfPortfolioWithAccountsIsSumOfAccountsBalance stamp: 'AS 10/24/2022 16:02:28'!
+PASSED!
+
+!testRun: #PortfolioTest #test03BalanceOfPortfolioIsCalculatedRecursivelyOnPortfolios stamp: 'AS 10/24/2022 16:02:28'!
+PASSED!
+
+!testRun: #PortfolioTest #test04PortfolioWithoutAccountsHasNoRegisteredTransaction stamp: 'AS 10/24/2022 16:02:28'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasRegisteredItsAccountsTransactions stamp: 'AS 10/24/2022 16:02:28'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioLooksForRegisteredTransactionsRecursively stamp: 'AS 10/24/2022 16:02:28'!
+PASSED!
+
+!testRun: #PortfolioTest #test07PortfolioHasNoTransactionWhenHasNoAccounts stamp: 'AS 10/24/2022 16:02:28'!
+PASSED!
+
+!testRun: #PortfolioTest #test08PortfolioTransactionsIncludesAllItsAccountsTransactions stamp: 'AS 10/24/2022 16:02:28'!
+PASSED!
+
+!testRun: #PortfolioTest #test09PortfolioTransactionsAreCalculatedRecursively stamp: 'AS 10/24/2022 16:02:28'!
+PASSED!
+
+!testRun: #PortfolioTest #test10PortfolioCanNotIncludeTheSameAccountMoreThanOnce stamp: 'AS 10/24/2022 16:02:28'!
+PASSED!
+
+!testRun: #PortfolioTest #test11PortfolioCanNotIncludeAccountOfItsPortfolios stamp: 'AS 10/24/2022 16:02:28'!
+PASSED!
+
+!testRun: #PortfolioTest #test12PortfolioCanNotIncludeItself stamp: 'AS 10/24/2022 16:02:28'!
+PASSED!
+
+!testRun: #PortfolioTest #test13ComposedPortfolioCanNotHaveParentPortfolioAccount stamp: 'AS 10/24/2022 16:02:28'!
+PASSED!
+
+!testRun: #PortfolioTest #test14ComposedPortfolioCanNotHaveAccountOfAnyRootParentRecursively stamp: 'AS 10/24/2022 16:02:28'!
+PASSED!
+
+!testRun: #PortfolioTest #test15PortfolioCanNotIncludeAnyOfTheComposedAccountOfPortfolioToAdd stamp: 'AS 10/24/2022 16:02:28'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'AS 10/24/2022 16:02:28'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'AS 10/24/2022 16:02:28'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'AS 10/24/2022 16:02:28'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'AS 10/24/2022 16:02:28'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'AS 10/24/2022 16:02:28'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'AS 10/24/2022 16:02:28'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'AS 10/24/2022 16:02:28'!
+PASSED!
+
+!testRun: #ReportsTest #test01EmptyAccountOnlyHasZeroBalanceInSummaryReport stamp: 'AS 10/24/2022 16:02:28'!
+PASSED!
+
+!testRun: #ReportsTest #test02AccountSummaryReportHasDeposits stamp: 'AS 10/24/2022 16:02:28'!
+PASSED!
+
+!testRun: #ReportsTest #test03AccountSummaryReportHasWithdraws stamp: 'AS 10/24/2022 16:02:28'!
+PASSED!
+
+!testRun: #ReportsTest #test04AccountSummaryReportHasTransferExit stamp: 'AS 10/24/2022 16:02:28'!
+PASSED!
+
+!testRun: #ReportsTest #test05AccountSummaryReportHasTransferEntrance stamp: 'AS 10/24/2022 16:02:28'!
+PASSED!
+
+!testRun: #TransfersTest #test01BalanceIsAffectedAfterTransfer stamp: 'AS 10/24/2022 16:02:28'!
+PASSED!
+
+!testRun: #TransfersTest #test02CanNotTransferFromAndToSameAccount stamp: 'AS 10/24/2022 16:02:28'!
+PASSED!
+
+!testRun: #TransfersTest #test03CanNavigateToAndFromBothTransferLegs stamp: 'AS 10/24/2022 16:02:28'!
+PASSED!
+
+!testRun: #TransfersTest #test04OriginAndDestinyHaveRegisteredWithdrawAndDepositRespectively stamp: 'AS 10/24/2022 16:02:28'!
+PASSED!
+
+!testRun: #TransfersTest #test05TransferAmountShouldNotBeZero stamp: 'AS 10/24/2022 16:02:28'!
+PASSED!
+
+!testRun: #TransfersTest #test06TransferAmountShouldNotBeNegative stamp: 'AS 10/24/2022 16:02:28'!
+PASSED!
+
+!testRun: #ReportsTest #test07TransferNetReportConsidersTransferEntrance stamp: 'AS 10/24/2022 16:02:28'!
+ERROR!
+
+!testRun: #ReportsTest #test06TransferNetReportConsidersTransferExit stamp: 'AS 10/24/2022 16:02:28'!
+FAILURE!
+
+!testRun: #ReportsTest #test06TransferNetReportConsidersTransferExit stamp: 'AS 10/24/2022 16:02:30'!
+FAILURE!
+!TransferNetReport methodsFor: 'evaluating' stamp: 'AS 10/24/2022 16:02:50' prior: 50571868!
+make
+	account makeReport: self.
+	
+	^'Transfer net = ', transferNett asString, '.'! !
+
+!testRun: #ReportsTest #test06TransferNetReportConsidersTransferExit stamp: 'AS 10/24/2022 16:02:51'!
+PASSED!
+
+!testRun: #PortfolioTest #test01BalanceOfPortfolioWithoutAccountsIsZero stamp: 'AS 10/24/2022 16:02:53'!
+PASSED!
+
+!testRun: #PortfolioTest #test02BalanceOfPortfolioWithAccountsIsSumOfAccountsBalance stamp: 'AS 10/24/2022 16:02:53'!
+PASSED!
+
+!testRun: #PortfolioTest #test03BalanceOfPortfolioIsCalculatedRecursivelyOnPortfolios stamp: 'AS 10/24/2022 16:02:53'!
+PASSED!
+
+!testRun: #PortfolioTest #test04PortfolioWithoutAccountsHasNoRegisteredTransaction stamp: 'AS 10/24/2022 16:02:53'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasRegisteredItsAccountsTransactions stamp: 'AS 10/24/2022 16:02:53'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioLooksForRegisteredTransactionsRecursively stamp: 'AS 10/24/2022 16:02:53'!
+PASSED!
+
+!testRun: #PortfolioTest #test07PortfolioHasNoTransactionWhenHasNoAccounts stamp: 'AS 10/24/2022 16:02:53'!
+PASSED!
+
+!testRun: #PortfolioTest #test08PortfolioTransactionsIncludesAllItsAccountsTransactions stamp: 'AS 10/24/2022 16:02:53'!
+PASSED!
+
+!testRun: #PortfolioTest #test09PortfolioTransactionsAreCalculatedRecursively stamp: 'AS 10/24/2022 16:02:53'!
+PASSED!
+
+!testRun: #PortfolioTest #test10PortfolioCanNotIncludeTheSameAccountMoreThanOnce stamp: 'AS 10/24/2022 16:02:53'!
+PASSED!
+
+!testRun: #PortfolioTest #test11PortfolioCanNotIncludeAccountOfItsPortfolios stamp: 'AS 10/24/2022 16:02:53'!
+PASSED!
+
+!testRun: #PortfolioTest #test12PortfolioCanNotIncludeItself stamp: 'AS 10/24/2022 16:02:53'!
+PASSED!
+
+!testRun: #PortfolioTest #test13ComposedPortfolioCanNotHaveParentPortfolioAccount stamp: 'AS 10/24/2022 16:02:53'!
+PASSED!
+
+!testRun: #PortfolioTest #test14ComposedPortfolioCanNotHaveAccountOfAnyRootParentRecursively stamp: 'AS 10/24/2022 16:02:53'!
+PASSED!
+
+!testRun: #PortfolioTest #test15PortfolioCanNotIncludeAnyOfTheComposedAccountOfPortfolioToAdd stamp: 'AS 10/24/2022 16:02:53'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'AS 10/24/2022 16:02:53'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'AS 10/24/2022 16:02:53'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'AS 10/24/2022 16:02:53'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'AS 10/24/2022 16:02:53'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'AS 10/24/2022 16:02:53'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'AS 10/24/2022 16:02:53'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'AS 10/24/2022 16:02:53'!
+PASSED!
+
+!testRun: #ReportsTest #test01EmptyAccountOnlyHasZeroBalanceInSummaryReport stamp: 'AS 10/24/2022 16:02:53'!
+PASSED!
+
+!testRun: #ReportsTest #test02AccountSummaryReportHasDeposits stamp: 'AS 10/24/2022 16:02:53'!
+PASSED!
+
+!testRun: #ReportsTest #test03AccountSummaryReportHasWithdraws stamp: 'AS 10/24/2022 16:02:53'!
+PASSED!
+
+!testRun: #ReportsTest #test04AccountSummaryReportHasTransferExit stamp: 'AS 10/24/2022 16:02:53'!
+PASSED!
+
+!testRun: #ReportsTest #test05AccountSummaryReportHasTransferEntrance stamp: 'AS 10/24/2022 16:02:53'!
+PASSED!
+
+!testRun: #TransfersTest #test01BalanceIsAffectedAfterTransfer stamp: 'AS 10/24/2022 16:02:53'!
+PASSED!
+
+!testRun: #TransfersTest #test02CanNotTransferFromAndToSameAccount stamp: 'AS 10/24/2022 16:02:53'!
+PASSED!
+
+!testRun: #TransfersTest #test03CanNavigateToAndFromBothTransferLegs stamp: 'AS 10/24/2022 16:02:53'!
+PASSED!
+
+!testRun: #TransfersTest #test04OriginAndDestinyHaveRegisteredWithdrawAndDepositRespectively stamp: 'AS 10/24/2022 16:02:53'!
+PASSED!
+
+!testRun: #TransfersTest #test05TransferAmountShouldNotBeZero stamp: 'AS 10/24/2022 16:02:53'!
+PASSED!
+
+!testRun: #TransfersTest #test06TransferAmountShouldNotBeNegative stamp: 'AS 10/24/2022 16:02:53'!
+PASSED!
+
+!testRun: #ReportsTest #test06TransferNetReportConsidersTransferExit stamp: 'AS 10/24/2022 16:02:53'!
+PASSED!
+
+!testRun: #ReportsTest #test07TransferNetReportConsidersTransferEntrance stamp: 'AS 10/24/2022 16:02:53'!
+ERROR!
+
+!testRun: #ReportsTest #test07TransferNetReportConsidersTransferEntrance stamp: 'AS 10/24/2022 16:02:53'!
+ERROR!
+!TransferNetReport methodsFor: 'add' stamp: 'AS 10/24/2022 16:03:09'!
+addTransferDeposit: aTransferDeposit 
+	self shouldBeImplemented.! !
+!TransferNetReport methodsFor: 'add' stamp: 'AS 10/24/2022 16:03:32' prior: 50572291!
+addTransferDeposit: aTransferDepositToAddToReport
+	transferNett := aTransferDepositToAddToReport affectTransferNet: transferNett ! !
+
+!testRun: #ReportsTest #test07TransferNetReportConsidersTransferEntrance stamp: 'AS 10/24/2022 16:03:34'!
+PASSED!
+
+!testRun: #PortfolioTest #test01BalanceOfPortfolioWithoutAccountsIsZero stamp: 'AS 10/24/2022 16:03:36'!
+PASSED!
+
+!testRun: #PortfolioTest #test02BalanceOfPortfolioWithAccountsIsSumOfAccountsBalance stamp: 'AS 10/24/2022 16:03:36'!
+PASSED!
+
+!testRun: #PortfolioTest #test03BalanceOfPortfolioIsCalculatedRecursivelyOnPortfolios stamp: 'AS 10/24/2022 16:03:36'!
+PASSED!
+
+!testRun: #PortfolioTest #test04PortfolioWithoutAccountsHasNoRegisteredTransaction stamp: 'AS 10/24/2022 16:03:36'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasRegisteredItsAccountsTransactions stamp: 'AS 10/24/2022 16:03:36'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioLooksForRegisteredTransactionsRecursively stamp: 'AS 10/24/2022 16:03:36'!
+PASSED!
+
+!testRun: #PortfolioTest #test07PortfolioHasNoTransactionWhenHasNoAccounts stamp: 'AS 10/24/2022 16:03:36'!
+PASSED!
+
+!testRun: #PortfolioTest #test08PortfolioTransactionsIncludesAllItsAccountsTransactions stamp: 'AS 10/24/2022 16:03:36'!
+PASSED!
+
+!testRun: #PortfolioTest #test09PortfolioTransactionsAreCalculatedRecursively stamp: 'AS 10/24/2022 16:03:36'!
+PASSED!
+
+!testRun: #PortfolioTest #test10PortfolioCanNotIncludeTheSameAccountMoreThanOnce stamp: 'AS 10/24/2022 16:03:36'!
+PASSED!
+
+!testRun: #PortfolioTest #test11PortfolioCanNotIncludeAccountOfItsPortfolios stamp: 'AS 10/24/2022 16:03:36'!
+PASSED!
+
+!testRun: #PortfolioTest #test12PortfolioCanNotIncludeItself stamp: 'AS 10/24/2022 16:03:36'!
+PASSED!
+
+!testRun: #PortfolioTest #test13ComposedPortfolioCanNotHaveParentPortfolioAccount stamp: 'AS 10/24/2022 16:03:36'!
+PASSED!
+
+!testRun: #PortfolioTest #test14ComposedPortfolioCanNotHaveAccountOfAnyRootParentRecursively stamp: 'AS 10/24/2022 16:03:36'!
+PASSED!
+
+!testRun: #PortfolioTest #test15PortfolioCanNotIncludeAnyOfTheComposedAccountOfPortfolioToAdd stamp: 'AS 10/24/2022 16:03:36'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'AS 10/24/2022 16:03:36'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'AS 10/24/2022 16:03:36'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'AS 10/24/2022 16:03:36'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'AS 10/24/2022 16:03:36'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'AS 10/24/2022 16:03:36'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'AS 10/24/2022 16:03:36'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'AS 10/24/2022 16:03:36'!
+PASSED!
+
+!testRun: #ReportsTest #test01EmptyAccountOnlyHasZeroBalanceInSummaryReport stamp: 'AS 10/24/2022 16:03:36'!
+PASSED!
+
+!testRun: #ReportsTest #test02AccountSummaryReportHasDeposits stamp: 'AS 10/24/2022 16:03:36'!
+PASSED!
+
+!testRun: #ReportsTest #test03AccountSummaryReportHasWithdraws stamp: 'AS 10/24/2022 16:03:36'!
+PASSED!
+
+!testRun: #ReportsTest #test04AccountSummaryReportHasTransferExit stamp: 'AS 10/24/2022 16:03:36'!
+PASSED!
+
+!testRun: #ReportsTest #test05AccountSummaryReportHasTransferEntrance stamp: 'AS 10/24/2022 16:03:36'!
+PASSED!
+
+!testRun: #ReportsTest #test06TransferNetReportConsidersTransferExit stamp: 'AS 10/24/2022 16:03:36'!
+PASSED!
+
+!testRun: #ReportsTest #test07TransferNetReportConsidersTransferEntrance stamp: 'AS 10/24/2022 16:03:36'!
+PASSED!
+
+!testRun: #TransfersTest #test01BalanceIsAffectedAfterTransfer stamp: 'AS 10/24/2022 16:03:36'!
+PASSED!
+
+!testRun: #TransfersTest #test02CanNotTransferFromAndToSameAccount stamp: 'AS 10/24/2022 16:03:36'!
+PASSED!
+
+!testRun: #TransfersTest #test03CanNavigateToAndFromBothTransferLegs stamp: 'AS 10/24/2022 16:03:36'!
+PASSED!
+
+!testRun: #TransfersTest #test04OriginAndDestinyHaveRegisteredWithdrawAndDepositRespectively stamp: 'AS 10/24/2022 16:03:36'!
+PASSED!
+
+!testRun: #TransfersTest #test05TransferAmountShouldNotBeZero stamp: 'AS 10/24/2022 16:03:36'!
+PASSED!
+
+!testRun: #TransfersTest #test06TransferAmountShouldNotBeNegative stamp: 'AS 10/24/2022 16:03:36'!
+PASSED!
+!ReportsTest methodsFor: 'tests' stamp: 'AS 10/24/2022 16:04:52' prior: 50571714!
+test06TransferNetReportConsidersTransferExit
+
+	| account |
+	
+	account := ReceptiveAccount new.
+	
+	Deposit register: 20 on: account.
+	Withdraw register: 5 on: account.
+	Transfer for: 10 from: account to: ReceptiveAccount new.
+	Transfer for: 7 from: account to: ReceptiveAccount new.
+	
+	self assert: 'Transfer net = -17.' equals: (TransferNetReport for: account) make .! !
+
+!testRun: #ReportsTest #test06TransferNetReportConsidersTransferExit stamp: 'AS 10/24/2022 16:04:52'!
+ERROR!
+
+!testRun: #ReportsTest #test06TransferNetReportConsidersTransferExit stamp: 'AS 10/24/2022 16:04:59'!
+ERROR!
+!TransferNetReport methodsFor: 'add' stamp: 'AS 10/24/2022 16:05:05'!
+addDeposit: aDeposit 
+	self shouldBeImplemented.! !
+!TransferNetReport methodsFor: 'add' stamp: 'AS 10/24/2022 16:05:21' prior: 50572457!
+addDeposit: aDepositToAddToReport
+	transferNett := aDepositToAddToReport affectTransferNet: transferNett.! !
+
+!testRun: #ReportsTest #test06TransferNetReportConsidersTransferExit stamp: 'AS 10/24/2022 16:05:23'!
+ERROR!
+!TransferNetReport methodsFor: 'add' stamp: 'AS 10/24/2022 16:05:32'!
+addWithdraw: aWithdraw 
+	self shouldBeImplemented.! !
+!TransferNetReport methodsFor: 'add' stamp: 'AS 10/24/2022 16:05:51' prior: 50572472!
+addWithdraw: aWithdrawToAddToReport
+	transferNett := aWithdrawToAddToReport affectTransferNet: transferNett.! !
+
+!testRun: #ReportsTest #test06TransferNetReportConsidersTransferExit stamp: 'AS 10/24/2022 16:05:52'!
+PASSED!
+
+!testRun: #ReportsTest #test01EmptyAccountOnlyHasZeroBalanceInSummaryReport stamp: 'AS 10/24/2022 16:05:52'!
+PASSED!
+
+!testRun: #ReportsTest #test02AccountSummaryReportHasDeposits stamp: 'AS 10/24/2022 16:05:52'!
+PASSED!
+
+!testRun: #ReportsTest #test03AccountSummaryReportHasWithdraws stamp: 'AS 10/24/2022 16:05:52'!
+PASSED!
+
+!testRun: #ReportsTest #test04AccountSummaryReportHasTransferExit stamp: 'AS 10/24/2022 16:05:52'!
+PASSED!
+
+!testRun: #ReportsTest #test05AccountSummaryReportHasTransferEntrance stamp: 'AS 10/24/2022 16:05:52'!
+PASSED!
+
+!testRun: #ReportsTest #test06TransferNetReportConsidersTransferExit stamp: 'AS 10/24/2022 16:05:52'!
+PASSED!
+
+!testRun: #ReportsTest #test07TransferNetReportConsidersTransferEntrance stamp: 'AS 10/24/2022 16:05:52'!
+PASSED!
+!ReportsTest methodsFor: 'tests' stamp: 'AS 10/24/2022 16:05:58' prior: 50571726!
+test07TransferNetReportConsidersTransferEntrance
+
+	| account |
+	
+	account := ReceptiveAccount new.
+	
+	Deposit register: 20 on: account.
+	Withdraw register: 5 on: account.
+	Transfer for: 10 from: account to: ReceptiveAccount new.
+	Transfer for: 7 from: account to: ReceptiveAccount new.
+	Transfer for: 30 from: ReceptiveAccount new to: account.
+	
+	self assert: 'Transfer net = 13.' equals: (TransferNetReport for: account) make.! !
+
+!testRun: #ReportsTest #test07TransferNetReportConsidersTransferEntrance stamp: 'AS 10/24/2022 16:05:58'!
+PASSED!
+
+!testRun: #ReportsTest #test01EmptyAccountOnlyHasZeroBalanceInSummaryReport stamp: 'AS 10/24/2022 16:05:58'!
+PASSED!
+
+!testRun: #ReportsTest #test02AccountSummaryReportHasDeposits stamp: 'AS 10/24/2022 16:05:58'!
+PASSED!
+
+!testRun: #ReportsTest #test03AccountSummaryReportHasWithdraws stamp: 'AS 10/24/2022 16:05:58'!
+PASSED!
+
+!testRun: #ReportsTest #test04AccountSummaryReportHasTransferExit stamp: 'AS 10/24/2022 16:05:58'!
+PASSED!
+
+!testRun: #ReportsTest #test05AccountSummaryReportHasTransferEntrance stamp: 'AS 10/24/2022 16:05:58'!
+PASSED!
+
+!testRun: #ReportsTest #test06TransferNetReportConsidersTransferExit stamp: 'AS 10/24/2022 16:05:58'!
+PASSED!
+
+!testRun: #ReportsTest #test07TransferNetReportConsidersTransferEntrance stamp: 'AS 10/24/2022 16:05:58'!
+PASSED!
+!Behavior method!
+initialize
+	#_coverageTracker11885809_ markAsExecuted.
+	#_coverageTracker11885809_
+		cover: (14 to: 21)
+		declaredAt: (14 to: 21)
+		by:
+			(accounts _ #_coverageTracker11885809_
+				coverAll:
+					{44 to: 46}
+				evaluating: [
+					(#_coverageTracker11885809_
+						coverAll:
+							{26 to: 42}
+						by: OrderedCollection) new ]).
+	#_coverageTracker11885809_
+		cover: (50 to: 56)
+		declaredAt: (50 to: 56)
+		by:
+			(parents _ #_coverageTracker11885809_
+				coverAll:
+					{79 to: 81}
+				evaluating: [
+					(#_coverageTracker11885809_
+						coverAll:
+							{61 to: 77}
+						by: OrderedCollection) new ]).! !
+!Behavior method!
+balance
+	#_coverageTracker11885990_ markAsExecuted.
+	^ #_coverageTracker11885990_
+		coverAll:
+			{22 to: 25. 62 to: 69}
+		evaluating: [
+			(#_coverageTracker11885990_
+				cover: (13 to: 20)
+				declaredAt: (13 to: 20)
+				by: accounts)
+				sum: [ :anAccount |
+					#_coverageTracker11885990_
+						coverAll:
+							{52 to: 58}
+						evaluating: [
+							(#_coverageTracker11885990_
+								cover: (42 to: 50)
+								declaredAt: (30 to: 38)
+								by: anAccount) balance ]]
+				ifEmpty: [
+					#_coverageTracker11885990_
+						coverAll:
+							{73 to: 73}
+						byLiteralOrPseudoVariable: 0 ]].! !
+
+!testRun: #PortfolioTest #test01BalanceOfPortfolioWithoutAccountsIsZero stamp: 'AS 10/24/2022 16:06:16'!
+PASSED!
+!Behavior method!
+initialize
+	#_coverageTracker11885893_ markAsExecuted.
+	#_coverageTracker11885893_
+		coverAll:
+			{20 to: 29}
+		evaluating: [ super initialize ].
+	#_coverageTracker11885893_
+		cover: (33 to: 44)
+		declaredAt: (33 to: 44)
+		by:
+			(transactions _ #_coverageTracker11885893_
+				coverAll:
+					{67 to: 69}
+				evaluating: [
+					(#_coverageTracker11885893_
+						coverAll:
+							{49 to: 65}
+						by: OrderedCollection) new ]).! !
+!Behavior method!
+register: aValueOrATransfer on: account
+	| transaction |
+	#_coverageTracker11886002_ markAsExecuted.
+	#_coverageTracker11886002_
+		cover: (62 to: 72)
+		declaredAt: (45 to: 55)
+		by:
+			(transaction _ #_coverageTracker11886002_
+				coverAll:
+					{82 to: 86}
+				evaluating: [
+					(#_coverageTracker11886002_
+						coverAll:
+							{77 to: 80}
+						byLiteralOrPseudoVariable: self) with:
+						(#_coverageTracker11886002_
+							cover: (88 to: 104)
+							declaredAt: (11 to: 27)
+							by: aValueOrATransfer) ]).
+	#_coverageTracker11886002_
+		coverAll:
+			{116 to: 124}
+		evaluating: [
+			(#_coverageTracker11886002_
+				cover: (108 to: 114)
+				declaredAt: (33 to: 39)
+				by: account) register:
+				(#_coverageTracker11886002_
+					cover: (126 to: 136)
+					declaredAt: (45 to: 55)
+					by: transaction) ].
+	^ #_coverageTracker11886002_
+		cover: (145 to: 155)
+		declaredAt: (45 to: 55)
+		by: transaction.! !
+!Behavior method!
+with: aValueOrATransfer
+	#_coverageTracker11885994_ markAsExecuted.
+	^ #_coverageTracker11885994_
+		coverAll:
+			{38 to: 51}
+		evaluating: [
+			(#_coverageTracker11885994_
+				coverAll:
+					{34 to: 36}
+				evaluating: [
+					(#_coverageTracker11885994_
+						coverAll:
+							{29 to: 32}
+						byLiteralOrPseudoVariable: self) new ]) initializeFor:
+				(#_coverageTracker11885994_
+					cover: (53 to: 69)
+					declaredAt: (7 to: 23)
+					by: aValueOrATransfer) ].! !
+!Behavior method!
+initializeFor: aValue
+	#_coverageTracker11886089_ markAsExecuted.
+	#_coverageTracker11886089_
+		cover: (25 to: 29)
+		declaredAt: (25 to: 29)
+		by:
+			(value _ #_coverageTracker11886089_
+				cover: (34 to: 39)
+				declaredAt: (16 to: 21)
+				by: aValue).! !
+!Behavior method!
+register: aTransaction
+	#_coverageTracker11886072_ markAsExecuted.
+	#_coverageTracker11886072_
+		coverAll:
+			{39 to: 42}
+		evaluating: [
+			(#_coverageTracker11886072_
+				cover: (26 to: 37)
+				declaredAt: (26 to: 37)
+				by: transactions) add:
+				(#_coverageTracker11886072_
+					cover: (44 to: 55)
+					declaredAt: (11 to: 22)
+					by: aTransaction) ].! !
+!Behavior method!
+with: anAccount
+	#_coverageTracker11885875_ markAsExecuted.
+	^ [ | cascadeReceiver |
+	cascadeReceiver _ #_coverageTracker11885875_
+		coverAll:
+			{25 to: 27}
+		evaluating: [
+			(#_coverageTracker11885875_
+				coverAll:
+					{20 to: 23}
+				byLiteralOrPseudoVariable: self) new ].
+	#_coverageTracker11885875_
+		coverAll:
+			{32 to: 35}
+		evaluating: [
+			cascadeReceiver add:
+				(#_coverageTracker11885875_
+					cover: (37 to: 45)
+					declaredAt: (7 to: 15)
+					by: anAccount) ].
+	#_coverageTracker11885875_
+		coverAll:
+			{50 to: 57}
+		evaluating: [ cascadeReceiver yourself ]] value.! !
+!Behavior method!
+add: accountToAdd
+	#_coverageTracker11885761_ markAsExecuted.
+	#_coverageTracker11885761_
+		coverAll:
+			{26 to: 38}
+		evaluating: [
+			(#_coverageTracker11885761_
+				coverAll:
+					{21 to: 24}
+				byLiteralOrPseudoVariable: self) assertCanAdd:
+				(#_coverageTracker11885761_
+					cover: (40 to: 51)
+					declaredAt: (6 to: 17)
+					by: accountToAdd) ].
+	#_coverageTracker11885761_
+		coverAll:
+			{67 to: 70}
+		evaluating: [
+			(#_coverageTracker11885761_
+				cover: (58 to: 65)
+				declaredAt: (58 to: 65)
+				by: accounts) add:
+				(#_coverageTracker11885761_
+					cover: (72 to: 83)
+					declaredAt: (6 to: 17)
+					by: accountToAdd) ].
+	#_coverageTracker11885761_
+		coverAll:
+			{100 to: 107}
+		evaluating: [
+			(#_coverageTracker11885761_
+				cover: (87 to: 98)
+				declaredAt: (6 to: 17)
+				by: accountToAdd) addedTo:
+				(#_coverageTracker11885761_
+					coverAll:
+						{109 to: 112}
+					byLiteralOrPseudoVariable: self) ].! !
+!Behavior method!
+assertCanAdd: accountToAdd
+	#_coverageTracker11885731_ markAsExecuted.
+	#_coverageTracker11885731_
+		coverAll:
+			{77 to: 83}
+		evaluating: [
+			(#_coverageTracker11885731_
+				coverAll:
+					{36 to: 61}
+				evaluating: [
+					(#_coverageTracker11885731_
+						coverAll:
+							{31 to: 34}
+						byLiteralOrPseudoVariable: self) anyRootParentIsComposedBy:
+						(#_coverageTracker11885731_
+							cover: (63 to: 74)
+							declaredAt: (15 to: 26)
+							by: accountToAdd) ]) ifTrue: [
+				#_coverageTracker11885731_
+					coverAll:
+						{92 to: 113}
+					evaluating: [
+						(#_coverageTracker11885731_
+							coverAll:
+								{87 to: 90}
+							byLiteralOrPseudoVariable: self) signalCanNotAddAccount ]]].! !
+!Behavior method!
+anyRootParentIsComposedBy: accountToAdd
+	#_coverageTracker11885846_ markAsExecuted.
+	^ #_coverageTracker11885846_
+		coverAll:
+			{61 to: 71}
+		evaluating: [
+			(#_coverageTracker11885846_
+				coverAll:
+					{49 to: 59}
+				evaluating: [
+					(#_coverageTracker11885846_
+						coverAll:
+							{44 to: 47}
+						byLiteralOrPseudoVariable: self) rootParents ]) anySatisfy: [ :aParent |
+				#_coverageTracker11885846_
+					coverAll:
+						{94 to: 106}
+					evaluating: [
+						(#_coverageTracker11885846_
+							cover: (86 to: 92)
+							declaredAt: (76 to: 82)
+							by: aParent) isComposedBy:
+							(#_coverageTracker11885846_
+								cover: (108 to: 119)
+								declaredAt: (28 to: 39)
+								by: accountToAdd) ]]].! !
+!Behavior method!
+rootParents
+	| rootParents |
+	#_coverageTracker11886064_ markAsExecuted.
+	#_coverageTracker11886064_
+		cover: (35 to: 45)
+		declaredAt: (18 to: 28)
+		by:
+			(rootParents _ #_coverageTracker11886064_
+				coverAll:
+					{54 to: 56}
+				evaluating: [
+					(#_coverageTracker11886064_
+						coverAll:
+							{50 to: 52}
+						by: Set) new ]).
+	#_coverageTracker11886064_
+		coverAll:
+			{65 to: 81}
+		evaluating: [
+			(#_coverageTracker11886064_
+				coverAll:
+					{60 to: 63}
+				byLiteralOrPseudoVariable: self) addRootParentsTo:
+				(#_coverageTracker11886064_
+					cover: (83 to: 93)
+					declaredAt: (18 to: 28)
+					by: rootParents) ].
+	^ #_coverageTracker11886064_
+		cover: (101 to: 111)
+		declaredAt: (18 to: 28)
+		by: rootParents.! !
+!Behavior method!
+addRootParentsTo: rootParents
+	#_coverageTracker11886023_ markAsExecuted.
+	#_coverageTracker11886023_
+		coverAll:
+			{44 to: 51. 82 to: 92}
+		evaluating: [
+			(#_coverageTracker11886023_
+				cover: (33 to: 39)
+				declaredAt: (33 to: 39)
+				by: parents)
+				ifEmpty: [
+					#_coverageTracker11886023_
+						coverAll:
+							{67 to: 70}
+						evaluating: [
+							(#_coverageTracker11886023_
+								cover: (55 to: 65)
+								declaredAt: (19 to: 29)
+								by: rootParents) add:
+								(#_coverageTracker11886023_
+									coverAll:
+										{72 to: 75}
+									byLiteralOrPseudoVariable: self) ]]
+				ifNotEmpty: [
+					#_coverageTracker11886023_
+						coverAll:
+							{104 to: 106}
+						evaluating: [
+							(#_coverageTracker11886023_
+								cover: (96 to: 102)
+								declaredAt: (33 to: 39)
+								by: parents) do: [ :aParent |
+								#_coverageTracker11886023_
+									coverAll:
+										{129 to: 145}
+									evaluating: [
+										(#_coverageTracker11886023_
+											cover: (121 to: 127)
+											declaredAt: (111 to: 117)
+											by: aParent) addRootParentsTo:
+											(#_coverageTracker11886023_
+												cover: (147 to: 157)
+												declaredAt: (19 to: 29)
+												by: rootParents) ]]]]].! !
+!Behavior method!
+isComposedBy: anAccount
+	#_coverageTracker11885938_ markAsExecuted.
+	^ #_coverageTracker11885938_
+		coverAll:
+			{46 to: 48}
+		evaluating: [
+			(#_coverageTracker11885938_
+				coverAll:
+					{34 to: 34}
+				evaluating: [
+					(#_coverageTracker11885938_
+						coverAll:
+							{29 to: 32}
+						byLiteralOrPseudoVariable: self) =
+						(#_coverageTracker11885938_
+							cover: (36 to: 44)
+							declaredAt: (15 to: 23)
+							by: anAccount) ]) or: [
+				#_coverageTracker11885938_
+					coverAll:
+						{61 to: 71}
+					evaluating: [
+						(#_coverageTracker11885938_
+							cover: (52 to: 59)
+							declaredAt: (52 to: 59)
+							by: accounts) anySatisfy: [ :composedAccount |
+							#_coverageTracker11885938_
+								coverAll:
+									{136 to: 138}
+								evaluating: [
+									(#_coverageTracker11885938_
+										coverAll:
+											{111 to: 123}
+										evaluating: [
+											(#_coverageTracker11885938_
+												cover: (95 to: 109)
+												declaredAt: (76 to: 90)
+												by: composedAccount) isComposedBy:
+												(#_coverageTracker11885938_
+													cover: (125 to: 133)
+													declaredAt: (15 to: 23)
+													by: anAccount) ]) or: [
+										#_coverageTracker11885938_
+											coverAll:
+												{152 to: 164}
+											evaluating: [
+												(#_coverageTracker11885938_
+													cover: (142 to: 150)
+													declaredAt: (15 to: 23)
+													by: anAccount) isComposedBy:
+													(#_coverageTracker11885938_
+														cover: (166 to: 180)
+														declaredAt: (76 to: 90)
+														by: composedAccount) ]]]]]]].! !
+!Behavior method!
+addedTo: aPortfolio
+	#_coverageTracker11885702_ markAsExecuted.! !
+!Behavior method!
+balance
+	#_coverageTracker11885803_ markAsExecuted.
+	^ #_coverageTracker11885803_
+		coverAll:
+			{28 to: 34. 40 to: 44}
+		evaluating: [
+			(#_coverageTracker11885803_
+				cover: (12 to: 23)
+				declaredAt: (12 to: 23)
+				by: transactions)
+				inject:
+					(#_coverageTracker11885803_
+						coverAll:
+							{36 to: 36}
+						byLiteralOrPseudoVariable: 0)
+				into: [ :currentBalance :transaction |
+					#_coverageTracker11885803_
+						coverAll:
+							{91 to: 104}
+						evaluating: [
+							(#_coverageTracker11885803_
+								cover: (79 to: 89)
+								declaredAt: (65 to: 75)
+								by: transaction) affectBalance:
+								(#_coverageTracker11885803_
+									cover: (106 to: 119)
+									declaredAt: (49 to: 62)
+									by: currentBalance) ]]].! !
+!Behavior method!
+affectBalance: aBalance
+	#_coverageTracker11886012_ markAsExecuted.
+	^ #_coverageTracker11886012_
+		coverAll:
+			{37 to: 37}
+		evaluating: [
+			(#_coverageTracker11886012_
+				cover: (28 to: 35)
+				declaredAt: (16 to: 23)
+				by: aBalance) +
+				(#_coverageTracker11886012_
+					cover: (39 to: 43)
+					declaredAt: (39 to: 43)
+					by: value) ].! !
+
+!testRun: #PortfolioTest #test02BalanceOfPortfolioWithAccountsIsSumOfAccountsBalance stamp: 'AS 10/24/2022 16:06:16'!
+PASSED!
+!Behavior method!
+with: anAccount with: anotherAccount
+	#_coverageTracker11886080_ markAsExecuted.
+	^ [ | cascadeReceiver |
+	cascadeReceiver _ #_coverageTracker11886080_
+		coverAll:
+			{46 to: 48}
+		evaluating: [
+			(#_coverageTracker11886080_
+				coverAll:
+					{41 to: 44}
+				byLiteralOrPseudoVariable: self) new ].
+	#_coverageTracker11886080_
+		coverAll:
+			{53 to: 56}
+		evaluating: [
+			cascadeReceiver add:
+				(#_coverageTracker11886080_
+					cover: (58 to: 66)
+					declaredAt: (7 to: 15)
+					by: anAccount) ].
+	#_coverageTracker11886080_
+		coverAll:
+			{71 to: 74}
+		evaluating: [
+			cascadeReceiver add:
+				(#_coverageTracker11886080_
+					cover: (76 to: 89)
+					declaredAt: (23 to: 36)
+					by: anotherAccount) ].
+	#_coverageTracker11886080_
+		coverAll:
+			{94 to: 101}
+		evaluating: [ cascadeReceiver yourself ]] value.! !
+!Behavior method!
+addedTo: aPortfolio
+	#_coverageTracker11886019_ markAsExecuted.
+	#_coverageTracker11886019_
+		coverAll:
+			{33 to: 36}
+		evaluating: [
+			(#_coverageTracker11886019_
+				cover: (25 to: 31)
+				declaredAt: (25 to: 31)
+				by: parents) add:
+				(#_coverageTracker11886019_
+					cover: (38 to: 47)
+					declaredAt: (10 to: 19)
+					by: aPortfolio) ].! !
+!Behavior method!
+isComposedBy: anAccount
+	#_coverageTracker11885965_ markAsExecuted.
+	^ #_coverageTracker11885965_
+		coverAll:
+			{33 to: 33}
+		evaluating: [
+			(#_coverageTracker11885965_
+				coverAll:
+					{28 to: 31}
+				byLiteralOrPseudoVariable: self) =
+				(#_coverageTracker11885965_
+					cover: (35 to: 43)
+					declaredAt: (15 to: 23)
+					by: anAccount) ].! !
+!Behavior method!
+affectBalance: aBalance
+	#_coverageTracker11885757_ markAsExecuted.
+	^ #_coverageTracker11885757_
+		coverAll:
+			{37 to: 37}
+		evaluating: [
+			(#_coverageTracker11885757_
+				cover: (28 to: 35)
+				declaredAt: (16 to: 23)
+				by: aBalance) -
+				(#_coverageTracker11885757_
+					cover: (39 to: 43)
+					declaredAt: (39 to: 43)
+					by: value) ].! !
+
+!testRun: #PortfolioTest #test03BalanceOfPortfolioIsCalculatedRecursivelyOnPortfolios stamp: 'AS 10/24/2022 16:06:16'!
+PASSED!
+!Behavior method!
+hasRegistered: aTransaction
+	#_coverageTracker11885949_ markAsExecuted.
+	^ #_coverageTracker11885949_
+		coverAll:
+			{41 to: 51}
+		evaluating: [
+			(#_coverageTracker11885949_
+				cover: (32 to: 39)
+				declaredAt: (32 to: 39)
+				by: accounts) anySatisfy: [ :anAccount |
+				#_coverageTracker11885949_
+					coverAll:
+						{78 to: 91}
+					evaluating: [
+						(#_coverageTracker11885949_
+							cover: (68 to: 76)
+							declaredAt: (56 to: 64)
+							by: anAccount) hasRegistered:
+							(#_coverageTracker11885949_
+								cover: (93 to: 104)
+								declaredAt: (16 to: 27)
+								by: aTransaction) ]]].! !
+
+!testRun: #PortfolioTest #test04PortfolioWithoutAccountsHasNoRegisteredTransaction stamp: 'AS 10/24/2022 16:06:16'!
+PASSED!
+!Behavior method!
+hasRegistered: aTransaction
+	#_coverageTracker11885770_ markAsExecuted.
+	^ #_coverageTracker11885770_
+		coverAll:
+			{46 to: 54}
+		evaluating: [
+			(#_coverageTracker11885770_
+				cover: (33 to: 44)
+				declaredAt: (33 to: 44)
+				by: transactions) includes:
+				(#_coverageTracker11885770_
+					cover: (56 to: 67)
+					declaredAt: (16 to: 27)
+					by: aTransaction) ].! !
+
+!testRun: #PortfolioTest #test05PortfolioHasRegisteredItsAccountsTransactions stamp: 'AS 10/24/2022 16:06:16'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioLooksForRegisteredTransactionsRecursively stamp: 'AS 10/24/2022 16:06:16'!
+PASSED!
+!Behavior method!
+transactions
+	| transactions |
+	#_coverageTracker11885955_ markAsExecuted.
+	#_coverageTracker11885955_
+		cover: (37 to: 48)
+		declaredAt: (19 to: 30)
+		by:
+			(transactions _ #_coverageTracker11885955_
+				coverAll:
+					{71 to: 73}
+				evaluating: [
+					(#_coverageTracker11885955_
+						coverAll:
+							{53 to: 69}
+						by: OrderedCollection) new ]).
+	#_coverageTracker11885955_
+		coverAll:
+			{86 to: 88}
+		evaluating: [
+			(#_coverageTracker11885955_
+				cover: (77 to: 84)
+				declaredAt: (77 to: 84)
+				by: accounts) do: [ :anAccount |
+				#_coverageTracker11885955_
+					coverAll:
+						{115 to: 132}
+					evaluating: [
+						(#_coverageTracker11885955_
+							cover: (105 to: 113)
+							declaredAt: (93 to: 101)
+							by: anAccount) addTransactionsTo:
+							(#_coverageTracker11885955_
+								cover: (134 to: 145)
+								declaredAt: (19 to: 30)
+								by: transactions) ]]].
+	^ #_coverageTracker11885955_
+		cover: (154 to: 165)
+		declaredAt: (19 to: 30)
+		by: transactions.! !
+
+!testRun: #PortfolioTest #test07PortfolioHasNoTransactionWhenHasNoAccounts stamp: 'AS 10/24/2022 16:06:16'!
+PASSED!
+!Behavior method!
+addTransactionsTo: aCollectionOfTransactions
+	#_coverageTracker11885856_ markAsExecuted.
+	#_coverageTracker11885856_
+		coverAll:
+			{74 to: 80}
+		evaluating: [
+			(#_coverageTracker11885856_
+				cover: (48 to: 72)
+				declaredAt: (20 to: 44)
+				by: aCollectionOfTransactions) addAll:
+				(#_coverageTracker11885856_
+					cover: (82 to: 93)
+					declaredAt: (82 to: 93)
+					by: transactions) ].! !
+
+!testRun: #PortfolioTest #test08PortfolioTransactionsIncludesAllItsAccountsTransactions stamp: 'AS 10/24/2022 16:06:16'!
+PASSED!
+!Behavior method!
+addTransactionsTo: aCollectionOfTransactions
+	#_coverageTracker11885792_ markAsExecuted.
+	#_coverageTracker11885792_
+		coverAll:
+			{57 to: 59}
+		evaluating: [
+			(#_coverageTracker11885792_
+				cover: (48 to: 55)
+				declaredAt: (48 to: 55)
+				by: accounts) do: [ :anAccount |
+				#_coverageTracker11885792_
+					coverAll:
+						{86 to: 103}
+					evaluating: [
+						(#_coverageTracker11885792_
+							cover: (76 to: 84)
+							declaredAt: (64 to: 72)
+							by: anAccount) addTransactionsTo:
+							(#_coverageTracker11885792_
+								cover: (105 to: 129)
+								declaredAt: (20 to: 44)
+								by: aCollectionOfTransactions) ]]].! !
+
+!testRun: #PortfolioTest #test09PortfolioTransactionsAreCalculatedRecursively stamp: 'AS 10/24/2022 16:06:16'!
+PASSED!
+!Behavior method!
+signalCanNotAddAccount
+	#_coverageTracker11885860_ markAsExecuted.
+	#_coverageTracker11885860_
+		coverAll:
+			{32 to: 37}
+		evaluating: [
+			(#_coverageTracker11885860_
+				coverAll:
+					{27 to: 30}
+				byLiteralOrPseudoVariable: self) error:
+				(#_coverageTracker11885860_
+					coverAll:
+						{50 to: 77}
+					evaluating: [
+						(#_coverageTracker11885860_
+							coverAll:
+								{44 to: 48}
+							evaluating: [
+								(#_coverageTracker11885860_
+									coverAll:
+										{39 to: 42}
+									byLiteralOrPseudoVariable: self) class ]) canNotAddAccountErrorMessage ]) ].! !
+!Behavior method!
+canNotAddAccountErrorMessage
+	#_coverageTracker11885798_ markAsExecuted.
+	^ #_coverageTracker11885798_
+		coverAll:
+			{34 to: 78}
+		byLiteralOrPseudoVariable: 'Can not add repeated account to a portfolio'.! !
+!Behavior method!
+accountsSize
+	#_coverageTracker11886017_ markAsExecuted.
+	^ #_coverageTracker11886017_
+		coverAll:
+			{27 to: 30}
+		evaluating: [
+			(#_coverageTracker11886017_
+				cover: (18 to: 25)
+				declaredAt: (18 to: 25)
+				by: accounts) size ].! !
+!Behavior method!
+accountsIncludes: anAccount
+	#_coverageTracker11886047_ markAsExecuted.
+	^ #_coverageTracker11886047_
+		coverAll:
+			{41 to: 49}
+		evaluating: [
+			(#_coverageTracker11886047_
+				cover: (32 to: 39)
+				declaredAt: (32 to: 39)
+				by: accounts) includes:
+				(#_coverageTracker11886047_
+					cover: (51 to: 59)
+					declaredAt: (19 to: 27)
+					by: anAccount) ].! !
+
+!testRun: #PortfolioTest #test10PortfolioCanNotIncludeTheSameAccountMoreThanOnce stamp: 'AS 10/24/2022 16:06:16'!
+PASSED!
+
+!testRun: #PortfolioTest #test11PortfolioCanNotIncludeAccountOfItsPortfolios stamp: 'AS 10/24/2022 16:06:16'!
+PASSED!
+
+!testRun: #PortfolioTest #test12PortfolioCanNotIncludeItself stamp: 'AS 10/24/2022 16:06:16'!
+PASSED!
+!Behavior method!
+accountsIsEmpty
+	#_coverageTracker11886076_ markAsExecuted.
+	^ #_coverageTracker11886076_
+		coverAll:
+			{30 to: 36}
+		evaluating: [
+			(#_coverageTracker11886076_
+				cover: (21 to: 28)
+				declaredAt: (21 to: 28)
+				by: accounts) isEmpty ].! !
+
+!testRun: #PortfolioTest #test13ComposedPortfolioCanNotHaveParentPortfolioAccount stamp: 'AS 10/24/2022 16:06:16'!
+PASSED!
+
+!testRun: #PortfolioTest #test14ComposedPortfolioCanNotHaveAccountOfAnyRootParentRecursively stamp: 'AS 10/24/2022 16:06:16'!
+PASSED!
+
+!testRun: #PortfolioTest #test15PortfolioCanNotIncludeAnyOfTheComposedAccountOfPortfolioToAdd stamp: 'AS 10/24/2022 16:06:16'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'AS 10/24/2022 16:06:16'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'AS 10/24/2022 16:06:16'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'AS 10/24/2022 16:06:16'!
+PASSED!
+!Behavior method!
+value
+	#_coverageTracker11885963_ markAsExecuted.
+	^ #_coverageTracker11885963_
+		cover: (10 to: 14)
+		declaredAt: (10 to: 14)
+		by: value.! !
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'AS 10/24/2022 16:06:16'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'AS 10/24/2022 16:06:16'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'AS 10/24/2022 16:06:16'!
+PASSED!
+!Behavior method!
+transactions
+	#_coverageTracker11886087_ markAsExecuted.
+	^ #_coverageTracker11886087_
+		coverAll:
+			{32 to: 35}
+		evaluating: [
+			(#_coverageTracker11886087_
+				cover: (19 to: 30)
+				declaredAt: (19 to: 30)
+				by: transactions) copy ].! !
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'AS 10/24/2022 16:06:16'!
+PASSED!
+!Behavior method!
+with: anAccount
+	#_coverageTracker11885932_ markAsExecuted.
+	^ #_coverageTracker11885932_
+		coverAll:
+			{29 to: 42}
+		evaluating: [
+			(#_coverageTracker11885932_
+				coverAll:
+					{25 to: 27}
+				evaluating: [
+					(#_coverageTracker11885932_
+						coverAll:
+							{20 to: 23}
+						byLiteralOrPseudoVariable: self) new ]) initializeFor:
+				(#_coverageTracker11885932_
+					cover: (44 to: 52)
+					declaredAt: (7 to: 15)
+					by: anAccount) ].! !
+!Behavior method!
+initializeFor: anAccount
+	#_coverageTracker11885864_ markAsExecuted.
+	#_coverageTracker11885864_
+		cover: (28 to: 34)
+		declaredAt: (28 to: 34)
+		by:
+			(account _ #_coverageTracker11885864_
+				cover: (39 to: 47)
+				declaredAt: (16 to: 24)
+				by: anAccount).
+	#_coverageTracker11885864_
+		cover: (51 to: 56)
+		declaredAt: (51 to: 56)
+		by:
+			(report _ #_coverageTracker11885864_
+				coverAll:
+					{79 to: 81}
+				evaluating: [
+					(#_coverageTracker11885864_
+						coverAll:
+							{61 to: 77}
+						by: OrderedCollection) new ]).! !
+!Behavior method!
+make
+	#_coverageTracker11885899_ markAsExecuted.
+	#_coverageTracker11885899_
+		coverAll:
+			{16 to: 26}
+		evaluating: [
+			(#_coverageTracker11885899_
+				cover: (8 to: 14)
+				declaredAt: (8 to: 14)
+				by: account) makeReport:
+				(#_coverageTracker11885899_
+					coverAll:
+						{28 to: 31}
+					byLiteralOrPseudoVariable: self) ].
+	#_coverageTracker11885899_
+		coverAll:
+			{42 to: 49}
+		evaluating: [
+			(#_coverageTracker11885899_
+				cover: (35 to: 40)
+				declaredAt: (35 to: 40)
+				by: report) addLast:
+				(#_coverageTracker11885899_
+					coverAll:
+						{63 to: 63}
+					evaluating: [
+						(#_coverageTracker11885899_
+							coverAll:
+								{51 to: 62}
+							byLiteralOrPseudoVariable: 'Balance = ') ,
+							(#_coverageTracker11885899_
+								coverAll:
+									{81 to: 88}
+								evaluating: [
+									(#_coverageTracker11885899_
+										coverAll:
+											{73 to: 79}
+										evaluating: [
+											(#_coverageTracker11885899_
+												cover: (65 to: 71)
+												declaredAt: (8 to: 14)
+												by: account) balance ]) asString ]) ]) ].
+	^ #_coverageTracker11885899_
+		cover: (93 to: 98)
+		declaredAt: (35 to: 40)
+		by: report.! !
+!Behavior method!
+makeReport: aReport
+	#_coverageTracker11885980_ markAsExecuted.
+	#_coverageTracker11885980_
+		coverAll:
+			{36 to: 38}
+		evaluating: [
+			(#_coverageTracker11885980_
+				cover: (23 to: 34)
+				declaredAt: (23 to: 34)
+				by: transactions) do: [ :aTransaction |
+				#_coverageTracker11885980_
+					coverAll:
+						{71 to: 82}
+					evaluating: [
+						(#_coverageTracker11885980_
+							cover: (58 to: 69)
+							declaredAt: (43 to: 54)
+							by: aTransaction) addToReport:
+							(#_coverageTracker11885980_
+								cover: (84 to: 90)
+								declaredAt: (13 to: 19)
+								by: aReport) ]]].! !
+
+!testRun: #ReportsTest #test01EmptyAccountOnlyHasZeroBalanceInSummaryReport stamp: 'AS 10/24/2022 16:06:16'!
+PASSED!
+!Behavior method!
+addToReport: aReportToAddMeTo
+	#_coverageTracker11885998_ markAsExecuted.
+	#_coverageTracker11885998_
+		coverAll:
+			{50 to: 60}
+		evaluating: [
+			(#_coverageTracker11885998_
+				cover: (33 to: 48)
+				declaredAt: (14 to: 29)
+				by: aReportToAddMeTo) addDeposit:
+				(#_coverageTracker11885998_
+					coverAll:
+						{62 to: 65}
+					byLiteralOrPseudoVariable: self) ].! !
+!Behavior method!
+addDeposit: aDepositToAddToReport
+	#_coverageTracker11885967_ markAsExecuted.
+	^ #_coverageTracker11885967_
+		coverAll:
+			{45 to: 48}
+		evaluating: [
+			(#_coverageTracker11885967_
+				cover: (38 to: 43)
+				declaredAt: (38 to: 43)
+				by: report) add:
+				(#_coverageTracker11885967_
+					coverAll:
+						{105 to: 105}
+					evaluating: [
+						(#_coverageTracker11885967_
+							coverAll:
+								{65 to: 65}
+							evaluating: [
+								(#_coverageTracker11885967_
+									coverAll:
+										{50 to: 64}
+									byLiteralOrPseudoVariable: 'Depósito por ') ,
+									(#_coverageTracker11885967_
+										coverAll:
+											{95 to: 102}
+										evaluating: [
+											(#_coverageTracker11885967_
+												coverAll:
+													{89 to: 93}
+												evaluating: [
+													(#_coverageTracker11885967_
+														cover: (67 to: 87)
+														declaredAt: (13 to: 33)
+														by: aDepositToAddToReport) value ]) asString ]) ]) ,
+							(#_coverageTracker11885967_
+								coverAll:
+									{106 to: 108}
+								byLiteralOrPseudoVariable: '.') ]) ].! !
+
+!testRun: #ReportsTest #test02AccountSummaryReportHasDeposits stamp: 'AS 10/24/2022 16:06:16'!
+PASSED!
+!Behavior method!
+addToReport: aReportToAddMeTo
+	#_coverageTracker11885737_ markAsExecuted.
+	#_coverageTracker11885737_
+		coverAll:
+			{50 to: 61}
+		evaluating: [
+			(#_coverageTracker11885737_
+				cover: (33 to: 48)
+				declaredAt: (14 to: 29)
+				by: aReportToAddMeTo) addWithdraw:
+				(#_coverageTracker11885737_
+					coverAll:
+						{63 to: 66}
+					byLiteralOrPseudoVariable: self) ].! !
+!Behavior method!
+addWithdraw: aWithdrawToAddToReport
+	#_coverageTracker11886052_ markAsExecuted.
+	#_coverageTracker11886052_
+		coverAll:
+			{45 to: 48}
+		evaluating: [
+			(#_coverageTracker11886052_
+				cover: (38 to: 43)
+				declaredAt: (38 to: 43)
+				by: report) add:
+				(#_coverageTracker11886052_
+					coverAll:
+						{107 to: 107}
+					evaluating: [
+						(#_coverageTracker11886052_
+							coverAll:
+								{67 to: 67}
+							evaluating: [
+								(#_coverageTracker11886052_
+									coverAll:
+										{50 to: 66}
+									byLiteralOrPseudoVariable: 'Extracción por ') ,
+									(#_coverageTracker11886052_
+										coverAll:
+											{98 to: 105}
+										evaluating: [
+											(#_coverageTracker11886052_
+												coverAll:
+													{92 to: 96}
+												evaluating: [
+													(#_coverageTracker11886052_
+														cover: (69 to: 90)
+														declaredAt: (14 to: 35)
+														by: aWithdrawToAddToReport) value ]) asString ]) ]) ,
+							(#_coverageTracker11886052_
+								coverAll:
+									{108 to: 110}
+								byLiteralOrPseudoVariable: '.') ]) ].! !
+
+!testRun: #ReportsTest #test03AccountSummaryReportHasWithdraws stamp: 'AS 10/24/2022 16:06:16'!
+PASSED!
+!Behavior method!
+for: anAmountToTransfer from: anOriginReceptiveAccount to: aDestinyReceptiveAccount
+	#_coverageTracker11885883_ markAsExecuted.
+	#_coverageTracker11885883_
+		coverAll:
+			{92 to: 116}
+		evaluating: [
+			(#_coverageTracker11885883_
+				coverAll:
+					{87 to: 90}
+				byLiteralOrPseudoVariable: self) assertIsStrictlyPositive:
+				(#_coverageTracker11885883_
+					cover: (118 to: 135)
+					declaredAt: (6 to: 23)
+					by: anAmountToTransfer) ].
+	#_coverageTracker11885883_
+		coverAll:
+			{144 to: 166. 193 to: 195}
+		evaluating: [
+			(#_coverageTracker11885883_
+				coverAll:
+					{139 to: 142}
+				byLiteralOrPseudoVariable: self)
+				assertIsNotSameAccount:
+					(#_coverageTracker11885883_
+						cover: (168 to: 191)
+						declaredAt: (31 to: 54)
+						by: anOriginReceptiveAccount)
+				as:
+					(#_coverageTracker11885883_
+						cover: (197 to: 220)
+						declaredAt: (60 to: 83)
+						by: aDestinyReceptiveAccount) ].
+	^ #_coverageTracker11885883_
+		coverAll:
+			{234 to: 247. 268 to: 272. 299 to: 301}
+		evaluating: [
+			(#_coverageTracker11885883_
+				coverAll:
+					{230 to: 232}
+				evaluating: [
+					(#_coverageTracker11885883_
+						coverAll:
+							{225 to: 228}
+						byLiteralOrPseudoVariable: self) new ])
+				initializeFor:
+					(#_coverageTracker11885883_
+						cover: (249 to: 266)
+						declaredAt: (6 to: 23)
+						by: anAmountToTransfer)
+				from:
+					(#_coverageTracker11885883_
+						cover: (274 to: 297)
+						declaredAt: (31 to: 54)
+						by: anOriginReceptiveAccount)
+				to:
+					(#_coverageTracker11885883_
+						cover: (303 to: 326)
+						declaredAt: (60 to: 83)
+						by: aDestinyReceptiveAccount) ].! !
+!Behavior method!
+assertIsStrictlyPositive: anAmountToTransfer
+	#_coverageTracker11885778_ markAsExecuted.
+	#_coverageTracker11885778_
+		coverAll:
+			{53 to: 68}
+		evaluating: [
+			(#_coverageTracker11885778_
+				coverAll:
+					{48 to: 51}
+				byLiteralOrPseudoVariable: self) assertIsNotZero:
+				(#_coverageTracker11885778_
+					cover: (70 to: 87)
+					declaredAt: (27 to: 44)
+					by: anAmountToTransfer) ].
+	#_coverageTracker11885778_
+		coverAll:
+			{96 to: 115}
+		evaluating: [
+			(#_coverageTracker11885778_
+				coverAll:
+					{91 to: 94}
+				byLiteralOrPseudoVariable: self) assertIsNotNegative:
+				(#_coverageTracker11885778_
+					cover: (117 to: 134)
+					declaredAt: (27 to: 44)
+					by: anAmountToTransfer) ].! !
+!Behavior method!
+assertIsNotZero: anAmountToTransfer
+	#_coverageTracker11885722_ markAsExecuted.
+	^ #_coverageTracker11885722_
+		coverAll:
+			{64 to: 70}
+		evaluating: [
+			(#_coverageTracker11885722_
+				coverAll:
+					{60 to: 60}
+				evaluating: [
+					(#_coverageTracker11885722_
+						cover: (41 to: 58)
+						declaredAt: (18 to: 35)
+						by: anAmountToTransfer) =
+						(#_coverageTracker11885722_
+							coverAll:
+								{62 to: 62}
+							byLiteralOrPseudoVariable: 0) ]) ifTrue: [
+				#_coverageTracker11885722_
+					coverAll:
+						{78 to: 83}
+					evaluating: [
+						(#_coverageTracker11885722_
+							coverAll:
+								{73 to: 76}
+							byLiteralOrPseudoVariable: self) error:
+							(#_coverageTracker11885722_
+								coverAll:
+									{90 to: 139}
+								evaluating: [
+									(#_coverageTracker11885722_
+										coverAll:
+											{85 to: 88}
+										byLiteralOrPseudoVariable: self) transferAmountShouldBeStrictlyPositiveErrorMessage ]) ]]].! !
+!Behavior method!
+assertIsNotNegative: anAmountToTransfer
+	#_coverageTracker11885815_ markAsExecuted.
+	^ #_coverageTracker11885815_
+		coverAll:
+			{68 to: 74}
+		evaluating: [
+			(#_coverageTracker11885815_
+				coverAll:
+					{64 to: 64}
+				evaluating: [
+					(#_coverageTracker11885815_
+						cover: (45 to: 62)
+						declaredAt: (22 to: 39)
+						by: anAmountToTransfer) <
+						(#_coverageTracker11885815_
+							coverAll:
+								{66 to: 66}
+							byLiteralOrPseudoVariable: 0) ]) ifTrue: [
+				#_coverageTracker11885815_
+					coverAll:
+						{82 to: 87}
+					evaluating: [
+						(#_coverageTracker11885815_
+							coverAll:
+								{77 to: 80}
+							byLiteralOrPseudoVariable: self) error:
+							(#_coverageTracker11885815_
+								coverAll:
+									{94 to: 143}
+								evaluating: [
+									(#_coverageTracker11885815_
+										coverAll:
+											{89 to: 92}
+										byLiteralOrPseudoVariable: self) transferAmountShouldBeStrictlyPositiveErrorMessage ]) ]]].! !
+!Behavior method!
+assertIsNotSameAccount: anOriginReceptiveAccount as: aDestinyReceptiveAccount
+	#_coverageTracker11885710_ markAsExecuted.
+	^ #_coverageTracker11885710_
+		coverAll:
+			{135 to: 141}
+		evaluating: [
+			(#_coverageTracker11885710_
+				coverAll:
+					{108 to: 108}
+				evaluating: [
+					(#_coverageTracker11885710_
+						cover: (83 to: 106)
+						declaredAt: (25 to: 48)
+						by: anOriginReceptiveAccount) =
+						(#_coverageTracker11885710_
+							cover: (110 to: 133)
+							declaredAt: (54 to: 77)
+							by: aDestinyReceptiveAccount) ]) ifTrue: [
+				#_coverageTracker11885710_
+					coverAll:
+						{149 to: 154}
+					evaluating: [
+						(#_coverageTracker11885710_
+							coverAll:
+								{144 to: 147}
+							byLiteralOrPseudoVariable: self) error:
+							(#_coverageTracker11885710_
+								coverAll:
+									{161 to: 206}
+								evaluating: [
+									(#_coverageTracker11885710_
+										coverAll:
+											{156 to: 159}
+										byLiteralOrPseudoVariable: self) canNotTransferFromAndToSameAccountErrorMessage ]) ]]].! !
+!Behavior method!
+initializeFor: anAmountToTransfer from: anOriginReceptiveAccount to: aDestinyReceptiveAccount
+	#_coverageTracker11886037_ markAsExecuted.
+	#_coverageTracker11886037_
+		cover: (97 to: 110)
+		declaredAt: (97 to: 110)
+		by:
+			(transferAmount _ #_coverageTracker11886037_
+				cover: (115 to: 132)
+				declaredAt: (16 to: 33)
+				by: anAmountToTransfer).
+	#_coverageTracker11886037_
+		cover: (136 to: 144)
+		declaredAt: (136 to: 144)
+		by:
+			(originLeg _ #_coverageTracker11886037_
+				coverAll:
+					{166 to: 174. 181 to: 183}
+				evaluating: [
+					(#_coverageTracker11886037_
+						coverAll:
+							{149 to: 164}
+						by: TransferWithdraw)
+						register:
+							(#_coverageTracker11886037_
+								coverAll:
+									{176 to: 179}
+								byLiteralOrPseudoVariable: self)
+						on:
+							(#_coverageTracker11886037_
+								cover: (185 to: 208)
+								declaredAt: (41 to: 64)
+								by: anOriginReceptiveAccount) ]).
+	#_coverageTracker11886037_
+		cover: (212 to: 221)
+		declaredAt: (212 to: 221)
+		by:
+			(destinyLeg _ #_coverageTracker11886037_
+				coverAll:
+					{242 to: 250. 257 to: 259}
+				evaluating: [
+					(#_coverageTracker11886037_
+						coverAll:
+							{226 to: 240}
+						by: TransferDeposit)
+						register:
+							(#_coverageTracker11886037_
+								coverAll:
+									{252 to: 255}
+								byLiteralOrPseudoVariable: self)
+						on:
+							(#_coverageTracker11886037_
+								cover: (261 to: 284)
+								declaredAt: (70 to: 93)
+								by: aDestinyReceptiveAccount) ]).! !
+!Behavior method!
+initializeFor: aTransfer
+	#_coverageTracker11885912_ markAsExecuted.
+	#_coverageTracker11885912_
+		cover: (28 to: 35)
+		declaredAt: (28 to: 35)
+		by:
+			(transfer _ #_coverageTracker11885912_
+				cover: (40 to: 48)
+				declaredAt: (16 to: 24)
+				by: aTransfer).! !
+!Behavior method!
+addToReport: aReportToAddMeTo
+	#_coverageTracker11886070_ markAsExecuted.
+	#_coverageTracker11886070_
+		coverAll:
+			{50 to: 69}
+		evaluating: [
+			(#_coverageTracker11886070_
+				cover: (33 to: 48)
+				declaredAt: (14 to: 29)
+				by: aReportToAddMeTo) addTransferWithdraw:
+				(#_coverageTracker11886070_
+					coverAll:
+						{71 to: 74}
+					byLiteralOrPseudoVariable: self) ].! !
+!Behavior method!
+addTransferWithdraw: aTransferWithdrawToAddToReport
+	#_coverageTracker11885743_ markAsExecuted.
+	#_coverageTracker11885743_
+		coverAll:
+			{63 to: 66}
+		evaluating: [
+			(#_coverageTracker11885743_
+				cover: (56 to: 61)
+				declaredAt: (56 to: 61)
+				by: report) add:
+				(#_coverageTracker11885743_
+					coverAll:
+						{146 to: 146}
+					evaluating: [
+						(#_coverageTracker11885743_
+							coverAll:
+								{98 to: 98}
+							evaluating: [
+								(#_coverageTracker11885743_
+									coverAll:
+										{68 to: 97}
+									byLiteralOrPseudoVariable: 'Salida por transferencia de ') ,
+									(#_coverageTracker11885743_
+										coverAll:
+											{137 to: 144}
+										evaluating: [
+											(#_coverageTracker11885743_
+												coverAll:
+													{131 to: 135}
+												evaluating: [
+													(#_coverageTracker11885743_
+														cover: (100 to: 129)
+														declaredAt: (22 to: 51)
+														by: aTransferWithdrawToAddToReport) value ]) asString ]) ]) ,
+							(#_coverageTracker11885743_
+								coverAll:
+									{147 to: 149}
+								byLiteralOrPseudoVariable: '.') ]) ].! !
+!Behavior method!
+value
+	#_coverageTracker11885930_ markAsExecuted.
+	^ #_coverageTracker11885930_
+		coverAll:
+			{19 to: 23}
+		evaluating: [
+			(#_coverageTracker11885930_
+				cover: (10 to: 17)
+				declaredAt: (10 to: 17)
+				by: transfer) value ].! !
+!Behavior method!
+value
+	#_coverageTracker11885739_ markAsExecuted.
+	^ #_coverageTracker11885739_
+		cover: (10 to: 23)
+		declaredAt: (10 to: 23)
+		by: transferAmount.! !
+!Behavior method!
+affectBalance: aBalance
+	#_coverageTracker11885842_ markAsExecuted.
+	^ #_coverageTracker11885842_
+		coverAll:
+			{38 to: 38}
+		evaluating: [
+			(#_coverageTracker11885842_
+				cover: (29 to: 36)
+				declaredAt: (16 to: 23)
+				by: aBalance) -
+				(#_coverageTracker11885842_
+					coverAll:
+						{45 to: 49}
+					evaluating: [
+						(#_coverageTracker11885842_
+							coverAll:
+								{40 to: 43}
+							byLiteralOrPseudoVariable: self) value ]) ].! !
+
+!testRun: #ReportsTest #test04AccountSummaryReportHasTransferExit stamp: 'AS 10/24/2022 16:06:16'!
+PASSED!
+!Behavior method!
+addToReport: aReportToAddMeTo
+	#_coverageTracker11886033_ markAsExecuted.
+	#_coverageTracker11886033_
+		coverAll:
+			{50 to: 68}
+		evaluating: [
+			(#_coverageTracker11886033_
+				cover: (33 to: 48)
+				declaredAt: (14 to: 29)
+				by: aReportToAddMeTo) addTransferDeposit:
+				(#_coverageTracker11886033_
+					coverAll:
+						{70 to: 73}
+					byLiteralOrPseudoVariable: self) ].! !
+!Behavior method!
+addTransferDeposit: aTransferDepositToAddToReport
+	#_coverageTracker11885784_ markAsExecuted.
+	#_coverageTracker11885784_
+		coverAll:
+			{60 to: 63}
+		evaluating: [
+			(#_coverageTracker11885784_
+				cover: (53 to: 58)
+				declaredAt: (53 to: 58)
+				by: report) add:
+				(#_coverageTracker11885784_
+					coverAll:
+						{143 to: 143}
+					evaluating: [
+						(#_coverageTracker11885784_
+							coverAll:
+								{96 to: 96}
+							evaluating: [
+								(#_coverageTracker11885784_
+									coverAll:
+										{65 to: 95}
+									byLiteralOrPseudoVariable: 'Entrada por transferencia de ') ,
+									(#_coverageTracker11885784_
+										coverAll:
+											{134 to: 141}
+										evaluating: [
+											(#_coverageTracker11885784_
+												coverAll:
+													{128 to: 132}
+												evaluating: [
+													(#_coverageTracker11885784_
+														cover: (98 to: 126)
+														declaredAt: (21 to: 49)
+														by: aTransferDepositToAddToReport) value ]) asString ]) ]) ,
+							(#_coverageTracker11885784_
+								coverAll:
+									{144 to: 146}
+								byLiteralOrPseudoVariable: '.') ]) ].! !
+!Behavior method!
+affectBalance: aBalance
+	#_coverageTracker11885868_ markAsExecuted.
+	^ #_coverageTracker11885868_
+		coverAll:
+			{36 to: 36}
+		evaluating: [
+			(#_coverageTracker11885868_
+				cover: (27 to: 34)
+				declaredAt: (16 to: 23)
+				by: aBalance) +
+				(#_coverageTracker11885868_
+					coverAll:
+						{43 to: 47}
+					evaluating: [
+						(#_coverageTracker11885868_
+							coverAll:
+								{38 to: 41}
+							byLiteralOrPseudoVariable: self) value ]) ].! !
+
+!testRun: #ReportsTest #test05AccountSummaryReportHasTransferEntrance stamp: 'AS 10/24/2022 16:06:16'!
+PASSED!
+!Behavior method!
+for: anAccount
+	#_coverageTracker11885718_ markAsExecuted.
+	^ #_coverageTracker11885718_
+		coverAll:
+			{27 to: 40}
+		evaluating: [
+			(#_coverageTracker11885718_
+				coverAll:
+					{23 to: 25}
+				evaluating: [
+					(#_coverageTracker11885718_
+						coverAll:
+							{18 to: 21}
+						byLiteralOrPseudoVariable: self) new ]) initializeFor:
+				(#_coverageTracker11885718_
+					cover: (42 to: 50)
+					declaredAt: (6 to: 14)
+					by: anAccount) ].! !
+!Behavior method!
+initializeFor: anAccount
+	#_coverageTracker11885984_ markAsExecuted.
+	#_coverageTracker11885984_
+		cover: (27 to: 33)
+		declaredAt: (27 to: 33)
+		by:
+			(account _ #_coverageTracker11885984_
+				cover: (38 to: 46)
+				declaredAt: (16 to: 24)
+				by: anAccount).
+	#_coverageTracker11885984_
+		cover: (50 to: 61)
+		declaredAt: (50 to: 61)
+		by:
+			(transferNett _ #_coverageTracker11885984_
+				coverAll:
+					{66 to: 66}
+				byLiteralOrPseudoVariable: 0).! !
+!Behavior method!
+make
+	#_coverageTracker11885751_ markAsExecuted.
+	#_coverageTracker11885751_
+		coverAll:
+			{15 to: 25}
+		evaluating: [
+			(#_coverageTracker11885751_
+				cover: (7 to: 13)
+				declaredAt: (7 to: 13)
+				by: account) makeReport:
+				(#_coverageTracker11885751_
+					coverAll:
+						{27 to: 30}
+					byLiteralOrPseudoVariable: self) ].
+	^ #_coverageTracker11885751_
+		coverAll:
+			{77 to: 77}
+		evaluating: [
+			(#_coverageTracker11885751_
+				coverAll:
+					{54 to: 54}
+				evaluating: [
+					(#_coverageTracker11885751_
+						coverAll:
+							{37 to: 53}
+						byLiteralOrPseudoVariable: 'Transfer net = ') ,
+						(#_coverageTracker11885751_
+							coverAll:
+								{69 to: 76}
+							evaluating: [
+								(#_coverageTracker11885751_
+									cover: (56 to: 67)
+									declaredAt: (56 to: 67)
+									by: transferNett) asString ]) ]) ,
+				(#_coverageTracker11885751_
+					coverAll:
+						{79 to: 81}
+					byLiteralOrPseudoVariable: '.') ].! !
+!Behavior method!
+addDeposit: aDepositToAddToReport
+	#_coverageTracker11885908_ markAsExecuted.
+	#_coverageTracker11885908_
+		cover: (93 to: 104)
+		declaredAt: (36 to: 47)
+		by:
+			(transferNett _ #_coverageTracker11885908_
+				coverAll:
+					{74 to: 91}
+				evaluating: [
+					(#_coverageTracker11885908_
+						cover: (52 to: 72)
+						declaredAt: (13 to: 33)
+						by: aDepositToAddToReport) affectTransferNet:
+						(#_coverageTracker11885908_
+							cover: (36 to: 47)
+							declaredAt: (36 to: 47)
+							by: transferNett) ]).! !
+!Behavior method!
+affectTransferNet: aTransferNet
+	#_coverageTracker11885774_ markAsExecuted.
+	^ #_coverageTracker11885774_
+		coverAll:
+			{36 to: 36}
+		byLiteralOrPseudoVariable: 0.! !
+!Behavior method!
+addWithdraw: aWithdrawToAddToReport
+	#_coverageTracker11885821_ markAsExecuted.
+	#_coverageTracker11885821_
+		cover: (96 to: 107)
+		declaredAt: (38 to: 49)
+		by:
+			(transferNett _ #_coverageTracker11885821_
+				coverAll:
+					{77 to: 94}
+				evaluating: [
+					(#_coverageTracker11885821_
+						cover: (54 to: 75)
+						declaredAt: (14 to: 35)
+						by: aWithdrawToAddToReport) affectTransferNet:
+						(#_coverageTracker11885821_
+							cover: (38 to: 49)
+							declaredAt: (38 to: 49)
+							by: transferNett) ]).! !
+!Behavior method!
+addTransferWithdraw: aTransferWithdrawToAddToReport
+	#_coverageTracker11885852_ markAsExecuted.
+	#_coverageTracker11885852_
+		cover: (120 to: 131)
+		declaredAt: (54 to: 65)
+		by:
+			(transferNett _ #_coverageTracker11885852_
+				coverAll:
+					{101 to: 118}
+				evaluating: [
+					(#_coverageTracker11885852_
+						cover: (70 to: 99)
+						declaredAt: (22 to: 51)
+						by: aTransferWithdrawToAddToReport) affectTransferNet:
+						(#_coverageTracker11885852_
+							cover: (54 to: 65)
+							declaredAt: (54 to: 65)
+							by: transferNett) ]).! !
+!Behavior method!
+affectTransferNet: aTransferNet
+	#_coverageTracker11886060_ markAsExecuted.
+	^ #_coverageTracker11886060_
+		coverAll:
+			{41 to: 54}
+		evaluating: [
+			(#_coverageTracker11886060_
+				coverAll:
+					{36 to: 39}
+				byLiteralOrPseudoVariable: self) affectBalance:
+				(#_coverageTracker11886060_
+					cover: (56 to: 67)
+					declaredAt: (20 to: 31)
+					by: aTransferNet) ].! !
+
+!testRun: #ReportsTest #test06TransferNetReportConsidersTransferExit stamp: 'AS 10/24/2022 16:06:16'!
+PASSED!
+!Behavior method!
+addTransferDeposit: aTransferDepositToAddToReport
+	#_coverageTracker11885825_ markAsExecuted.
+	#_coverageTracker11885825_
+		cover: (117 to: 128)
+		declaredAt: (52 to: 63)
+		by:
+			(transferNett _ #_coverageTracker11885825_
+				coverAll:
+					{98 to: 115}
+				evaluating: [
+					(#_coverageTracker11885825_
+						cover: (68 to: 96)
+						declaredAt: (21 to: 49)
+						by: aTransferDepositToAddToReport) affectTransferNet:
+						(#_coverageTracker11885825_
+							cover: (52 to: 63)
+							declaredAt: (52 to: 63)
+							by: transferNett) ]).! !
+!Behavior method!
+affectTransferNet: aTransferNet
+	#_coverageTracker11885975_ markAsExecuted.
+	^ #_coverageTracker11885975_
+		coverAll:
+			{41 to: 54}
+		evaluating: [
+			(#_coverageTracker11885975_
+				coverAll:
+					{36 to: 39}
+				byLiteralOrPseudoVariable: self) affectBalance:
+				(#_coverageTracker11885975_
+					cover: (56 to: 67)
+					declaredAt: (20 to: 31)
+					by: aTransferNet) ].! !
+
+!testRun: #ReportsTest #test07TransferNetReportConsidersTransferEntrance stamp: 'AS 10/24/2022 16:06:16'!
+PASSED!
+
+!testRun: #TransfersTest #test01BalanceIsAffectedAfterTransfer stamp: 'AS 10/24/2022 16:06:16'!
+PASSED!
+!Behavior method!
+canNotTransferFromAndToSameAccountErrorMessage
+	#_coverageTracker11885922_ markAsExecuted.
+	^ #_coverageTracker11885922_
+		coverAll:
+			{50 to: 93}
+		byLiteralOrPseudoVariable: 'Can not transfer from and to same account!!'.! !
+
+!testRun: #TransfersTest #test02CanNotTransferFromAndToSameAccount stamp: 'AS 10/24/2022 16:06:16'!
+PASSED!
+!Behavior method!
+originLeg
+	#_coverageTracker11885879_ markAsExecuted.
+	^ #_coverageTracker11885879_
+		cover: (13 to: 21)
+		declaredAt: (13 to: 21)
+		by: originLeg.! !
+!Behavior method!
+associatedTransfer
+	#_coverageTracker11885774_ markAsExecuted.
+	^ #_coverageTracker11885774_
+		cover: (22 to: 29)
+		declaredAt: (22 to: 29)
+		by: transfer.! !
+!Behavior method!
+destinyLeg
+	#_coverageTracker11885829_ markAsExecuted.
+	^ #_coverageTracker11885829_
+		cover: (14 to: 23)
+		declaredAt: (14 to: 23)
+		by: destinyLeg.! !
+
+!testRun: #TransfersTest #test03CanNavigateToAndFromBothTransferLegs stamp: 'AS 10/24/2022 16:06:16'!
+PASSED!
+
+!testRun: #TransfersTest #test04OriginAndDestinyHaveRegisteredWithdrawAndDepositRespectively stamp: 'AS 10/24/2022 16:06:16'!
+PASSED!
+!Behavior method!
+transferAmountShouldBeStrictlyPositiveErrorMessage
+	#_coverageTracker11885833_ markAsExecuted.
+	^ #_coverageTracker11885833_
+		coverAll:
+			{54 to: 99}
+		byLiteralOrPseudoVariable: 'Transfer amount should be strictly positive!!'.! !
+
+!testRun: #TransfersTest #test05TransferAmountShouldNotBeZero stamp: 'AS 10/24/2022 16:06:16'!
+PASSED!
+
+!testRun: #TransfersTest #test06TransferAmountShouldNotBeNegative stamp: 'AS 10/24/2022 16:06:16'!
+PASSED!
+
+!classDefinition: #TransferNetReport category: 'Portfolio-Solucion' stamp: 'AS 10/24/2022 16:06:44'!
+Object subclass: #TransferNetReport
+	instanceVariableNames: 'account report transferNett'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classDefinition: #TransferNetReport category: 'Portfolio-Solucion' stamp: 'AS 10/24/2022 16:06:44'!
+Object subclass: #TransferNetReport
+	instanceVariableNames: 'account transferNett'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classDefinition: #TransferNetReport category: 'Portfolio-Solucion' stamp: 'AS 10/24/2022 16:06:48'!
+Object subclass: #TransferNetReport
+	instanceVariableNames: 'account transferNet'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+!TransferNetReport methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 16:06:48' prior: 50571820!
+initializeFor: anAccount
+	account := anAccount.
+	transferNet := 0.! !
+!TransferNetReport methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 16:06:48' prior: 50572296!
+addTransferDeposit: aTransferDepositToAddToReport
+	transferNet := aTransferDepositToAddToReport affectTransferNet: transferNet ! !
+!TransferNetReport methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 16:06:48' prior: 50572149!
+make
+	account makeReport: self.
+	
+	^'Transfer net = ', transferNet asString, '.'! !
+!TransferNetReport methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 16:06:48' prior: 50572477!
+addWithdraw: aWithdrawToAddToReport
+	transferNet := aWithdrawToAddToReport affectTransferNet: transferNet.! !
+!TransferNetReport methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 16:06:48' prior: 50571857!
+addTransferWithdraw: aTransferWithdrawToAddToReport
+	transferNet := aTransferWithdrawToAddToReport affectTransferNet: transferNet.! !
+!TransferNetReport methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 16:06:48' prior: 50572462!
+addDeposit: aDepositToAddToReport
+	transferNet := aDepositToAddToReport affectTransferNet: transferNet.! !
+
+!methodRemoval: Deposit #lineForSummaryReport stamp: 'AS 10/24/2022 16:07:29'!
+lineForSummaryReport
+
+	^'Depósito por ', self value asString ,'.'!
+
+!methodRemoval: Withdraw #lineForSummaryReport stamp: 'AS 10/24/2022 16:07:37'!
+lineForSummaryReport
+
+	^'Extracción por ', self value asString ,'.'!
+
+!methodRemoval: TransferTransaction #lineForSummaryReport stamp: 'AS 10/24/2022 16:07:41'!
+lineForSummaryReport
+	
+	self subclassResponsibility !
+
+!methodRemoval: RegularTransaction #lineForSummaryReport stamp: 'AS 10/24/2022 16:07:47'!
+lineForSummaryReport
+
+	self subclassResponsibility !
+
+!methodRemoval: AccountTransaction #lineForSummaryReport stamp: 'AS 10/24/2022 16:07:50'!
+lineForSummaryReport
+
+	self subclassResponsibility !
+
+!methodRemoval: TransferDeposit #lineForSummaryReport stamp: 'AS 10/24/2022 16:07:55'!
+lineForSummaryReport
+
+	^'Entrada por transferencia de ', self value asString ,'.'!
+
+!methodRemoval: TransferWithdraw #lineForSummaryReport stamp: 'AS 10/24/2022 16:08:00'!
+lineForSummaryReport
+
+	^'Salida por transferencia de ', self value asString ,'.'!
+!ReportsTest methodsFor: 'tests' stamp: 'AS 10/24/2022 16:09:27' prior: 50572436!
+test06TransferNetReportConsidersTransferExit
+
+	| account |
+	
+	account := ReceptiveAccount new.
+	
+	Withdraw register: 5 on: account.
+	Transfer for: 10 from: account to: ReceptiveAccount new.
+	Transfer for: 7 from: account to: ReceptiveAccount new.
+	Deposit register: 20 on: account.
+	
+	self assert: 'Transfer net = -17.' equals: (TransferNetReport for: account) make .! !
+
+!testRun: #ReportsTest #test06TransferNetReportConsidersTransferExit stamp: 'AS 10/24/2022 16:09:28'!
+FAILURE!
+!RegularTransaction methodsFor: 'report' stamp: 'AS 10/24/2022 16:09:44' prior: 50566195 overrides: 50566111!
+affectTransferNet: aTransferNet
+
+	^aTransferNet! !
+
+!testRun: #PortfolioTest #test01BalanceOfPortfolioWithoutAccountsIsZero stamp: 'AS 10/24/2022 16:10:04'!
+PASSED!
+
+!testRun: #PortfolioTest #test02BalanceOfPortfolioWithAccountsIsSumOfAccountsBalance stamp: 'AS 10/24/2022 16:10:04'!
+PASSED!
+
+!testRun: #PortfolioTest #test03BalanceOfPortfolioIsCalculatedRecursivelyOnPortfolios stamp: 'AS 10/24/2022 16:10:04'!
+PASSED!
+
+!testRun: #PortfolioTest #test04PortfolioWithoutAccountsHasNoRegisteredTransaction stamp: 'AS 10/24/2022 16:10:04'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasRegisteredItsAccountsTransactions stamp: 'AS 10/24/2022 16:10:04'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioLooksForRegisteredTransactionsRecursively stamp: 'AS 10/24/2022 16:10:04'!
+PASSED!
+
+!testRun: #PortfolioTest #test07PortfolioHasNoTransactionWhenHasNoAccounts stamp: 'AS 10/24/2022 16:10:04'!
+PASSED!
+
+!testRun: #PortfolioTest #test08PortfolioTransactionsIncludesAllItsAccountsTransactions stamp: 'AS 10/24/2022 16:10:04'!
+PASSED!
+
+!testRun: #PortfolioTest #test09PortfolioTransactionsAreCalculatedRecursively stamp: 'AS 10/24/2022 16:10:04'!
+PASSED!
+
+!testRun: #PortfolioTest #test10PortfolioCanNotIncludeTheSameAccountMoreThanOnce stamp: 'AS 10/24/2022 16:10:04'!
+PASSED!
+
+!testRun: #PortfolioTest #test11PortfolioCanNotIncludeAccountOfItsPortfolios stamp: 'AS 10/24/2022 16:10:04'!
+PASSED!
+
+!testRun: #PortfolioTest #test12PortfolioCanNotIncludeItself stamp: 'AS 10/24/2022 16:10:04'!
+PASSED!
+
+!testRun: #PortfolioTest #test13ComposedPortfolioCanNotHaveParentPortfolioAccount stamp: 'AS 10/24/2022 16:10:04'!
+PASSED!
+
+!testRun: #PortfolioTest #test14ComposedPortfolioCanNotHaveAccountOfAnyRootParentRecursively stamp: 'AS 10/24/2022 16:10:04'!
+PASSED!
+
+!testRun: #PortfolioTest #test15PortfolioCanNotIncludeAnyOfTheComposedAccountOfPortfolioToAdd stamp: 'AS 10/24/2022 16:10:04'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'AS 10/24/2022 16:10:04'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'AS 10/24/2022 16:10:04'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'AS 10/24/2022 16:10:04'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'AS 10/24/2022 16:10:04'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'AS 10/24/2022 16:10:04'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'AS 10/24/2022 16:10:04'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'AS 10/24/2022 16:10:04'!
+PASSED!
+
+!testRun: #ReportsTest #test01EmptyAccountOnlyHasZeroBalanceInSummaryReport stamp: 'AS 10/24/2022 16:10:04'!
+PASSED!
+
+!testRun: #ReportsTest #test02AccountSummaryReportHasDeposits stamp: 'AS 10/24/2022 16:10:04'!
+PASSED!
+
+!testRun: #ReportsTest #test03AccountSummaryReportHasWithdraws stamp: 'AS 10/24/2022 16:10:04'!
+PASSED!
+
+!testRun: #ReportsTest #test04AccountSummaryReportHasTransferExit stamp: 'AS 10/24/2022 16:10:04'!
+PASSED!
+
+!testRun: #ReportsTest #test05AccountSummaryReportHasTransferEntrance stamp: 'AS 10/24/2022 16:10:04'!
+PASSED!
+
+!testRun: #ReportsTest #test06TransferNetReportConsidersTransferExit stamp: 'AS 10/24/2022 16:10:04'!
+PASSED!
+
+!testRun: #ReportsTest #test07TransferNetReportConsidersTransferEntrance stamp: 'AS 10/24/2022 16:10:04'!
+PASSED!
+
+!testRun: #TransfersTest #test01BalanceIsAffectedAfterTransfer stamp: 'AS 10/24/2022 16:10:04'!
+PASSED!
+
+!testRun: #TransfersTest #test02CanNotTransferFromAndToSameAccount stamp: 'AS 10/24/2022 16:10:04'!
+PASSED!
+
+!testRun: #TransfersTest #test03CanNavigateToAndFromBothTransferLegs stamp: 'AS 10/24/2022 16:10:04'!
+PASSED!
+
+!testRun: #TransfersTest #test04OriginAndDestinyHaveRegisteredWithdrawAndDepositRespectively stamp: 'AS 10/24/2022 16:10:04'!
+PASSED!
+
+!testRun: #TransfersTest #test05TransferAmountShouldNotBeZero stamp: 'AS 10/24/2022 16:10:04'!
+PASSED!
+
+!testRun: #TransfersTest #test06TransferAmountShouldNotBeNegative stamp: 'AS 10/24/2022 16:10:04'!
+PASSED!
+!TransferNetReport methodsFor: 'add' stamp: 'AS 10/24/2022 16:12:42' prior: 50574106!
+addDeposit: aDepositToAddToReport
+	transferNet := transferNet + aDepositToAddToReport affectTransferNet: transferNet.! !
+!TransferNetReport methodsFor: 'add' stamp: 'AS 10/24/2022 16:12:49' prior: 50574077!
+addTransferDeposit: aTransferDepositToAddToReport
+	transferNet := transferNet + aTransferDepositToAddToReport affectTransferNet: transferNet ! !
+!TransferNetReport methodsFor: 'add' stamp: 'AS 10/24/2022 16:12:52' prior: 50574098!
+addTransferWithdraw: aTransferWithdrawToAddToReport
+	transferNet := transferNet + aTransferWithdrawToAddToReport affectTransferNet: transferNet.! !
+!TransferNetReport methodsFor: 'add' stamp: 'AS 10/24/2022 16:12:56' prior: 50574091!
+addWithdraw: aWithdrawToAddToReport
+	transferNet := transferNet + aWithdrawToAddToReport affectTransferNet: transferNet.! !
+!RegularTransaction methodsFor: 'report' stamp: 'AS 10/24/2022 16:13:16' prior: 50574165 overrides: 50566111!
+affectTransferNet: aTransferNet
+
+	^0! !
+!TransferDeposit methodsFor: 'report' stamp: 'AS 10/24/2022 16:13:38' prior: 50566106 overrides: 50566117!
+affectTransferNet: aTransferNet
+
+	^self value! !
+!TransferWithdraw methodsFor: 'report' stamp: 'AS 10/24/2022 16:13:58' prior: 50566101 overrides: 50566117!
+affectTransferNet: aTransferNet
+
+	^self value negated ! !
+
+!testRun: #PortfolioTest #test01BalanceOfPortfolioWithoutAccountsIsZero stamp: 'AS 10/24/2022 16:14:02'!
+PASSED!
+
+!testRun: #PortfolioTest #test02BalanceOfPortfolioWithAccountsIsSumOfAccountsBalance stamp: 'AS 10/24/2022 16:14:02'!
+PASSED!
+
+!testRun: #PortfolioTest #test03BalanceOfPortfolioIsCalculatedRecursivelyOnPortfolios stamp: 'AS 10/24/2022 16:14:02'!
+PASSED!
+
+!testRun: #PortfolioTest #test04PortfolioWithoutAccountsHasNoRegisteredTransaction stamp: 'AS 10/24/2022 16:14:02'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasRegisteredItsAccountsTransactions stamp: 'AS 10/24/2022 16:14:02'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioLooksForRegisteredTransactionsRecursively stamp: 'AS 10/24/2022 16:14:02'!
+PASSED!
+
+!testRun: #PortfolioTest #test07PortfolioHasNoTransactionWhenHasNoAccounts stamp: 'AS 10/24/2022 16:14:02'!
+PASSED!
+
+!testRun: #PortfolioTest #test08PortfolioTransactionsIncludesAllItsAccountsTransactions stamp: 'AS 10/24/2022 16:14:02'!
+PASSED!
+
+!testRun: #PortfolioTest #test09PortfolioTransactionsAreCalculatedRecursively stamp: 'AS 10/24/2022 16:14:02'!
+PASSED!
+
+!testRun: #PortfolioTest #test10PortfolioCanNotIncludeTheSameAccountMoreThanOnce stamp: 'AS 10/24/2022 16:14:02'!
+PASSED!
+
+!testRun: #PortfolioTest #test11PortfolioCanNotIncludeAccountOfItsPortfolios stamp: 'AS 10/24/2022 16:14:02'!
+PASSED!
+
+!testRun: #PortfolioTest #test12PortfolioCanNotIncludeItself stamp: 'AS 10/24/2022 16:14:02'!
+PASSED!
+
+!testRun: #PortfolioTest #test13ComposedPortfolioCanNotHaveParentPortfolioAccount stamp: 'AS 10/24/2022 16:14:02'!
+PASSED!
+
+!testRun: #PortfolioTest #test14ComposedPortfolioCanNotHaveAccountOfAnyRootParentRecursively stamp: 'AS 10/24/2022 16:14:02'!
+PASSED!
+
+!testRun: #PortfolioTest #test15PortfolioCanNotIncludeAnyOfTheComposedAccountOfPortfolioToAdd stamp: 'AS 10/24/2022 16:14:02'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'AS 10/24/2022 16:14:02'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'AS 10/24/2022 16:14:02'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'AS 10/24/2022 16:14:02'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'AS 10/24/2022 16:14:02'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'AS 10/24/2022 16:14:02'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'AS 10/24/2022 16:14:02'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'AS 10/24/2022 16:14:02'!
+PASSED!
+
+!testRun: #ReportsTest #test01EmptyAccountOnlyHasZeroBalanceInSummaryReport stamp: 'AS 10/24/2022 16:14:02'!
+PASSED!
+
+!testRun: #ReportsTest #test02AccountSummaryReportHasDeposits stamp: 'AS 10/24/2022 16:14:02'!
+PASSED!
+
+!testRun: #ReportsTest #test03AccountSummaryReportHasWithdraws stamp: 'AS 10/24/2022 16:14:02'!
+PASSED!
+
+!testRun: #ReportsTest #test04AccountSummaryReportHasTransferExit stamp: 'AS 10/24/2022 16:14:02'!
+PASSED!
+
+!testRun: #ReportsTest #test05AccountSummaryReportHasTransferEntrance stamp: 'AS 10/24/2022 16:14:02'!
+PASSED!
+
+!testRun: #ReportsTest #test06TransferNetReportConsidersTransferExit stamp: 'AS 10/24/2022 16:14:02'!
+ERROR!
+
+!testRun: #ReportsTest #test07TransferNetReportConsidersTransferEntrance stamp: 'AS 10/24/2022 16:14:02'!
+ERROR!
+
+!testRun: #TransfersTest #test01BalanceIsAffectedAfterTransfer stamp: 'AS 10/24/2022 16:14:02'!
+PASSED!
+
+!testRun: #TransfersTest #test02CanNotTransferFromAndToSameAccount stamp: 'AS 10/24/2022 16:14:02'!
+PASSED!
+
+!testRun: #TransfersTest #test03CanNavigateToAndFromBothTransferLegs stamp: 'AS 10/24/2022 16:14:02'!
+PASSED!
+
+!testRun: #TransfersTest #test04OriginAndDestinyHaveRegisteredWithdrawAndDepositRespectively stamp: 'AS 10/24/2022 16:14:02'!
+PASSED!
+
+!testRun: #TransfersTest #test05TransferAmountShouldNotBeZero stamp: 'AS 10/24/2022 16:14:02'!
+PASSED!
+
+!testRun: #TransfersTest #test06TransferAmountShouldNotBeNegative stamp: 'AS 10/24/2022 16:14:02'!
+PASSED!
+
+!testRun: #ReportsTest #test06TransferNetReportConsidersTransferExit stamp: 'AS 10/24/2022 16:14:05'!
+ERROR!
+!TransferNetReport methodsFor: 'add' stamp: 'AS 10/24/2022 16:14:38' prior: 50574299!
+addDeposit: aDepositToAddToReport
+	transferNet := transferNet + (aDepositToAddToReport affectTransferNet: transferNet).! !
+!TransferNetReport methodsFor: 'add' stamp: 'AS 10/24/2022 16:14:48' prior: 50574306!
+addTransferDeposit: aTransferDepositToAddToReport
+	transferNet := transferNet + (aTransferDepositToAddToReport affectTransferNet: transferNet)! !
+!TransferNetReport methodsFor: 'add' stamp: 'AS 10/24/2022 16:14:55' prior: 50574314!
+addTransferWithdraw: aTransferWithdrawToAddToReport
+	transferNet := transferNet + (aTransferWithdrawToAddToReport affectTransferNet: transferNet).! !
+!TransferNetReport methodsFor: 'add' stamp: 'AS 10/24/2022 16:15:01' prior: 50574322!
+addWithdraw: aWithdrawToAddToReport
+	transferNet := transferNet + (aWithdrawToAddToReport affectTransferNet: transferNet).! !
+
+!testRun: #ReportsTest #test01EmptyAccountOnlyHasZeroBalanceInSummaryReport stamp: 'AS 10/24/2022 16:15:02'!
+PASSED!
+
+!testRun: #ReportsTest #test02AccountSummaryReportHasDeposits stamp: 'AS 10/24/2022 16:15:02'!
+PASSED!
+
+!testRun: #ReportsTest #test03AccountSummaryReportHasWithdraws stamp: 'AS 10/24/2022 16:15:02'!
+PASSED!
+
+!testRun: #ReportsTest #test04AccountSummaryReportHasTransferExit stamp: 'AS 10/24/2022 16:15:02'!
+PASSED!
+
+!testRun: #ReportsTest #test05AccountSummaryReportHasTransferEntrance stamp: 'AS 10/24/2022 16:15:02'!
+PASSED!
+
+!testRun: #ReportsTest #test06TransferNetReportConsidersTransferExit stamp: 'AS 10/24/2022 16:15:02'!
+PASSED!
+
+!testRun: #ReportsTest #test07TransferNetReportConsidersTransferEntrance stamp: 'AS 10/24/2022 16:15:02'!
+PASSED!
+
+!testRun: #PortfolioTest #test01BalanceOfPortfolioWithoutAccountsIsZero stamp: 'AS 10/24/2022 16:15:04'!
+PASSED!
+
+!testRun: #PortfolioTest #test02BalanceOfPortfolioWithAccountsIsSumOfAccountsBalance stamp: 'AS 10/24/2022 16:15:04'!
+PASSED!
+
+!testRun: #PortfolioTest #test03BalanceOfPortfolioIsCalculatedRecursivelyOnPortfolios stamp: 'AS 10/24/2022 16:15:04'!
+PASSED!
+
+!testRun: #PortfolioTest #test04PortfolioWithoutAccountsHasNoRegisteredTransaction stamp: 'AS 10/24/2022 16:15:04'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasRegisteredItsAccountsTransactions stamp: 'AS 10/24/2022 16:15:05'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioLooksForRegisteredTransactionsRecursively stamp: 'AS 10/24/2022 16:15:05'!
+PASSED!
+
+!testRun: #PortfolioTest #test07PortfolioHasNoTransactionWhenHasNoAccounts stamp: 'AS 10/24/2022 16:15:05'!
+PASSED!
+
+!testRun: #PortfolioTest #test08PortfolioTransactionsIncludesAllItsAccountsTransactions stamp: 'AS 10/24/2022 16:15:05'!
+PASSED!
+
+!testRun: #PortfolioTest #test09PortfolioTransactionsAreCalculatedRecursively stamp: 'AS 10/24/2022 16:15:05'!
+PASSED!
+
+!testRun: #PortfolioTest #test10PortfolioCanNotIncludeTheSameAccountMoreThanOnce stamp: 'AS 10/24/2022 16:15:05'!
+PASSED!
+
+!testRun: #PortfolioTest #test11PortfolioCanNotIncludeAccountOfItsPortfolios stamp: 'AS 10/24/2022 16:15:05'!
+PASSED!
+
+!testRun: #PortfolioTest #test12PortfolioCanNotIncludeItself stamp: 'AS 10/24/2022 16:15:05'!
+PASSED!
+
+!testRun: #PortfolioTest #test13ComposedPortfolioCanNotHaveParentPortfolioAccount stamp: 'AS 10/24/2022 16:15:05'!
+PASSED!
+
+!testRun: #PortfolioTest #test14ComposedPortfolioCanNotHaveAccountOfAnyRootParentRecursively stamp: 'AS 10/24/2022 16:15:05'!
+PASSED!
+
+!testRun: #PortfolioTest #test15PortfolioCanNotIncludeAnyOfTheComposedAccountOfPortfolioToAdd stamp: 'AS 10/24/2022 16:15:05'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'AS 10/24/2022 16:15:05'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'AS 10/24/2022 16:15:05'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'AS 10/24/2022 16:15:05'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'AS 10/24/2022 16:15:05'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'AS 10/24/2022 16:15:05'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'AS 10/24/2022 16:15:05'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'AS 10/24/2022 16:15:05'!
+PASSED!
+
+!testRun: #ReportsTest #test01EmptyAccountOnlyHasZeroBalanceInSummaryReport stamp: 'AS 10/24/2022 16:15:05'!
+PASSED!
+
+!testRun: #ReportsTest #test02AccountSummaryReportHasDeposits stamp: 'AS 10/24/2022 16:15:05'!
+PASSED!
+
+!testRun: #ReportsTest #test03AccountSummaryReportHasWithdraws stamp: 'AS 10/24/2022 16:15:05'!
+PASSED!
+
+!testRun: #ReportsTest #test04AccountSummaryReportHasTransferExit stamp: 'AS 10/24/2022 16:15:05'!
+PASSED!
+
+!testRun: #ReportsTest #test05AccountSummaryReportHasTransferEntrance stamp: 'AS 10/24/2022 16:15:05'!
+PASSED!
+
+!testRun: #ReportsTest #test06TransferNetReportConsidersTransferExit stamp: 'AS 10/24/2022 16:15:05'!
+PASSED!
+
+!testRun: #ReportsTest #test07TransferNetReportConsidersTransferEntrance stamp: 'AS 10/24/2022 16:15:05'!
+PASSED!
+
+!testRun: #TransfersTest #test01BalanceIsAffectedAfterTransfer stamp: 'AS 10/24/2022 16:15:05'!
+PASSED!
+
+!testRun: #TransfersTest #test02CanNotTransferFromAndToSameAccount stamp: 'AS 10/24/2022 16:15:05'!
+PASSED!
+
+!testRun: #TransfersTest #test03CanNavigateToAndFromBothTransferLegs stamp: 'AS 10/24/2022 16:15:05'!
+PASSED!
+
+!testRun: #TransfersTest #test04OriginAndDestinyHaveRegisteredWithdrawAndDepositRespectively stamp: 'AS 10/24/2022 16:15:05'!
+PASSED!
+
+!testRun: #TransfersTest #test05TransferAmountShouldNotBeZero stamp: 'AS 10/24/2022 16:15:05'!
+PASSED!
+
+!testRun: #TransfersTest #test06TransferAmountShouldNotBeNegative stamp: 'AS 10/24/2022 16:15:05'!
+PASSED!
+!AccountTransaction methodsFor: 'report' stamp: 'AS 10/24/2022 16:15:17'!
+affectTransferNet
+
+	self subclassResponsibility ! !
+!RegularTransaction methodsFor: 'report' stamp: 'AS 10/24/2022 16:15:17' overrides: 50574661!
+affectTransferNet
+
+	^0! !
+!TransferTransaction methodsFor: 'report' stamp: 'AS 10/24/2022 16:15:17' overrides: 50574661!
+affectTransferNet
+	
+	self subclassResponsibility ! !
+!TransferDeposit methodsFor: 'report' stamp: 'AS 10/24/2022 16:15:17' overrides: 50574670!
+affectTransferNet
+
+	^self value! !
+!TransferWithdraw methodsFor: 'report' stamp: 'AS 10/24/2022 16:15:17' overrides: 50574670!
+affectTransferNet
+
+	^self value negated ! !
+!TransferNetReport methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 16:15:17' prior: 50574493!
+addTransferWithdraw: aTransferWithdrawToAddToReport
+	transferNet := transferNet + (aTransferWithdrawToAddToReport affectTransferNet).! !
+!TransferNetReport methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 16:15:18' prior: 50574485!
+addTransferDeposit: aTransferDepositToAddToReport
+	transferNet := transferNet + (aTransferDepositToAddToReport affectTransferNet)! !
+!TransferNetReport methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 16:15:18' prior: 50574478!
+addDeposit: aDepositToAddToReport
+	transferNet := transferNet + (aDepositToAddToReport affectTransferNet).! !
+!TransferNetReport methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 16:15:18' prior: 50574501!
+addWithdraw: aWithdrawToAddToReport
+	transferNet := transferNet + (aWithdrawToAddToReport affectTransferNet).! !
+
+!methodRemoval: AccountTransaction #affectTransferNet: stamp: 'AS 10/24/2022 16:15:18'!
+affectTransferNet: aTransferNet
+
+	self subclassResponsibility !
+
+!methodRemoval: RegularTransaction #affectTransferNet: stamp: 'AS 10/24/2022 16:15:18'!
+affectTransferNet: aTransferNet
+
+	^0!
+
+!methodRemoval: TransferTransaction #affectTransferNet: stamp: 'AS 10/24/2022 16:15:18'!
+affectTransferNet: aTransferNet
+	
+	self subclassResponsibility !
+
+!methodRemoval: TransferDeposit #affectTransferNet: stamp: 'AS 10/24/2022 16:15:18'!
+affectTransferNet: aTransferNet
+
+	^self value!
+
+!methodRemoval: TransferWithdraw #affectTransferNet: stamp: 'AS 10/24/2022 16:15:18'!
+affectTransferNet: aTransferNet
+
+	^self value negated !
+
+!testRun: #PortfolioTest #test01BalanceOfPortfolioWithoutAccountsIsZero stamp: 'AS 10/24/2022 16:15:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test02BalanceOfPortfolioWithAccountsIsSumOfAccountsBalance stamp: 'AS 10/24/2022 16:15:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test03BalanceOfPortfolioIsCalculatedRecursivelyOnPortfolios stamp: 'AS 10/24/2022 16:15:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test04PortfolioWithoutAccountsHasNoRegisteredTransaction stamp: 'AS 10/24/2022 16:15:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasRegisteredItsAccountsTransactions stamp: 'AS 10/24/2022 16:15:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioLooksForRegisteredTransactionsRecursively stamp: 'AS 10/24/2022 16:15:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test07PortfolioHasNoTransactionWhenHasNoAccounts stamp: 'AS 10/24/2022 16:15:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test08PortfolioTransactionsIncludesAllItsAccountsTransactions stamp: 'AS 10/24/2022 16:15:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test09PortfolioTransactionsAreCalculatedRecursively stamp: 'AS 10/24/2022 16:15:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test10PortfolioCanNotIncludeTheSameAccountMoreThanOnce stamp: 'AS 10/24/2022 16:15:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test11PortfolioCanNotIncludeAccountOfItsPortfolios stamp: 'AS 10/24/2022 16:15:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test12PortfolioCanNotIncludeItself stamp: 'AS 10/24/2022 16:15:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test13ComposedPortfolioCanNotHaveParentPortfolioAccount stamp: 'AS 10/24/2022 16:15:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test14ComposedPortfolioCanNotHaveAccountOfAnyRootParentRecursively stamp: 'AS 10/24/2022 16:15:27'!
+PASSED!
+
+!testRun: #PortfolioTest #test15PortfolioCanNotIncludeAnyOfTheComposedAccountOfPortfolioToAdd stamp: 'AS 10/24/2022 16:15:27'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'AS 10/24/2022 16:15:27'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'AS 10/24/2022 16:15:27'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'AS 10/24/2022 16:15:27'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'AS 10/24/2022 16:15:27'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'AS 10/24/2022 16:15:27'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'AS 10/24/2022 16:15:27'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'AS 10/24/2022 16:15:27'!
+PASSED!
+
+!testRun: #ReportsTest #test01EmptyAccountOnlyHasZeroBalanceInSummaryReport stamp: 'AS 10/24/2022 16:15:27'!
+PASSED!
+
+!testRun: #ReportsTest #test02AccountSummaryReportHasDeposits stamp: 'AS 10/24/2022 16:15:27'!
+PASSED!
+
+!testRun: #ReportsTest #test03AccountSummaryReportHasWithdraws stamp: 'AS 10/24/2022 16:15:27'!
+PASSED!
+
+!testRun: #ReportsTest #test04AccountSummaryReportHasTransferExit stamp: 'AS 10/24/2022 16:15:27'!
+PASSED!
+
+!testRun: #ReportsTest #test05AccountSummaryReportHasTransferEntrance stamp: 'AS 10/24/2022 16:15:27'!
+PASSED!
+
+!testRun: #ReportsTest #test06TransferNetReportConsidersTransferExit stamp: 'AS 10/24/2022 16:15:27'!
+PASSED!
+
+!testRun: #ReportsTest #test07TransferNetReportConsidersTransferEntrance stamp: 'AS 10/24/2022 16:15:27'!
+PASSED!
+
+!testRun: #TransfersTest #test01BalanceIsAffectedAfterTransfer stamp: 'AS 10/24/2022 16:15:27'!
+PASSED!
+
+!testRun: #TransfersTest #test02CanNotTransferFromAndToSameAccount stamp: 'AS 10/24/2022 16:15:27'!
+PASSED!
+
+!testRun: #TransfersTest #test03CanNavigateToAndFromBothTransferLegs stamp: 'AS 10/24/2022 16:15:27'!
+PASSED!
+
+!testRun: #TransfersTest #test04OriginAndDestinyHaveRegisteredWithdrawAndDepositRespectively stamp: 'AS 10/24/2022 16:15:27'!
+PASSED!
+
+!testRun: #TransfersTest #test05TransferAmountShouldNotBeZero stamp: 'AS 10/24/2022 16:15:27'!
+PASSED!
+
+!testRun: #TransfersTest #test06TransferAmountShouldNotBeNegative stamp: 'AS 10/24/2022 16:15:27'!
+PASSED!
+!AccountTransaction methodsFor: 'report' stamp: 'AS 10/24/2022 16:15:46'!
+valueForTransferNet
+
+	self subclassResponsibility ! !
+!RegularTransaction methodsFor: 'report' stamp: 'AS 10/24/2022 16:15:46' overrides: 50574865!
+valueForTransferNet
+
+	^0! !
+!TransferTransaction methodsFor: 'report' stamp: 'AS 10/24/2022 16:15:46' overrides: 50574865!
+valueForTransferNet
+	
+	self subclassResponsibility ! !
+!TransferDeposit methodsFor: 'report' stamp: 'AS 10/24/2022 16:15:46' overrides: 50574874!
+valueForTransferNet
+
+	^self value! !
+!TransferWithdraw methodsFor: 'report' stamp: 'AS 10/24/2022 16:15:46' overrides: 50574874!
+valueForTransferNet
+
+	^self value negated ! !
+!TransferNetReport methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 16:15:46' prior: 50574707!
+addWithdraw: aWithdrawToAddToReport
+	transferNet := transferNet + (aWithdrawToAddToReport valueForTransferNet).! !
+!TransferNetReport methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 16:15:46' prior: 50574684!
+addTransferWithdraw: aTransferWithdrawToAddToReport
+	transferNet := transferNet + (aTransferWithdrawToAddToReport valueForTransferNet).! !
+!TransferNetReport methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 16:15:46' prior: 50574700!
+addDeposit: aDepositToAddToReport
+	transferNet := transferNet + (aDepositToAddToReport valueForTransferNet).! !
+!TransferNetReport methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 16:15:46' prior: 50574692!
+addTransferDeposit: aTransferDepositToAddToReport
+	transferNet := transferNet + (aTransferDepositToAddToReport valueForTransferNet)! !
+
+!methodRemoval: AccountTransaction #affectTransferNet stamp: 'AS 10/24/2022 16:15:46'!
+affectTransferNet
+
+	self subclassResponsibility !
+
+!methodRemoval: RegularTransaction #affectTransferNet stamp: 'AS 10/24/2022 16:15:46'!
+affectTransferNet
+
+	^0!
+
+!methodRemoval: TransferTransaction #affectTransferNet stamp: 'AS 10/24/2022 16:15:46'!
+affectTransferNet
+	
+	self subclassResponsibility !
+
+!methodRemoval: TransferDeposit #affectTransferNet stamp: 'AS 10/24/2022 16:15:46'!
+affectTransferNet
+
+	^self value!
+
+!methodRemoval: TransferWithdraw #affectTransferNet stamp: 'AS 10/24/2022 16:15:46'!
+affectTransferNet
+
+	^self value negated !
+
+!testRun: #PortfolioTest #test01BalanceOfPortfolioWithoutAccountsIsZero stamp: 'AS 10/24/2022 16:15:51'!
+PASSED!
+
+!testRun: #PortfolioTest #test02BalanceOfPortfolioWithAccountsIsSumOfAccountsBalance stamp: 'AS 10/24/2022 16:15:51'!
+PASSED!
+
+!testRun: #PortfolioTest #test03BalanceOfPortfolioIsCalculatedRecursivelyOnPortfolios stamp: 'AS 10/24/2022 16:15:51'!
+PASSED!
+
+!testRun: #PortfolioTest #test04PortfolioWithoutAccountsHasNoRegisteredTransaction stamp: 'AS 10/24/2022 16:15:51'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasRegisteredItsAccountsTransactions stamp: 'AS 10/24/2022 16:15:51'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioLooksForRegisteredTransactionsRecursively stamp: 'AS 10/24/2022 16:15:51'!
+PASSED!
+
+!testRun: #PortfolioTest #test07PortfolioHasNoTransactionWhenHasNoAccounts stamp: 'AS 10/24/2022 16:15:51'!
+PASSED!
+
+!testRun: #PortfolioTest #test08PortfolioTransactionsIncludesAllItsAccountsTransactions stamp: 'AS 10/24/2022 16:15:51'!
+PASSED!
+
+!testRun: #PortfolioTest #test09PortfolioTransactionsAreCalculatedRecursively stamp: 'AS 10/24/2022 16:15:51'!
+PASSED!
+
+!testRun: #PortfolioTest #test10PortfolioCanNotIncludeTheSameAccountMoreThanOnce stamp: 'AS 10/24/2022 16:15:51'!
+PASSED!
+
+!testRun: #PortfolioTest #test11PortfolioCanNotIncludeAccountOfItsPortfolios stamp: 'AS 10/24/2022 16:15:51'!
+PASSED!
+
+!testRun: #PortfolioTest #test12PortfolioCanNotIncludeItself stamp: 'AS 10/24/2022 16:15:51'!
+PASSED!
+
+!testRun: #PortfolioTest #test13ComposedPortfolioCanNotHaveParentPortfolioAccount stamp: 'AS 10/24/2022 16:15:51'!
+PASSED!
+
+!testRun: #PortfolioTest #test14ComposedPortfolioCanNotHaveAccountOfAnyRootParentRecursively stamp: 'AS 10/24/2022 16:15:51'!
+PASSED!
+
+!testRun: #PortfolioTest #test15PortfolioCanNotIncludeAnyOfTheComposedAccountOfPortfolioToAdd stamp: 'AS 10/24/2022 16:15:51'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'AS 10/24/2022 16:15:51'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'AS 10/24/2022 16:15:51'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'AS 10/24/2022 16:15:51'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'AS 10/24/2022 16:15:51'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'AS 10/24/2022 16:15:51'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'AS 10/24/2022 16:15:51'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'AS 10/24/2022 16:15:51'!
+PASSED!
+
+!testRun: #ReportsTest #test01EmptyAccountOnlyHasZeroBalanceInSummaryReport stamp: 'AS 10/24/2022 16:15:51'!
+PASSED!
+
+!testRun: #ReportsTest #test02AccountSummaryReportHasDeposits stamp: 'AS 10/24/2022 16:15:51'!
+PASSED!
+
+!testRun: #ReportsTest #test03AccountSummaryReportHasWithdraws stamp: 'AS 10/24/2022 16:15:51'!
+PASSED!
+
+!testRun: #ReportsTest #test04AccountSummaryReportHasTransferExit stamp: 'AS 10/24/2022 16:15:51'!
+PASSED!
+
+!testRun: #ReportsTest #test05AccountSummaryReportHasTransferEntrance stamp: 'AS 10/24/2022 16:15:51'!
+PASSED!
+
+!testRun: #ReportsTest #test06TransferNetReportConsidersTransferExit stamp: 'AS 10/24/2022 16:15:51'!
+PASSED!
+
+!testRun: #ReportsTest #test07TransferNetReportConsidersTransferEntrance stamp: 'AS 10/24/2022 16:15:51'!
+PASSED!
+
+!testRun: #TransfersTest #test01BalanceIsAffectedAfterTransfer stamp: 'AS 10/24/2022 16:15:51'!
+PASSED!
+
+!testRun: #TransfersTest #test02CanNotTransferFromAndToSameAccount stamp: 'AS 10/24/2022 16:15:51'!
+PASSED!
+
+!testRun: #TransfersTest #test03CanNavigateToAndFromBothTransferLegs stamp: 'AS 10/24/2022 16:15:51'!
+PASSED!
+
+!testRun: #TransfersTest #test04OriginAndDestinyHaveRegisteredWithdrawAndDepositRespectively stamp: 'AS 10/24/2022 16:15:51'!
+PASSED!
+
+!testRun: #TransfersTest #test05TransferAmountShouldNotBeZero stamp: 'AS 10/24/2022 16:15:51'!
+PASSED!
+
+!testRun: #TransfersTest #test06TransferAmountShouldNotBeNegative stamp: 'AS 10/24/2022 16:15:51'!
+PASSED!
+
+!classDefinition: #AccountReport category: 'Portfolio-Solucion' stamp: 'AS 10/24/2022 16:16:24'!
+Object subclass: #AccountReport
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classDefinition: #SummaryReport category: 'Portfolio-Solucion' stamp: 'AS 10/24/2022 16:16:24'!
+AccountReport subclass: #SummaryReport
+	instanceVariableNames: 'account report'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+AccountReport subclass: #TransferNetReport
+	instanceVariableNames: 'account transferNet'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classDefinition: #TransferNetReport category: 'Portfolio-Solucion' stamp: 'AS 10/24/2022 16:16:35'!
+AccountReport subclass: #TransferNetReport
+	instanceVariableNames: 'account transferNet'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+!AccountReport methodsFor: 'nil' stamp: 'AS 10/24/2022 16:16:48'!
+addDeposit: aDepositToAddToReport
+	
+	self subclassResponsibility ! !
+!AccountReport methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 16:17:02'!
+addWithdraw: aWithdrawToAddToReport
+	
+	self subclassResponsibility ! !
+!AccountReport methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 16:17:10'!
+addTransferDeposit: aTransferDepositToAddToReport
+	
+	self subclassResponsibility ! !
+!AccountReport methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 16:17:21'!
+addTransferWithdraw: aTransferWithdrawToAddToReport
+	
+	self subclassResponsibility ! !
+
+!classDefinition: #SummaryReport category: 'Portfolio-Solucion' stamp: 'AS 10/24/2022 16:17:52'!
+AccountReport subclass: #SummaryReport
+	instanceVariableNames: 'report'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classDefinition: #TransferNetReport category: 'Portfolio-Solucion' stamp: 'AS 10/24/2022 16:17:52'!
+AccountReport subclass: #TransferNetReport
+	instanceVariableNames: 'transferNet'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classDefinition: #AccountReport category: 'Portfolio-Solucion' stamp: 'AS 10/24/2022 16:17:52'!
+Object subclass: #AccountReport
+	instanceVariableNames: 'account'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!classDefinition: #SummaryReport category: 'Portfolio-Solucion' stamp: 'AS 10/24/2022 16:18:02'!
+AccountReport subclass: #SummaryReport
+	instanceVariableNames: 'summaryReport'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+!SummaryReport methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 16:18:02' prior: 50570305!
+initializeFor: anAccount 
+	account := anAccount.
+	summaryReport := OrderedCollection new.! !
+!SummaryReport methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 16:18:02' prior: 50569599 overrides: 50575106!
+addTransferDeposit: aTransferDepositToAddToReport
+
+	summaryReport add: 'Entrada por transferencia de ', aTransferDepositToAddToReport value asString ,'.'! !
+!SummaryReport methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 16:18:02' prior: 50569321!
+make
+
+	account makeReport: self.
+	summaryReport addLast: 'Balance = ', account balance asString.
+	^summaryReport! !
+!SummaryReport methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 16:18:02' prior: 50569498 overrides: 50575101!
+addWithdraw: aWithdrawToAddToReport
+	summaryReport add: 'Extracción por ', aWithdrawToAddToReport value asString ,'.'! !
+!SummaryReport methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 16:18:02' prior: 50569565 overrides: 50575112!
+addTransferWithdraw: aTransferWithdrawToAddToReport
+	
+	summaryReport add: 'Salida por transferencia de ', aTransferWithdrawToAddToReport value asString ,'.'! !
+!SummaryReport methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 16:18:02' prior: 50569314 overrides: 50575096!
+addDeposit: aDepositToAddToReport 
+	^summaryReport add: 'Depósito por ', aDepositToAddToReport value asString  ,'.'! !
+!SummaryReport methodsFor: 'initialization' stamp: 'AS 10/24/2022 16:18:28' overrides: 16920235!
+initialize
+	summaryReport := OrderedCollection new.! !
+!TransferNetReport methodsFor: 'initialization' stamp: 'AS 10/24/2022 16:18:35' overrides: 16920235!
+initialize
+	transferNet := 0.! !
+!SummaryReport methodsFor: 'initialization' stamp: 'AS 10/24/2022 16:18:53' prior: 50575150!
+initializeFor: anAccount 
+	account := anAccount.! !
+!AccountReport methodsFor: 'initialization' stamp: 'AS 10/24/2022 16:18:57'!
+initializeFor: anAccount 
+	account := anAccount.! !
+
+!methodRemoval: SummaryReport #initializeFor: stamp: 'AS 10/24/2022 16:18:57'!
+initializeFor: anAccount 
+	account := anAccount.!
+
+!methodRemoval: TransferNetReport #initializeFor: stamp: 'AS 10/24/2022 16:19:04'!
+initializeFor: anAccount
+	account := anAccount.
+	transferNet := 0.!
+!AccountReport methodsFor: 'evaluating' stamp: 'AS 10/24/2022 16:20:04'!
+make
+	
+	self subclassResponsibility ! !
+
+!testRun: #PortfolioTest #test01BalanceOfPortfolioWithoutAccountsIsZero stamp: 'AS 10/24/2022 16:20:07'!
+PASSED!
+
+!testRun: #PortfolioTest #test02BalanceOfPortfolioWithAccountsIsSumOfAccountsBalance stamp: 'AS 10/24/2022 16:20:07'!
+PASSED!
+
+!testRun: #PortfolioTest #test03BalanceOfPortfolioIsCalculatedRecursivelyOnPortfolios stamp: 'AS 10/24/2022 16:20:07'!
+PASSED!
+
+!testRun: #PortfolioTest #test04PortfolioWithoutAccountsHasNoRegisteredTransaction stamp: 'AS 10/24/2022 16:20:07'!
+PASSED!
+
+!testRun: #PortfolioTest #test05PortfolioHasRegisteredItsAccountsTransactions stamp: 'AS 10/24/2022 16:20:07'!
+PASSED!
+
+!testRun: #PortfolioTest #test06PortfolioLooksForRegisteredTransactionsRecursively stamp: 'AS 10/24/2022 16:20:07'!
+PASSED!
+
+!testRun: #PortfolioTest #test07PortfolioHasNoTransactionWhenHasNoAccounts stamp: 'AS 10/24/2022 16:20:07'!
+PASSED!
+
+!testRun: #PortfolioTest #test08PortfolioTransactionsIncludesAllItsAccountsTransactions stamp: 'AS 10/24/2022 16:20:07'!
+PASSED!
+
+!testRun: #PortfolioTest #test09PortfolioTransactionsAreCalculatedRecursively stamp: 'AS 10/24/2022 16:20:07'!
+PASSED!
+
+!testRun: #PortfolioTest #test10PortfolioCanNotIncludeTheSameAccountMoreThanOnce stamp: 'AS 10/24/2022 16:20:07'!
+PASSED!
+
+!testRun: #PortfolioTest #test11PortfolioCanNotIncludeAccountOfItsPortfolios stamp: 'AS 10/24/2022 16:20:07'!
+PASSED!
+
+!testRun: #PortfolioTest #test12PortfolioCanNotIncludeItself stamp: 'AS 10/24/2022 16:20:07'!
+PASSED!
+
+!testRun: #PortfolioTest #test13ComposedPortfolioCanNotHaveParentPortfolioAccount stamp: 'AS 10/24/2022 16:20:07'!
+PASSED!
+
+!testRun: #PortfolioTest #test14ComposedPortfolioCanNotHaveAccountOfAnyRootParentRecursively stamp: 'AS 10/24/2022 16:20:07'!
+PASSED!
+
+!testRun: #PortfolioTest #test15PortfolioCanNotIncludeAnyOfTheComposedAccountOfPortfolioToAdd stamp: 'AS 10/24/2022 16:20:07'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test01ReceptiveAccountHaveZeroAsBalanceWhenCreated stamp: 'AS 10/24/2022 16:20:07'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test02DepositIncreasesBalanceOnTransactionValue stamp: 'AS 10/24/2022 16:20:07'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test03WithdrawDecreasesBalanceOnTransactionValue stamp: 'AS 10/24/2022 16:20:07'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test04WithdrawValueMustBePositive stamp: 'AS 10/24/2022 16:20:07'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test05ReceptiveAccountKnowsRegisteredTransactions stamp: 'AS 10/24/2022 16:20:07'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test06ReceptiveAccountDoNotKnowNotRegisteredTransactions stamp: 'AS 10/24/2022 16:20:07'!
+PASSED!
+
+!testRun: #ReceptiveAccountTest #test07AccountKnowsItsTransactions stamp: 'AS 10/24/2022 16:20:07'!
+PASSED!
+
+!testRun: #ReportsTest #test01EmptyAccountOnlyHasZeroBalanceInSummaryReport stamp: 'AS 10/24/2022 16:20:07'!
+PASSED!
+
+!testRun: #ReportsTest #test02AccountSummaryReportHasDeposits stamp: 'AS 10/24/2022 16:20:07'!
+PASSED!
+
+!testRun: #ReportsTest #test03AccountSummaryReportHasWithdraws stamp: 'AS 10/24/2022 16:20:07'!
+PASSED!
+
+!testRun: #ReportsTest #test04AccountSummaryReportHasTransferExit stamp: 'AS 10/24/2022 16:20:07'!
+PASSED!
+
+!testRun: #ReportsTest #test05AccountSummaryReportHasTransferEntrance stamp: 'AS 10/24/2022 16:20:07'!
+PASSED!
+
+!testRun: #ReportsTest #test06TransferNetReportConsidersTransferExit stamp: 'AS 10/24/2022 16:20:07'!
+PASSED!
+
+!testRun: #ReportsTest #test07TransferNetReportConsidersTransferEntrance stamp: 'AS 10/24/2022 16:20:07'!
+PASSED!
+
+!testRun: #TransfersTest #test01BalanceIsAffectedAfterTransfer stamp: 'AS 10/24/2022 16:20:07'!
+PASSED!
+
+!testRun: #TransfersTest #test02CanNotTransferFromAndToSameAccount stamp: 'AS 10/24/2022 16:20:07'!
+PASSED!
+
+!testRun: #TransfersTest #test03CanNavigateToAndFromBothTransferLegs stamp: 'AS 10/24/2022 16:20:07'!
+PASSED!
+
+!testRun: #TransfersTest #test04OriginAndDestinyHaveRegisteredWithdrawAndDepositRespectively stamp: 'AS 10/24/2022 16:20:07'!
+PASSED!
+
+!testRun: #TransfersTest #test05TransferAmountShouldNotBeZero stamp: 'AS 10/24/2022 16:20:07'!
+PASSED!
+
+!testRun: #TransfersTest #test06TransferAmountShouldNotBeNegative stamp: 'AS 10/24/2022 16:20:07'!
+PASSED!
+
+----SNAPSHOT----(24 October 2022 16:20:17) CuisUniversity-5481.image priorSource: 7636827!

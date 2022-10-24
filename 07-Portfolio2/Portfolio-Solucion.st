@@ -10,7 +10,7 @@ test01BalanceOfPortfolioWithoutAccountsIsZero
 
 	self assert: 0 equals: Portfolio new balance! !
 
-!PortfolioTest methodsFor: 'tests' stamp: 'NR 5/27/2021 17:36:04'!
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/24/2022 15:42:53'!
 test02BalanceOfPortfolioWithAccountsIsSumOfAccountsBalance
 
 	| account portfolio |
@@ -21,7 +21,7 @@ test02BalanceOfPortfolioWithAccountsIsSumOfAccountsBalance
 	
 	self assert: account balance equals: portfolio balance! !
 
-!PortfolioTest methodsFor: 'tests' stamp: 'HAW 5/25/2019 11:23:25'!
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/24/2022 15:42:53'!
 test03BalanceOfPortfolioIsCalculatedRecursivelyOnPortfolios
 
 	| simplePortfolioAccount simplePortfolio composedPortfolioAccount composedPortofolio |
@@ -36,12 +36,12 @@ test03BalanceOfPortfolioIsCalculatedRecursivelyOnPortfolios
 	
 	self assert: (composedPortfolioAccount balance + simplePortfolio balance) equals: composedPortofolio balance! !
 
-!PortfolioTest methodsFor: 'tests' stamp: 'HAW 5/25/2019 11:43:15'!
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/24/2022 15:42:53'!
 test04PortfolioWithoutAccountsHasNoRegisteredTransaction
 
-	self deny: (Portfolio new hasRegistered: (Deposit for: 100))! !
+	self deny: (Portfolio new hasRegistered: (Deposit with: 100))! !
 
-!PortfolioTest methodsFor: 'tests' stamp: 'HAW 5/25/2019 11:43:11'!
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/24/2022 15:42:53'!
 test05PortfolioHasRegisteredItsAccountsTransactions
 
 	| account portfolio deposit |
@@ -52,7 +52,7 @@ test05PortfolioHasRegisteredItsAccountsTransactions
 	
 	self assert: (portfolio hasRegistered: deposit)! !
 
-!PortfolioTest methodsFor: 'tests' stamp: 'HAW 5/25/2019 11:58:06'!
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/24/2022 15:42:53'!
 test06PortfolioLooksForRegisteredTransactionsRecursively
 
 	| simplePortfolioAccount simplePortfolio composedPortfolioAccount composedPortfolio composedPortfolioAccountWithdraw simplePortfolioAccountDeposit |
@@ -73,7 +73,7 @@ test07PortfolioHasNoTransactionWhenHasNoAccounts
 
 	self assert: Portfolio new transactions isEmpty! !
 
-!PortfolioTest methodsFor: 'tests' stamp: 'NR 6/22/2020 07:31:19'!
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/24/2022 15:42:53'!
 test08PortfolioTransactionsIncludesAllItsAccountsTransactions
 
 	| account portfolio accountDeposit anotherAccount portfolioTransactions anotherAccountWithdraw |
@@ -90,7 +90,7 @@ test08PortfolioTransactionsIncludesAllItsAccountsTransactions
 	self assert: (portfolioTransactions includes: accountDeposit).
 	self assert: (portfolioTransactions includes: anotherAccountWithdraw)! !
 
-!PortfolioTest methodsFor: 'tests' stamp: 'HAW 5/25/2019 11:58:20'!
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/24/2022 15:42:53'!
 test09PortfolioTransactionsAreCalculatedRecursively
 
 	| simplePortfolioAccount simplePortfolio composedPortfolioAccount composedPortfolio composedPortfolioAccountWithdraw simplePortfolioAccountDeposit composedPortfolioTransactions |
@@ -108,7 +108,7 @@ test09PortfolioTransactionsAreCalculatedRecursively
 	self assert: (composedPortfolioTransactions includes: simplePortfolioAccountDeposit).
 	self assert: (composedPortfolioTransactions includes: composedPortfolioAccountWithdraw)! !
 
-!PortfolioTest methodsFor: 'tests' stamp: 'HAW 5/25/2019 11:58:24'!
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/24/2022 15:42:53'!
 test10PortfolioCanNotIncludeTheSameAccountMoreThanOnce
 
 	| account portfolio |
@@ -124,7 +124,7 @@ test10PortfolioCanNotIncludeTheSameAccountMoreThanOnce
 			self assert: 1 equals: portfolio accountsSize.
 			self assert: (portfolio accountsIncludes: account) ]! !
 
-!PortfolioTest methodsFor: 'tests' stamp: 'HAW 5/25/2019 11:58:28'!
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/24/2022 15:42:53'!
 test11PortfolioCanNotIncludeAccountOfItsPortfolios
 
 	| account simplePortfolio composedPortfolio |
@@ -141,7 +141,7 @@ test11PortfolioCanNotIncludeAccountOfItsPortfolios
 			self assert: 1 equals: composedPortfolio accountsSize.
 			self assert: (composedPortfolio accountsIncludes: simplePortfolio) ]! !
 
-!PortfolioTest methodsFor: 'tests' stamp: 'HAW 5/25/2019 11:58:32'!
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/24/2022 15:42:53'!
 test12PortfolioCanNotIncludeItself
 
 	| account simplePortfolio |
@@ -157,7 +157,7 @@ test12PortfolioCanNotIncludeItself
 			self assert: 1 equals: simplePortfolio accountsSize.
 			self assert: (simplePortfolio accountsIncludes: account) ]! !
 
-!PortfolioTest methodsFor: 'tests' stamp: 'HAW 5/25/2019 12:01:51'!
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/24/2022 15:42:53'!
 test13ComposedPortfolioCanNotHaveParentPortfolioAccount
 
 	| account simplePortfolio composedPortfolio |
@@ -174,7 +174,7 @@ test13ComposedPortfolioCanNotHaveParentPortfolioAccount
 			self assert: Portfolio canNotAddAccountErrorMessage equals: anError messageText.
 			self assert: simplePortfolio accountsIsEmpty ]! !
 
-!PortfolioTest methodsFor: 'tests' stamp: 'HAW 5/25/2019 12:12:16'!
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/24/2022 15:42:53'!
 test14ComposedPortfolioCanNotHaveAccountOfAnyRootParentRecursively
 
 	| account leftParentPortfolio leftRootParentPortfolio portfolio rightParentPortfolio rightRootParentPortfolio |
@@ -196,7 +196,7 @@ test14ComposedPortfolioCanNotHaveAccountOfAnyRootParentRecursively
 			self assert: Portfolio canNotAddAccountErrorMessage equals: anError messageText.
 			self assert: portfolio accountsIsEmpty ]! !
 
-!PortfolioTest methodsFor: 'tests' stamp: 'HAW 5/29/2019 16:31:18'!
+!PortfolioTest methodsFor: 'tests' stamp: 'AS 10/24/2022 15:42:53'!
 test15PortfolioCanNotIncludeAnyOfTheComposedAccountOfPortfolioToAdd
 
 	| portfolioToAdd portfolioToModify rootPortfolio sharedAccount |
@@ -278,14 +278,14 @@ test05ReceptiveAccountKnowsRegisteredTransactions
 	self assert: (account hasRegistered: withdraw).
 ! !
 
-!ReceptiveAccountTest methodsFor: 'tests' stamp: 'HAW 5/23/2019 15:20:54'!
+!ReceptiveAccountTest methodsFor: 'tests' stamp: 'AS 10/24/2022 15:42:53'!
 test06ReceptiveAccountDoNotKnowNotRegisteredTransactions
 
 	| account deposit withdraw |
 	
 	account := ReceptiveAccount new.
-	deposit :=  Deposit for: 100.
-	withdraw := Withdraw for: 50.
+	deposit :=  Deposit with: 100.
+	withdraw := Withdraw with: 50.
 		
 	self deny: (account hasRegistered: deposit).
 	self deny: (account hasRegistered:withdraw).
@@ -312,26 +312,26 @@ TestCase subclass: #ReportsTest
 	poolDictionaries: ''
 	category: 'Portfolio-Solucion'!
 
-!ReportsTest methodsFor: 'tests' stamp: 'AS 10/24/2022 15:35:45'!
+!ReportsTest methodsFor: 'tests' stamp: 'AS 10/24/2022 15:42:53'!
 test01EmptyAccountOnlyHasZeroBalanceInSummaryReport
 
 	| account |
 	account := ReceptiveAccount new.
 	
-	self assert: 'Balance = 0' equals: (SummaryReport for: account ) make first.! !
+	self assert: 'Balance = 0' equals: (SummaryReport with: account ) make first.! !
 
-!ReportsTest methodsFor: 'tests' stamp: 'AS 10/24/2022 15:35:45'!
+!ReportsTest methodsFor: 'tests' stamp: 'AS 10/24/2022 15:42:53'!
 test02AccountSummaryReportHasDeposits
 
 	| account summaryReport |
 	account := ReceptiveAccount new.
 	Deposit register: 20 on: account.
 	
-	summaryReport := (SummaryReport for: account ) make.
+	summaryReport := (SummaryReport with: account ) make.
 	self assert: 'Depósito por 20.' equals: summaryReport first.
 	self assert: 'Balance = 20' equals: summaryReport second.! !
 
-!ReportsTest methodsFor: 'tests' stamp: 'AS 10/24/2022 15:35:45'!
+!ReportsTest methodsFor: 'tests' stamp: 'AS 10/24/2022 15:42:53'!
 test03AccountSummaryReportHasWithdraws
 
 	| account summaryReport |
@@ -339,12 +339,12 @@ test03AccountSummaryReportHasWithdraws
 	Deposit register: 20 on: account.
 	Withdraw register: 5 on: account.
 	
-	summaryReport := (SummaryReport for: account ) make.
+	summaryReport := (SummaryReport with: account ) make.
 	self assert: 'Depósito por 20.' equals: summaryReport first.
 	self assert: 'Extracción por 5.' equals: summaryReport second.
 	self assert: 'Balance = 15' equals: summaryReport third.! !
 
-!ReportsTest methodsFor: 'tests' stamp: 'AS 10/24/2022 15:35:45'!
+!ReportsTest methodsFor: 'tests' stamp: 'AS 10/24/2022 15:42:53'!
 test04AccountSummaryReportHasTransferExit
 
 	| account summaryReport |
@@ -353,13 +353,13 @@ test04AccountSummaryReportHasTransferExit
 	Withdraw register: 5 on: account.
 	Transfer for: 10 from: account to: ReceptiveAccount new.
 	
-	summaryReport := (SummaryReport for: account ) make.
+	summaryReport := (SummaryReport with: account ) make.
 	self assert: 'Depósito por 20.' equals: summaryReport first.
 	self assert: 'Extracción por 5.' equals: summaryReport second.
 	self assert: 'Salida por transferencia de 10.' equals: summaryReport third.
 	self assert: 'Balance = 5' equals: summaryReport fourth.! !
 
-!ReportsTest methodsFor: 'tests' stamp: 'AS 10/24/2022 15:35:45'!
+!ReportsTest methodsFor: 'tests' stamp: 'AS 10/24/2022 15:42:53'!
 test05AccountSummaryReportHasTransferEntrance
 
 	| account summaryReport |
@@ -369,37 +369,41 @@ test05AccountSummaryReportHasTransferEntrance
 	Transfer for: 10 from: account to: ReceptiveAccount new.
 	Transfer for: 27 from: ReceptiveAccount new to: account.
 	
-	summaryReport := (SummaryReport for: account ) make.
+	summaryReport := (SummaryReport with: account ) make.
 	self assert: 'Depósito por 20.' equals: summaryReport first.
 	self assert: 'Extracción por 5.' equals: summaryReport second.
 	self assert: 'Salida por transferencia de 10.' equals: summaryReport third.
 	self assert: 'Entrada por transferencia de 27.' equals: summaryReport fourth.
 	self assert: 'Balance = 32' equals: summaryReport fifth.! !
 
-!ReportsTest methodsFor: 'tests' stamp: 'AS 10/24/2022 13:02:03'!
+!ReportsTest methodsFor: 'tests' stamp: 'AS 10/24/2022 16:09:27'!
 test06TransferNetReportConsidersTransferExit
 
 	| account |
 	
 	account := ReceptiveAccount new.
 	
+	Withdraw register: 5 on: account.
 	Transfer for: 10 from: account to: ReceptiveAccount new.
 	Transfer for: 7 from: account to: ReceptiveAccount new.
+	Deposit register: 20 on: account.
 	
-	self assert: 'Transfer net = -17.' equals: (TransferNetReport with: account transactions) make .! !
+	self assert: 'Transfer net = -17.' equals: (TransferNetReport for: account) make .! !
 
-!ReportsTest methodsFor: 'tests' stamp: 'AS 10/24/2022 13:02:11'!
+!ReportsTest methodsFor: 'tests' stamp: 'AS 10/24/2022 16:05:58'!
 test07TransferNetReportConsidersTransferEntrance
 
 	| account |
 	
 	account := ReceptiveAccount new.
 	
+	Deposit register: 20 on: account.
+	Withdraw register: 5 on: account.
 	Transfer for: 10 from: account to: ReceptiveAccount new.
 	Transfer for: 7 from: account to: ReceptiveAccount new.
 	Transfer for: 30 from: ReceptiveAccount new to: account.
 	
-	self assert: 'Transfer net = 13.' equals: (TransferNetReport with: account transactions) make.! !
+	self assert: 'Transfer net = 13.' equals: (TransferNetReport for: account) make.! !
 
 
 !classDefinition: #TransfersTest category: 'Portfolio-Solucion'!
@@ -650,7 +654,7 @@ canNotAddAccountErrorMessage
 	
 	^'Can not add repeated account to a portfolio'! !
 
-!Portfolio class methodsFor: 'as yet unclassified' stamp: 'HAW 5/25/2019 11:18:21'!
+!Portfolio class methodsFor: 'as yet unclassified' stamp: 'AS 10/24/2022 15:42:53'!
 with: anAccount
 
 	^self new 
@@ -730,6 +734,140 @@ makeReport: aReport
 ! !
 
 
+!classDefinition: #AccountReport category: 'Portfolio-Solucion'!
+Object subclass: #AccountReport
+	instanceVariableNames: 'account'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!AccountReport methodsFor: 'add' stamp: 'AS 10/24/2022 16:16:48'!
+addDeposit: aDepositToAddToReport
+	
+	self subclassResponsibility ! !
+
+!AccountReport methodsFor: 'add' stamp: 'AS 10/24/2022 16:17:10'!
+addTransferDeposit: aTransferDepositToAddToReport
+	
+	self subclassResponsibility ! !
+
+!AccountReport methodsFor: 'add' stamp: 'AS 10/24/2022 16:17:21'!
+addTransferWithdraw: aTransferWithdrawToAddToReport
+	
+	self subclassResponsibility ! !
+
+!AccountReport methodsFor: 'add' stamp: 'AS 10/24/2022 16:17:02'!
+addWithdraw: aWithdrawToAddToReport
+	
+	self subclassResponsibility ! !
+
+
+!AccountReport methodsFor: 'initialization' stamp: 'AS 10/24/2022 16:18:57'!
+initializeFor: anAccount 
+	account := anAccount.! !
+
+
+!AccountReport methodsFor: 'evaluating' stamp: 'AS 10/24/2022 16:20:04'!
+make
+	
+	self subclassResponsibility ! !
+
+
+!classDefinition: #SummaryReport category: 'Portfolio-Solucion'!
+AccountReport subclass: #SummaryReport
+	instanceVariableNames: 'summaryReport'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!SummaryReport methodsFor: 'initialization' stamp: 'AS 10/24/2022 16:18:28'!
+initialize
+	summaryReport := OrderedCollection new.! !
+
+
+!SummaryReport methodsFor: 'evaluating' stamp: 'AS 10/24/2022 16:18:02'!
+make
+
+	account makeReport: self.
+	summaryReport addLast: 'Balance = ', account balance asString.
+	^summaryReport! !
+
+
+!SummaryReport methodsFor: 'add' stamp: 'AS 10/24/2022 16:18:02'!
+addDeposit: aDepositToAddToReport 
+	^summaryReport add: 'Depósito por ', aDepositToAddToReport value asString  ,'.'! !
+
+!SummaryReport methodsFor: 'add' stamp: 'AS 10/24/2022 16:18:02'!
+addTransferDeposit: aTransferDepositToAddToReport
+
+	summaryReport add: 'Entrada por transferencia de ', aTransferDepositToAddToReport value asString ,'.'! !
+
+!SummaryReport methodsFor: 'add' stamp: 'AS 10/24/2022 16:18:02'!
+addTransferWithdraw: aTransferWithdrawToAddToReport
+	
+	summaryReport add: 'Salida por transferencia de ', aTransferWithdrawToAddToReport value asString ,'.'! !
+
+!SummaryReport methodsFor: 'add' stamp: 'AS 10/24/2022 16:18:02'!
+addWithdraw: aWithdrawToAddToReport
+	summaryReport add: 'Extracción por ', aWithdrawToAddToReport value asString ,'.'! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'SummaryReport class' category: 'Portfolio-Solucion'!
+SummaryReport class
+	instanceVariableNames: ''!
+
+!SummaryReport class methodsFor: 'instance creation' stamp: 'AS 10/24/2022 15:42:53'!
+with: anAccount 
+	^self new initializeFor: anAccount ! !
+
+
+!classDefinition: #TransferNetReport category: 'Portfolio-Solucion'!
+AccountReport subclass: #TransferNetReport
+	instanceVariableNames: 'transferNet'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'Portfolio-Solucion'!
+
+!TransferNetReport methodsFor: 'initialization' stamp: 'AS 10/24/2022 16:18:35'!
+initialize
+	transferNet := 0.! !
+
+
+!TransferNetReport methodsFor: 'evaluating' stamp: 'AS 10/24/2022 16:06:48'!
+make
+	account makeReport: self.
+	
+	^'Transfer net = ', transferNet asString, '.'! !
+
+
+!TransferNetReport methodsFor: 'add' stamp: 'AS 10/24/2022 16:15:46'!
+addDeposit: aDepositToAddToReport
+	transferNet := transferNet + (aDepositToAddToReport valueForTransferNet).! !
+
+!TransferNetReport methodsFor: 'add' stamp: 'AS 10/24/2022 16:15:46'!
+addTransferDeposit: aTransferDepositToAddToReport
+	transferNet := transferNet + (aTransferDepositToAddToReport valueForTransferNet)! !
+
+!TransferNetReport methodsFor: 'add' stamp: 'AS 10/24/2022 16:15:46'!
+addTransferWithdraw: aTransferWithdrawToAddToReport
+	transferNet := transferNet + (aTransferWithdrawToAddToReport valueForTransferNet).! !
+
+!TransferNetReport methodsFor: 'add' stamp: 'AS 10/24/2022 16:15:46'!
+addWithdraw: aWithdrawToAddToReport
+	transferNet := transferNet + (aWithdrawToAddToReport valueForTransferNet).! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'TransferNetReport class' category: 'Portfolio-Solucion'!
+TransferNetReport class
+	instanceVariableNames: ''!
+
+!TransferNetReport class methodsFor: 'instance creation' stamp: 'AS 10/24/2022 15:53:30'!
+for: anAccount
+	^self new initializeFor: anAccount! !
+
+
 !classDefinition: #AccountTransaction category: 'Portfolio-Solucion'!
 Object subclass: #AccountTransaction
 	instanceVariableNames: 'value'
@@ -747,13 +885,8 @@ value
 addToReport: aReportToAddMeTo 
 	self subclassResponsibility .! !
 
-!AccountTransaction methodsFor: 'report' stamp: 'AS 10/23/2022 17:30:34'!
-affectTransferNet: aTransferNet
-
-	self subclassResponsibility ! !
-
-!AccountTransaction methodsFor: 'report' stamp: 'AS 10/23/2022 18:09:29'!
-lineForSummaryReport
+!AccountTransaction methodsFor: 'report' stamp: 'AS 10/24/2022 16:15:46'!
+valueForTransferNet
 
 	self subclassResponsibility ! !
 
@@ -776,20 +909,20 @@ initializeFor: aValue
 AccountTransaction class
 	instanceVariableNames: ''!
 
-!AccountTransaction class methodsFor: 'instance creation' stamp: 'AS 10/23/2022 14:28:17'!
-for: aValueOrATransfer
-
-	^ self new initializeFor: aValueOrATransfer ! !
-
-!AccountTransaction class methodsFor: 'instance creation' stamp: 'AS 10/23/2022 14:28:03'!
+!AccountTransaction class methodsFor: 'instance creation' stamp: 'AS 10/24/2022 15:42:53'!
 register: aValueOrATransfer on: account
 
 	| transaction |
 	
-	transaction := self for: aValueOrATransfer.
+	transaction := self with: aValueOrATransfer.
 	account register: transaction.
 		
 	^ transaction! !
+
+!AccountTransaction class methodsFor: 'instance creation' stamp: 'AS 10/24/2022 15:42:53'!
+with: aValueOrATransfer
+
+	^ self new initializeFor: aValueOrATransfer ! !
 
 
 !classDefinition: #RegularTransaction category: 'Portfolio-Solucion'!
@@ -814,15 +947,10 @@ value
 addToReport: aReportToAddMeTo 
 	self subclassResponsibility! !
 
-!RegularTransaction methodsFor: 'report' stamp: 'AS 10/23/2022 17:34:16'!
-affectTransferNet: aTransferNet
+!RegularTransaction methodsFor: 'report' stamp: 'AS 10/24/2022 16:15:46'!
+valueForTransferNet
 
-	^0 ! !
-
-!RegularTransaction methodsFor: 'report' stamp: 'AS 10/23/2022 18:11:17'!
-lineForSummaryReport
-
-	self subclassResponsibility ! !
+	^0! !
 
 
 !classDefinition: #Deposit category: 'Portfolio-Solucion'!
@@ -844,11 +972,6 @@ affectBalance: aBalance
 addToReport: aReportToAddMeTo 
 	aReportToAddMeTo addDeposit: self! !
 
-!Deposit methodsFor: 'report' stamp: 'AS 10/23/2022 18:09:29'!
-lineForSummaryReport
-
-	^'Depósito por ', self value asString ,'.'! !
-
 
 !classDefinition: #Withdraw category: 'Portfolio-Solucion'!
 RegularTransaction subclass: #Withdraw
@@ -868,11 +991,6 @@ affectBalance: aBalance
 !Withdraw methodsFor: 'report' stamp: 'AS 10/24/2022 15:19:58'!
 addToReport: aReportToAddMeTo 
 	aReportToAddMeTo addWithdraw: self.! !
-
-!Withdraw methodsFor: 'report' stamp: 'AS 10/23/2022 18:09:29'!
-lineForSummaryReport
-
-	^'Extracción por ', self value asString ,'.'! !
 
 
 !classDefinition: #TransferTransaction category: 'Portfolio-Solucion'!
@@ -909,13 +1027,8 @@ value
 addToReport: aReportToAddMeTo 
 	self subclassResponsibility .! !
 
-!TransferTransaction methodsFor: 'report' stamp: 'AS 10/23/2022 17:30:39'!
-affectTransferNet: aTransferNet
-	
-	self subclassResponsibility ! !
-
-!TransferTransaction methodsFor: 'report' stamp: 'AS 10/23/2022 18:09:29'!
-lineForSummaryReport
+!TransferTransaction methodsFor: 'report' stamp: 'AS 10/24/2022 16:15:46'!
+valueForTransferNet
 	
 	self subclassResponsibility ! !
 
@@ -932,15 +1045,10 @@ addToReport: aReportToAddMeTo
 
 	aReportToAddMeTo addTransferDeposit: self! !
 
-!TransferDeposit methodsFor: 'report' stamp: 'AS 10/23/2022 17:30:13'!
-affectTransferNet: aTransferNet
+!TransferDeposit methodsFor: 'report' stamp: 'AS 10/24/2022 16:15:46'!
+valueForTransferNet
 
-	^self affectBalance: aTransferNet ! !
-
-!TransferDeposit methodsFor: 'report' stamp: 'AS 10/23/2022 18:09:29'!
-lineForSummaryReport
-
-	^'Entrada por transferencia de ', self value asString ,'.'! !
+	^self value! !
 
 
 !TransferDeposit methodsFor: 'balance' stamp: 'AS 10/23/2022 14:39:37'!
@@ -966,69 +1074,10 @@ addToReport: aReportToAddMeTo
 
 	aReportToAddMeTo addTransferWithdraw: self.! !
 
-!TransferWithdraw methodsFor: 'report' stamp: 'AS 10/23/2022 17:29:59'!
-affectTransferNet: aTransferNet
+!TransferWithdraw methodsFor: 'report' stamp: 'AS 10/24/2022 16:15:46'!
+valueForTransferNet
 
-	^self affectBalance: aTransferNet! !
-
-!TransferWithdraw methodsFor: 'report' stamp: 'AS 10/23/2022 18:09:29'!
-lineForSummaryReport
-
-	^'Salida por transferencia de ', self value asString ,'.'! !
-
-
-!classDefinition: #SummaryReport category: 'Portfolio-Solucion'!
-Object subclass: #SummaryReport
-	instanceVariableNames: 'account report'
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'Portfolio-Solucion'!
-
-!SummaryReport methodsFor: 'initialization' stamp: 'AS 10/24/2022 15:35:19'!
-initializeFor: anAccount 
-	account := anAccount.! !
-
-
-!SummaryReport methodsFor: 'evaluating' stamp: 'AS 10/24/2022 15:18:41'!
-initialize
-
-	report := OrderedCollection new.! !
-
-!SummaryReport methodsFor: 'evaluating' stamp: 'AS 10/24/2022 15:18:41'!
-make
-
-	account makeReport: self.
-	report addLast: 'Balance = ', account balance asString.
-	^report! !
-
-
-!SummaryReport methodsFor: 'add' stamp: 'AS 10/24/2022 15:18:41'!
-addDeposit: aDepositToAddToReport 
-	^report add: 'Depósito por ', aDepositToAddToReport value asString  ,'.'! !
-
-!SummaryReport methodsFor: 'add' stamp: 'AS 10/24/2022 15:29:45'!
-addTransferDeposit: aTransferDepositToAddToReport
-
-	report add: 'Entrada por transferencia de ', aTransferDepositToAddToReport value asString ,'.'! !
-
-!SummaryReport methodsFor: 'add' stamp: 'AS 10/24/2022 15:28:28'!
-addTransferWithdraw: aTransferWithdrawToAddToReport
-	
-	report add: 'Salida por transferencia de ', aTransferWithdrawToAddToReport value asString ,'.'! !
-
-!SummaryReport methodsFor: 'add' stamp: 'AS 10/24/2022 15:25:25'!
-addWithdraw: aWithdrawToAddToReport
-	report add: 'Extracción por ', aWithdrawToAddToReport value asString ,'.'! !
-
-"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
-
-!classDefinition: 'SummaryReport class' category: 'Portfolio-Solucion'!
-SummaryReport class
-	instanceVariableNames: ''!
-
-!SummaryReport class methodsFor: 'instance creation' stamp: 'AS 10/24/2022 15:35:45'!
-for: anAccount 
-	^self new initializeFor: anAccount ! !
+	^self value negated ! !
 
 
 !classDefinition: #Transfer category: 'Portfolio-Solucion'!
@@ -1101,30 +1150,3 @@ assertIsStrictlyPositive: anAmountToTransfer
 
 	self assertIsNotZero: anAmountToTransfer.
 	self assertIsNotNegative: anAmountToTransfer! !
-
-
-!classDefinition: #TransferNetReport category: 'Portfolio-Solucion'!
-Object subclass: #TransferNetReport
-	instanceVariableNames: 'transactions'
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'Portfolio-Solucion'!
-
-!TransferNetReport methodsFor: 'initialization' stamp: 'AS 10/24/2022 12:51:23'!
-initializeWith: aTransactions
-	transactions := aTransactions.! !
-
-
-!TransferNetReport methodsFor: 'evaluating' stamp: 'AS 10/24/2022 12:51:23'!
-make
-	^'Transfer net = ', (transactions inject: 0 into: [:transferNet :aTransaction | aTransaction affectTransferNet: transferNet ]) asString , '.'! !
-
-"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
-
-!classDefinition: 'TransferNetReport class' category: 'Portfolio-Solucion'!
-TransferNetReport class
-	instanceVariableNames: ''!
-
-!TransferNetReport class methodsFor: 'instance creation' stamp: 'AS 10/24/2022 12:51:23'!
-with: aTransactions
-	^self new initializeWith: aTransactions! !
