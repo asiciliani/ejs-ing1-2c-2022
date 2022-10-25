@@ -5,10 +5,30 @@ TestCase subclass: #MarsRoverLoggerTest
 	poolDictionaries: ''
 	category: 'MarsRover-WithHeading'!
 
+!MarsRoverLoggerTest methodsFor: 'support' stamp: 'AS 10/24/2022 21:47:09'!
+eastHead
+
+	^ MarsRoverHeadingEast headAsString! !
+
 !MarsRoverLoggerTest methodsFor: 'support' stamp: 'AS 10/24/2022 20:09:02'!
 north
 
 	^MarsRoverHeadingNorth ! !
+
+!MarsRoverLoggerTest methodsFor: 'support' stamp: 'AS 10/24/2022 21:47:21'!
+northHead
+
+	^ MarsRoverHeadingNorth headAsString! !
+
+!MarsRoverLoggerTest methodsFor: 'support' stamp: 'AS 10/24/2022 21:47:35'!
+southHead
+
+	^ MarsRoverHeadingSouth headAsString! !
+
+!MarsRoverLoggerTest methodsFor: 'support' stamp: 'AS 10/24/2022 21:47:28'!
+westHead
+
+	^ MarsRoverHeadingWest headAsString! !
 
 
 !MarsRoverLoggerTest methodsFor: 'tests' stamp: 'AS 10/24/2022 21:27:39'!
@@ -36,16 +56,19 @@ test02WhenOnlyLoggingPositionLogsOnlyShowNewPositionsAfterOnlyMovingInOneDirecti
 
 	! !
 
-!MarsRoverLoggerTest methodsFor: 'tests' stamp: 'AS 10/24/2022 21:30:19'!
-test03WhenOnlyLoggingHeadingLogsShowNewHeadingAfterRotatingOnce
+!MarsRoverLoggerTest methodsFor: 'tests' stamp: 'AS 10/24/2022 21:47:35'!
+test03WhenOnlyLoggingHeadLogsShowNewHeadingsAfterRotatingToAllPosibleDirections
 
 	| marsRover logger|
 	marsRover := MarsRover at: 1@1 heading: self north.
 	
 	logger := (MarsRoverHeadingLogger for: marsRover).
-	marsRover process: 'r'.
+	marsRover process: 'rlll'.
 	
-	self assert: 'East' equals: logger logs first.
+	self assert: self eastHead equals: logger logs first.
+	self assert: self northHead equals: logger logs second.
+	self assert: self westHead equals: logger logs third.
+	self assert: self southHead equals: logger logs fourth.
 
 	! !
 
@@ -460,10 +483,6 @@ initializeFor: aMarsRover
 	marsRover := aMarsRover.! !
 
 
-!MarsRoverHeading methodsFor: 'asString' stamp: 'AS 10/24/2022 21:06:14'!
-headAsString
-	self subclassResponsibility .! !
-
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
 !classDefinition: 'MarsRoverHeading class' category: 'MarsRover-WithHeading'!
@@ -474,6 +493,11 @@ MarsRoverHeading class
 for: aMarsRover 
 	
 	^self new initializeFor: aMarsRover ! !
+
+
+!MarsRoverHeading class methodsFor: 'asString' stamp: 'AS 10/24/2022 21:45:57'!
+headAsString
+	self subclassResponsibility .! !
 
 
 !classDefinition: #MarsRoverHeadingEast category: 'MarsRover-WithHeading'!
@@ -505,7 +529,13 @@ rotateRight
 	^marsRover headSouth! !
 
 
-!MarsRoverHeadingEast methodsFor: 'asString' stamp: 'AS 10/24/2022 21:08:33'!
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'MarsRoverHeadingEast class' category: 'MarsRover-WithHeading'!
+MarsRoverHeadingEast class
+	instanceVariableNames: ''!
+
+!MarsRoverHeadingEast class methodsFor: 'asString' stamp: 'AS 10/24/2022 21:46:03'!
 headAsString
 	
 	^'East'! !
@@ -540,7 +570,13 @@ rotateRight
 	^marsRover headEast! !
 
 
-!MarsRoverHeadingNorth methodsFor: 'asString' stamp: 'AS 10/24/2022 21:09:15'!
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'MarsRoverHeadingNorth class' category: 'MarsRover-WithHeading'!
+MarsRoverHeadingNorth class
+	instanceVariableNames: ''!
+
+!MarsRoverHeadingNorth class methodsFor: 'asString' stamp: 'AS 10/24/2022 21:46:07'!
 headAsString
 	^'North'.! !
 
@@ -574,9 +610,21 @@ rotateRight
 	^marsRover headWest! !
 
 
-!MarsRoverHeadingSouth methodsFor: 'printing' stamp: 'AS 10/24/2022 21:06:20'!
-headAsString
+
+!MarsRoverHeadingSouth methodsFor: 'error handling' stamp: 'AS 10/24/2022 21:42:42'!
+error: aString 
 	self shouldBeImplemented.! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'MarsRoverHeadingSouth class' category: 'MarsRover-WithHeading'!
+MarsRoverHeadingSouth class
+	instanceVariableNames: ''!
+
+!MarsRoverHeadingSouth class methodsFor: 'asString' stamp: 'AS 10/24/2022 21:46:11'!
+headAsString
+	
+	^'South'! !
 
 
 !classDefinition: #MarsRoverHeadingWest category: 'MarsRover-WithHeading'!
@@ -607,6 +655,18 @@ rotateRight
 	
 	^marsRover headNorth! !
 
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'MarsRoverHeadingWest class' category: 'MarsRover-WithHeading'!
+MarsRoverHeadingWest class
+	instanceVariableNames: ''!
+
+!MarsRoverHeadingWest class methodsFor: 'asString' stamp: 'AS 10/24/2022 21:46:16'!
+headAsString
+	
+	^'West'! !
+
 
 !classDefinition: #MarsRoverHeadingLogger category: 'MarsRover-WithHeading'!
 Object subclass: #MarsRoverHeadingLogger
@@ -623,10 +683,10 @@ initializeFor: aMarsRoverToLogHeadOn
 	logs := OrderedCollection new.! !
 
 
-!MarsRoverHeadingLogger methodsFor: 'logging' stamp: 'AS 10/24/2022 21:34:57'!
+!MarsRoverHeadingLogger methodsFor: 'logging' stamp: 'AS 10/24/2022 21:45:52'!
 logHead: aMarsRoverHeading
 
-	logs add: aMarsRoverHeading headAsString ! !
+	logs add: aMarsRoverHeading class headAsString ! !
 
 
 !MarsRoverHeadingLogger methodsFor: 'operations' stamp: 'AS 10/24/2022 21:34:58'!
