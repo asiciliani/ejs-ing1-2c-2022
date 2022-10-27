@@ -531,7 +531,6 @@ initializeFor: aMarsRover
 	marsRover := aMarsRover.! !
 
 
-
 !MarsRoverHeading methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:08:41'!
 accept: aMarsRoverLogger 
 	
@@ -583,7 +582,6 @@ rotateRight
 	^marsRover headSouth! !
 
 
-
 !MarsRoverHeadingEast methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:09:03'!
 accept: aMarsRoverLogger 
 	
@@ -630,7 +628,6 @@ rotateRight
 	^marsRover headEast! !
 
 
-
 !MarsRoverHeadingNorth methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:09:56'!
 accept: aMarsRoverLogger 
 	
@@ -674,7 +671,6 @@ rotateLeft
 rotateRight
 	
 	^marsRover headWest! !
-
 
 
 !MarsRoverHeadingSouth methodsFor: 'error handling' stamp: 'AS 10/27/2022 16:36:40'!
@@ -725,7 +721,6 @@ rotateLeft
 rotateRight
 	
 	^marsRover headNorth! !
-
 
 
 !MarsRoverHeadingWest methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:10:23'!

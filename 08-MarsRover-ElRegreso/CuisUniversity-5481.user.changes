@@ -5843,3 +5843,68 @@ PASSED!
 PASSED!
 
 ----SNAPSHOT----(27 October 2022 16:39:41) CuisUniversity-5481.image priorSource: 7300075!
+
+!testRun: #MarsRoverLoggerTest #test01WhenOnlyLoggingPositionLogsAreEmptyWhenMarsRoverProcessesEmptyCommand stamp: 'AS 10/27/2022 16:41:27'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test02WhenOnlyLoggingPositionLogsOnlyShowNewPositionsAfterOnlyMovingInOneDirection stamp: 'AS 10/27/2022 16:41:27'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test03WhenOnlyLoggingHeadLogsShowNewHeadingsAfterRotatingToAllPosibleDirections stamp: 'AS 10/27/2022 16:41:27'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test04WhenLoggingPositionAndHeadLogsShowNewPositionAndNewHeadingAfterMovingAndThenRotating stamp: 'AS 10/27/2022 16:41:27'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test05WhenLoggingPositionAndHeadLogsShowNewHeadingAndNewPositionAfterRotatingAndThenMoving stamp: 'AS 10/27/2022 16:41:27'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test06CanLogWithMoreThanOneLogger stamp: 'AS 10/27/2022 16:41:27'!
+PASSED!
+
+!testRun: #MarsRoverTest #test01DoesNotMoveWhenNoCommand stamp: 'AS 10/27/2022 16:41:27'!
+PASSED!
+
+!testRun: #MarsRoverTest #test02IsAtFailsForDifferentPosition stamp: 'AS 10/27/2022 16:41:27'!
+PASSED!
+
+!testRun: #MarsRoverTest #test03IsAtFailsForDifferentHeading stamp: 'AS 10/27/2022 16:41:27'!
+PASSED!
+
+!testRun: #MarsRoverTest #test04IncrementsYAfterMovingForwardWhenHeadingNorth stamp: 'AS 10/27/2022 16:41:27'!
+PASSED!
+
+!testRun: #MarsRoverTest #test06DecrementsYAfterMovingBackwardsWhenHeadingNorth stamp: 'AS 10/27/2022 16:41:27'!
+PASSED!
+
+!testRun: #MarsRoverTest #test07PointToEashAfterRotatingRightWhenHeadingNorth stamp: 'AS 10/27/2022 16:41:27'!
+PASSED!
+
+!testRun: #MarsRoverTest #test08PointsToWestAfterRotatingLeftWhenPointingNorth stamp: 'AS 10/27/2022 16:41:27'!
+PASSED!
+
+!testRun: #MarsRoverTest #test09DoesNotProcessInvalidCommand stamp: 'AS 10/27/2022 16:41:27'!
+PASSED!
+
+!testRun: #MarsRoverTest #test10CanProcessMoreThanOneCommand stamp: 'AS 10/27/2022 16:41:27'!
+PASSED!
+
+!testRun: #MarsRoverTest #test11IncrementsXAfterMovingForwareWhenHeadingEast stamp: 'AS 10/27/2022 16:41:27'!
+PASSED!
+
+!testRun: #MarsRoverTest #test12DecrementsXAfterMovingBackwardWhenHeadingEast stamp: 'AS 10/27/2022 16:41:27'!
+PASSED!
+
+!testRun: #MarsRoverTest #test13PointsToSouthAfterRotatingRightWhenHeadingEast stamp: 'AS 10/27/2022 16:41:27'!
+PASSED!
+
+!testRun: #MarsRoverTest #test14PointsToNorthAfterRotatingLeftWhenPointingEast stamp: 'AS 10/27/2022 16:41:27'!
+PASSED!
+
+!testRun: #MarsRoverTest #test15ForwardBackwardsAndRotateRightWorkAsExpectedWhenPointingSouth stamp: 'AS 10/27/2022 16:41:27'!
+PASSED!
+
+!testRun: #MarsRoverTest #test16ForwardBackwardsAndRotateRightWorkAsExpectedWhenPointingWest stamp: 'AS 10/27/2022 16:41:27'!
+PASSED!
+
+----SNAPSHOT----(27 October 2022 16:41:43) CuisUniversity-5481.image priorSource: 7321918!
