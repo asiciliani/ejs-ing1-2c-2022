@@ -31,24 +31,24 @@ westHead
 	^ MarsRoverHeadingWest headAsString! !
 
 
-!MarsRoverLoggerTest methodsFor: 'tests' stamp: 'AS 10/24/2022 21:27:39'!
+!MarsRoverLoggerTest methodsFor: 'tests' stamp: 'AS 10/27/2022 12:19:22'!
 test01WhenOnlyLoggingPositionLogsAreEmptyWhenMarsRoverProcessesEmptyCommand
 
 	| marsRover logger|
 	
 	marsRover := MarsRover at: 1@1 heading: self north.
-	logger := (MarsRoverPositioLogger for: marsRover).
+	logger := (MarsRoverLogger logPositionChangesOn: marsRover).
 	marsRover process: ''.
 	
 	self assert: logger logs isEmpty! !
 
-!MarsRoverLoggerTest methodsFor: 'tests' stamp: 'AS 10/24/2022 21:28:37'!
+!MarsRoverLoggerTest methodsFor: 'tests' stamp: 'AS 10/27/2022 12:29:29'!
 test02WhenOnlyLoggingPositionLogsOnlyShowNewPositionsAfterOnlyMovingInOneDirection
 
 	| marsRover logger|
 	marsRover := MarsRover at: 1@1 heading: self north.
 	
-	logger := (MarsRoverPositioLogger for: marsRover).
+	logger := (MarsRoverLogger logPositionChangesOn: marsRover).
 	marsRover process: 'ff'.
 	
 	self assert: '1@2' equals: logger logs first.
@@ -56,19 +56,49 @@ test02WhenOnlyLoggingPositionLogsOnlyShowNewPositionsAfterOnlyMovingInOneDirecti
 
 	! !
 
-!MarsRoverLoggerTest methodsFor: 'tests' stamp: 'AS 10/24/2022 21:47:35'!
+!MarsRoverLoggerTest methodsFor: 'tests' stamp: 'AS 10/27/2022 12:29:49'!
 test03WhenOnlyLoggingHeadLogsShowNewHeadingsAfterRotatingToAllPosibleDirections
 
 	| marsRover logger|
 	marsRover := MarsRover at: 1@1 heading: self north.
 	
-	logger := (MarsRoverHeadingLogger for: marsRover).
+	logger := (MarsRoverLogger logHeadChangesOn: marsRover).
 	marsRover process: 'rlll'.
 	
 	self assert: self eastHead equals: logger logs first.
 	self assert: self northHead equals: logger logs second.
 	self assert: self westHead equals: logger logs third.
 	self assert: self southHead equals: logger logs fourth.
+
+	! !
+
+!MarsRoverLoggerTest methodsFor: 'tests' stamp: 'AS 10/27/2022 12:05:04'!
+test04WhenLoggingPositionAndHeadLogsShowNewPositionAndNewHeadingAfterMovingAndThenRotating
+
+	| marsRover logger|
+	marsRover := MarsRover at: 1@1 heading: self north.
+	
+	logger := (MarsRoverLogger for: marsRover).
+	marsRover process: 'fr'.
+	
+	self assert: '1@2' equals: logger logs first.
+	self assert: self eastHead equals: logger logs second.
+	
+
+	! !
+
+!MarsRoverLoggerTest methodsFor: 'tests' stamp: 'AS 10/27/2022 12:05:04'!
+test05WhenLoggingPositionAndHeadLogsShowNewPositionAndNewHeadingAfterRotatingAndThenMoving
+
+	| marsRover logger|
+	marsRover := MarsRover at: 1@1 heading: self north.
+	
+	logger := (MarsRoverLogger for: marsRover).
+	marsRover process: 'rf'.
+	
+	self assert: self eastHead equals: logger logs first.
+	self assert: '2@1' equals: logger logs second.
+	
 
 	! !
 
@@ -391,21 +421,19 @@ moveWest
 	position := position + (-1@0)! !
 
 
-!MarsRover methodsFor: 'command processing' stamp: 'AS 10/24/2022 21:14:19'!
+!MarsRover methodsFor: 'command processing' stamp: 'AS 10/27/2022 10:29:54'!
 process: aSequenceOfCommands
 
-	aSequenceOfCommands do: [:aCommand | self processCommand: aCommand .
-									  self logPosition.
-									self logHead.]
+	aSequenceOfCommands do: [:aCommand | self processCommand: aCommand .]
 ! !
 
-!MarsRover methodsFor: 'command processing' stamp: 'HAW 8/22/2019 12:08:50'!
+!MarsRover methodsFor: 'command processing' stamp: 'AS 10/27/2022 09:58:33'!
 processCommand: aCommand
 
-	(self isForwardCommand: aCommand) ifTrue: [ ^ self moveForward ].
-	(self isBackwardCommand: aCommand) ifTrue: [ ^ self moveBackward ].
-	(self isRotateRightCommand: aCommand) ifTrue: [ ^ self rotateRight ].
-	(self isRotateLeftCommand: aCommand) ifTrue: [ ^ self rotateLeft ].
+	(self isForwardCommand: aCommand) ifTrue: [ self moveForward. ^self logPosition. ].
+	(self isBackwardCommand: aCommand) ifTrue: [ self moveBackward.  ^self logPosition. ].
+	(self isRotateRightCommand: aCommand) ifTrue: [ self rotateRight.  ^self logHead.  ].
+	(self isRotateLeftCommand: aCommand) ifTrue: [ self rotateLeft. ^self logHead. ].
 
 	self signalInvalidCommand.! !
 
@@ -668,76 +696,150 @@ headAsString
 	^'West'! !
 
 
-!classDefinition: #MarsRoverHeadingLogger category: 'MarsRover-WithHeading'!
-Object subclass: #MarsRoverHeadingLogger
-	instanceVariableNames: 'marsRoverToLogHeadOn logs'
+!classDefinition: #MarsRoverHeadingFollower category: 'MarsRover-WithHeading'!
+Object subclass: #MarsRoverHeadingFollower
+	instanceVariableNames: 'marsRoverToLogHeadOn logs marsRoverLogger'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'MarsRover-WithHeading'!
 
-!MarsRoverHeadingLogger methodsFor: 'initialization' stamp: 'AS 10/24/2022 21:34:57'!
-initializeFor: aMarsRoverToLogHeadOn 
+!MarsRoverHeadingFollower methodsFor: 'initialization' stamp: 'AS 10/27/2022 12:31:49'!
+initializeFor: aMarsRoverLogger 
 
-	marsRoverToLogHeadOn := aMarsRoverToLogHeadOn.
-	marsRoverToLogHeadOn logHeadingWith: self.
+	marsRoverLogger := aMarsRoverLogger.
+	marsRoverLogger marsRover logHeadingWith: self.
 	logs := OrderedCollection new.! !
 
 
-!MarsRoverHeadingLogger methodsFor: 'logging' stamp: 'AS 10/24/2022 21:45:52'!
+!MarsRoverHeadingFollower methodsFor: 'logging' stamp: 'AS 10/27/2022 12:15:38'!
+logHead: aMarsRoverHeading
+
+	marsRoverLogger logHead: aMarsRoverHeading ! !
+
+
+!MarsRoverHeadingFollower methodsFor: 'operations' stamp: 'AS 10/24/2022 21:34:58'!
+logs
+
+	^logs! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'MarsRoverHeadingFollower class' category: 'MarsRover-WithHeading'!
+MarsRoverHeadingFollower class
+	instanceVariableNames: ''!
+
+!MarsRoverHeadingFollower class methodsFor: 'instance creation' stamp: 'AS 10/27/2022 12:09:25'!
+for: aMarsRoverLogger
+	
+	^self new initializeFor: aMarsRoverLogger ! !
+
+
+!classDefinition: #MarsRoverLogger category: 'MarsRover-WithHeading'!
+Object subclass: #MarsRoverLogger
+	instanceVariableNames: 'marsRoverToLog positionFollower headFollower logs marsRoverToLogHeadChangesOn'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'MarsRover-WithHeading'!
+
+!MarsRoverLogger methodsFor: 'initialization' stamp: 'AS 10/27/2022 12:24:21'!
+initialize
+
+	logs := OrderedCollection new.! !
+
+!MarsRoverLogger methodsFor: 'initialization' stamp: 'AS 10/27/2022 12:15:09'!
+initializeFor: aMarsRoverToLogPositionAndHeadOn 
+
+	marsRoverToLog := aMarsRoverToLogPositionAndHeadOn.
+	positionFollower := MarsRoverPositionFollower for: self.
+	headFollower := MarsRoverHeadingFollower for: self.
+	logs := OrderedCollection new.! !
+
+!MarsRoverLogger methodsFor: 'initialization' stamp: 'AS 10/27/2022 12:31:13'!
+initializeLoggingHeadChangesOn: aMarsRoverToLogHeadChangesOn 
+
+	marsRoverToLog := aMarsRoverToLogHeadChangesOn.
+	headFollower := MarsRoverHeadingFollower for: self.! !
+
+!MarsRoverLogger methodsFor: 'initialization' stamp: 'AS 10/27/2022 12:28:54'!
+initializeLoggingPositionChangesOn: aMarsRoverToLogPositionOn
+
+	marsRoverToLog := aMarsRoverToLogPositionOn.
+	positionFollower := MarsRoverPositionFollower for: self.! !
+
+!MarsRoverLogger methodsFor: 'initialization' stamp: 'AS 10/27/2022 12:15:44'!
 logHead: aMarsRoverHeading
 
 	logs add: aMarsRoverHeading class headAsString ! !
 
-
-!MarsRoverHeadingLogger methodsFor: 'operations' stamp: 'AS 10/24/2022 21:34:58'!
-logs
-
-	^logs! !
-
-"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
-
-!classDefinition: 'MarsRoverHeadingLogger class' category: 'MarsRover-WithHeading'!
-MarsRoverHeadingLogger class
-	instanceVariableNames: ''!
-
-!MarsRoverHeadingLogger class methodsFor: 'instance creation' stamp: 'AS 10/24/2022 21:30:42'!
-for: aMarsRoverToLogHeadOn
-	
-	^self new initializeFor: aMarsRoverToLogHeadOn ! !
-
-
-!classDefinition: #MarsRoverPositioLogger category: 'MarsRover-WithHeading'!
-Object subclass: #MarsRoverPositioLogger
-	instanceVariableNames: 'marsRoverToLogPositionOf logs'
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'MarsRover-WithHeading'!
-
-!MarsRoverPositioLogger methodsFor: 'initialization' stamp: 'AS 10/24/2022 21:34:50'!
-initializeFor: aMarsRoverToLogPositionOf 
-	
-	marsRoverToLogPositionOf := aMarsRoverToLogPositionOf.
-	marsRoverToLogPositionOf logPositionWith: self.
-	logs := OrderedCollection new.! !
-
-
-!MarsRoverPositioLogger methodsFor: 'operations' stamp: 'AS 10/24/2022 21:34:50'!
-logs
-	^logs! !
-
-
-!MarsRoverPositioLogger methodsFor: 'logging' stamp: 'AS 10/24/2022 21:34:50'!
+!MarsRoverLogger methodsFor: 'initialization' stamp: 'AS 10/27/2022 12:14:51'!
 logPosition: aPosition 
 
 	logs add: aPosition asString.! !
 
+
+!MarsRoverLogger methodsFor: 'logs' stamp: 'AS 10/27/2022 12:15:56'!
+logs
+	^logs! !
+
+
+!MarsRoverLogger methodsFor: 'mars rover' stamp: 'AS 10/27/2022 12:09:04'!
+marsRover
+
+	^marsRoverToLog ! !
+
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
-!classDefinition: 'MarsRoverPositioLogger class' category: 'MarsRover-WithHeading'!
-MarsRoverPositioLogger class
+!classDefinition: 'MarsRoverLogger class' category: 'MarsRover-WithHeading'!
+MarsRoverLogger class
 	instanceVariableNames: ''!
 
-!MarsRoverPositioLogger class methodsFor: 'instance creation' stamp: 'AS 10/24/2022 20:09:33'!
-for: aMarsRoverToLogPositionOf
+!MarsRoverLogger class methodsFor: 'instance creation' stamp: 'AS 10/25/2022 15:09:47'!
+for: aMarsRoverToLogPositionAndHeadOn
+	
+	^self new initializeFor: aMarsRoverToLogPositionAndHeadOn ! !
 
-	^self new initializeFor: aMarsRoverToLogPositionOf ! !
+!MarsRoverLogger class methodsFor: 'instance creation' stamp: 'AS 10/27/2022 12:30:26'!
+logHeadChangesOn: aMarsRoverToLogHeadChangesOn
+
+	^self new initializeLoggingHeadChangesOn: aMarsRoverToLogHeadChangesOn ! !
+
+!MarsRoverLogger class methodsFor: 'instance creation' stamp: 'AS 10/27/2022 12:21:16'!
+logPositionChangesOn: aMarsRoverToLogPositionOn
+	^self new initializeLoggingPositionChangesOn: aMarsRoverToLogPositionOn ! !
+
+
+!classDefinition: #MarsRoverPositionFollower category: 'MarsRover-WithHeading'!
+Object subclass: #MarsRoverPositionFollower
+	instanceVariableNames: 'marsRoverToLogPositionOf logs marsRoverLogger'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'MarsRover-WithHeading'!
+
+!MarsRoverPositionFollower methodsFor: 'initialization' stamp: 'AS 10/27/2022 12:08:04'!
+initializeFor: aMarsRoverLogger 
+	
+	marsRoverLogger := aMarsRoverLogger.
+	marsRoverLogger marsRover logPositionWith: self.
+	logs := OrderedCollection new.! !
+
+
+!MarsRoverPositionFollower methodsFor: 'operations' stamp: 'AS 10/24/2022 21:34:50'!
+logs
+	^logs! !
+
+
+!MarsRoverPositionFollower methodsFor: 'logging' stamp: 'AS 10/27/2022 12:12:53'!
+logPosition: aPosition 
+
+	marsRoverLogger logPosition: aPosition.! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'MarsRoverPositionFollower class' category: 'MarsRover-WithHeading'!
+MarsRoverPositionFollower class
+	instanceVariableNames: ''!
+
+!MarsRoverPositionFollower class methodsFor: 'instance creation' stamp: 'AS 10/27/2022 12:05:45'!
+for: aMarsRoverLogger
+
+	^self new initializeFor: aMarsRoverLogger ! !
