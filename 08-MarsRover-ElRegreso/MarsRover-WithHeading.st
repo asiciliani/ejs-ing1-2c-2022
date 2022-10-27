@@ -673,14 +673,15 @@ rotateRight
 	^marsRover headWest! !
 
 
-!MarsRoverHeadingSouth methodsFor: 'error handling' stamp: 'AS 10/27/2022 16:36:40'!
-accept: aMarsRoverLogger 
-	
-	aMarsRoverLogger visitMarsRoverHeadingSouth: self.! !
-
 !MarsRoverHeadingSouth methodsFor: 'error handling' stamp: 'AS 10/24/2022 21:42:42'!
 error: aString 
 	self shouldBeImplemented.! !
+
+
+!MarsRoverHeadingSouth methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:36:40'!
+accept: aMarsRoverLogger 
+	
+	aMarsRoverLogger visitMarsRoverHeadingSouth: self.! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -785,6 +786,17 @@ Object subclass: #MarsRoverLogger
 	poolDictionaries: ''
 	category: 'MarsRover-WithHeading'!
 
+!MarsRoverLogger methodsFor: 'logging' stamp: 'AS 10/27/2022 16:07:35'!
+logHead: aMarsRoverHeading
+	
+	aMarsRoverHeading accept: self.! !
+
+!MarsRoverLogger methodsFor: 'logging' stamp: 'AS 10/27/2022 12:14:51'!
+logPosition: aPosition 
+
+	logs add: aPosition asString.! !
+
+
 !MarsRoverLogger methodsFor: 'initialization' stamp: 'AS 10/27/2022 12:24:21'!
 initialize
 
@@ -808,16 +820,6 @@ initializeLoggingPositionChangesOn: aMarsRoverToLogPositionOn
 
 	marsRoverToLog := aMarsRoverToLogPositionOn.
 	positionFollower := MarsRoverPositionFollower for: self.! !
-
-!MarsRoverLogger methodsFor: 'initialization' stamp: 'AS 10/27/2022 16:07:35'!
-logHead: aMarsRoverHeading
-	
-	aMarsRoverHeading accept: self.! !
-
-!MarsRoverLogger methodsFor: 'initialization' stamp: 'AS 10/27/2022 12:14:51'!
-logPosition: aPosition 
-
-	logs add: aPosition asString.! !
 
 
 !MarsRoverLogger methodsFor: 'logs' stamp: 'AS 10/27/2022 12:15:56'!
