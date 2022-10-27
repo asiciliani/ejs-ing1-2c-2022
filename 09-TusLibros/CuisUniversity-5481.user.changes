@@ -1,0 +1,245 @@
+
+
+----QUIT----(11 September 2022 19:10:09) CuisUniversity-5481.image priorSource: 2810882!
+
+----STARTUP---- (11 September 2022 19:10:10) as /Users/hernan/Documents/Cuis/5.0-64Bits/Cuis-University-Installer/CuisUniversity-5481.image!
+
+
+----QUIT----(11 September 2022 19:10:10) CuisUniversity-5481.image priorSource: 7059465!
+
+----STARTUP---- (27 October 2022 19:09:23) as /home/andisici/Documents/2022/ing-2c2022/linux64/CuisUniversity-5481.image!
+
+
+TestCase subclass: #CartTests
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #CartTests category: 'TusLibros' stamp: 'AS 10/27/2022 20:37:26'!
+TestCase subclass: #CartTests
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #Cart category: 'TusLibros' stamp: 'AS 10/27/2022 20:39:54'!
+Object subclass: #Cart
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!CartTests methodsFor: 'nil' stamp: 'AS 10/27/2022 20:39:20'!
+test01CartIsEmptyWhenCreated
+
+	self assert: Cart new isEmpty.! !
+
+!testRun: #CartTests #test01CartIsEmptyWhenCreated stamp: 'AS 10/27/2022 20:40:12'!
+ERROR!
+!Cart methodsFor: 'creation' stamp: 'AS 10/27/2022 20:40:19'!
+isEmpty
+	self shouldBeImplemented.! !
+!Cart methodsFor: 'creation' stamp: 'AS 10/27/2022 20:40:52' prior: 50552297!
+isEmpty
+	
+	^true! !
+
+!testRun: #CartTests #test01CartIsEmptyWhenCreated stamp: 'AS 10/27/2022 20:40:54'!
+PASSED!
+
+!testRun: #CartTests #test01CartIsEmptyWhenCreated stamp: 'AS 10/27/2022 20:40:54'!
+PASSED!
+!CartTests methodsFor: 'as yet unclassified' stamp: 'AS 10/27/2022 20:43:42'!
+test02CartIsNotEmptyAfterAddingElement
+	
+	| cart |
+	cart := Cart new.
+	cart add: 'element'.
+	
+	self deny: Cart new isEmpty.! !
+!CartTests methodsFor: 'as yet unclassified' stamp: 'AS 10/27/2022 20:43:53' prior: 50552310!
+test02CartIsNotEmptyAfterAddingElement
+	
+	| cart |
+	cart := Cart new.
+	cart add: 'element'.
+	
+	self deny: cart isEmpty.! !
+
+!testRun: #CartTests #test02CartIsNotEmptyAfterAddingElement stamp: 'AS 10/27/2022 20:44:04'!
+ERROR!
+!Cart methodsFor: 'adding' stamp: 'AS 10/27/2022 20:44:22'!
+add: aString 
+	self shouldBeImplemented.! !
+
+!classDefinition: #Cart category: 'TusLibros' stamp: 'AS 10/27/2022 20:44:36'!
+Object subclass: #Cart
+	instanceVariableNames: 'element'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!Cart methodsFor: 'adding' stamp: 'AS 10/27/2022 20:44:35' prior: 50552326!
+add: anElement 
+	element := anElement.! !
+
+!testRun: #CartTests #test02CartIsNotEmptyAfterAddingElement stamp: 'AS 10/27/2022 20:44:37'!
+FAILURE!
+!Cart methodsFor: 'creation' stamp: 'AS 10/27/2022 20:45:24' prior: 50552301!
+isEmpty
+	
+	^element isNil ! !
+
+!testRun: #CartTests #test01CartIsEmptyWhenCreated stamp: 'AS 10/27/2022 20:45:25'!
+PASSED!
+
+!testRun: #CartTests #test02CartIsNotEmptyAfterAddingElement stamp: 'AS 10/27/2022 20:45:25'!
+PASSED!
+!CartTests methodsFor: 'as yet unclassified' stamp: 'AS 10/27/2022 20:46:33'!
+test03CartSizeIsAmountOfNewAddedElements
+	
+	| cart |
+	cart := Cart new.
+	cart add: 'element1'.
+	cart add: 'element2'.
+	
+	self assert: 2 equals: cart size.! !
+
+!testRun: #CartTests #test03CartSizeIsAmountOfNewAddedElements stamp: 'AS 10/27/2022 20:46:36'!
+ERROR!
+!Cart methodsFor: 'creation' stamp: 'AS 10/27/2022 20:47:02' overrides: 16901663!
+size
+	
+	^element size ! !
+
+!testRun: #CartTests #test01CartIsEmptyWhenCreated stamp: 'AS 10/27/2022 20:47:18'!
+PASSED!
+
+!testRun: #CartTests #test02CartIsNotEmptyAfterAddingElement stamp: 'AS 10/27/2022 20:47:18'!
+PASSED!
+
+!testRun: #CartTests #test03CartSizeIsAmountOfNewAddedElements stamp: 'AS 10/27/2022 20:47:18'!
+FAILURE!
+
+!testRun: #CartTests #test03CartSizeIsAmountOfNewAddedElements stamp: 'AS 10/27/2022 20:47:18'!
+FAILURE!
+!Cart methodsFor: 'adding' stamp: 'AS 10/27/2022 20:47:52' prior: 50552337!
+add: anElement 
+
+	element add: anElement.! !
+!Cart methodsFor: 'adding' stamp: 'AS 10/27/2022 20:48:07'!
+initialization
+
+	element := OrderedCollection new.! !
+!Cart methodsFor: 'initialization' stamp: 'AS 10/27/2022 20:48:54' overrides: 16920235!
+initialize
+
+	element := OrderedCollection new.! !
+
+!methodRemoval: Cart #initialization stamp: 'AS 10/27/2022 20:48:57'!
+initialization
+
+	element := OrderedCollection new.!
+!Cart methodsFor: 'size' stamp: 'AS 10/27/2022 20:49:11' prior: 50552344!
+isEmpty
+	
+	^element isEmpty ! !
+
+!classDefinition: #Cart category: 'TusLibros' stamp: 'AS 10/27/2022 20:49:14'!
+Object subclass: #Cart
+	instanceVariableNames: 'elements'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!Cart methodsFor: 'as yet unclassified' stamp: 'AS 10/27/2022 20:49:14' prior: 50552398!
+isEmpty
+	
+	^elements isEmpty ! !
+!Cart methodsFor: 'as yet unclassified' stamp: 'AS 10/27/2022 20:49:14' prior: 50552390 overrides: 16920235!
+initialize
+
+	elements := OrderedCollection new.! !
+!Cart methodsFor: 'as yet unclassified' stamp: 'AS 10/27/2022 20:49:14' prior: 50552381!
+add: anElement 
+
+	elements add: anElement.! !
+!Cart methodsFor: 'as yet unclassified' stamp: 'AS 10/27/2022 20:49:14' prior: 50552365 overrides: 16901663!
+size
+	
+	^elements size ! !
+
+!testRun: #CartTests #test01CartIsEmptyWhenCreated stamp: 'AS 10/27/2022 20:49:22'!
+PASSED!
+
+!testRun: #CartTests #test02CartIsNotEmptyAfterAddingElement stamp: 'AS 10/27/2022 20:49:22'!
+PASSED!
+
+!testRun: #CartTests #test03CartSizeIsAmountOfNewAddedElements stamp: 'AS 10/27/2022 20:49:22'!
+PASSED!
+
+----SNAPSHOT----(27 October 2022 20:49:35) CuisUniversity-5481.image priorSource: 7059698!
+!CartTests methodsFor: 'as yet unclassified' stamp: 'AS 10/27/2022 20:49:57' prior: 50552317!
+test02CartIsNotEmptyAfterAddingElement
+	
+	| cart |
+	cart := Cart new.
+	cart add: 'element1'.
+	
+	self deny: cart isEmpty.! !
+!CartTests methodsFor: 'tests' stamp: 'AS 10/27/2022 20:50:31'!
+element1
+
+	^ 'element1'! !
+!CartTests methodsFor: 'tests' stamp: 'AS 10/27/2022 20:50:31' prior: 50552354!
+test03CartSizeIsAmountOfNewAddedElements
+	
+	| cart |
+	cart := Cart new.
+	cart add: self element1.
+	cart add: 'element2'.
+	
+	self assert: 2 equals: cart size.! !
+!CartTests methodsFor: 'tests' stamp: 'AS 10/27/2022 20:50:31' prior: 50552441!
+test02CartIsNotEmptyAfterAddingElement
+	
+	| cart |
+	cart := Cart new.
+	cart add: self element1.
+	
+	self deny: cart isEmpty.! !
+!CartTests methodsFor: 'tests' stamp: 'AS 10/27/2022 20:50:43'!
+element2
+
+	^ 'element2'! !
+!CartTests methodsFor: 'tests' stamp: 'AS 10/27/2022 20:50:43' prior: 50552451!
+test03CartSizeIsAmountOfNewAddedElements
+	
+	| cart |
+	cart := Cart new.
+	cart add: self element1.
+	cart add: self element2.
+	
+	self assert: 2 equals: cart size.! !
+!CartTests methodsFor: 'tests' stamp: 'AS 10/27/2022 20:51:30' prior: 50552469!
+test03CartSizeIsAmountOfNewAddedElements
+	
+	| cart |
+	cart := Cart new.
+	cart add: self element1.
+	cart add: self element2.
+	
+	self assert: 2 equals: cart size.
+	self deny: cart isEmpty ! !
+
+!testRun: #CartTests #test03CartSizeIsAmountOfNewAddedElements stamp: 'AS 10/27/2022 20:51:30'!
+PASSED!
+
+!testRun: #CartTests #test01CartIsEmptyWhenCreated stamp: 'AS 10/27/2022 20:51:30'!
+PASSED!
+
+!testRun: #CartTests #test02CartIsNotEmptyAfterAddingElement stamp: 'AS 10/27/2022 20:51:30'!
+PASSED!
+
+!testRun: #CartTests #test03CartSizeIsAmountOfNewAddedElements stamp: 'AS 10/27/2022 20:51:30'!
+PASSED!
+
+----SNAPSHOT----(27 October 2022 20:53:33) CuisUniversity-5481.image priorSource: 7065159!
