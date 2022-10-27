@@ -4893,3 +4893,953 @@ PASSED!
 PASSED!
 
 ----SNAPSHOT----(27 October 2022 15:39:39) CuisUniversity-5481.image priorSource: 7260592!
+!MarsRoverLogger methodsFor: 'initialization' stamp: 'AS 10/27/2022 16:01:19'!
+initializeLoggingPositionAndHeadChangesOn: aMarsRoverToLogPositionAndHeadOn 
+
+	marsRoverToLog := aMarsRoverToLogPositionAndHeadOn.
+	positionFollower := MarsRoverPositionFollower for: self.
+	headFollower := MarsRoverHeadingFollower for: self.! !
+!MarsRoverLogger class methodsFor: 'as yet unclassified' stamp: 'AS 10/27/2022 16:01:19' prior: 50555974!
+for: aMarsRoverToLogPositionAndHeadOn
+	
+	^self new initializeLoggingPositionAndHeadChangesOn: aMarsRoverToLogPositionAndHeadOn ! !
+
+!methodRemoval: MarsRoverLogger #initializeFor: stamp: 'AS 10/27/2022 16:01:19'!
+initializeFor: aMarsRoverToLogPositionAndHeadOn 
+
+	marsRoverToLog := aMarsRoverToLogPositionAndHeadOn.
+	positionFollower := MarsRoverPositionFollower for: self.
+	headFollower := MarsRoverHeadingFollower for: self.!
+
+!testRun: #MarsRoverLoggerTest #test01WhenOnlyLoggingPositionLogsAreEmptyWhenMarsRoverProcessesEmptyCommand stamp: 'AS 10/27/2022 16:01:25'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test02WhenOnlyLoggingPositionLogsOnlyShowNewPositionsAfterOnlyMovingInOneDirection stamp: 'AS 10/27/2022 16:01:25'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test03WhenOnlyLoggingHeadLogsShowNewHeadingsAfterRotatingToAllPosibleDirections stamp: 'AS 10/27/2022 16:01:25'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test04WhenLoggingPositionAndHeadLogsShowNewPositionAndNewHeadingAfterMovingAndThenRotating stamp: 'AS 10/27/2022 16:01:25'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test05WhenLoggingPositionAndHeadLogsShowNewHeadingAndNewPositionAfterRotatingAndThenMoving stamp: 'AS 10/27/2022 16:01:25'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test06CanLogWithMoreThanOneLogger stamp: 'AS 10/27/2022 16:01:25'!
+PASSED!
+
+!testRun: #MarsRoverTest #test01DoesNotMoveWhenNoCommand stamp: 'AS 10/27/2022 16:01:25'!
+PASSED!
+
+!testRun: #MarsRoverTest #test02IsAtFailsForDifferentPosition stamp: 'AS 10/27/2022 16:01:25'!
+PASSED!
+
+!testRun: #MarsRoverTest #test03IsAtFailsForDifferentHeading stamp: 'AS 10/27/2022 16:01:25'!
+PASSED!
+
+!testRun: #MarsRoverTest #test04IncrementsYAfterMovingForwardWhenHeadingNorth stamp: 'AS 10/27/2022 16:01:25'!
+PASSED!
+
+!testRun: #MarsRoverTest #test06DecrementsYAfterMovingBackwardsWhenHeadingNorth stamp: 'AS 10/27/2022 16:01:25'!
+PASSED!
+
+!testRun: #MarsRoverTest #test07PointToEashAfterRotatingRightWhenHeadingNorth stamp: 'AS 10/27/2022 16:01:25'!
+PASSED!
+
+!testRun: #MarsRoverTest #test08PointsToWestAfterRotatingLeftWhenPointingNorth stamp: 'AS 10/27/2022 16:01:25'!
+PASSED!
+
+!testRun: #MarsRoverTest #test09DoesNotProcessInvalidCommand stamp: 'AS 10/27/2022 16:01:25'!
+PASSED!
+
+!testRun: #MarsRoverTest #test10CanProcessMoreThanOneCommand stamp: 'AS 10/27/2022 16:01:25'!
+PASSED!
+
+!testRun: #MarsRoverTest #test11IncrementsXAfterMovingForwareWhenHeadingEast stamp: 'AS 10/27/2022 16:01:25'!
+PASSED!
+
+!testRun: #MarsRoverTest #test12DecrementsXAfterMovingBackwardWhenHeadingEast stamp: 'AS 10/27/2022 16:01:25'!
+PASSED!
+
+!testRun: #MarsRoverTest #test13PointsToSouthAfterRotatingRightWhenHeadingEast stamp: 'AS 10/27/2022 16:01:25'!
+PASSED!
+
+!testRun: #MarsRoverTest #test14PointsToNorthAfterRotatingLeftWhenPointingEast stamp: 'AS 10/27/2022 16:01:25'!
+PASSED!
+
+!testRun: #MarsRoverTest #test15ForwardBackwardsAndRotateRightWorkAsExpectedWhenPointingSouth stamp: 'AS 10/27/2022 16:01:25'!
+PASSED!
+
+!testRun: #MarsRoverTest #test16ForwardBackwardsAndRotateRightWorkAsExpectedWhenPointingWest stamp: 'AS 10/27/2022 16:01:25'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test01WhenOnlyLoggingPositionLogsAreEmptyWhenMarsRoverProcessesEmptyCommand stamp: 'AS 10/27/2022 16:01:35'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test02WhenOnlyLoggingPositionLogsOnlyShowNewPositionsAfterOnlyMovingInOneDirection stamp: 'AS 10/27/2022 16:01:35'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test03WhenOnlyLoggingHeadLogsShowNewHeadingsAfterRotatingToAllPosibleDirections stamp: 'AS 10/27/2022 16:01:35'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test04WhenLoggingPositionAndHeadLogsShowNewPositionAndNewHeadingAfterMovingAndThenRotating stamp: 'AS 10/27/2022 16:01:35'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test05WhenLoggingPositionAndHeadLogsShowNewHeadingAndNewPositionAfterRotatingAndThenMoving stamp: 'AS 10/27/2022 16:01:35'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test06CanLogWithMoreThanOneLogger stamp: 'AS 10/27/2022 16:01:35'!
+PASSED!
+
+!testRun: #MarsRoverTest #test01DoesNotMoveWhenNoCommand stamp: 'AS 10/27/2022 16:01:35'!
+PASSED!
+
+!testRun: #MarsRoverTest #test02IsAtFailsForDifferentPosition stamp: 'AS 10/27/2022 16:01:35'!
+PASSED!
+
+!testRun: #MarsRoverTest #test03IsAtFailsForDifferentHeading stamp: 'AS 10/27/2022 16:01:35'!
+PASSED!
+
+!testRun: #MarsRoverTest #test04IncrementsYAfterMovingForwardWhenHeadingNorth stamp: 'AS 10/27/2022 16:01:35'!
+PASSED!
+
+!testRun: #MarsRoverTest #test06DecrementsYAfterMovingBackwardsWhenHeadingNorth stamp: 'AS 10/27/2022 16:01:35'!
+PASSED!
+
+!testRun: #MarsRoverTest #test07PointToEashAfterRotatingRightWhenHeadingNorth stamp: 'AS 10/27/2022 16:01:35'!
+PASSED!
+
+!testRun: #MarsRoverTest #test08PointsToWestAfterRotatingLeftWhenPointingNorth stamp: 'AS 10/27/2022 16:01:35'!
+PASSED!
+
+!testRun: #MarsRoverTest #test09DoesNotProcessInvalidCommand stamp: 'AS 10/27/2022 16:01:35'!
+PASSED!
+
+!testRun: #MarsRoverTest #test10CanProcessMoreThanOneCommand stamp: 'AS 10/27/2022 16:01:35'!
+PASSED!
+
+!testRun: #MarsRoverTest #test11IncrementsXAfterMovingForwareWhenHeadingEast stamp: 'AS 10/27/2022 16:01:35'!
+PASSED!
+
+!testRun: #MarsRoverTest #test12DecrementsXAfterMovingBackwardWhenHeadingEast stamp: 'AS 10/27/2022 16:01:35'!
+PASSED!
+
+!testRun: #MarsRoverTest #test13PointsToSouthAfterRotatingRightWhenHeadingEast stamp: 'AS 10/27/2022 16:01:35'!
+PASSED!
+
+!testRun: #MarsRoverTest #test14PointsToNorthAfterRotatingLeftWhenPointingEast stamp: 'AS 10/27/2022 16:01:35'!
+PASSED!
+
+!testRun: #MarsRoverTest #test15ForwardBackwardsAndRotateRightWorkAsExpectedWhenPointingSouth stamp: 'AS 10/27/2022 16:01:35'!
+PASSED!
+
+!testRun: #MarsRoverTest #test16ForwardBackwardsAndRotateRightWorkAsExpectedWhenPointingWest stamp: 'AS 10/27/2022 16:01:35'!
+PASSED!
+!MarsRoverLogger class methodsFor: 'instance creation' stamp: 'AS 10/27/2022 16:02:25'!
+logPositionAndHeadChangesOn: aMarsRoverToLogPositionAndHeadOn
+	
+	^self new initializeLoggingPositionAndHeadChangesOn: aMarsRoverToLogPositionAndHeadOn ! !
+!MarsRoverLoggerTest methodsFor: 'as yet unclassified' stamp: 'AS 10/27/2022 16:02:25' prior: 50558613!
+test06CanLogWithMoreThanOneLogger
+
+	| marsRover logger1 logger2 |
+	marsRover := MarsRover at: 1@1 heading: self north.
+	
+	logger1 := (MarsRoverLogger logPositionAndHeadChangesOn: marsRover).
+	logger2 := (MarsRoverLogger logPositionAndHeadChangesOn: marsRover).
+	marsRover process: 'rf'.
+	
+	self assert: self eastHead equals: logger1 logs first.
+	self assert: '2@1' equals: logger1 logs second.
+	
+	self assert: self eastHead equals: logger2 logs first.
+	self assert: '2@1' equals: logger2 logs second.
+	
+
+	! !
+!MarsRoverLoggerTest methodsFor: 'as yet unclassified' stamp: 'AS 10/27/2022 16:02:25' prior: 50557076!
+test04WhenLoggingPositionAndHeadLogsShowNewPositionAndNewHeadingAfterMovingAndThenRotating
+
+	| marsRover logger|
+	marsRover := MarsRover at: 1@1 heading: self north.
+	
+	logger := (MarsRoverLogger logPositionAndHeadChangesOn: marsRover).
+	marsRover process: 'fr'.
+	
+	self assert: '1@2' equals: logger logs first.
+	self assert: self eastHead equals: logger logs second.
+	
+
+	! !
+!MarsRoverLoggerTest methodsFor: 'as yet unclassified' stamp: 'AS 10/27/2022 16:02:25' prior: 50557855!
+test05WhenLoggingPositionAndHeadLogsShowNewHeadingAndNewPositionAfterRotatingAndThenMoving
+
+	| marsRover logger|
+	marsRover := MarsRover at: 1@1 heading: self north.
+	
+	logger := (MarsRoverLogger logPositionAndHeadChangesOn: marsRover).
+	marsRover process: 'rf'.
+	
+	self assert: self eastHead equals: logger logs first.
+	self assert: '2@1' equals: logger logs second.
+	
+
+	! !
+
+!methodRemoval: MarsRoverLogger class #for: stamp: 'AS 10/27/2022 16:02:25'!
+for: aMarsRoverToLogPositionAndHeadOn
+	
+	^self new initializeLoggingPositionAndHeadChangesOn: aMarsRoverToLogPositionAndHeadOn !
+
+!testRun: #MarsRoverLoggerTest #test01WhenOnlyLoggingPositionLogsAreEmptyWhenMarsRoverProcessesEmptyCommand stamp: 'AS 10/27/2022 16:02:43'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test02WhenOnlyLoggingPositionLogsOnlyShowNewPositionsAfterOnlyMovingInOneDirection stamp: 'AS 10/27/2022 16:02:43'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test03WhenOnlyLoggingHeadLogsShowNewHeadingsAfterRotatingToAllPosibleDirections stamp: 'AS 10/27/2022 16:02:43'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test04WhenLoggingPositionAndHeadLogsShowNewPositionAndNewHeadingAfterMovingAndThenRotating stamp: 'AS 10/27/2022 16:02:43'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test05WhenLoggingPositionAndHeadLogsShowNewHeadingAndNewPositionAfterRotatingAndThenMoving stamp: 'AS 10/27/2022 16:02:43'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test06CanLogWithMoreThanOneLogger stamp: 'AS 10/27/2022 16:02:43'!
+PASSED!
+
+!testRun: #MarsRoverTest #test01DoesNotMoveWhenNoCommand stamp: 'AS 10/27/2022 16:02:43'!
+PASSED!
+
+!testRun: #MarsRoverTest #test02IsAtFailsForDifferentPosition stamp: 'AS 10/27/2022 16:02:43'!
+PASSED!
+
+!testRun: #MarsRoverTest #test03IsAtFailsForDifferentHeading stamp: 'AS 10/27/2022 16:02:43'!
+PASSED!
+
+!testRun: #MarsRoverTest #test04IncrementsYAfterMovingForwardWhenHeadingNorth stamp: 'AS 10/27/2022 16:02:43'!
+PASSED!
+
+!testRun: #MarsRoverTest #test06DecrementsYAfterMovingBackwardsWhenHeadingNorth stamp: 'AS 10/27/2022 16:02:43'!
+PASSED!
+
+!testRun: #MarsRoverTest #test07PointToEashAfterRotatingRightWhenHeadingNorth stamp: 'AS 10/27/2022 16:02:43'!
+PASSED!
+
+!testRun: #MarsRoverTest #test08PointsToWestAfterRotatingLeftWhenPointingNorth stamp: 'AS 10/27/2022 16:02:43'!
+PASSED!
+
+!testRun: #MarsRoverTest #test09DoesNotProcessInvalidCommand stamp: 'AS 10/27/2022 16:02:43'!
+PASSED!
+
+!testRun: #MarsRoverTest #test10CanProcessMoreThanOneCommand stamp: 'AS 10/27/2022 16:02:43'!
+PASSED!
+
+!testRun: #MarsRoverTest #test11IncrementsXAfterMovingForwareWhenHeadingEast stamp: 'AS 10/27/2022 16:02:43'!
+PASSED!
+
+!testRun: #MarsRoverTest #test12DecrementsXAfterMovingBackwardWhenHeadingEast stamp: 'AS 10/27/2022 16:02:43'!
+PASSED!
+
+!testRun: #MarsRoverTest #test13PointsToSouthAfterRotatingRightWhenHeadingEast stamp: 'AS 10/27/2022 16:02:43'!
+PASSED!
+
+!testRun: #MarsRoverTest #test14PointsToNorthAfterRotatingLeftWhenPointingEast stamp: 'AS 10/27/2022 16:02:43'!
+PASSED!
+
+!testRun: #MarsRoverTest #test15ForwardBackwardsAndRotateRightWorkAsExpectedWhenPointingSouth stamp: 'AS 10/27/2022 16:02:43'!
+PASSED!
+
+!testRun: #MarsRoverTest #test16ForwardBackwardsAndRotateRightWorkAsExpectedWhenPointingWest stamp: 'AS 10/27/2022 16:02:43'!
+PASSED!
+!MarsRoverLogger methodsFor: 'initialization' stamp: 'AS 10/27/2022 16:07:35' prior: 50557273!
+logHead: aMarsRoverHeading
+	
+	aMarsRoverHeading accept: self.! !
+!MarsRoverLogger methodsFor: 'initialization' stamp: 'AS 10/27/2022 16:08:15'!
+visitMarsRoverHeadingEast: aMarsRoverHeadingEast
+	
+	logs add: aMarsRoverHeadingEast class headAsString ! !
+
+!testRun: #MarsRoverLoggerTest #test01WhenOnlyLoggingPositionLogsAreEmptyWhenMarsRoverProcessesEmptyCommand stamp: 'AS 10/27/2022 16:08:16'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test02WhenOnlyLoggingPositionLogsOnlyShowNewPositionsAfterOnlyMovingInOneDirection stamp: 'AS 10/27/2022 16:08:16'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test03WhenOnlyLoggingHeadLogsShowNewHeadingsAfterRotatingToAllPosibleDirections stamp: 'AS 10/27/2022 16:08:16'!
+ERROR!
+
+!testRun: #MarsRoverLoggerTest #test04WhenLoggingPositionAndHeadLogsShowNewPositionAndNewHeadingAfterMovingAndThenRotating stamp: 'AS 10/27/2022 16:08:16'!
+ERROR!
+
+!testRun: #MarsRoverLoggerTest #test05WhenLoggingPositionAndHeadLogsShowNewHeadingAndNewPositionAfterRotatingAndThenMoving stamp: 'AS 10/27/2022 16:08:16'!
+ERROR!
+
+!testRun: #MarsRoverLoggerTest #test06CanLogWithMoreThanOneLogger stamp: 'AS 10/27/2022 16:08:16'!
+ERROR!
+
+!testRun: #MarsRoverLoggerTest #test03WhenOnlyLoggingHeadLogsShowNewHeadingsAfterRotatingToAllPosibleDirections stamp: 'AS 10/27/2022 16:08:18'!
+ERROR!
+!MarsRoverHeading methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:08:34'!
+accept: aMarsRoverLogger 
+	self shouldBeImplemented.! !
+!MarsRoverHeading methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:08:41' prior: 50559479!
+accept: aMarsRoverLogger 
+	
+	self subclassResponsibility ! !
+
+!testRun: #MarsRoverLoggerTest #test03WhenOnlyLoggingHeadLogsShowNewHeadingsAfterRotatingToAllPosibleDirections stamp: 'AS 10/27/2022 16:08:42'!
+ERROR!
+!MarsRoverHeadingEast methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:08:54' overrides: 50559484!
+accept: aMarsRoverLogger 
+	self shouldBeImplemented.! !
+!MarsRoverHeadingEast methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:09:03' prior: 50559494 overrides: 50559484!
+accept: aMarsRoverLogger 
+	
+	aMarsRoverLogger visitMarsRoverHeadingEast: self! !
+
+!testRun: #MarsRoverLoggerTest #test03WhenOnlyLoggingHeadLogsShowNewHeadingsAfterRotatingToAllPosibleDirections stamp: 'AS 10/27/2022 16:09:05'!
+ERROR!
+!MarsRoverLogger methodsFor: 'initialization' stamp: 'AS 10/27/2022 16:09:41'!
+visitMarsRoverHeadingNorth: aMarsRoverHeadingNorth
+	
+	logs add: aMarsRoverHeadingNorth class headAsString ! !
+
+!testRun: #MarsRoverLoggerTest #test01WhenOnlyLoggingPositionLogsAreEmptyWhenMarsRoverProcessesEmptyCommand stamp: 'AS 10/27/2022 16:09:44'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test02WhenOnlyLoggingPositionLogsOnlyShowNewPositionsAfterOnlyMovingInOneDirection stamp: 'AS 10/27/2022 16:09:44'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test03WhenOnlyLoggingHeadLogsShowNewHeadingsAfterRotatingToAllPosibleDirections stamp: 'AS 10/27/2022 16:09:44'!
+ERROR!
+
+!testRun: #MarsRoverLoggerTest #test04WhenLoggingPositionAndHeadLogsShowNewPositionAndNewHeadingAfterMovingAndThenRotating stamp: 'AS 10/27/2022 16:09:44'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test05WhenLoggingPositionAndHeadLogsShowNewHeadingAndNewPositionAfterRotatingAndThenMoving stamp: 'AS 10/27/2022 16:09:44'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test06CanLogWithMoreThanOneLogger stamp: 'AS 10/27/2022 16:09:44'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test03WhenOnlyLoggingHeadLogsShowNewHeadingsAfterRotatingToAllPosibleDirections stamp: 'AS 10/27/2022 16:09:44'!
+ERROR!
+!MarsRoverHeadingNorth methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:09:48' overrides: 50559484!
+accept: aMarsRoverLogger 
+	self shouldBeImplemented.! !
+!MarsRoverHeadingNorth methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:09:56' prior: 50559550 overrides: 50559484!
+accept: aMarsRoverLogger 
+	
+	aMarsRoverLogger visitMarsRoverHeadingNorth: self! !
+
+!testRun: #MarsRoverLoggerTest #test03WhenOnlyLoggingHeadLogsShowNewHeadingsAfterRotatingToAllPosibleDirections stamp: 'AS 10/27/2022 16:09:57'!
+ERROR!
+!MarsRoverHeadingWest methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:10:08' overrides: 50559484!
+accept: aMarsRoverLogger 
+	self shouldBeImplemented.! !
+!MarsRoverHeadingWest methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:10:23' prior: 50559567 overrides: 50559484!
+accept: aMarsRoverLogger 
+	
+	aMarsRoverLogger visitMarsRoverHeadingWest: self.! !
+
+!testRun: #MarsRoverLoggerTest #test03WhenOnlyLoggingHeadLogsShowNewHeadingsAfterRotatingToAllPosibleDirections stamp: 'AS 10/27/2022 16:10:25'!
+ERROR!
+!MarsRoverLogger methodsFor: 'as yet unclassified' stamp: 'AS 10/27/2022 16:10:36'!
+visitMarsRoverHeadingWest: aMarsRoverHeadingWest 
+	self shouldBeImplemented.! !
+!MarsRoverLogger methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:11:32' prior: 50559583!
+visitMarsRoverHeadingWest: aMarsRoverHeadingWest 
+	
+	logs add: aMarsRoverHeadingWest class headAsString ! !
+
+!testRun: #MarsRoverLoggerTest #test01WhenOnlyLoggingPositionLogsAreEmptyWhenMarsRoverProcessesEmptyCommand stamp: 'AS 10/27/2022 16:11:37'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test02WhenOnlyLoggingPositionLogsOnlyShowNewPositionsAfterOnlyMovingInOneDirection stamp: 'AS 10/27/2022 16:11:37'!
+PASSED!
+
+----STARTUP---- (27 October 2022 16:12:27) as /home/andisici/Documents/2022/ing-2c2022/cuisMarsRoverElRegreso/CuisUniversity-5481.image!
+
+!MarsRoverLogger methodsFor: 'initialization' stamp: 'AS 10/27/2022 16:01:19'!
+initializeLoggingPositionAndHeadChangesOn: aMarsRoverToLogPositionAndHeadOn 
+
+	marsRoverToLog := aMarsRoverToLogPositionAndHeadOn.
+	positionFollower := MarsRoverPositionFollower for: self.
+	headFollower := MarsRoverHeadingFollower for: self.! !
+!MarsRoverLogger class methodsFor: 'as yet unclassified' stamp: 'AS 10/27/2022 16:01:19' prior: 50555974!
+for: aMarsRoverToLogPositionAndHeadOn
+	
+	^self new initializeLoggingPositionAndHeadChangesOn: aMarsRoverToLogPositionAndHeadOn ! !
+
+!methodRemoval: MarsRoverLogger #initializeFor: stamp: 'AS 10/27/2022 16:12:29'!
+initializeFor: aMarsRoverToLogPositionAndHeadOn 
+
+	marsRoverToLog := aMarsRoverToLogPositionAndHeadOn.
+	positionFollower := MarsRoverPositionFollower for: self.
+	headFollower := MarsRoverHeadingFollower for: self.!
+!MarsRoverLogger class methodsFor: 'instance creation' stamp: 'AS 10/27/2022 16:02:25'!
+logPositionAndHeadChangesOn: aMarsRoverToLogPositionAndHeadOn
+	
+	^self new initializeLoggingPositionAndHeadChangesOn: aMarsRoverToLogPositionAndHeadOn ! !
+!MarsRoverLoggerTest methodsFor: 'as yet unclassified' stamp: 'AS 10/27/2022 16:02:25' prior: 50558613!
+test06CanLogWithMoreThanOneLogger
+
+	| marsRover logger1 logger2 |
+	marsRover := MarsRover at: 1@1 heading: self north.
+	
+	logger1 := (MarsRoverLogger logPositionAndHeadChangesOn: marsRover).
+	logger2 := (MarsRoverLogger logPositionAndHeadChangesOn: marsRover).
+	marsRover process: 'rf'.
+	
+	self assert: self eastHead equals: logger1 logs first.
+	self assert: '2@1' equals: logger1 logs second.
+	
+	self assert: self eastHead equals: logger2 logs first.
+	self assert: '2@1' equals: logger2 logs second.
+	
+
+	! !
+!MarsRoverLoggerTest methodsFor: 'as yet unclassified' stamp: 'AS 10/27/2022 16:02:25' prior: 50557076!
+test04WhenLoggingPositionAndHeadLogsShowNewPositionAndNewHeadingAfterMovingAndThenRotating
+
+	| marsRover logger|
+	marsRover := MarsRover at: 1@1 heading: self north.
+	
+	logger := (MarsRoverLogger logPositionAndHeadChangesOn: marsRover).
+	marsRover process: 'fr'.
+	
+	self assert: '1@2' equals: logger logs first.
+	self assert: self eastHead equals: logger logs second.
+	
+
+	! !
+!MarsRoverLoggerTest methodsFor: 'as yet unclassified' stamp: 'AS 10/27/2022 16:02:25' prior: 50557855!
+test05WhenLoggingPositionAndHeadLogsShowNewHeadingAndNewPositionAfterRotatingAndThenMoving
+
+	| marsRover logger|
+	marsRover := MarsRover at: 1@1 heading: self north.
+	
+	logger := (MarsRoverLogger logPositionAndHeadChangesOn: marsRover).
+	marsRover process: 'rf'.
+	
+	self assert: self eastHead equals: logger logs first.
+	self assert: '2@1' equals: logger logs second.
+	
+
+	! !
+
+!methodRemoval: MarsRoverLogger class #for: stamp: 'AS 10/27/2022 16:12:29'!
+for: aMarsRoverToLogPositionAndHeadOn
+	
+	^self new initializeLoggingPositionAndHeadChangesOn: aMarsRoverToLogPositionAndHeadOn !
+!MarsRoverLogger methodsFor: 'initialization' stamp: 'AS 10/27/2022 16:07:35' prior: 50557273!
+logHead: aMarsRoverHeading
+	
+	aMarsRoverHeading accept: self.! !
+!MarsRoverLogger methodsFor: 'initialization' stamp: 'AS 10/27/2022 16:08:15'!
+visitMarsRoverHeadingEast: aMarsRoverHeadingEast
+	
+	logs add: aMarsRoverHeadingEast class headAsString ! !
+!MarsRoverHeading methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:08:34'!
+accept: aMarsRoverLogger 
+	self shouldBeImplemented.! !
+!MarsRoverHeading methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:08:41' prior: 50559714!
+accept: aMarsRoverLogger 
+	
+	self subclassResponsibility ! !
+!MarsRoverHeadingEast methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:08:54' overrides: 50559719!
+accept: aMarsRoverLogger 
+	self shouldBeImplemented.! !
+!MarsRoverHeadingEast methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:09:03' prior: 50559724 overrides: 50559719!
+accept: aMarsRoverLogger 
+	
+	aMarsRoverLogger visitMarsRoverHeadingEast: self! !
+!MarsRoverLogger methodsFor: 'initialization' stamp: 'AS 10/27/2022 16:09:41'!
+visitMarsRoverHeadingNorth: aMarsRoverHeadingNorth
+	
+	logs add: aMarsRoverHeadingNorth class headAsString ! !
+!MarsRoverHeadingNorth methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:09:48' overrides: 50559719!
+accept: aMarsRoverLogger 
+	self shouldBeImplemented.! !
+!MarsRoverHeadingNorth methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:09:56' prior: 50559742 overrides: 50559719!
+accept: aMarsRoverLogger 
+	
+	aMarsRoverLogger visitMarsRoverHeadingNorth: self! !
+!MarsRoverHeadingWest methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:10:08' overrides: 50559719!
+accept: aMarsRoverLogger 
+	self shouldBeImplemented.! !
+!MarsRoverHeadingWest methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:10:23' prior: 50559754 overrides: 50559719!
+accept: aMarsRoverLogger 
+	
+	aMarsRoverLogger visitMarsRoverHeadingWest: self.! !
+!MarsRoverLogger methodsFor: 'as yet unclassified' stamp: 'AS 10/27/2022 16:10:36'!
+visitMarsRoverHeadingWest: aMarsRoverHeadingWest 
+	self shouldBeImplemented.! !
+!MarsRoverLogger methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:11:32' prior: 50559766!
+visitMarsRoverHeadingWest: aMarsRoverHeadingWest 
+	
+	logs add: aMarsRoverHeadingWest class headAsString ! !
+
+----SNAPSHOT----(27 October 2022 16:12:40) CuisUniversity-5481.image priorSource: 7278080!
+
+!testRun: #MarsRoverLoggerTest #test01WhenOnlyLoggingPositionLogsAreEmptyWhenMarsRoverProcessesEmptyCommand stamp: 'AS 10/27/2022 16:12:51'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test02WhenOnlyLoggingPositionLogsOnlyShowNewPositionsAfterOnlyMovingInOneDirection stamp: 'AS 10/27/2022 16:12:51'!
+PASSED!
+
+----STARTUP---- (27 October 2022 16:13:48) as /home/andisici/Documents/2022/ing-2c2022/cuisMarsRoverElRegreso/CuisUniversity-5481.image!
+
+!MarsRoverLogger methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:10:36' prior: 50559772!
+visitMarsRoverHeadingWest: aMarsRoverHeadingWest 
+	self shouldBeImplemented.! !
+
+!testRun: #MarsRoverLoggerTest #test01WhenOnlyLoggingPositionLogsAreEmptyWhenMarsRoverProcessesEmptyCommand stamp: 'AS 10/27/2022 16:13:57'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test02WhenOnlyLoggingPositionLogsOnlyShowNewPositionsAfterOnlyMovingInOneDirection stamp: 'AS 10/27/2022 16:13:57'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test03WhenOnlyLoggingHeadLogsShowNewHeadingsAfterRotatingToAllPosibleDirections stamp: 'AS 10/27/2022 16:13:57'!
+ERROR!
+
+!testRun: #MarsRoverLoggerTest #test04WhenLoggingPositionAndHeadLogsShowNewPositionAndNewHeadingAfterMovingAndThenRotating stamp: 'AS 10/27/2022 16:13:57'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test05WhenLoggingPositionAndHeadLogsShowNewHeadingAndNewPositionAfterRotatingAndThenMoving stamp: 'AS 10/27/2022 16:13:57'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test06CanLogWithMoreThanOneLogger stamp: 'AS 10/27/2022 16:13:57'!
+PASSED!
+
+!testRun: #MarsRoverTest #test01DoesNotMoveWhenNoCommand stamp: 'AS 10/27/2022 16:13:57'!
+PASSED!
+
+!testRun: #MarsRoverTest #test02IsAtFailsForDifferentPosition stamp: 'AS 10/27/2022 16:13:57'!
+PASSED!
+
+!testRun: #MarsRoverTest #test03IsAtFailsForDifferentHeading stamp: 'AS 10/27/2022 16:13:57'!
+PASSED!
+
+!testRun: #MarsRoverTest #test04IncrementsYAfterMovingForwardWhenHeadingNorth stamp: 'AS 10/27/2022 16:13:57'!
+PASSED!
+
+!testRun: #MarsRoverTest #test06DecrementsYAfterMovingBackwardsWhenHeadingNorth stamp: 'AS 10/27/2022 16:13:57'!
+PASSED!
+
+!testRun: #MarsRoverTest #test07PointToEashAfterRotatingRightWhenHeadingNorth stamp: 'AS 10/27/2022 16:13:57'!
+PASSED!
+
+!testRun: #MarsRoverTest #test08PointsToWestAfterRotatingLeftWhenPointingNorth stamp: 'AS 10/27/2022 16:13:57'!
+PASSED!
+
+!testRun: #MarsRoverTest #test09DoesNotProcessInvalidCommand stamp: 'AS 10/27/2022 16:13:57'!
+PASSED!
+
+!testRun: #MarsRoverTest #test10CanProcessMoreThanOneCommand stamp: 'AS 10/27/2022 16:13:57'!
+PASSED!
+
+!testRun: #MarsRoverTest #test11IncrementsXAfterMovingForwareWhenHeadingEast stamp: 'AS 10/27/2022 16:13:57'!
+PASSED!
+
+!testRun: #MarsRoverTest #test12DecrementsXAfterMovingBackwardWhenHeadingEast stamp: 'AS 10/27/2022 16:13:57'!
+PASSED!
+
+!testRun: #MarsRoverTest #test13PointsToSouthAfterRotatingRightWhenHeadingEast stamp: 'AS 10/27/2022 16:13:57'!
+PASSED!
+
+!testRun: #MarsRoverTest #test14PointsToNorthAfterRotatingLeftWhenPointingEast stamp: 'AS 10/27/2022 16:13:57'!
+PASSED!
+
+!testRun: #MarsRoverTest #test15ForwardBackwardsAndRotateRightWorkAsExpectedWhenPointingSouth stamp: 'AS 10/27/2022 16:13:57'!
+PASSED!
+
+!testRun: #MarsRoverTest #test16ForwardBackwardsAndRotateRightWorkAsExpectedWhenPointingWest stamp: 'AS 10/27/2022 16:13:57'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test03WhenOnlyLoggingHeadLogsShowNewHeadingsAfterRotatingToAllPosibleDirections stamp: 'AS 10/27/2022 16:13:57'!
+ERROR!
+!MarsRoverLogger methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:11:32' prior: 50559795!
+visitMarsRoverHeadingWest: aMarsRoverHeadingWest 
+	
+	logs add: aMarsRoverHeadingWest class headAsString ! !
+
+!testRun: #MarsRoverLoggerTest #test01WhenOnlyLoggingPositionLogsAreEmptyWhenMarsRoverProcessesEmptyCommand stamp: 'AS 10/27/2022 16:14:26'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test02WhenOnlyLoggingPositionLogsOnlyShowNewPositionsAfterOnlyMovingInOneDirection stamp: 'AS 10/27/2022 16:14:29'!
+PASSED!
+
+----STARTUP---- (27 October 2022 16:15:20) as /home/andisici/Documents/2022/ing-2c2022/cuisMarsRoverElRegreso/CuisUniversity-5481.image!
+
+!MarsRoverLogger methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:10:36' prior: 50559772!
+visitMarsRoverHeadingWest: aMarsRoverHeadingWest 
+	self shouldBeImplemented.! !
+
+!testRun: #MarsRoverLoggerTest #test03WhenOnlyLoggingHeadLogsShowNewHeadingsAfterRotatingToAllPosibleDirections stamp: 'AS 10/27/2022 16:16:21'!
+ERROR!
+
+!testRun: #MarsRoverLoggerTest #test03WhenOnlyLoggingHeadLogsShowNewHeadingsAfterRotatingToAllPosibleDirections stamp: 'AS 10/27/2022 16:16:21'!
+ERROR!
+!MarsRoverLogger methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:11:32' prior: 50559909!
+visitMarsRoverHeadingWest: aMarsRoverHeadingWest 
+	
+	logs add: aMarsRoverHeadingWest class headAsString ! !
+
+----STARTUP---- (27 October 2022 16:17:48) as /home/andisici/Documents/2022/ing-2c2022/cuisMarsRoverElRegreso/CuisUniversity-5481.image!
+
+!MarsRoverLogger methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:10:36' prior: 50559772!
+visitMarsRoverHeadingWest: aMarsRoverHeadingWest 
+	self shouldBeImplemented.! !
+!MarsRoverLogger methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:11:32' prior: 50559935!
+visitMarsRoverHeadingWest: aMarsRoverHeadingWest 
+	
+	logs add: aMarsRoverHeadingWest class headAsString ! !
+!MarsRoverLogger methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:10:36' prior: 50559941!
+visitMarsRoverHeadingWest: aMarsRoverHeadingWest 
+	self shouldBeImplemented.! !
+!MarsRoverLogger methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:11:32' prior: 50559948!
+visitMarsRoverHeadingWest: aMarsRoverHeadingWest 
+	
+	logs add: aMarsRoverHeadingWest class headAsString ! !
+!MarsRoverLogger methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:17:59' prior: 50559954!
+visitMarsRoverHeadingWest: aMarsRoverHeadingWest 
+	self halt.
+	logs add: aMarsRoverHeadingWest class headAsString ! !
+
+!testRun: #MarsRoverLoggerTest #test01WhenOnlyLoggingPositionLogsAreEmptyWhenMarsRoverProcessesEmptyCommand stamp: 'AS 10/27/2022 16:18:02'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test02WhenOnlyLoggingPositionLogsOnlyShowNewPositionsAfterOnlyMovingInOneDirection stamp: 'AS 10/27/2022 16:18:02'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test04WhenLoggingPositionAndHeadLogsShowNewPositionAndNewHeadingAfterMovingAndThenRotating stamp: 'AS 10/27/2022 16:18:02'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test05WhenLoggingPositionAndHeadLogsShowNewHeadingAndNewPositionAfterRotatingAndThenMoving stamp: 'AS 10/27/2022 16:18:02'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test06CanLogWithMoreThanOneLogger stamp: 'AS 10/27/2022 16:18:02'!
+PASSED!
+
+!testRun: #MarsRoverTest #test01DoesNotMoveWhenNoCommand stamp: 'AS 10/27/2022 16:18:02'!
+PASSED!
+
+!testRun: #MarsRoverTest #test02IsAtFailsForDifferentPosition stamp: 'AS 10/27/2022 16:18:02'!
+PASSED!
+
+!testRun: #MarsRoverTest #test03IsAtFailsForDifferentHeading stamp: 'AS 10/27/2022 16:18:02'!
+PASSED!
+
+!testRun: #MarsRoverTest #test04IncrementsYAfterMovingForwardWhenHeadingNorth stamp: 'AS 10/27/2022 16:18:02'!
+PASSED!
+
+!testRun: #MarsRoverTest #test06DecrementsYAfterMovingBackwardsWhenHeadingNorth stamp: 'AS 10/27/2022 16:18:02'!
+PASSED!
+
+!testRun: #MarsRoverTest #test07PointToEashAfterRotatingRightWhenHeadingNorth stamp: 'AS 10/27/2022 16:18:02'!
+PASSED!
+
+!testRun: #MarsRoverTest #test08PointsToWestAfterRotatingLeftWhenPointingNorth stamp: 'AS 10/27/2022 16:18:02'!
+PASSED!
+
+!testRun: #MarsRoverTest #test09DoesNotProcessInvalidCommand stamp: 'AS 10/27/2022 16:18:02'!
+PASSED!
+
+!testRun: #MarsRoverTest #test10CanProcessMoreThanOneCommand stamp: 'AS 10/27/2022 16:18:02'!
+PASSED!
+
+!testRun: #MarsRoverTest #test11IncrementsXAfterMovingForwareWhenHeadingEast stamp: 'AS 10/27/2022 16:18:02'!
+PASSED!
+
+!testRun: #MarsRoverTest #test12DecrementsXAfterMovingBackwardWhenHeadingEast stamp: 'AS 10/27/2022 16:18:02'!
+PASSED!
+
+!testRun: #MarsRoverTest #test13PointsToSouthAfterRotatingRightWhenHeadingEast stamp: 'AS 10/27/2022 16:18:02'!
+PASSED!
+
+!testRun: #MarsRoverTest #test14PointsToNorthAfterRotatingLeftWhenPointingEast stamp: 'AS 10/27/2022 16:18:02'!
+PASSED!
+
+!testRun: #MarsRoverTest #test15ForwardBackwardsAndRotateRightWorkAsExpectedWhenPointingSouth stamp: 'AS 10/27/2022 16:18:02'!
+PASSED!
+
+!testRun: #MarsRoverTest #test16ForwardBackwardsAndRotateRightWorkAsExpectedWhenPointingWest stamp: 'AS 10/27/2022 16:18:02'!
+PASSED!
+
+----STARTUP---- (27 October 2022 16:19:44) as /home/andisici/Documents/2022/ing-2c2022/cuisMarsRoverElRegreso/CuisUniversity-5481.image!
+
+!MarsRoverLogger methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:10:36' prior: 50559772!
+visitMarsRoverHeadingWest: aMarsRoverHeadingWest 
+	self shouldBeImplemented.! !
+!MarsRoverLogger methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:11:32' prior: 50560050!
+visitMarsRoverHeadingWest: aMarsRoverHeadingWest 
+	
+	logs add: aMarsRoverHeadingWest class headAsString ! !
+!MarsRoverLogger methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:10:36' prior: 50560056!
+visitMarsRoverHeadingWest: aMarsRoverHeadingWest 
+	self shouldBeImplemented.! !
+!MarsRoverLogger methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:11:32' prior: 50560063!
+visitMarsRoverHeadingWest: aMarsRoverHeadingWest 
+	
+	logs add: aMarsRoverHeadingWest class headAsString ! !
+!MarsRoverLogger methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:10:36' prior: 50560069!
+visitMarsRoverHeadingWest: aMarsRoverHeadingWest 
+	self shouldBeImplemented.! !
+!MarsRoverLogger methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:11:32' prior: 50560076!
+visitMarsRoverHeadingWest: aMarsRoverHeadingWest 
+	
+	logs add: aMarsRoverHeadingWest class headAsString ! !
+!MarsRoverLogger methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:10:36' prior: 50560082!
+visitMarsRoverHeadingWest: aMarsRoverHeadingWest 
+	self shouldBeImplemented.! !
+!MarsRoverLogger methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:11:32' prior: 50560089!
+visitMarsRoverHeadingWest: aMarsRoverHeadingWest 
+	
+	logs add: aMarsRoverHeadingWest class headAsString ! !
+!MarsRoverLogger methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:17:59' prior: 50560095!
+visitMarsRoverHeadingWest: aMarsRoverHeadingWest 
+	self halt.
+	logs add: aMarsRoverHeadingWest class headAsString ! !
+
+!testRun: #MarsRoverLoggerTest #test01WhenOnlyLoggingPositionLogsAreEmptyWhenMarsRoverProcessesEmptyCommand stamp: 'AS 10/27/2022 16:21:13'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test02WhenOnlyLoggingPositionLogsOnlyShowNewPositionsAfterOnlyMovingInOneDirection stamp: 'AS 10/27/2022 16:21:13'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test04WhenLoggingPositionAndHeadLogsShowNewPositionAndNewHeadingAfterMovingAndThenRotating stamp: 'AS 10/27/2022 16:21:13'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test05WhenLoggingPositionAndHeadLogsShowNewHeadingAndNewPositionAfterRotatingAndThenMoving stamp: 'AS 10/27/2022 16:21:13'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test06CanLogWithMoreThanOneLogger stamp: 'AS 10/27/2022 16:21:13'!
+PASSED!
+
+----STARTUP---- (27 October 2022 16:30:09) as /home/andisici/Documents/2022/ing-2c2022/cuisMarsRoverElRegreso/CuisUniversity-5481.image!
+
+!MarsRoverLogger methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:10:36' prior: 50559772!
+visitMarsRoverHeadingWest: aMarsRoverHeadingWest 
+	self shouldBeImplemented.! !
+!MarsRoverLogger methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:11:32' prior: 50560137!
+visitMarsRoverHeadingWest: aMarsRoverHeadingWest 
+	
+	logs add: aMarsRoverHeadingWest class headAsString ! !
+!MarsRoverLogger methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:10:36' prior: 50560143!
+visitMarsRoverHeadingWest: aMarsRoverHeadingWest 
+	self shouldBeImplemented.! !
+!MarsRoverLogger methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:11:32' prior: 50560150!
+visitMarsRoverHeadingWest: aMarsRoverHeadingWest 
+	
+	logs add: aMarsRoverHeadingWest class headAsString ! !
+!MarsRoverLogger methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:10:36' prior: 50560156!
+visitMarsRoverHeadingWest: aMarsRoverHeadingWest 
+	self shouldBeImplemented.! !
+!MarsRoverLogger methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:11:32' prior: 50560163!
+visitMarsRoverHeadingWest: aMarsRoverHeadingWest 
+	
+	logs add: aMarsRoverHeadingWest class headAsString ! !
+!MarsRoverLogger methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:10:36' prior: 50560169!
+visitMarsRoverHeadingWest: aMarsRoverHeadingWest 
+	self shouldBeImplemented.! !
+!MarsRoverLogger methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:11:32' prior: 50560176!
+visitMarsRoverHeadingWest: aMarsRoverHeadingWest 
+	
+	logs add: aMarsRoverHeadingWest class headAsString ! !
+!MarsRoverLogger methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:17:59' prior: 50560182!
+visitMarsRoverHeadingWest: aMarsRoverHeadingWest 
+	self halt.
+	logs add: aMarsRoverHeadingWest class headAsString ! !
+!MarsRoverLogger methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:10:36' prior: 50560189!
+visitMarsRoverHeadingWest: aMarsRoverHeadingWest 
+	self shouldBeImplemented.! !
+!MarsRoverLogger methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:11:32' prior: 50560196!
+visitMarsRoverHeadingWest: aMarsRoverHeadingWest 
+	
+	logs add: aMarsRoverHeadingWest class headAsString ! !
+!MarsRoverLogger methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:10:36' prior: 50560202!
+visitMarsRoverHeadingWest: aMarsRoverHeadingWest 
+	self shouldBeImplemented.! !
+!MarsRoverLogger methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:11:32' prior: 50560209!
+visitMarsRoverHeadingWest: aMarsRoverHeadingWest 
+	
+	logs add: aMarsRoverHeadingWest class headAsString ! !
+!MarsRoverLogger methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:10:36' prior: 50560215!
+visitMarsRoverHeadingWest: aMarsRoverHeadingWest 
+	self shouldBeImplemented.! !
+!MarsRoverLogger methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:11:32' prior: 50560222!
+visitMarsRoverHeadingWest: aMarsRoverHeadingWest 
+	
+	logs add: aMarsRoverHeadingWest class headAsString ! !
+!MarsRoverLogger methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:10:36' prior: 50560228!
+visitMarsRoverHeadingWest: aMarsRoverHeadingWest 
+	self shouldBeImplemented.! !
+!MarsRoverLogger methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:11:32' prior: 50560235!
+visitMarsRoverHeadingWest: aMarsRoverHeadingWest 
+	
+	logs add: aMarsRoverHeadingWest class headAsString ! !
+!MarsRoverLogger methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:17:59' prior: 50560241!
+visitMarsRoverHeadingWest: aMarsRoverHeadingWest 
+	self halt.
+	logs add: aMarsRoverHeadingWest class headAsString ! !
+!MarsRoverLogger methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:30:56' prior: 50560248!
+visitMarsRoverHeadingWest: aMarsRoverHeadingWest 
+	
+	logs add: aMarsRoverHeadingWest class headAsString ! !
+!MarsRoverHeadingSouth methodsFor: 'error handling' stamp: 'AS 10/27/2022 16:36:40' overrides: 50559719!
+accept: aMarsRoverLogger 
+	
+	aMarsRoverLogger visitMarsRoverHeadingSouth: self.! !
+!MarsRoverLogger methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:37:05'!
+visitMarsRoverHeadingSouth: aMarsRoverHeadingSouth 
+	
+	logs add: aMarsRoverHeadingSouth class headAsString ! !
+
+!testRun: #MarsRoverLoggerTest #test01WhenOnlyLoggingPositionLogsAreEmptyWhenMarsRoverProcessesEmptyCommand stamp: 'AS 10/27/2022 16:37:19'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test02WhenOnlyLoggingPositionLogsOnlyShowNewPositionsAfterOnlyMovingInOneDirection stamp: 'AS 10/27/2022 16:37:19'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test03WhenOnlyLoggingHeadLogsShowNewHeadingsAfterRotatingToAllPosibleDirections stamp: 'AS 10/27/2022 16:37:19'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test04WhenLoggingPositionAndHeadLogsShowNewPositionAndNewHeadingAfterMovingAndThenRotating stamp: 'AS 10/27/2022 16:37:19'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test05WhenLoggingPositionAndHeadLogsShowNewHeadingAndNewPositionAfterRotatingAndThenMoving stamp: 'AS 10/27/2022 16:37:19'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test06CanLogWithMoreThanOneLogger stamp: 'AS 10/27/2022 16:37:19'!
+PASSED!
+
+!testRun: #MarsRoverTest #test01DoesNotMoveWhenNoCommand stamp: 'AS 10/27/2022 16:37:19'!
+PASSED!
+
+!testRun: #MarsRoverTest #test02IsAtFailsForDifferentPosition stamp: 'AS 10/27/2022 16:37:19'!
+PASSED!
+
+!testRun: #MarsRoverTest #test03IsAtFailsForDifferentHeading stamp: 'AS 10/27/2022 16:37:19'!
+PASSED!
+
+!testRun: #MarsRoverTest #test04IncrementsYAfterMovingForwardWhenHeadingNorth stamp: 'AS 10/27/2022 16:37:19'!
+PASSED!
+
+!testRun: #MarsRoverTest #test06DecrementsYAfterMovingBackwardsWhenHeadingNorth stamp: 'AS 10/27/2022 16:37:19'!
+PASSED!
+
+!testRun: #MarsRoverTest #test07PointToEashAfterRotatingRightWhenHeadingNorth stamp: 'AS 10/27/2022 16:37:19'!
+PASSED!
+
+!testRun: #MarsRoverTest #test08PointsToWestAfterRotatingLeftWhenPointingNorth stamp: 'AS 10/27/2022 16:37:19'!
+PASSED!
+
+!testRun: #MarsRoverTest #test09DoesNotProcessInvalidCommand stamp: 'AS 10/27/2022 16:37:19'!
+PASSED!
+
+!testRun: #MarsRoverTest #test10CanProcessMoreThanOneCommand stamp: 'AS 10/27/2022 16:37:19'!
+PASSED!
+
+!testRun: #MarsRoverTest #test11IncrementsXAfterMovingForwareWhenHeadingEast stamp: 'AS 10/27/2022 16:37:19'!
+PASSED!
+
+!testRun: #MarsRoverTest #test12DecrementsXAfterMovingBackwardWhenHeadingEast stamp: 'AS 10/27/2022 16:37:19'!
+PASSED!
+
+!testRun: #MarsRoverTest #test13PointsToSouthAfterRotatingRightWhenHeadingEast stamp: 'AS 10/27/2022 16:37:19'!
+PASSED!
+
+!testRun: #MarsRoverTest #test14PointsToNorthAfterRotatingLeftWhenPointingEast stamp: 'AS 10/27/2022 16:37:19'!
+PASSED!
+
+!testRun: #MarsRoverTest #test15ForwardBackwardsAndRotateRightWorkAsExpectedWhenPointingSouth stamp: 'AS 10/27/2022 16:37:19'!
+PASSED!
+
+!testRun: #MarsRoverTest #test16ForwardBackwardsAndRotateRightWorkAsExpectedWhenPointingWest stamp: 'AS 10/27/2022 16:37:19'!
+PASSED!
+!MarsRoverLogger methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:39:04' prior: 50559708!
+visitMarsRoverHeadingEast: aMarsRoverHeadingEast
+	
+	logs add: 'East'! !
+!MarsRoverLogger methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:39:15' prior: 50559735!
+visitMarsRoverHeadingNorth: aMarsRoverHeadingNorth
+	
+	logs add: 'North'! !
+!MarsRoverLogger methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:39:24' prior: 50560267!
+visitMarsRoverHeadingSouth: aMarsRoverHeadingSouth 
+	
+	logs add: 'South' ! !
+!MarsRoverLogger methodsFor: 'visitor' stamp: 'AS 10/27/2022 16:39:30' prior: 50560255!
+visitMarsRoverHeadingWest: aMarsRoverHeadingWest 
+	
+	logs add: 'West'! !
+
+!testRun: #MarsRoverLoggerTest #test01WhenOnlyLoggingPositionLogsAreEmptyWhenMarsRoverProcessesEmptyCommand stamp: 'AS 10/27/2022 16:39:33'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test02WhenOnlyLoggingPositionLogsOnlyShowNewPositionsAfterOnlyMovingInOneDirection stamp: 'AS 10/27/2022 16:39:33'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test03WhenOnlyLoggingHeadLogsShowNewHeadingsAfterRotatingToAllPosibleDirections stamp: 'AS 10/27/2022 16:39:33'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test04WhenLoggingPositionAndHeadLogsShowNewPositionAndNewHeadingAfterMovingAndThenRotating stamp: 'AS 10/27/2022 16:39:33'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test05WhenLoggingPositionAndHeadLogsShowNewHeadingAndNewPositionAfterRotatingAndThenMoving stamp: 'AS 10/27/2022 16:39:33'!
+PASSED!
+
+!testRun: #MarsRoverLoggerTest #test06CanLogWithMoreThanOneLogger stamp: 'AS 10/27/2022 16:39:33'!
+PASSED!
+
+!testRun: #MarsRoverTest #test01DoesNotMoveWhenNoCommand stamp: 'AS 10/27/2022 16:39:33'!
+PASSED!
+
+!testRun: #MarsRoverTest #test02IsAtFailsForDifferentPosition stamp: 'AS 10/27/2022 16:39:33'!
+PASSED!
+
+!testRun: #MarsRoverTest #test03IsAtFailsForDifferentHeading stamp: 'AS 10/27/2022 16:39:33'!
+PASSED!
+
+!testRun: #MarsRoverTest #test04IncrementsYAfterMovingForwardWhenHeadingNorth stamp: 'AS 10/27/2022 16:39:33'!
+PASSED!
+
+!testRun: #MarsRoverTest #test06DecrementsYAfterMovingBackwardsWhenHeadingNorth stamp: 'AS 10/27/2022 16:39:33'!
+PASSED!
+
+!testRun: #MarsRoverTest #test07PointToEashAfterRotatingRightWhenHeadingNorth stamp: 'AS 10/27/2022 16:39:33'!
+PASSED!
+
+!testRun: #MarsRoverTest #test08PointsToWestAfterRotatingLeftWhenPointingNorth stamp: 'AS 10/27/2022 16:39:33'!
+PASSED!
+
+!testRun: #MarsRoverTest #test09DoesNotProcessInvalidCommand stamp: 'AS 10/27/2022 16:39:33'!
+PASSED!
+
+!testRun: #MarsRoverTest #test10CanProcessMoreThanOneCommand stamp: 'AS 10/27/2022 16:39:33'!
+PASSED!
+
+!testRun: #MarsRoverTest #test11IncrementsXAfterMovingForwareWhenHeadingEast stamp: 'AS 10/27/2022 16:39:33'!
+PASSED!
+
+!testRun: #MarsRoverTest #test12DecrementsXAfterMovingBackwardWhenHeadingEast stamp: 'AS 10/27/2022 16:39:33'!
+PASSED!
+
+!testRun: #MarsRoverTest #test13PointsToSouthAfterRotatingRightWhenHeadingEast stamp: 'AS 10/27/2022 16:39:33'!
+PASSED!
+
+!testRun: #MarsRoverTest #test14PointsToNorthAfterRotatingLeftWhenPointingEast stamp: 'AS 10/27/2022 16:39:33'!
+PASSED!
+
+!testRun: #MarsRoverTest #test15ForwardBackwardsAndRotateRightWorkAsExpectedWhenPointingSouth stamp: 'AS 10/27/2022 16:39:33'!
+PASSED!
+
+!testRun: #MarsRoverTest #test16ForwardBackwardsAndRotateRightWorkAsExpectedWhenPointingWest stamp: 'AS 10/27/2022 16:39:33'!
+PASSED!
+
+----SNAPSHOT----(27 October 2022 16:39:41) CuisUniversity-5481.image priorSource: 7300075!
