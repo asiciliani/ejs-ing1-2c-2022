@@ -102,6 +102,25 @@ test05WhenLoggingPositionAndHeadLogsShowNewHeadingAndNewPositionAfterRotatingAnd
 
 	! !
 
+!MarsRoverLoggerTest methodsFor: 'tests' stamp: 'AS 10/27/2022 15:32:33'!
+test06CanLogWithMoreThanOneLogger
+
+	| marsRover logger1 logger2 |
+	marsRover := MarsRover at: 1@1 heading: self north.
+	
+	logger1 := (MarsRoverLogger for: marsRover).
+	logger2 := (MarsRoverLogger for: marsRover).
+	marsRover process: 'rf'.
+	
+	self assert: self eastHead equals: logger1 logs first.
+	self assert: '2@1' equals: logger1 logs second.
+	
+	self assert: self eastHead equals: logger2 logs first.
+	self assert: '2@1' equals: logger2 logs second.
+	
+
+	! !
+
 
 !classDefinition: #MarsRoverTest category: 'MarsRover-WithHeading'!
 TestCase subclass: #MarsRoverTest
@@ -310,7 +329,7 @@ assertIsAt: newPosition heading: newHeadingType afterProcessing: commands whenSt
 
 !classDefinition: #MarsRover category: 'MarsRover-WithHeading'!
 Object subclass: #MarsRover
-	instanceVariableNames: 'position head positionLogger headingLogger'
+	instanceVariableNames: 'position head positionLoggingBlocks headingLoggingBlocks'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'MarsRover-WithHeading'!
@@ -326,11 +345,13 @@ signalInvalidCommand
 	self error: self invalidCommandErrorDescription ! !
 
 
-!MarsRover methodsFor: 'initialization' stamp: 'HAW 10/7/2021 20:10:49'!
+!MarsRover methodsFor: 'initialization' stamp: 'AS 10/27/2022 15:36:04'!
 initializeAt: aPosition heading: aHeadingType
 
 	position := aPosition.
-	head := aHeadingType for: self ! !
+	head := aHeadingType for: self.
+	positionLoggingBlocks := OrderedCollection new.
+	headingLoggingBlocks := OrderedCollection new.! !
 
 
 !MarsRover methodsFor: 'heading' stamp: 'HAW 10/7/2021 20:17:02'!
@@ -438,25 +459,24 @@ processCommand: aCommand
 	self signalInvalidCommand.! !
 
 
-!MarsRover methodsFor: 'logging' stamp: 'AS 10/27/2022 15:15:26'!
+!MarsRover methodsFor: 'logging' stamp: 'AS 10/27/2022 15:38:51'!
 logHead
 
-	^ headingLogger ifNotNil: [headingLogger value: head]! !
+	headingLoggingBlocks do: [:aHeadingLoggingBlock | aHeadingLoggingBlock value: head].! !
 
-!MarsRover methodsFor: 'logging' stamp: 'AS 10/24/2022 21:32:58'!
-logHeadingWith: aMarsRoverHeadingLogger 
+!MarsRover methodsFor: 'logging' stamp: 'AS 10/27/2022 15:36:57'!
+logHeadingWith: aMarsRoverHeadingLoggingBlock 
 
-	headingLogger := aMarsRoverHeadingLogger.! !
+	headingLoggingBlocks add: aMarsRoverHeadingLoggingBlock.! !
 
-!MarsRover methodsFor: 'logging' stamp: 'AS 10/27/2022 15:07:11'!
+!MarsRover methodsFor: 'logging' stamp: 'AS 10/27/2022 15:37:48'!
 logPosition
+	positionLoggingBlocks do: [:aPositionLoggingBlock | aPositionLoggingBlock value: position].! !
 
-	^ positionLogger ifNotNil: [positionLogger value: position]! !
+!MarsRover methodsFor: 'logging' stamp: 'AS 10/27/2022 15:34:36'!
+logPositionWith: aMarsRoverPositionLoggingBlock 
 
-!MarsRover methodsFor: 'logging' stamp: 'AS 10/24/2022 21:36:36'!
-logPositionWith: aMarsRoverPositionLogger 
-
-	positionLogger := aMarsRoverPositionLogger.! !
+	positionLoggingBlocks add: aMarsRoverPositionLoggingBlock.! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
