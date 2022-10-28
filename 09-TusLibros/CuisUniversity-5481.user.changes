@@ -243,3 +243,563 @@ PASSED!
 PASSED!
 
 ----SNAPSHOT----(27 October 2022 20:53:33) CuisUniversity-5481.image priorSource: 7065159!
+
+----STARTUP---- (27 October 2022 21:05:58) as /home/andisici/Documents/2022/ing-2c2022/cuisTusLibros/CuisUniversity-5481.image!
+
+
+----QUIT----(27 October 2022 21:06:23) CuisUniversity-5481.image priorSource: 7067123!
+
+----STARTUP---- (27 October 2022 21:06:39) as /home/andisici/Documents/2022/ing-2c2022/cuisTusLibros/CuisUniversity-5481.image!
+
+!CartTests methodsFor: 'tests' stamp: 'AS 10/27/2022 21:09:52'!
+test04CanNotAddItemNotInStoreCatalog
+	
+	| cart catalog |
+	
+	catalog := OrderedCollection new.
+	cart := Cart withCatalog: catalog.
+	
+	self should: [cart add: self elementNotInStore]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: Cart canNotAddItemNotSoldByStoreErrorMessage equals: anError messageText.
+							   self assert: cart isEmpty].! !
+
+!testRun: #CartTests #test04CanNotAddItemNotInStoreCatalog stamp: 'AS 10/27/2022 21:10:14'!
+ERROR!
+!Cart class methodsFor: 'instance creation' stamp: 'AS 10/27/2022 21:10:18'!
+withCatalog: anOrderedCollection 
+	"DO NOT FORGET TO RENAME COLLABORATORS AND REMOVE THIS COMMENT!!!!"
+	self shouldBeImplemented.
+	^self new initializeWithCatalog: anOrderedCollection ! !
+!Cart class methodsFor: 'instance creation' stamp: 'AS 10/27/2022 21:10:30' prior: 50552602!
+withCatalog: aStoreCatalog
+
+	^self new initializeWithCatalog: aStoreCatalog ! !
+
+!testRun: #CartTests #test04CanNotAddItemNotInStoreCatalog stamp: 'AS 10/27/2022 21:10:31'!
+ERROR!
+
+!classDefinition: #Cart category: 'TusLibros' stamp: 'AS 10/27/2022 21:10:36'!
+Object subclass: #Cart
+	instanceVariableNames: 'elements storeCatalog'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!Cart methodsFor: 'initialization' stamp: 'AS 10/27/2022 21:10:36'!
+initializeWithCatalog: aStoreCatalog 
+	self shouldBeImplemented.
+	storeCatalog := aStoreCatalog.! !
+!Cart methodsFor: 'initialization' stamp: 'AS 10/27/2022 21:10:39' prior: 50552626!
+initializeWithCatalog: aStoreCatalog 
+
+	storeCatalog := aStoreCatalog.! !
+
+!testRun: #CartTests #test04CanNotAddItemNotInStoreCatalog stamp: 'AS 10/27/2022 21:10:40'!
+ERROR!
+!CartTests methodsFor: 'support' stamp: 'AS 10/27/2022 21:10:43'!
+elementNotInStore
+	self shouldBeImplemented.! !
+!CartTests methodsFor: 'support' stamp: 'AS 10/27/2022 21:10:55' prior: 50552640!
+elementNotInStore
+	
+	^'itemNotSoldByStore'! !
+
+!testRun: #CartTests #test04CanNotAddItemNotInStoreCatalog stamp: 'AS 10/27/2022 21:10:57'!
+FAILURE!
+!Cart methodsFor: 'adding' stamp: 'AS 10/27/2022 21:12:28' prior: 50552419!
+add: anElement 
+
+	(storeCatalog includes: anElement) ifFalse: [self error: self class canNotAddItemNotSoldByStoreErrorMessage].
+	
+	elements add: anElement.! !
+
+!testRun: #CartTests #test01CartIsEmptyWhenCreated stamp: 'AS 10/27/2022 21:12:29'!
+PASSED!
+
+!testRun: #CartTests #test02CartIsNotEmptyAfterAddingElement stamp: 'AS 10/27/2022 21:12:29'!
+ERROR!
+
+!testRun: #CartTests #test03CartSizeIsAmountOfNewAddedElements stamp: 'AS 10/27/2022 21:12:29'!
+ERROR!
+
+!testRun: #CartTests #test04CanNotAddItemNotInStoreCatalog stamp: 'AS 10/27/2022 21:12:29'!
+ERROR!
+
+!testRun: #CartTests #test02CartIsNotEmptyAfterAddingElement stamp: 'AS 10/27/2022 21:12:31'!
+ERROR!
+
+!testRun: #CartTests #test04CanNotAddItemNotInStoreCatalog stamp: 'AS 10/27/2022 21:12:39'!
+ERROR!
+!Cart class methodsFor: 'error message' stamp: 'AS 10/27/2022 21:12:49'!
+canNotAddItemNotSoldByStoreErrorMessage
+	self shouldBeImplemented.! !
+!Cart class methodsFor: 'error message' stamp: 'AS 10/27/2022 21:13:01' prior: 50552679!
+canNotAddItemNotSoldByStoreErrorMessage
+	
+	^'Item not sold by Store!!'! !
+
+!testRun: #CartTests #test04CanNotAddItemNotInStoreCatalog stamp: 'AS 10/27/2022 21:13:02'!
+PASSED!
+
+!testRun: #CartTests #test02CartIsNotEmptyAfterAddingElement stamp: 'AS 10/27/2022 21:13:05'!
+ERROR!
+!CartTests methodsFor: 'tests' stamp: 'AS 10/27/2022 21:14:25' prior: 50552459!
+test02CartIsNotEmptyAfterAddingElement
+	
+	| cart catalog|
+	
+	catalog := OrderedCollection with: self element1.
+	cart := Cart withCatalog: catalog.
+	
+	cart add: self element1.
+	
+	self deny: cart isEmpty.! !
+
+!testRun: #CartTests #test02CartIsNotEmptyAfterAddingElement stamp: 'AS 10/27/2022 21:14:28'!
+PASSED!
+!CartTests methodsFor: 'tests' stamp: 'AS 10/27/2022 21:15:10' prior: 50552477!
+test03CartSizeIsAmountOfNewAddedElements
+	
+	| cart catalog |
+	
+	catalog := OrderedCollection with: self element1 with: self element2.
+	cart := Cart withCatalog: catalog.
+	
+	cart add: self element1.
+	cart add: self element2.
+	
+	self assert: 2 equals: cart size.
+	self deny: cart isEmpty ! !
+
+!testRun: #CartTests #test03CartSizeIsAmountOfNewAddedElements stamp: 'AS 10/27/2022 21:15:10'!
+PASSED!
+
+!testRun: #CartTests #test01CartIsEmptyWhenCreated stamp: 'AS 10/27/2022 21:15:10'!
+PASSED!
+
+!testRun: #CartTests #test02CartIsNotEmptyAfterAddingElement stamp: 'AS 10/27/2022 21:15:10'!
+PASSED!
+
+!testRun: #CartTests #test03CartSizeIsAmountOfNewAddedElements stamp: 'AS 10/27/2022 21:15:10'!
+PASSED!
+
+!testRun: #CartTests #test04CanNotAddItemNotInStoreCatalog stamp: 'AS 10/27/2022 21:15:10'!
+PASSED!
+!CartTests methodsFor: 'tests' stamp: 'AS 10/27/2022 21:16:16' prior: 50552290!
+test01CartIsEmptyWhenCreated
+	
+	| cart |
+	cart := Cart withCatalog: OrderedCollection new.
+	
+	self assert: cart isEmpty.! !
+
+!testRun: #CartTests #test01CartIsEmptyWhenCreated stamp: 'AS 10/27/2022 21:16:19'!
+PASSED!
+
+!testRun: #CartTests #test01CartIsEmptyWhenCreated stamp: 'AS 10/27/2022 21:16:19'!
+PASSED!
+
+!testRun: #CartTests #test02CartIsNotEmptyAfterAddingElement stamp: 'AS 10/27/2022 21:16:19'!
+PASSED!
+
+!testRun: #CartTests #test03CartSizeIsAmountOfNewAddedElements stamp: 'AS 10/27/2022 21:16:19'!
+PASSED!
+
+!testRun: #CartTests #test04CanNotAddItemNotInStoreCatalog stamp: 'AS 10/27/2022 21:16:19'!
+PASSED!
+!CartTests methodsFor: 'tests' stamp: 'AS 10/27/2022 21:16:36'!
+test02CartIsNotEmptyAfterAddingItems
+	
+	| cart catalog|
+	
+	catalog := OrderedCollection with: self element1.
+	cart := Cart withCatalog: catalog.
+	
+	cart add: self element1.
+	
+	self deny: cart isEmpty.! !
+
+!methodRemoval: CartTests #test02CartIsNotEmptyAfterAddingElement stamp: 'AS 10/27/2022 21:16:36'!
+test02CartIsNotEmptyAfterAddingElement
+	
+	| cart catalog|
+	
+	catalog := OrderedCollection with: self element1.
+	cart := Cart withCatalog: catalog.
+	
+	cart add: self element1.
+	
+	self deny: cart isEmpty.!
+!CartTests methodsFor: 'tests' stamp: 'AS 10/27/2022 21:16:43'!
+test03CartSizeIsAmountOfNewAddedItems
+	
+	| cart catalog |
+	
+	catalog := OrderedCollection with: self element1 with: self element2.
+	cart := Cart withCatalog: catalog.
+	
+	cart add: self element1.
+	cart add: self element2.
+	
+	self assert: 2 equals: cart size.
+	self deny: cart isEmpty ! !
+
+!methodRemoval: CartTests #test03CartSizeIsAmountOfNewAddedElements stamp: 'AS 10/27/2022 21:16:43'!
+test03CartSizeIsAmountOfNewAddedElements
+	
+	| cart catalog |
+	
+	catalog := OrderedCollection with: self element1 with: self element2.
+	cart := Cart withCatalog: catalog.
+	
+	cart add: self element1.
+	cart add: self element2.
+	
+	self assert: 2 equals: cart size.
+	self deny: cart isEmpty !
+!CartTests methodsFor: 'support' stamp: 'AS 10/27/2022 21:16:57'!
+element1SoldByStore
+
+	^ 'element1'! !
+!CartTests methodsFor: 'as yet unclassified' stamp: 'AS 10/27/2022 21:16:57' prior: 50552759!
+test02CartIsNotEmptyAfterAddingItems
+	
+	| cart catalog|
+	
+	catalog := OrderedCollection with: self element1SoldByStore.
+	cart := Cart withCatalog: catalog.
+	
+	cart add: self element1SoldByStore.
+	
+	self deny: cart isEmpty.! !
+!CartTests methodsFor: 'as yet unclassified' stamp: 'AS 10/27/2022 21:16:57' prior: 50552777!
+test03CartSizeIsAmountOfNewAddedItems
+	
+	| cart catalog |
+	
+	catalog := OrderedCollection with: self element1SoldByStore with: self element2.
+	cart := Cart withCatalog: catalog.
+	
+	cart add: self element1SoldByStore.
+	cart add: self element2.
+	
+	self assert: 2 equals: cart size.
+	self deny: cart isEmpty ! !
+
+!methodRemoval: CartTests #element1 stamp: 'AS 10/27/2022 21:16:57'!
+element1
+
+	^ 'element1'!
+!CartTests methodsFor: 'support' stamp: 'AS 10/27/2022 21:17:17'!
+item2SoldByStore
+
+	^ 'element2'! !
+!CartTests methodsFor: 'as yet unclassified' stamp: 'AS 10/27/2022 21:17:17' prior: 50552816!
+test03CartSizeIsAmountOfNewAddedItems
+	
+	| cart catalog |
+	
+	catalog := OrderedCollection with: self element1SoldByStore with: self item2SoldByStore.
+	cart := Cart withCatalog: catalog.
+	
+	cart add: self element1SoldByStore.
+	cart add: self item2SoldByStore.
+	
+	self assert: 2 equals: cart size.
+	self deny: cart isEmpty ! !
+
+!methodRemoval: CartTests #element2 stamp: 'AS 10/27/2022 21:17:17'!
+element2
+
+	^ 'element2'!
+!CartTests methodsFor: 'support' stamp: 'AS 10/27/2022 21:17:35'!
+item1SoldByStore
+
+	^ 'element1'! !
+!CartTests methodsFor: 'as yet unclassified' stamp: 'AS 10/27/2022 21:17:35' prior: 50552806!
+test02CartIsNotEmptyAfterAddingItems
+	
+	| cart catalog|
+	
+	catalog := OrderedCollection with: self item1SoldByStore.
+	cart := Cart withCatalog: catalog.
+	
+	cart add: self item1SoldByStore.
+	
+	self deny: cart isEmpty.! !
+!CartTests methodsFor: 'as yet unclassified' stamp: 'AS 10/27/2022 21:17:35' prior: 50552836!
+test03CartSizeIsAmountOfNewAddedItems
+	
+	| cart catalog |
+	
+	catalog := OrderedCollection with: self item1SoldByStore with: self item2SoldByStore.
+	cart := Cart withCatalog: catalog.
+	
+	cart add: self item1SoldByStore.
+	cart add: self item2SoldByStore.
+	
+	self assert: 2 equals: cart size.
+	self deny: cart isEmpty ! !
+
+!methodRemoval: CartTests #element1SoldByStore stamp: 'AS 10/27/2022 21:17:35'!
+element1SoldByStore
+
+	^ 'element1'!
+!CartTests methodsFor: 'support' stamp: 'AS 10/27/2022 21:17:51'!
+itemNotSoldByStore
+	
+	^'itemNotSoldByStore'! !
+!CartTests methodsFor: 'as yet unclassified' stamp: 'AS 10/27/2022 21:17:51' prior: 50552584!
+test04CanNotAddItemNotInStoreCatalog
+	
+	| cart catalog |
+	
+	catalog := OrderedCollection new.
+	cart := Cart withCatalog: catalog.
+	
+	self should: [cart add: self itemNotSoldByStore]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: Cart canNotAddItemNotSoldByStoreErrorMessage equals: anError messageText.
+							   self assert: cart isEmpty].! !
+
+!methodRemoval: CartTests #elementNotInStore stamp: 'AS 10/27/2022 21:17:51'!
+elementNotInStore
+	
+	^'itemNotSoldByStore'!
+
+!testRun: #CartTests #test01CartIsEmptyWhenCreated stamp: 'AS 10/27/2022 21:17:56'!
+PASSED!
+
+!testRun: #CartTests #test02CartIsNotEmptyAfterAddingItems stamp: 'AS 10/27/2022 21:17:56'!
+PASSED!
+
+!testRun: #CartTests #test03CartSizeIsAmountOfNewAddedItems stamp: 'AS 10/27/2022 21:17:56'!
+PASSED!
+
+!testRun: #CartTests #test04CanNotAddItemNotInStoreCatalog stamp: 'AS 10/27/2022 21:17:56'!
+PASSED!
+!CartTests methodsFor: 'tests' stamp: 'AS 10/27/2022 21:18:30' prior: 50552737!
+test01CartIsEmptyWhenCreated
+	
+	| emptyCart |
+	emptyCart := Cart withCatalog: OrderedCollection new.
+	
+	self assert: emptyCart isEmpty.! !
+
+!classDefinition: #CartTests category: 'TusLibros' stamp: 'AS 10/27/2022 21:18:57'!
+TestCase subclass: #CartTests
+	instanceVariableNames: 'catalog1'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #CartTests category: 'TusLibros' stamp: 'AS 10/27/2022 21:18:59'!
+TestCase subclass: #CartTests
+	instanceVariableNames: 'catalog1 cart1'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!CartTests methodsFor: 'tests' stamp: 'AS 10/27/2022 21:18:54' overrides: 16961394!
+setUp
+	
+	catalog1 := OrderedCollection with: self item1SoldByStore.
+	cart1 := Cart withCatalog: catalog1.! !
+!CartTests methodsFor: 'tests' stamp: 'AS 10/27/2022 21:19:16' prior: 50552940 overrides: 16961394!
+setUp
+	
+	catalog1 := OrderedCollection with: self item1SoldByStore with: self item2SoldByStore.
+	cart1 := Cart withCatalog: catalog1.! !
+
+!classDefinition: #CartTests category: 'TusLibros' stamp: 'AS 10/27/2022 21:19:28'!
+TestCase subclass: #CartTests
+	instanceVariableNames: 'storeCatalog cart1'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!CartTests methodsFor: 'as yet unclassified' stamp: 'AS 10/27/2022 21:19:28' prior: 50552947 overrides: 16961394!
+setUp
+	
+	storeCatalog := OrderedCollection with: self item1SoldByStore with: self item2SoldByStore.
+	cart1 := Cart withCatalog: storeCatalog.! !
+!CartTests methodsFor: 'tests' stamp: 'AS 10/27/2022 21:19:39' prior: 50552857!
+test02CartIsNotEmptyAfterAddingItems
+	
+	cart1 add: self item1SoldByStore.
+	
+	self deny: cart1 isEmpty.! !
+
+!testRun: #CartTests #test02CartIsNotEmptyAfterAddingItems stamp: 'AS 10/27/2022 21:19:41'!
+PASSED!
+
+!testRun: #CartTests #test01CartIsEmptyWhenCreated stamp: 'AS 10/27/2022 21:19:41'!
+PASSED!
+
+!testRun: #CartTests #test02CartIsNotEmptyAfterAddingItems stamp: 'AS 10/27/2022 21:19:41'!
+PASSED!
+
+!testRun: #CartTests #test03CartSizeIsAmountOfNewAddedItems stamp: 'AS 10/27/2022 21:19:41'!
+PASSED!
+
+!testRun: #CartTests #test04CanNotAddItemNotInStoreCatalog stamp: 'AS 10/27/2022 21:19:41'!
+PASSED!
+!CartTests methodsFor: 'tests' stamp: 'AS 10/27/2022 21:19:57' prior: 50552867!
+test03CartSizeIsAmountOfNewAddedItems
+	
+	cart1 add: self item1SoldByStore.
+	cart1 add: self item2SoldByStore.
+	
+	self assert: 2 equals: cart1 size.
+	self deny: cart1 isEmpty ! !
+
+!testRun: #CartTests #test03CartSizeIsAmountOfNewAddedItems stamp: 'AS 10/27/2022 21:19:59'!
+PASSED!
+
+!testRun: #CartTests #test01CartIsEmptyWhenCreated stamp: 'AS 10/27/2022 21:19:59'!
+PASSED!
+
+!testRun: #CartTests #test02CartIsNotEmptyAfterAddingItems stamp: 'AS 10/27/2022 21:19:59'!
+PASSED!
+
+!testRun: #CartTests #test03CartSizeIsAmountOfNewAddedItems stamp: 'AS 10/27/2022 21:19:59'!
+PASSED!
+
+!testRun: #CartTests #test04CanNotAddItemNotInStoreCatalog stamp: 'AS 10/27/2022 21:19:59'!
+PASSED!
+!CartTests methodsFor: 'tests' stamp: 'AS 10/27/2022 21:20:11' prior: 50552888!
+test04CanNotAddItemNotInStoreCatalog
+	
+	self should: [cart1 add: self itemNotSoldByStore]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: Cart canNotAddItemNotSoldByStoreErrorMessage equals: anError messageText.
+							   self assert: cart1 isEmpty].! !
+
+!testRun: #CartTests #test04CanNotAddItemNotInStoreCatalog stamp: 'AS 10/27/2022 21:20:11'!
+PASSED!
+
+!testRun: #CartTests #test01CartIsEmptyWhenCreated stamp: 'AS 10/27/2022 21:20:11'!
+PASSED!
+
+!testRun: #CartTests #test02CartIsNotEmptyAfterAddingItems stamp: 'AS 10/27/2022 21:20:11'!
+PASSED!
+
+!testRun: #CartTests #test03CartSizeIsAmountOfNewAddedItems stamp: 'AS 10/27/2022 21:20:11'!
+PASSED!
+
+!testRun: #CartTests #test04CanNotAddItemNotInStoreCatalog stamp: 'AS 10/27/2022 21:20:11'!
+PASSED!
+
+!classDefinition: #CartTests category: 'TusLibros' stamp: 'AS 10/27/2022 21:20:23'!
+TestCase subclass: #CartTests
+	instanceVariableNames: 'storeCatalog cartWithItems'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!CartTests methodsFor: 'as yet unclassified' stamp: 'AS 10/27/2022 21:20:23' prior: 50553017!
+test04CanNotAddItemNotInStoreCatalog
+	
+	self should: [cartWithItems add: self itemNotSoldByStore]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: Cart canNotAddItemNotSoldByStoreErrorMessage equals: anError messageText.
+							   self assert: cartWithItems isEmpty].! !
+!CartTests methodsFor: 'as yet unclassified' stamp: 'AS 10/27/2022 21:20:23' prior: 50552963 overrides: 16961394!
+setUp
+	
+	storeCatalog := OrderedCollection with: self item1SoldByStore with: self item2SoldByStore.
+	cartWithItems := Cart withCatalog: storeCatalog.! !
+!CartTests methodsFor: 'as yet unclassified' stamp: 'AS 10/27/2022 21:20:23' prior: 50552993!
+test03CartSizeIsAmountOfNewAddedItems
+	
+	cartWithItems add: self item1SoldByStore.
+	cartWithItems add: self item2SoldByStore.
+	
+	self assert: 2 equals: cartWithItems size.
+	self deny: cartWithItems isEmpty ! !
+!CartTests methodsFor: 'as yet unclassified' stamp: 'AS 10/27/2022 21:20:23' prior: 50552971!
+test02CartIsNotEmptyAfterAddingItems
+	
+	cartWithItems add: self item1SoldByStore.
+	
+	self deny: cartWithItems isEmpty.! !
+
+!classDefinition: #CartTests category: 'TusLibros' stamp: 'AS 10/27/2022 21:20:48'!
+TestCase subclass: #CartTests
+	instanceVariableNames: 'storeCatalog cart'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!CartTests methodsFor: 'as yet unclassified' stamp: 'AS 10/27/2022 21:20:48' prior: 50553052!
+test04CanNotAddItemNotInStoreCatalog
+	
+	self should: [cart add: self itemNotSoldByStore]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: Cart canNotAddItemNotSoldByStoreErrorMessage equals: anError messageText.
+							   self assert: cart isEmpty].! !
+!CartTests methodsFor: 'as yet unclassified' stamp: 'AS 10/27/2022 21:20:48' prior: 50553066 overrides: 16961394!
+setUp
+	
+	storeCatalog := OrderedCollection with: self item1SoldByStore with: self item2SoldByStore.
+	cart := Cart withCatalog: storeCatalog.! !
+!CartTests methodsFor: 'as yet unclassified' stamp: 'AS 10/27/2022 21:20:48' prior: 50553074!
+test03CartSizeIsAmountOfNewAddedItems
+	
+	cart add: self item1SoldByStore.
+	cart add: self item2SoldByStore.
+	
+	self assert: 2 equals: cart size.
+	self deny: cart isEmpty ! !
+!CartTests methodsFor: 'as yet unclassified' stamp: 'AS 10/27/2022 21:20:48' prior: 50553084!
+test02CartIsNotEmptyAfterAddingItems
+	
+	cart add: self item1SoldByStore.
+	
+	self deny: cart isEmpty.! !
+!CartTests methodsFor: 'tests' stamp: 'AS 10/27/2022 21:20:54' prior: 50552919!
+test01CartIsEmptyWhenCreated
+	
+	self assert: cart isEmpty.! !
+
+!testRun: #CartTests #test01CartIsEmptyWhenCreated stamp: 'AS 10/27/2022 21:20:54'!
+PASSED!
+
+!testRun: #CartTests #test01CartIsEmptyWhenCreated stamp: 'AS 10/27/2022 21:20:54'!
+PASSED!
+
+!testRun: #CartTests #test02CartIsNotEmptyAfterAddingItems stamp: 'AS 10/27/2022 21:20:54'!
+PASSED!
+
+!testRun: #CartTests #test03CartSizeIsAmountOfNewAddedItems stamp: 'AS 10/27/2022 21:20:54'!
+PASSED!
+
+!testRun: #CartTests #test04CanNotAddItemNotInStoreCatalog stamp: 'AS 10/27/2022 21:20:54'!
+PASSED!
+
+!testRun: #CartTests #test04CanNotAddItemNotInStoreCatalog stamp: 'AS 10/27/2022 21:21:19'!
+PASSED!
+
+!testRun: #CartTests #test01CartIsEmptyWhenCreated stamp: 'AS 10/27/2022 21:21:22'!
+PASSED!
+
+!testRun: #CartTests #test02CartIsNotEmptyAfterAddingItems stamp: 'AS 10/27/2022 21:21:22'!
+PASSED!
+
+!testRun: #CartTests #test03CartSizeIsAmountOfNewAddedItems stamp: 'AS 10/27/2022 21:21:22'!
+PASSED!
+
+!testRun: #CartTests #test04CanNotAddItemNotInStoreCatalog stamp: 'AS 10/27/2022 21:21:22'!
+PASSED!
+
+----SNAPSHOT----(27 October 2022 21:21:30) CuisUniversity-5481.image priorSource: 7069651!
+
+!testRun: #CartTests #test01CartIsEmptyWhenCreated stamp: 'AS 10/27/2022 21:23:04'!
+PASSED!
+
+!testRun: #CartTests #test02CartIsNotEmptyAfterAddingItems stamp: 'AS 10/27/2022 21:23:04'!
+PASSED!
+
+!testRun: #CartTests #test03CartSizeIsAmountOfNewAddedItems stamp: 'AS 10/27/2022 21:23:04'!
+PASSED!
+
+!testRun: #CartTests #test04CanNotAddItemNotInStoreCatalog stamp: 'AS 10/27/2022 21:23:04'!
+PASSED!
+
+----SNAPSHOT----(27 October 2022 21:23:11) CuisUniversity-5481.image priorSource: 7088601!
