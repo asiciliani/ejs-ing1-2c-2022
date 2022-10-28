@@ -124,11 +124,10 @@ add: anItemToAddToCart
 	self assertIsSoldByStore: anItemToAddToCart.
 	elements add: anItemToAddToCart.! !
 
-!Cart methodsFor: 'adding' stamp: 'AS 10/27/2022 21:39:48'!
+!Cart methodsFor: 'adding' stamp: 'AS 10/27/2022 21:43:48'!
 add: aQuantityOfItemToAdd of: anItem 
 
-	self assertIsNotNegative: aQuantityOfItemToAdd.
-	aQuantityOfItemToAdd isZero ifTrue: [self quantityOfItemToAddMustBePositiveErrorSignal].
+	self assertIsPositive: aQuantityOfItemToAdd.
 	
 	aQuantityOfItemToAdd timesRepeat: [self add: anItem].! !
 
@@ -137,6 +136,17 @@ add: aQuantityOfItemToAdd of: anItem
 assertIsNotNegative: aQuantityOfItemToAdd
 
 	^ (aQuantityOfItemToAdd < 0) ifTrue: [self quantityOfItemToAddMustBePositiveErrorSignal]! !
+
+!Cart methodsFor: 'assertions' stamp: 'AS 10/27/2022 21:43:03'!
+assertIsNotZero: aQuantityOfItemToAdd
+
+	^ aQuantityOfItemToAdd isZero ifTrue: [self quantityOfItemToAddMustBePositiveErrorSignal]! !
+
+!Cart methodsFor: 'assertions' stamp: 'AS 10/27/2022 21:43:48'!
+assertIsPositive: aQuantityOfItemToAdd
+
+	self assertIsNotNegative: aQuantityOfItemToAdd.
+	self assertIsNotZero: aQuantityOfItemToAdd! !
 
 !Cart methodsFor: 'assertions' stamp: 'AS 10/27/2022 21:35:58'!
 assertIsSoldByStore: anElement

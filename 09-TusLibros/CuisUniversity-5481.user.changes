@@ -1126,3 +1126,34 @@ PASSED!
 PASSED!
 
 ----SNAPSHOT----(27 October 2022 21:40:16) CuisUniversity-5481.image priorSource: 7089090!
+!Cart methodsFor: 'adding' stamp: 'AS 10/27/2022 21:43:03'!
+assertIsNotZero: aQuantityOfItemToAdd
+
+	^ aQuantityOfItemToAdd isZero ifTrue: [self quantityOfItemToAddMustBePositiveErrorSignal]! !
+!Cart methodsFor: 'adding' stamp: 'AS 10/27/2022 21:43:03' prior: 50553527!
+add: aQuantityOfItemToAdd of: anItem 
+
+	self assertIsNotNegative: aQuantityOfItemToAdd.
+	self assertIsNotZero: aQuantityOfItemToAdd.
+	
+	aQuantityOfItemToAdd timesRepeat: [self add: anItem].! !
+!Cart methodsFor: 'adding' stamp: 'AS 10/27/2022 21:43:48'!
+assertIsPositive: aQuantityOfItemToAdd
+
+	self assertIsNotNegative: aQuantityOfItemToAdd.
+	self assertIsNotZero: aQuantityOfItemToAdd! !
+!Cart methodsFor: 'adding' stamp: 'AS 10/27/2022 21:43:48' prior: 50553593!
+add: aQuantityOfItemToAdd of: anItem 
+
+	self assertIsPositive: aQuantityOfItemToAdd.
+	
+	aQuantityOfItemToAdd timesRepeat: [self add: anItem].! !
+
+----SNAPSHOT----(27 October 2022 21:44:54) CuisUniversity-5481.image priorSource: 7101851!
+
+----QUIT----(27 October 2022 21:46:36) CuisUniversity-5481.image priorSource: 7102864!
+
+----STARTUP---- (27 October 2022 21:48:07) as /home/andisici/Documents/2022/ing-2c2022/cuisTusLibros/CuisUniversity-5481.image!
+
+
+----SNAPSHOT----(27 October 2022 21:48:23) CuisUniversity-5481.image priorSource: 7102956!
