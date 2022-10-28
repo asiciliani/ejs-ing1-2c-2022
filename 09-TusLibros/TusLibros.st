@@ -5,15 +5,15 @@ TestCase subclass: #CartTests
 	poolDictionaries: ''
 	category: 'TusLibros'!
 
-!CartTests methodsFor: 'support' stamp: 'AS 10/27/2022 21:17:35'!
+!CartTests methodsFor: 'support' stamp: 'AS 10/27/2022 23:16:38'!
 item1SoldByStore
 
-	^ 'element1'! !
+	^ 'item1'! !
 
-!CartTests methodsFor: 'support' stamp: 'AS 10/27/2022 21:17:17'!
+!CartTests methodsFor: 'support' stamp: 'AS 10/27/2022 23:16:42'!
 item2SoldByStore
 
-	^ 'element2'! !
+	^ 'item2'! !
 
 !CartTests methodsFor: 'support' stamp: 'AS 10/27/2022 21:17:51'!
 itemNotSoldByStore
@@ -83,7 +83,7 @@ test07CanNotAddZeroQuantityOfItem
 	
 	self shouldFailWithMustBePositiveQuantityOfItemAddingQuantityOfItem: 	0! !
 
-!CartTests methodsFor: 'tests' stamp: 'AS 10/27/2022 22:02:45'!
+!CartTests methodsFor: 'tests' stamp: 'AS 10/27/2022 23:13:21'!
 test08CanGetItemsInCart
 	
 	cart add: 2 of: self item1SoldByStore.
@@ -94,29 +94,46 @@ test08CanGetItemsInCart
 	self assert: 3 equals: cart size.
 	self deny: cart isEmpty ! !
 
+!CartTests methodsFor: 'tests' stamp: 'AS 10/27/2022 23:15:12'!
+test09CartContentIsTheSameEvenWhenAddingInDifferentOrder
+	
+	| cart2 |
+	
+	cart2 := Cart withCatalog: storeCatalog.
+	
+	cart add: 2 of: self item1SoldByStore.
+	cart add: self item2SoldByStore.
+	
+	cart2 add: self item2SoldByStore.
+	cart2 add: 2 of: self item1SoldByStore.
+	
+	self assert: cart2 content equals: cart content.
+	self assert: 3 equals: cart size.
+	self deny: cart isEmpty ! !
+
 
 !classDefinition: #Cart category: 'TusLibros'!
 Object subclass: #Cart
-	instanceVariableNames: 'elements storeCatalog'
+	instanceVariableNames: 'items storeCatalog'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TusLibros'!
 
-!Cart methodsFor: 'size' stamp: 'AS 10/27/2022 20:49:14'!
+!Cart methodsFor: 'size' stamp: 'AS 10/27/2022 23:16:18'!
 isEmpty
 	
-	^elements isEmpty ! !
+	^items isEmpty ! !
 
-!Cart methodsFor: 'size' stamp: 'AS 10/27/2022 20:49:14'!
+!Cart methodsFor: 'size' stamp: 'AS 10/27/2022 23:16:18'!
 size
 	
-	^elements size ! !
+	^items size ! !
 
 
-!Cart methodsFor: 'initialization' stamp: 'AS 10/27/2022 22:02:01'!
+!Cart methodsFor: 'initialization' stamp: 'AS 10/27/2022 23:16:18'!
 initializeWithCatalog: aStoreCatalog 
 	
-	elements := Bag new.
+	items := Bag new.
 	storeCatalog := aStoreCatalog.! !
 
 
@@ -131,11 +148,11 @@ quantityOfItemToAddMustBePositiveErrorSignal
 	^ self error: self class quantityOfItemToAddMustBePositiveErrorMessage! !
 
 
-!Cart methodsFor: 'adding' stamp: 'AS 10/27/2022 21:36:38'!
+!Cart methodsFor: 'adding' stamp: 'AS 10/27/2022 23:16:18'!
 add: anItemToAddToCart 
 
 	self assertIsSoldByStore: anItemToAddToCart.
-	elements add: anItemToAddToCart.! !
+	items add: anItemToAddToCart.! !
 
 !Cart methodsFor: 'adding' stamp: 'AS 10/27/2022 21:43:48'!
 add: aQuantityOfItemToAdd of: anItem 
@@ -167,10 +184,10 @@ assertIsSoldByStore: anElement
 	^ (storeCatalog includes: anElement) ifFalse: [self canNotAddItemNotSoldByStoreErrorSignal]! !
 
 
-!Cart methodsFor: 'content' stamp: 'AS 10/27/2022 21:56:27'!
+!Cart methodsFor: 'content' stamp: 'AS 10/27/2022 23:16:18'!
 content
 	
-	^elements ! !
+	^items ! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
