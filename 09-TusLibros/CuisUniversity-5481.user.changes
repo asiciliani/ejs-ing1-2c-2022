@@ -803,3 +803,326 @@ PASSED!
 PASSED!
 
 ----SNAPSHOT----(27 October 2022 21:23:11) CuisUniversity-5481.image priorSource: 7088601!
+!CartTests methodsFor: 'tests' stamp: 'AS 10/27/2022 21:26:25'!
+test05CanAddToCartManyOfSameItem
+	
+	cart add: 5 of: self item1SoldByStore.
+	
+	self assert: 5 equals: cart size.
+	self deny: cart isEmpty ! !
+
+!testRun: #CartTests #test05CanAddToCartManyOfSameItem stamp: 'AS 10/27/2022 21:26:27'!
+ERROR!
+!Cart methodsFor: 'adding' stamp: 'AS 10/27/2022 21:26:31'!
+add: aSmallInteger of: aString 
+	self shouldBeImplemented.! !
+!Cart methodsFor: 'adding' stamp: 'AS 10/27/2022 21:27:13' prior: 50553197!
+add: anAmoutOfItemToAdd of: anItem 
+	
+	anAmoutOfItemToAdd timesRepeat: [self add: anItem].! !
+
+!testRun: #CartTests #test05CanAddToCartManyOfSameItem stamp: 'AS 10/27/2022 21:27:21'!
+PASSED!
+
+!testRun: #CartTests #test01CartIsEmptyWhenCreated stamp: 'AS 10/27/2022 21:27:21'!
+PASSED!
+
+!testRun: #CartTests #test02CartIsNotEmptyAfterAddingItems stamp: 'AS 10/27/2022 21:27:21'!
+PASSED!
+
+!testRun: #CartTests #test03CartSizeIsAmountOfNewAddedItems stamp: 'AS 10/27/2022 21:27:21'!
+PASSED!
+
+!testRun: #CartTests #test04CanNotAddItemNotInStoreCatalog stamp: 'AS 10/27/2022 21:27:21'!
+PASSED!
+
+!testRun: #CartTests #test05CanAddToCartManyOfSameItem stamp: 'AS 10/27/2022 21:27:21'!
+PASSED!
+!CartTests methodsFor: 'tests' stamp: 'AS 10/27/2022 21:28:57'!
+test06CanNotAddNegativeQuantityOfItem
+	
+	self should: [cart add: -1 of: self itemSoldByStore]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: Cart canNotAddItemNegativeQuantityOfItem equals: anError messageText.
+							   self assert: cart isEmpty].! !
+
+!testRun: #CartTests #test06CanNotAddNegativeQuantityOfItem stamp: 'AS 10/27/2022 21:31:32'!
+ERROR!
+!CartTests methodsFor: 'tests' stamp: 'AS 10/27/2022 21:31:42' prior: 50553226!
+test06CanNotAddNegativeQuantityOfItem
+	
+	self should: [cart add: -1 of: self item1SoldByStore]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: Cart canNotAddItemNegativeQuantityOfItem equals: anError messageText.
+							   self assert: cart isEmpty].! !
+
+!testRun: #CartTests #test06CanNotAddNegativeQuantityOfItem stamp: 'AS 10/27/2022 21:31:42'!
+FAILURE!
+
+!testRun: #CartTests #test06CanNotAddNegativeQuantityOfItem stamp: 'AS 10/27/2022 21:31:46'!
+FAILURE!
+!Cart methodsFor: 'adding' stamp: 'AS 10/27/2022 21:33:29' prior: 50553202!
+add: anAmoutOfItemToAdd of: anItem 
+	(anAmoutOfItemToAdd < 0) ifTrue: [self error: self class canNotAddItemNegativeQuantityOfItem].
+	anAmoutOfItemToAdd timesRepeat: [self add: anItem].! !
+
+!testRun: #CartTests #test06CanNotAddNegativeQuantityOfItem stamp: 'AS 10/27/2022 21:33:30'!
+ERROR!
+!Cart class methodsFor: 'error message' stamp: 'AS 10/27/2022 21:33:35'!
+canNotAddItemNegativeQuantityOfItem
+	self shouldBeImplemented.! !
+!Cart class methodsFor: 'error message' stamp: 'AS 10/27/2022 21:34:02' prior: 50553271!
+canNotAddItemNegativeQuantityOfItem
+	
+	^'Quantity of item to add must be positive!!'! !
+
+!testRun: #CartTests #test06CanNotAddNegativeQuantityOfItem stamp: 'AS 10/27/2022 21:34:03'!
+PASSED!
+
+!testRun: #CartTests #test01CartIsEmptyWhenCreated stamp: 'AS 10/27/2022 21:34:03'!
+PASSED!
+
+!testRun: #CartTests #test02CartIsNotEmptyAfterAddingItems stamp: 'AS 10/27/2022 21:34:03'!
+PASSED!
+
+!testRun: #CartTests #test03CartSizeIsAmountOfNewAddedItems stamp: 'AS 10/27/2022 21:34:03'!
+PASSED!
+
+!testRun: #CartTests #test04CanNotAddItemNotInStoreCatalog stamp: 'AS 10/27/2022 21:34:03'!
+PASSED!
+
+!testRun: #CartTests #test05CanAddToCartManyOfSameItem stamp: 'AS 10/27/2022 21:34:03'!
+PASSED!
+
+!testRun: #CartTests #test06CanNotAddNegativeQuantityOfItem stamp: 'AS 10/27/2022 21:34:03'!
+PASSED!
+!Cart class methodsFor: 'error message' stamp: 'AS 10/27/2022 21:35:08'!
+quantityOfItemToAddMustBePositiveErrorMessage
+	
+	^'Quantity of item to add must be positive!!'! !
+!Cart methodsFor: 'as yet unclassified' stamp: 'AS 10/27/2022 21:35:08' prior: 50553259!
+add: anAmoutOfItemToAdd of: anItem 
+	(anAmoutOfItemToAdd < 0) ifTrue: [self error: self class quantityOfItemToAddMustBePositiveErrorMessage].
+	anAmoutOfItemToAdd timesRepeat: [self add: anItem].! !
+!CartTests methodsFor: 'as yet unclassified' stamp: 'AS 10/27/2022 21:35:08' prior: 50553241!
+test06CanNotAddNegativeQuantityOfItem
+	
+	self should: [cart add: -1 of: self item1SoldByStore]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: Cart quantityOfItemToAddMustBePositiveErrorMessage equals: anError messageText.
+							   self assert: cart isEmpty].! !
+
+!methodRemoval: Cart class #canNotAddItemNegativeQuantityOfItem stamp: 'AS 10/27/2022 21:35:08'!
+canNotAddItemNegativeQuantityOfItem
+	
+	^'Quantity of item to add must be positive!!'!
+
+!testRun: #CartTests #test06CanNotAddNegativeQuantityOfItem stamp: 'AS 10/27/2022 21:35:12'!
+PASSED!
+
+!testRun: #CartTests #test01CartIsEmptyWhenCreated stamp: 'AS 10/27/2022 21:35:12'!
+PASSED!
+
+!testRun: #CartTests #test02CartIsNotEmptyAfterAddingItems stamp: 'AS 10/27/2022 21:35:12'!
+PASSED!
+
+!testRun: #CartTests #test03CartSizeIsAmountOfNewAddedItems stamp: 'AS 10/27/2022 21:35:12'!
+PASSED!
+
+!testRun: #CartTests #test04CanNotAddItemNotInStoreCatalog stamp: 'AS 10/27/2022 21:35:12'!
+PASSED!
+
+!testRun: #CartTests #test05CanAddToCartManyOfSameItem stamp: 'AS 10/27/2022 21:35:12'!
+PASSED!
+
+!testRun: #CartTests #test06CanNotAddNegativeQuantityOfItem stamp: 'AS 10/27/2022 21:35:12'!
+PASSED!
+!Cart methodsFor: 'adding' stamp: 'AS 10/27/2022 21:35:38'!
+canNotAddItemNotSoldByStoreErrorSignal
+
+	^ self error: self class canNotAddItemNotSoldByStoreErrorMessage! !
+!Cart methodsFor: 'adding' stamp: 'AS 10/27/2022 21:35:38' prior: 50552652!
+add: anElement 
+
+	(storeCatalog includes: anElement) ifFalse: [self canNotAddItemNotSoldByStoreErrorSignal].
+	
+	elements add: anElement.! !
+!Cart methodsFor: 'adding' stamp: 'AS 10/27/2022 21:35:58'!
+assertIsSoldByStore: anElement
+
+	^ (storeCatalog includes: anElement) ifFalse: [self canNotAddItemNotSoldByStoreErrorSignal]! !
+!Cart methodsFor: 'adding' stamp: 'AS 10/27/2022 21:35:58' prior: 50553364!
+add: anElement 
+
+	self assertIsSoldByStore: anElement.
+	
+	elements add: anElement.! !
+!Cart methodsFor: 'adding' stamp: 'AS 10/27/2022 21:36:28' prior: 50553378!
+add: anItemToAddToCart 
+
+	self assertIsSoldByStore: anItemToAddToCart.
+	
+	elements add: anItemToAddToCart.! !
+!Cart methodsFor: 'adding' stamp: 'AS 10/27/2022 21:36:38' prior: 50553384!
+add: anItemToAddToCart 
+
+	self assertIsSoldByStore: anItemToAddToCart.
+	elements add: anItemToAddToCart.! !
+!Cart methodsFor: 'adding' stamp: 'AS 10/27/2022 21:37:06'!
+quantityOfItemToAddMustBePositiveErrorSignal
+
+	^ self error: self class quantityOfItemToAddMustBePositiveErrorMessage! !
+!Cart methodsFor: 'adding' stamp: 'AS 10/27/2022 21:37:06' prior: 50553309!
+add: anAmoutOfItemToAdd of: anItem 
+	(anAmoutOfItemToAdd < 0) ifTrue: [self quantityOfItemToAddMustBePositiveErrorSignal].
+	anAmoutOfItemToAdd timesRepeat: [self add: anItem].! !
+!Cart methodsFor: 'adding' stamp: 'AS 10/27/2022 21:37:33'!
+assertIsNotNegative: anAmoutOfItemToAdd
+
+	^ (anAmoutOfItemToAdd < 0) ifTrue: [self quantityOfItemToAddMustBePositiveErrorSignal]! !
+!Cart methodsFor: 'adding' stamp: 'AS 10/27/2022 21:37:33' prior: 50553403!
+add: anAmoutOfItemToAdd of: anItem 
+	self assertIsNotNegative: anAmoutOfItemToAdd.
+	anAmoutOfItemToAdd timesRepeat: [self add: anItem].! !
+!Cart methodsFor: 'adding' stamp: 'AS 10/27/2022 21:37:41' prior: 50553418!
+add: aQuantityOfItemToAdd of: anItem 
+	self assertIsNotNegative: aQuantityOfItemToAdd.
+	aQuantityOfItemToAdd timesRepeat: [self add: anItem].! !
+!Cart methodsFor: 'adding' stamp: 'AS 10/27/2022 21:37:52' prior: 50553425!
+add: aQuantityOfItemToAdd of: anItem 
+
+	self assertIsNotNegative: aQuantityOfItemToAdd.
+	
+	aQuantityOfItemToAdd timesRepeat: [self add: anItem].! !
+
+!testRun: #CartTests #test01CartIsEmptyWhenCreated stamp: 'AS 10/27/2022 21:37:52'!
+PASSED!
+
+!testRun: #CartTests #test02CartIsNotEmptyAfterAddingItems stamp: 'AS 10/27/2022 21:37:52'!
+PASSED!
+
+!testRun: #CartTests #test03CartSizeIsAmountOfNewAddedItems stamp: 'AS 10/27/2022 21:37:52'!
+PASSED!
+
+!testRun: #CartTests #test04CanNotAddItemNotInStoreCatalog stamp: 'AS 10/27/2022 21:37:52'!
+PASSED!
+
+!testRun: #CartTests #test05CanAddToCartManyOfSameItem stamp: 'AS 10/27/2022 21:37:52'!
+PASSED!
+
+!testRun: #CartTests #test06CanNotAddNegativeQuantityOfItem stamp: 'AS 10/27/2022 21:37:52'!
+PASSED!
+!Cart methodsFor: 'adding' stamp: 'AS 10/27/2022 21:38:04' prior: 50553411!
+assertIsNotNegative: aQuantityOfItemToAdd
+
+	^ (aQuantityOfItemToAdd < 0) ifTrue: [self quantityOfItemToAddMustBePositiveErrorSignal]! !
+
+!testRun: #CartTests #test01CartIsEmptyWhenCreated stamp: 'AS 10/27/2022 21:38:07'!
+PASSED!
+
+!testRun: #CartTests #test02CartIsNotEmptyAfterAddingItems stamp: 'AS 10/27/2022 21:38:07'!
+PASSED!
+
+!testRun: #CartTests #test03CartSizeIsAmountOfNewAddedItems stamp: 'AS 10/27/2022 21:38:07'!
+PASSED!
+
+!testRun: #CartTests #test04CanNotAddItemNotInStoreCatalog stamp: 'AS 10/27/2022 21:38:07'!
+PASSED!
+
+!testRun: #CartTests #test05CanAddToCartManyOfSameItem stamp: 'AS 10/27/2022 21:38:07'!
+PASSED!
+
+!testRun: #CartTests #test06CanNotAddNegativeQuantityOfItem stamp: 'AS 10/27/2022 21:38:07'!
+PASSED!
+!Cart methodsFor: 'initialization' stamp: 'AS 10/27/2022 21:38:37' prior: 50552632!
+initializeWithCatalog: aStoreCatalog 
+	
+	elements := OrderedCollection new.
+	storeCatalog := aStoreCatalog.! !
+
+!methodRemoval: Cart #initialize stamp: 'AS 10/27/2022 21:38:41'!
+initialize
+
+	elements := OrderedCollection new.!
+
+!testRun: #CartTests #test01CartIsEmptyWhenCreated stamp: 'AS 10/27/2022 21:38:44'!
+PASSED!
+
+!testRun: #CartTests #test02CartIsNotEmptyAfterAddingItems stamp: 'AS 10/27/2022 21:38:44'!
+PASSED!
+
+!testRun: #CartTests #test03CartSizeIsAmountOfNewAddedItems stamp: 'AS 10/27/2022 21:38:44'!
+PASSED!
+
+!testRun: #CartTests #test04CanNotAddItemNotInStoreCatalog stamp: 'AS 10/27/2022 21:38:44'!
+PASSED!
+
+!testRun: #CartTests #test05CanAddToCartManyOfSameItem stamp: 'AS 10/27/2022 21:38:44'!
+PASSED!
+
+!testRun: #CartTests #test06CanNotAddNegativeQuantityOfItem stamp: 'AS 10/27/2022 21:38:44'!
+PASSED!
+!CartTests methodsFor: 'tests' stamp: 'AS 10/27/2022 21:39:08'!
+test07CanNotAddZeroQuantityOfItem
+	
+	self should: [cart add: 0 of: self item1SoldByStore]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: Cart quantityOfItemToAddMustBePositiveErrorMessage equals: anError messageText.
+							   self assert: cart isEmpty].! !
+
+!testRun: #CartTests #test07CanNotAddZeroQuantityOfItem stamp: 'AS 10/27/2022 21:39:09'!
+FAILURE!
+!Cart methodsFor: 'adding' stamp: 'AS 10/27/2022 21:39:48' prior: 50553432!
+add: aQuantityOfItemToAdd of: anItem 
+
+	self assertIsNotNegative: aQuantityOfItemToAdd.
+	aQuantityOfItemToAdd isZero ifTrue: [self quantityOfItemToAddMustBePositiveErrorSignal].
+	
+	aQuantityOfItemToAdd timesRepeat: [self add: anItem].! !
+
+!testRun: #CartTests #test07CanNotAddZeroQuantityOfItem stamp: 'AS 10/27/2022 21:39:54'!
+PASSED!
+
+!testRun: #CartTests #test01CartIsEmptyWhenCreated stamp: 'AS 10/27/2022 21:39:54'!
+PASSED!
+
+!testRun: #CartTests #test02CartIsNotEmptyAfterAddingItems stamp: 'AS 10/27/2022 21:39:54'!
+PASSED!
+
+!testRun: #CartTests #test03CartSizeIsAmountOfNewAddedItems stamp: 'AS 10/27/2022 21:39:54'!
+PASSED!
+
+!testRun: #CartTests #test04CanNotAddItemNotInStoreCatalog stamp: 'AS 10/27/2022 21:39:54'!
+PASSED!
+
+!testRun: #CartTests #test05CanAddToCartManyOfSameItem stamp: 'AS 10/27/2022 21:39:54'!
+PASSED!
+
+!testRun: #CartTests #test06CanNotAddNegativeQuantityOfItem stamp: 'AS 10/27/2022 21:39:54'!
+PASSED!
+
+!testRun: #CartTests #test07CanNotAddZeroQuantityOfItem stamp: 'AS 10/27/2022 21:39:54'!
+PASSED!
+
+!testRun: #CartTests #test01CartIsEmptyWhenCreated stamp: 'AS 10/27/2022 21:40:08'!
+PASSED!
+
+!testRun: #CartTests #test02CartIsNotEmptyAfterAddingItems stamp: 'AS 10/27/2022 21:40:08'!
+PASSED!
+
+!testRun: #CartTests #test03CartSizeIsAmountOfNewAddedItems stamp: 'AS 10/27/2022 21:40:08'!
+PASSED!
+
+!testRun: #CartTests #test04CanNotAddItemNotInStoreCatalog stamp: 'AS 10/27/2022 21:40:08'!
+PASSED!
+
+!testRun: #CartTests #test05CanAddToCartManyOfSameItem stamp: 'AS 10/27/2022 21:40:08'!
+PASSED!
+
+!testRun: #CartTests #test06CanNotAddNegativeQuantityOfItem stamp: 'AS 10/27/2022 21:40:08'!
+PASSED!
+
+!testRun: #CartTests #test07CanNotAddZeroQuantityOfItem stamp: 'AS 10/27/2022 21:40:08'!
+PASSED!
+
+----SNAPSHOT----(27 October 2022 21:40:16) CuisUniversity-5481.image priorSource: 7089090!

@@ -57,6 +57,30 @@ test04CanNotAddItemNotInStoreCatalog
 		withExceptionDo: [:anError | self assert: Cart canNotAddItemNotSoldByStoreErrorMessage equals: anError messageText.
 							   self assert: cart isEmpty].! !
 
+!CartTests methodsFor: 'tests' stamp: 'AS 10/27/2022 21:26:25'!
+test05CanAddToCartManyOfSameItem
+	
+	cart add: 5 of: self item1SoldByStore.
+	
+	self assert: 5 equals: cart size.
+	self deny: cart isEmpty ! !
+
+!CartTests methodsFor: 'tests' stamp: 'AS 10/27/2022 21:35:08'!
+test06CanNotAddNegativeQuantityOfItem
+	
+	self should: [cart add: -1 of: self item1SoldByStore]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: Cart quantityOfItemToAddMustBePositiveErrorMessage equals: anError messageText.
+							   self assert: cart isEmpty].! !
+
+!CartTests methodsFor: 'tests' stamp: 'AS 10/27/2022 21:39:08'!
+test07CanNotAddZeroQuantityOfItem
+	
+	self should: [cart add: 0 of: self item1SoldByStore]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: Cart quantityOfItemToAddMustBePositiveErrorMessage equals: anError messageText.
+							   self assert: cart isEmpty].! !
+
 
 !classDefinition: #Cart category: 'TusLibros'!
 Object subclass: #Cart
@@ -76,23 +100,48 @@ size
 	^elements size ! !
 
 
-!Cart methodsFor: 'initialization' stamp: 'AS 10/27/2022 20:49:14'!
-initialize
-
-	elements := OrderedCollection new.! !
-
-!Cart methodsFor: 'initialization' stamp: 'AS 10/27/2022 21:10:39'!
+!Cart methodsFor: 'initialization' stamp: 'AS 10/27/2022 21:38:37'!
 initializeWithCatalog: aStoreCatalog 
-
+	
+	elements := OrderedCollection new.
 	storeCatalog := aStoreCatalog.! !
 
 
-!Cart methodsFor: 'adding' stamp: 'AS 10/27/2022 21:12:28'!
-add: anElement 
+!Cart methodsFor: 'error signal' stamp: 'AS 10/27/2022 21:35:38'!
+canNotAddItemNotSoldByStoreErrorSignal
 
-	(storeCatalog includes: anElement) ifFalse: [self error: self class canNotAddItemNotSoldByStoreErrorMessage].
+	^ self error: self class canNotAddItemNotSoldByStoreErrorMessage! !
+
+!Cart methodsFor: 'error signal' stamp: 'AS 10/27/2022 21:37:06'!
+quantityOfItemToAddMustBePositiveErrorSignal
+
+	^ self error: self class quantityOfItemToAddMustBePositiveErrorMessage! !
+
+
+!Cart methodsFor: 'adding' stamp: 'AS 10/27/2022 21:36:38'!
+add: anItemToAddToCart 
+
+	self assertIsSoldByStore: anItemToAddToCart.
+	elements add: anItemToAddToCart.! !
+
+!Cart methodsFor: 'adding' stamp: 'AS 10/27/2022 21:39:48'!
+add: aQuantityOfItemToAdd of: anItem 
+
+	self assertIsNotNegative: aQuantityOfItemToAdd.
+	aQuantityOfItemToAdd isZero ifTrue: [self quantityOfItemToAddMustBePositiveErrorSignal].
 	
-	elements add: anElement.! !
+	aQuantityOfItemToAdd timesRepeat: [self add: anItem].! !
+
+
+!Cart methodsFor: 'assertions' stamp: 'AS 10/27/2022 21:38:04'!
+assertIsNotNegative: aQuantityOfItemToAdd
+
+	^ (aQuantityOfItemToAdd < 0) ifTrue: [self quantityOfItemToAddMustBePositiveErrorSignal]! !
+
+!Cart methodsFor: 'assertions' stamp: 'AS 10/27/2022 21:35:58'!
+assertIsSoldByStore: anElement
+
+	^ (storeCatalog includes: anElement) ifFalse: [self canNotAddItemNotSoldByStoreErrorSignal]! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -110,3 +159,8 @@ withCatalog: aStoreCatalog
 canNotAddItemNotSoldByStoreErrorMessage
 	
 	^'Item not sold by Store!!'! !
+
+!Cart class methodsFor: 'error message' stamp: 'AS 10/27/2022 21:35:08'!
+quantityOfItemToAddMustBePositiveErrorMessage
+	
+	^'Quantity of item to add must be positive!!'! !
