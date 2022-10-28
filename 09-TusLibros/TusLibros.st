@@ -20,6 +20,14 @@ itemNotSoldByStore
 	
 	^'itemNotSoldByStore'! !
 
+!CartTests methodsFor: 'support' stamp: 'AS 10/27/2022 21:51:23'!
+shouldFailWithMustBePositiveQuantityOfItemAddingQuantityOfItem: aQuantityOfItemToAdd
+	
+	self should: [cart add: aQuantityOfItemToAdd of: self item1SoldByStore]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: Cart quantityOfItemToAddMustBePositiveErrorMessage equals: anError messageText.
+							   self assert: cart isEmpty].! !
+
 
 !CartTests methodsFor: 'setup' stamp: 'AS 10/27/2022 21:20:48'!
 setUp
@@ -65,21 +73,15 @@ test05CanAddToCartManyOfSameItem
 	self assert: 5 equals: cart size.
 	self deny: cart isEmpty ! !
 
-!CartTests methodsFor: 'tests' stamp: 'AS 10/27/2022 21:35:08'!
+!CartTests methodsFor: 'tests' stamp: 'AS 10/27/2022 21:51:23'!
 test06CanNotAddNegativeQuantityOfItem
 	
-	self should: [cart add: -1 of: self item1SoldByStore]
-		raise: Error - MessageNotUnderstood 
-		withExceptionDo: [:anError | self assert: Cart quantityOfItemToAddMustBePositiveErrorMessage equals: anError messageText.
-							   self assert: cart isEmpty].! !
+	self shouldFailWithMustBePositiveQuantityOfItemAddingQuantityOfItem: -1! !
 
-!CartTests methodsFor: 'tests' stamp: 'AS 10/27/2022 21:39:08'!
+!CartTests methodsFor: 'tests' stamp: 'AS 10/27/2022 21:51:23'!
 test07CanNotAddZeroQuantityOfItem
 	
-	self should: [cart add: 0 of: self item1SoldByStore]
-		raise: Error - MessageNotUnderstood 
-		withExceptionDo: [:anError | self assert: Cart quantityOfItemToAddMustBePositiveErrorMessage equals: anError messageText.
-							   self assert: cart isEmpty].! !
+	self shouldFailWithMustBePositiveQuantityOfItemAddingQuantityOfItem: 	0! !
 
 
 !classDefinition: #Cart category: 'TusLibros'!
