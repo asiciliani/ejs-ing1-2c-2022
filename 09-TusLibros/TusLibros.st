@@ -83,6 +83,17 @@ test07CanNotAddZeroQuantityOfItem
 	
 	self shouldFailWithMustBePositiveQuantityOfItemAddingQuantityOfItem: 	0! !
 
+!CartTests methodsFor: 'tests' stamp: 'AS 10/27/2022 22:02:45'!
+test08CanGetItemsInCart
+	
+	cart add: 2 of: self item1SoldByStore.
+	cart add: self item2SoldByStore.
+	
+	self assert: (Bag with: self item1SoldByStore with: self item1SoldByStore with: self item2SoldByStore) equals: cart content.
+	
+	self assert: 3 equals: cart size.
+	self deny: cart isEmpty ! !
+
 
 !classDefinition: #Cart category: 'TusLibros'!
 Object subclass: #Cart
@@ -102,10 +113,10 @@ size
 	^elements size ! !
 
 
-!Cart methodsFor: 'initialization' stamp: 'AS 10/27/2022 21:38:37'!
+!Cart methodsFor: 'initialization' stamp: 'AS 10/27/2022 22:02:01'!
 initializeWithCatalog: aStoreCatalog 
 	
-	elements := OrderedCollection new.
+	elements := Bag new.
 	storeCatalog := aStoreCatalog.! !
 
 
@@ -154,6 +165,12 @@ assertIsPositive: aQuantityOfItemToAdd
 assertIsSoldByStore: anElement
 
 	^ (storeCatalog includes: anElement) ifFalse: [self canNotAddItemNotSoldByStoreErrorSignal]! !
+
+
+!Cart methodsFor: 'content' stamp: 'AS 10/27/2022 21:56:27'!
+content
+	
+	^elements ! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 

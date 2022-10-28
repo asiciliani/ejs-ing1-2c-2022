@@ -1266,3 +1266,186 @@ PASSED!
 PASSED!
 
 ----SNAPSHOT----(27 October 2022 21:51:36) CuisUniversity-5481.image priorSource: 7103174!
+
+----QUIT----(27 October 2022 21:52:37) CuisUniversity-5481.image priorSource: 7107628!
+
+----STARTUP---- (27 October 2022 21:54:33) as /home/andisici/Documents/2022/ing-2c2022/cuisTusLibros/CuisUniversity-5481.image!
+
+!CartTests methodsFor: 'tests' stamp: 'AS 10/27/2022 21:56:06'!
+test08CanGetCartItems
+	
+	cart add: 2 of: self item1SoldByStore.
+	cart add: self item2SoldByStore.
+	
+	self assert: (OrderedCollection with: self item1SoldByStore with: self item1SoldByStore with: self item2SoldByStore) equals: cart content.
+	
+	self assert: 3 equals: cart size.
+	self deny: cart isEmpty ! !
+
+!testRun: #CartTests #test08CanGetCartItems stamp: 'AS 10/27/2022 21:56:07'!
+ERROR!
+!Cart methodsFor: 'content' stamp: 'AS 10/27/2022 21:56:17'!
+content
+	self shouldBeImplemented.! !
+!Cart methodsFor: 'content' stamp: 'AS 10/27/2022 21:56:27' prior: 50553789!
+content
+	
+	^elements ! !
+
+!testRun: #CartTests #test08CanGetCartItems stamp: 'AS 10/27/2022 21:56:29'!
+PASSED!
+
+!testRun: #CartTests #test01CartIsEmptyWhenCreated stamp: 'AS 10/27/2022 21:56:29'!
+PASSED!
+
+!testRun: #CartTests #test02CartIsNotEmptyAfterAddingItems stamp: 'AS 10/27/2022 21:56:29'!
+PASSED!
+
+!testRun: #CartTests #test03CartSizeIsAmountOfNewAddedItems stamp: 'AS 10/27/2022 21:56:29'!
+PASSED!
+
+!testRun: #CartTests #test04CanNotAddItemNotInStoreCatalog stamp: 'AS 10/27/2022 21:56:29'!
+PASSED!
+
+!testRun: #CartTests #test05CanAddToCartManyOfSameItem stamp: 'AS 10/27/2022 21:56:29'!
+PASSED!
+
+!testRun: #CartTests #test06CanNotAddNegativeQuantityOfItem stamp: 'AS 10/27/2022 21:56:29'!
+PASSED!
+
+!testRun: #CartTests #test07CanNotAddZeroQuantityOfItem stamp: 'AS 10/27/2022 21:56:29'!
+PASSED!
+
+!testRun: #CartTests #test08CanGetCartItems stamp: 'AS 10/27/2022 21:56:29'!
+PASSED!
+!CartTests methodsFor: 'tests' stamp: 'AS 10/27/2022 21:56:36' prior: 50553774!
+test08CanGetCartItems
+	
+	cart add: 2 of: self item1SoldByStore.
+	cart add: self item2SoldByStore.
+	
+	self assert: (Set with: self item1SoldByStore with: self item1SoldByStore with: self item2SoldByStore) equals: cart content.
+	
+	self assert: 3 equals: cart size.
+	self deny: cart isEmpty ! !
+
+!testRun: #CartTests #test08CanGetCartItems stamp: 'AS 10/27/2022 21:56:36'!
+FAILURE!
+!Cart methodsFor: 'initialization' stamp: 'AS 10/27/2022 21:56:43' prior: 50553484!
+initializeWithCatalog: aStoreCatalog 
+	
+	elements := Set new.
+	storeCatalog := aStoreCatalog.! !
+
+!testRun: #CartTests #test01CartIsEmptyWhenCreated stamp: 'AS 10/27/2022 21:56:43'!
+PASSED!
+
+!testRun: #CartTests #test02CartIsNotEmptyAfterAddingItems stamp: 'AS 10/27/2022 21:56:43'!
+PASSED!
+
+!testRun: #CartTests #test03CartSizeIsAmountOfNewAddedItems stamp: 'AS 10/27/2022 21:56:43'!
+PASSED!
+
+!testRun: #CartTests #test04CanNotAddItemNotInStoreCatalog stamp: 'AS 10/27/2022 21:56:43'!
+PASSED!
+
+!testRun: #CartTests #test05CanAddToCartManyOfSameItem stamp: 'AS 10/27/2022 21:56:43'!
+FAILURE!
+
+!testRun: #CartTests #test06CanNotAddNegativeQuantityOfItem stamp: 'AS 10/27/2022 21:56:43'!
+PASSED!
+
+!testRun: #CartTests #test07CanNotAddZeroQuantityOfItem stamp: 'AS 10/27/2022 21:56:43'!
+PASSED!
+
+!testRun: #CartTests #test08CanGetCartItems stamp: 'AS 10/27/2022 21:56:43'!
+FAILURE!
+
+!testRun: #CartTests #test08CanGetCartItems stamp: 'AS 10/27/2022 21:56:48'!
+FAILURE!
+!CartTests methodsFor: 'tests' stamp: 'AS 10/27/2022 22:01:53' prior: 50553824!
+test08CanGetCartItems
+	
+	cart add: 2 of: self item1SoldByStore.
+	cart add: self item2SoldByStore.
+	
+	self assert: (Bag with: self item1SoldByStore with: self item1SoldByStore with: self item2SoldByStore) equals: cart content.
+	
+	self assert: 3 equals: cart size.
+	self deny: cart isEmpty ! !
+!Cart methodsFor: 'initialization' stamp: 'AS 10/27/2022 22:02:01' prior: 50553839!
+initializeWithCatalog: aStoreCatalog 
+	
+	elements := Bag new.
+	storeCatalog := aStoreCatalog.! !
+
+!testRun: #CartTests #test01CartIsEmptyWhenCreated stamp: 'AS 10/27/2022 22:02:01'!
+PASSED!
+
+!testRun: #CartTests #test02CartIsNotEmptyAfterAddingItems stamp: 'AS 10/27/2022 22:02:01'!
+PASSED!
+
+!testRun: #CartTests #test03CartSizeIsAmountOfNewAddedItems stamp: 'AS 10/27/2022 22:02:01'!
+PASSED!
+
+!testRun: #CartTests #test04CanNotAddItemNotInStoreCatalog stamp: 'AS 10/27/2022 22:02:01'!
+PASSED!
+
+!testRun: #CartTests #test05CanAddToCartManyOfSameItem stamp: 'AS 10/27/2022 22:02:01'!
+PASSED!
+
+!testRun: #CartTests #test06CanNotAddNegativeQuantityOfItem stamp: 'AS 10/27/2022 22:02:01'!
+PASSED!
+
+!testRun: #CartTests #test07CanNotAddZeroQuantityOfItem stamp: 'AS 10/27/2022 22:02:01'!
+PASSED!
+
+!testRun: #CartTests #test08CanGetCartItems stamp: 'AS 10/27/2022 22:02:01'!
+PASSED!
+!CartTests methodsFor: 'tests' stamp: 'AS 10/27/2022 22:02:45'!
+test08CanGetItemsInCart
+	
+	cart add: 2 of: self item1SoldByStore.
+	cart add: self item2SoldByStore.
+	
+	self assert: (Bag with: self item1SoldByStore with: self item1SoldByStore with: self item2SoldByStore) equals: cart content.
+	
+	self assert: 3 equals: cart size.
+	self deny: cart isEmpty ! !
+
+!methodRemoval: CartTests #test08CanGetCartItems stamp: 'AS 10/27/2022 22:02:45'!
+test08CanGetCartItems
+	
+	cart add: 2 of: self item1SoldByStore.
+	cart add: self item2SoldByStore.
+	
+	self assert: (Bag with: self item1SoldByStore with: self item1SoldByStore with: self item2SoldByStore) equals: cart content.
+	
+	self assert: 3 equals: cart size.
+	self deny: cart isEmpty !
+
+!testRun: #CartTests #test01CartIsEmptyWhenCreated stamp: 'AS 10/27/2022 22:02:49'!
+PASSED!
+
+!testRun: #CartTests #test02CartIsNotEmptyAfterAddingItems stamp: 'AS 10/27/2022 22:02:49'!
+PASSED!
+
+!testRun: #CartTests #test03CartSizeIsAmountOfNewAddedItems stamp: 'AS 10/27/2022 22:02:49'!
+PASSED!
+
+!testRun: #CartTests #test04CanNotAddItemNotInStoreCatalog stamp: 'AS 10/27/2022 22:02:49'!
+PASSED!
+
+!testRun: #CartTests #test05CanAddToCartManyOfSameItem stamp: 'AS 10/27/2022 22:02:49'!
+PASSED!
+
+!testRun: #CartTests #test06CanNotAddNegativeQuantityOfItem stamp: 'AS 10/27/2022 22:02:49'!
+PASSED!
+
+!testRun: #CartTests #test07CanNotAddZeroQuantityOfItem stamp: 'AS 10/27/2022 22:02:49'!
+PASSED!
+
+!testRun: #CartTests #test08CanGetItemsInCart stamp: 'AS 10/27/2022 22:02:49'!
+PASSED!
+
+----SNAPSHOT----(27 October 2022 22:03:14) CuisUniversity-5481.image priorSource: 7107720!
