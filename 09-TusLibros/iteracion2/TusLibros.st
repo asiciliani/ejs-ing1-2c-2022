@@ -1,3 +1,32 @@
+!classDefinition: #CardTests category: 'TusLibros'!
+TestCase subclass: #CardTests
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!CardTests methodsFor: 'tests' stamp: 'AS 10/31/2022 21:50:16'!
+test01CanNotCreateCardWithLessThan16DigitNumber
+
+	self should: [CreditCard for: 'Homero Simpsons' withNumber: '123456781234567' withExpirationDate: FixedGregorianDate today ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: CreditCard cardNumberMustBe16DigitsLongErrorMessage.]! !
+
+!CardTests methodsFor: 'tests' stamp: 'AS 10/31/2022 21:50:16'!
+test02CanNotCreateCardWithMoreThan16DigitNumber
+
+	self should: [CreditCard for: 'Homero Simpsons' withNumber: '12345678123456781' withExpirationDate: FixedGregorianDate today ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: CreditCard cardNumberMustBe16DigitsLongErrorMessage.]! !
+
+!CardTests methodsFor: 'tests' stamp: 'AS 10/31/2022 21:52:04'!
+test03CanNotCreateCardWithEmptyName
+
+	self should: [CreditCard for: '' withNumber: '1234567812345678' withExpirationDate: FixedGregorianDate today ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: CreditCard cardOwnerNameCanNotBeEmptyErrorMessage.]! !
+
+
 !classDefinition: #CartTests category: 'TusLibros'!
 TestCase subclass: #CartTests
 	instanceVariableNames: 'storeCatalog cart'
@@ -128,15 +157,17 @@ item2SoldByStore
 	^'item2'! !
 
 
-!CashierTests methodsFor: 'setup - tear down' stamp: 'AS 10/31/2022 21:16:06'!
+!CashierTests methodsFor: 'setup - tear down' stamp: 'AS 10/31/2022 21:50:16'!
 setUp 
 	
+	| cardNumber |
 	storeCatalog := OrderedCollection with: self item1SoldByStore with: self item2SoldByStore.
 	cart := Cart withCatalog: storeCatalog.
 	salesBook := OrderedCollection new.
 	priceList := Dictionary newFromPairs: (Array with: self item1SoldByStore with: self item1Price with: self item2SoldByStore with: self item2Price).
-	creditCard := CreditCard withExpirationDate: GregorianMonthOfYear current previous.
-	expiredCreditCard := CreditCard withExpirationDate: GregorianMonthOfYear current next.! !
+	cardNumber := '1234567812345678'.
+	creditCard := CreditCard for: 'Homero Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.
+	expiredCreditCard := CreditCard for: 'Homero Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current next.! !
 
 
 !CashierTests methodsFor: 'tests' stamp: 'AS 10/31/2022 21:12:44'!
@@ -324,11 +355,22 @@ debit: anAmountToDebit fromCard: aCardToDebitFrom
 Cashier class
 	instanceVariableNames: ''!
 
-!Cashier class methodsFor: 'instance creation' stamp: 'AS 10/31/2022 21:13:46'!
+!Cashier class methodsFor: 'assertions' stamp: 'AS 10/31/2022 21:47:57'!
+assertCard: aCardToCharge isNotExpiredOn: aFixedGregorianDate
+
+	^ (aCardToCharge isExpiredOn: aFixedGregorianDate) ifTrue: [self canNotCheckoutWithExpiredCardErrorSignal]! !
+
+!Cashier class methodsFor: 'assertions' stamp: 'AS 10/31/2022 21:47:24'!
+assertIsNotEmpty: aCart
+
+	^ aCart isEmpty ifTrue: [self canNotCheckoutEmptyCartErrorSignal]! !
+
+
+!Cashier class methodsFor: 'instance creation' stamp: 'AS 10/31/2022 21:47:57'!
 checkout: aCart withCard: aCardToCharge usingPriceList: aPriceList registeringOn: aSalesBook onDate: aFixedGregorianDate 
 
-	aCart isEmpty ifTrue: [self canNotCheckoutEmptyCartErrorSignal].
-	(aCardToCharge isExpiredOn: aFixedGregorianDate) ifTrue: [self error: self canNotCheckoutWithExpiredCardErrorMessage].
+	self assertIsNotEmpty: aCart.
+	self assertCard: aCardToCharge isNotExpiredOn: aFixedGregorianDate.
 	^self new initializeCheckout: aCart withCard: aCardToCharge usingPriceList: aPriceList registeringOn: aSalesBook ! !
 
 
@@ -347,10 +389,15 @@ canNotCheckoutEmptyCartErrorSignal
 
 	^ self error: self canNotCheckoutEmptyCartErrorMessage! !
 
+!Cashier class methodsFor: 'error signal' stamp: 'AS 10/31/2022 21:47:06'!
+canNotCheckoutWithExpiredCardErrorSignal
+
+	^ self error: self canNotCheckoutWithExpiredCardErrorMessage! !
+
 
 !classDefinition: #CreditCard category: 'TusLibros'!
 Object subclass: #CreditCard
-	instanceVariableNames: 'expirationDate gregorianMonthOfYear'
+	instanceVariableNames: 'expirationDate'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TusLibros'!
@@ -371,10 +418,44 @@ isExpiredOn: aFixedGregorianDate
 CreditCard class
 	instanceVariableNames: ''!
 
-!CreditCard class methodsFor: 'instance creation' stamp: 'AS 10/31/2022 20:01:47'!
-withExpirationDate: aGregorianMonthOfYear 
-	
+!CreditCard class methodsFor: 'error signal' stamp: 'AS 10/31/2022 21:53:13'!
+cardNumberMustBe16DigitsLongErrorSignal
+
+	^ self error: self cardNumberMustBe16DigitsLongErrorMessage! !
+
+!CreditCard class methodsFor: 'error signal' stamp: 'AS 10/31/2022 21:53:02'!
+cardOwnerNameCanNotBeEmptyErrorSignal
+
+	^ self error: self cardOwnerNameCanNotBeEmptyErrorMessage! !
+
+
+!CreditCard class methodsFor: 'instance creation' stamp: 'AS 10/31/2022 21:53:44'!
+assertIsNotEmpty: aCardOwnerName
+
+	^ aCardOwnerName isEmpty ifTrue: [self cardOwnerNameCanNotBeEmptyErrorSignal]! !
+
+!CreditCard class methodsFor: 'instance creation' stamp: 'AS 10/31/2022 21:53:13'!
+assertIsSixteenDigitsLong: aCardNumber
+
+	^ aCardNumber size  ~= 16 ifTrue: [self cardNumberMustBe16DigitsLongErrorSignal]! !
+
+!CreditCard class methodsFor: 'instance creation' stamp: 'AS 10/31/2022 21:53:44'!
+for: aCardOwnerName withNumber: aCardNumber withExpirationDate: aGregorianMonthOfYear 
+
+	self assertIsSixteenDigitsLong: aCardNumber.
+	self assertIsNotEmpty: aCardOwnerName.
 	^self new initializeWithExpirationDate: aGregorianMonthOfYear ! !
+
+
+!CreditCard class methodsFor: 'error message' stamp: 'AS 10/31/2022 21:42:46'!
+cardNumberMustBe16DigitsLongErrorMessage
+	
+	^'Card number must be 16 digits long'! !
+
+!CreditCard class methodsFor: 'error message' stamp: 'AS 10/31/2022 21:51:51'!
+cardOwnerNameCanNotBeEmptyErrorMessage
+	
+	^'Card owner name can not be empty!!'! !
 
 
 !classDefinition: #Sale category: 'TusLibros'!

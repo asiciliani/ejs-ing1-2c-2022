@@ -4100,3 +4100,527 @@ PASSED!
 ----SNAPSHOT----(31 October 2022 21:24:40) CuisUniversity-5481.image priorSource: 7192432!
 
 ----SNAPSHOT----(31 October 2022 21:24:58) CuisUniversity-5481.image priorSource: 7223210!
+
+!classDefinition: #CreditCard category: 'TusLibros' stamp: 'AS 10/31/2022 21:26:56'!
+Object subclass: #CreditCard
+	instanceVariableNames: 'expirationDate'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+TestCase subclass: #CardTests
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #CardTests category: 'TusLibros' stamp: 'AS 10/31/2022 21:32:45'!
+TestCase subclass: #CardTests
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!CreditCard class methodsFor: 'instance creation' stamp: 'AS 10/31/2022 21:36:37'!
+withNumber: aCardNumber withExpirationDate: aGregorianMonthOfYear 
+	
+	^self new initializeWithExpirationDate: aGregorianMonthOfYear ! !
+!CashierTests methodsFor: 'as yet unclassified' stamp: 'AS 10/31/2022 21:36:37' prior: 50557055 overrides: 16961394!
+setUp 
+	
+	storeCatalog := OrderedCollection with: self item1SoldByStore with: self item2SoldByStore.
+	cart := Cart withCatalog: storeCatalog.
+	salesBook := OrderedCollection new.
+	priceList := Dictionary newFromPairs: (Array with: self item1SoldByStore with: self item1Price with: self item2SoldByStore with: self item2Price).
+	creditCard := CreditCard withNumber: 1234567812345678 withExpirationDate: GregorianMonthOfYear current previous.
+	expiredCreditCard := CreditCard withNumber: 1234567812345678 withExpirationDate: GregorianMonthOfYear current next.! !
+
+!methodRemoval: CreditCard class #withExpirationDate: stamp: 'AS 10/31/2022 21:36:37'!
+withExpirationDate: aGregorianMonthOfYear 
+	
+	^self new initializeWithExpirationDate: aGregorianMonthOfYear !
+!CashierTests methodsFor: 'setup - tear down' stamp: 'AS 10/31/2022 21:36:57' prior: 50557408 overrides: 16961394!
+setUp 
+	
+	| cardNumber |
+	storeCatalog := OrderedCollection with: self item1SoldByStore with: self item2SoldByStore.
+	cart := Cart withCatalog: storeCatalog.
+	salesBook := OrderedCollection new.
+	priceList := Dictionary newFromPairs: (Array with: self item1SoldByStore with: self item1Price with: self item2SoldByStore with: self item2Price).
+	cardNumber := 1234567812345678.
+	creditCard := CreditCard withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.
+	expiredCreditCard := CreditCard withNumber: 1234567812345678 withExpirationDate: GregorianMonthOfYear current next.! !
+!CashierTests methodsFor: 'setup - tear down' stamp: 'AS 10/31/2022 21:37:05' prior: 50557436 overrides: 16961394!
+setUp 
+	
+	| cardNumber |
+	storeCatalog := OrderedCollection with: self item1SoldByStore with: self item2SoldByStore.
+	cart := Cart withCatalog: storeCatalog.
+	salesBook := OrderedCollection new.
+	priceList := Dictionary newFromPairs: (Array with: self item1SoldByStore with: self item1Price with: self item2SoldByStore with: self item2Price).
+	cardNumber := 1234567812345678.
+	creditCard := CreditCard withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.
+	expiredCreditCard := CreditCard withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current next.! !
+
+!testRun: #CashierTests #test01CanNotCheckoutEmptyCart stamp: 'AS 10/31/2022 21:37:05'!
+PASSED!
+
+!testRun: #CashierTests #test02CanCheckoutCartWithItemsAndCorrectlyChargeCard stamp: 'AS 10/31/2022 21:37:05'!
+PASSED!
+
+!testRun: #CashierTests #test03CanNotCheckoutWithExpiredCard stamp: 'AS 10/31/2022 21:37:05'!
+PASSED!
+!CardTests methodsFor: 'nil' stamp: 'AS 10/31/2022 21:39:58'!
+test01CanNotCreateCardWithNumberWithLessThan16Digits
+
+	self should: [CreditCard withNumber: 123456781234567 withExpirationDate: FixedGregorianDate today ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: CreditCard cardNumberMustBe16DigitsLongErrorMessage.]! !
+
+!testRun: #CardTests #test01CanNotCreateCardWithNumberWithLessThan16Digits stamp: 'AS 10/31/2022 21:40:02'!
+FAILURE!
+!CreditCard class methodsFor: 'instance creation' stamp: 'AS 10/31/2022 21:40:53' prior: 50557400!
+withNumber: aCardNumber withExpirationDate: aGregorianMonthOfYear 
+	aCardNumber length < 16 ifTrue: [self error: self cardNumberMustBe16DigitsLongErrorMessage].
+	^self new initializeWithExpirationDate: aGregorianMonthOfYear ! !
+
+!testRun: #CardTests #test01CanNotCreateCardWithNumberWithLessThan16Digits stamp: 'AS 10/31/2022 21:40:55'!
+ERROR!
+!CreditCard class methodsFor: 'instance creation' stamp: 'AS 10/31/2022 21:41:16' prior: 50557507!
+withNumber: aCardNumber withExpirationDate: aGregorianMonthOfYear 
+	aCardNumber length < 16 ifTrue: [self error: self cardNumberMustBe16DigitsLongErrorMessage].
+	^self new initializeWithExpirationDate: aGregorianMonthOfYear ! !
+!CardTests methodsFor: 'as yet unclassified' stamp: 'AS 10/31/2022 21:41:24' prior: 50557490!
+test01CanNotCreateCardWithNumberWithLessThan16Digits
+
+	self should: [CreditCard withNumber: '123456781234567' withExpirationDate: FixedGregorianDate today ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: CreditCard cardNumberMustBe16DigitsLongErrorMessage.]! !
+!CashierTests methodsFor: 'setup - tear down' stamp: 'AS 10/31/2022 21:41:34' prior: 50557459 overrides: 16961394!
+setUp 
+	
+	| cardNumber |
+	storeCatalog := OrderedCollection with: self item1SoldByStore with: self item2SoldByStore.
+	cart := Cart withCatalog: storeCatalog.
+	salesBook := OrderedCollection new.
+	priceList := Dictionary newFromPairs: (Array with: self item1SoldByStore with: self item1Price with: self item2SoldByStore with: self item2Price).
+	cardNumber := '1234567812345678'.
+	creditCard := CreditCard withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.
+	expiredCreditCard := CreditCard withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current next.! !
+
+!testRun: #CardTests #test01CanNotCreateCardWithNumberWithLessThan16Digits stamp: 'AS 10/31/2022 21:41:53'!
+ERROR!
+!CreditCard class methodsFor: 'instance creation' stamp: 'AS 10/31/2022 21:42:21' prior: 50557521!
+withNumber: aCardNumber withExpirationDate: aGregorianMonthOfYear 
+	aCardNumber size < 16 ifTrue: [self error: self cardNumberMustBe16DigitsLongErrorMessage].
+	^self new initializeWithExpirationDate: aGregorianMonthOfYear ! !
+
+!testRun: #CardTests #test01CanNotCreateCardWithNumberWithLessThan16Digits stamp: 'AS 10/31/2022 21:42:21'!
+ERROR!
+
+!testRun: #CashierTests #test01CanNotCheckoutEmptyCart stamp: 'AS 10/31/2022 21:42:21'!
+PASSED!
+
+!testRun: #CashierTests #test02CanCheckoutCartWithItemsAndCorrectlyChargeCard stamp: 'AS 10/31/2022 21:42:21'!
+PASSED!
+
+!testRun: #CashierTests #test03CanNotCheckoutWithExpiredCard stamp: 'AS 10/31/2022 21:42:21'!
+PASSED!
+
+!testRun: #CardTests #test01CanNotCreateCardWithNumberWithLessThan16Digits stamp: 'AS 10/31/2022 21:42:21'!
+ERROR!
+!CreditCard class methodsFor: 'error message' stamp: 'AS 10/31/2022 21:42:29'!
+cardNumberMustBe16DigitsLongErrorMessage
+	self shouldBeImplemented.! !
+!CreditCard class methodsFor: 'error message' stamp: 'AS 10/31/2022 21:42:46' prior: 50557599!
+cardNumberMustBe16DigitsLongErrorMessage
+	
+	^'Card number must be 16 digits long'! !
+
+!testRun: #CardTests #test01CanNotCreateCardWithNumberWithLessThan16Digits stamp: 'AS 10/31/2022 21:42:48'!
+PASSED!
+
+!testRun: #CardTests #test01CanNotCreateCardWithNumberWithLessThan16Digits stamp: 'AS 10/31/2022 21:43:15'!
+PASSED!
+
+!testRun: #CartTests #test01CartIsEmptyWhenCreated stamp: 'AS 10/31/2022 21:43:15'!
+PASSED!
+
+!testRun: #CartTests #test02CartIsNotEmptyAfterAddingItemsAndIncludesThem stamp: 'AS 10/31/2022 21:43:15'!
+PASSED!
+
+!testRun: #CartTests #test03CartSizeIsAmountOfNewAddedItems stamp: 'AS 10/31/2022 21:43:15'!
+PASSED!
+
+!testRun: #CartTests #test04CanNotAddItemNotInStoreCatalog stamp: 'AS 10/31/2022 21:43:15'!
+PASSED!
+
+!testRun: #CartTests #test05CanAddToCartManyOfSameItem stamp: 'AS 10/31/2022 21:43:15'!
+PASSED!
+
+!testRun: #CartTests #test06CanNotAddNegativeQuantityOfItem stamp: 'AS 10/31/2022 21:43:15'!
+PASSED!
+
+!testRun: #CartTests #test07CanNotAddZeroQuantityOfItem stamp: 'AS 10/31/2022 21:43:15'!
+PASSED!
+
+!testRun: #CartTests #test08CanGetItemsInCart stamp: 'AS 10/31/2022 21:43:15'!
+PASSED!
+
+!testRun: #CartTests #test09CanNotAddNonIntegerQuantityOfItem stamp: 'AS 10/31/2022 21:43:15'!
+PASSED!
+
+!testRun: #CashierTests #test01CanNotCheckoutEmptyCart stamp: 'AS 10/31/2022 21:43:15'!
+PASSED!
+
+!testRun: #CashierTests #test02CanCheckoutCartWithItemsAndCorrectlyChargeCard stamp: 'AS 10/31/2022 21:43:15'!
+PASSED!
+
+!testRun: #CashierTests #test03CanNotCheckoutWithExpiredCard stamp: 'AS 10/31/2022 21:43:15'!
+PASSED!
+
+!testRun: #CashierTests #test01CanNotCheckoutEmptyCart stamp: 'AS 10/31/2022 21:43:21'!
+PASSED!
+
+!testRun: #CashierTests #test02CanCheckoutCartWithItemsAndCorrectlyChargeCard stamp: 'AS 10/31/2022 21:43:21'!
+PASSED!
+
+!testRun: #CashierTests #test03CanNotCheckoutWithExpiredCard stamp: 'AS 10/31/2022 21:43:21'!
+PASSED!
+!CardTests methodsFor: 'tests' stamp: 'AS 10/31/2022 21:43:57'!
+test01CanNotCreateCardWithLessThan16DigitNumber
+
+	self should: [CreditCard withNumber: '123456781234567' withExpirationDate: FixedGregorianDate today ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: CreditCard cardNumberMustBe16DigitsLongErrorMessage.]! !
+
+!methodRemoval: CardTests #test01CanNotCreateCardWithNumberWithLessThan16Digits stamp: 'AS 10/31/2022 21:43:57'!
+test01CanNotCreateCardWithNumberWithLessThan16Digits
+
+	self should: [CreditCard withNumber: '123456781234567' withExpirationDate: FixedGregorianDate today ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: CreditCard cardNumberMustBe16DigitsLongErrorMessage.]!
+!CardTests methodsFor: 'tests' stamp: 'AS 10/31/2022 21:44:11'!
+test01CanNotCreateCardWithMoreThan16DigitNumber
+
+	self should: [CreditCard withNumber: '12345678123456781' withExpirationDate: FixedGregorianDate today ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: CreditCard cardNumberMustBe16DigitsLongErrorMessage.]! !
+
+!testRun: #CardTests #test01CanNotCreateCardWithMoreThan16DigitNumber stamp: 'AS 10/31/2022 21:44:11'!
+FAILURE!
+!CreditCard class methodsFor: 'instance creation' stamp: 'AS 10/31/2022 21:44:45' prior: 50557572!
+withNumber: aCardNumber withExpirationDate: aGregorianMonthOfYear 
+	(aCardNumber size < 16 or: [aCardNumber size > 16]) ifTrue: [self error: self cardNumberMustBe16DigitsLongErrorMessage].
+	^self new initializeWithExpirationDate: aGregorianMonthOfYear ! !
+
+!testRun: #CardTests #test01CanNotCreateCardWithMoreThan16DigitNumber stamp: 'AS 10/31/2022 21:44:50'!
+PASSED!
+
+!testRun: #CardTests #test01CanNotCreateCardWithLessThan16DigitNumber stamp: 'AS 10/31/2022 21:44:50'!
+PASSED!
+
+!testRun: #CardTests #test01CanNotCreateCardWithMoreThan16DigitNumber stamp: 'AS 10/31/2022 21:44:50'!
+PASSED!
+!CardTests methodsFor: 'tests' stamp: 'AS 10/31/2022 21:44:58'!
+test02CanNotCreateCardWithMoreThan16DigitNumber
+
+	self should: [CreditCard withNumber: '12345678123456781' withExpirationDate: FixedGregorianDate today ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: CreditCard cardNumberMustBe16DigitsLongErrorMessage.]! !
+
+!methodRemoval: CardTests #test01CanNotCreateCardWithMoreThan16DigitNumber stamp: 'AS 10/31/2022 21:44:58'!
+test01CanNotCreateCardWithMoreThan16DigitNumber
+
+	self should: [CreditCard withNumber: '12345678123456781' withExpirationDate: FixedGregorianDate today ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: CreditCard cardNumberMustBe16DigitsLongErrorMessage.]!
+
+!testRun: #CardTests #test02CanNotCreateCardWithMoreThan16DigitNumber stamp: 'AS 10/31/2022 21:45:01'!
+PASSED!
+
+!testRun: #CardTests #test01CanNotCreateCardWithLessThan16DigitNumber stamp: 'AS 10/31/2022 21:45:01'!
+PASSED!
+
+!testRun: #CardTests #test02CanNotCreateCardWithMoreThan16DigitNumber stamp: 'AS 10/31/2022 21:45:01'!
+PASSED!
+!CreditCard class methodsFor: 'instance creation' stamp: 'AS 10/31/2022 21:45:57' prior: 50557709!
+withNumber: aCardNumber withExpirationDate: aGregorianMonthOfYear 
+	aCardNumber size  ~= 16 ifTrue: [self error: self cardNumberMustBe16DigitsLongErrorMessage].
+	^self new initializeWithExpirationDate: aGregorianMonthOfYear ! !
+
+!testRun: #CashierTests #test01CanNotCheckoutEmptyCart stamp: 'AS 10/31/2022 21:45:57'!
+PASSED!
+
+!testRun: #CashierTests #test02CanCheckoutCartWithItemsAndCorrectlyChargeCard stamp: 'AS 10/31/2022 21:45:57'!
+PASSED!
+
+!testRun: #CashierTests #test03CanNotCheckoutWithExpiredCard stamp: 'AS 10/31/2022 21:45:57'!
+PASSED!
+
+!testRun: #CardTests #test01CanNotCreateCardWithLessThan16DigitNumber stamp: 'AS 10/31/2022 21:45:57'!
+PASSED!
+
+!testRun: #CardTests #test02CanNotCreateCardWithMoreThan16DigitNumber stamp: 'AS 10/31/2022 21:45:57'!
+PASSED!
+!CreditCard class methodsFor: 'instance creation' stamp: 'AS 10/31/2022 21:46:14'!
+assertIs16DigitsLong: aCardNumber
+
+	^ aCardNumber size  ~= 16 ifTrue: [self error: self cardNumberMustBe16DigitsLongErrorMessage]! !
+!CreditCard class methodsFor: 'instance creation' stamp: 'AS 10/31/2022 21:46:14' prior: 50557768!
+withNumber: aCardNumber withExpirationDate: aGregorianMonthOfYear 
+	self assertIs16DigitsLong: aCardNumber.
+	^self new initializeWithExpirationDate: aGregorianMonthOfYear ! !
+!CreditCard class methodsFor: 'instance creation' stamp: 'AS 10/31/2022 21:46:24'!
+assertIsSixteenDigitsLong: aCardNumber
+
+	^ aCardNumber size  ~= 16 ifTrue: [self error: self cardNumberMustBe16DigitsLongErrorMessage]! !
+!CreditCard class methodsFor: 'as yet unclassified' stamp: 'AS 10/31/2022 21:46:24' prior: 50557803!
+withNumber: aCardNumber withExpirationDate: aGregorianMonthOfYear 
+	self assertIsSixteenDigitsLong: aCardNumber.
+	^self new initializeWithExpirationDate: aGregorianMonthOfYear ! !
+
+!methodRemoval: CreditCard class #assertIs16DigitsLong: stamp: 'AS 10/31/2022 21:46:24'!
+assertIs16DigitsLong: aCardNumber
+
+	^ aCardNumber size  ~= 16 ifTrue: [self error: self cardNumberMustBe16DigitsLongErrorMessage]!
+
+!testRun: #CashierTests #test01CanNotCheckoutEmptyCart stamp: 'AS 10/31/2022 21:46:27'!
+PASSED!
+
+!testRun: #CashierTests #test02CanCheckoutCartWithItemsAndCorrectlyChargeCard stamp: 'AS 10/31/2022 21:46:27'!
+PASSED!
+
+!testRun: #CashierTests #test03CanNotCheckoutWithExpiredCard stamp: 'AS 10/31/2022 21:46:27'!
+PASSED!
+
+!testRun: #CardTests #test01CanNotCreateCardWithLessThan16DigitNumber stamp: 'AS 10/31/2022 21:46:27'!
+PASSED!
+
+!testRun: #CardTests #test02CanNotCreateCardWithMoreThan16DigitNumber stamp: 'AS 10/31/2022 21:46:27'!
+PASSED!
+!CreditCard class methodsFor: 'instance creation' stamp: 'AS 10/31/2022 21:46:30' prior: 50557820!
+withNumber: aCardNumber withExpirationDate: aGregorianMonthOfYear 
+
+	self assertIsSixteenDigitsLong: aCardNumber.
+	^self new initializeWithExpirationDate: aGregorianMonthOfYear ! !
+
+!testRun: #CashierTests #test01CanNotCheckoutEmptyCart stamp: 'AS 10/31/2022 21:46:30'!
+PASSED!
+
+!testRun: #CashierTests #test02CanCheckoutCartWithItemsAndCorrectlyChargeCard stamp: 'AS 10/31/2022 21:46:30'!
+PASSED!
+
+!testRun: #CashierTests #test03CanNotCheckoutWithExpiredCard stamp: 'AS 10/31/2022 21:46:30'!
+PASSED!
+
+!testRun: #CardTests #test01CanNotCreateCardWithLessThan16DigitNumber stamp: 'AS 10/31/2022 21:46:30'!
+PASSED!
+
+!testRun: #CardTests #test02CanNotCreateCardWithMoreThan16DigitNumber stamp: 'AS 10/31/2022 21:46:30'!
+PASSED!
+!Cashier class methodsFor: 'instance creation' stamp: 'AS 10/31/2022 21:47:06'!
+canNotCheckoutWithExpiredCardErrorSignal
+
+	^ self error: self canNotCheckoutWithExpiredCardErrorMessage! !
+!Cashier class methodsFor: 'instance creation' stamp: 'AS 10/31/2022 21:47:06' prior: 50557006!
+checkout: aCart withCard: aCardToCharge usingPriceList: aPriceList registeringOn: aSalesBook onDate: aFixedGregorianDate 
+
+	aCart isEmpty ifTrue: [self canNotCheckoutEmptyCartErrorSignal].
+	(aCardToCharge isExpiredOn: aFixedGregorianDate) ifTrue: [self canNotCheckoutWithExpiredCardErrorSignal].
+	^self new initializeCheckout: aCart withCard: aCardToCharge usingPriceList: aPriceList registeringOn: aSalesBook ! !
+!Cashier class methodsFor: 'instance creation' stamp: 'AS 10/31/2022 21:47:24'!
+assertIsNotEmpty: aCart
+
+	^ aCart isEmpty ifTrue: [self canNotCheckoutEmptyCartErrorSignal]! !
+!Cashier class methodsFor: 'instance creation' stamp: 'AS 10/31/2022 21:47:24' prior: 50557886!
+checkout: aCart withCard: aCardToCharge usingPriceList: aPriceList registeringOn: aSalesBook onDate: aFixedGregorianDate 
+
+	self assertIsNotEmpty: aCart.
+	(aCardToCharge isExpiredOn: aFixedGregorianDate) ifTrue: [self canNotCheckoutWithExpiredCardErrorSignal].
+	^self new initializeCheckout: aCart withCard: aCardToCharge usingPriceList: aPriceList registeringOn: aSalesBook ! !
+!Cashier class methodsFor: 'instance creation' stamp: 'AS 10/31/2022 21:47:57'!
+assertCard: aCardToCharge isNotExpiredOn: aFixedGregorianDate
+
+	^ (aCardToCharge isExpiredOn: aFixedGregorianDate) ifTrue: [self canNotCheckoutWithExpiredCardErrorSignal]! !
+!Cashier class methodsFor: 'instance creation' stamp: 'AS 10/31/2022 21:47:57' prior: 50557908!
+checkout: aCart withCard: aCardToCharge usingPriceList: aPriceList registeringOn: aSalesBook onDate: aFixedGregorianDate 
+
+	self assertIsNotEmpty: aCart.
+	self assertCard: aCardToCharge isNotExpiredOn: aFixedGregorianDate.
+	^self new initializeCheckout: aCart withCard: aCardToCharge usingPriceList: aPriceList registeringOn: aSalesBook ! !
+!CreditCard class methodsFor: 'instance creation' stamp: 'AS 10/31/2022 21:50:16'!
+for: aCardOwnerName withNumber: aCardNumber withExpirationDate: aGregorianMonthOfYear 
+
+	self assertIsSixteenDigitsLong: aCardNumber.
+	^self new initializeWithExpirationDate: aGregorianMonthOfYear ! !
+!CardTests methodsFor: 'as yet unclassified' stamp: 'AS 10/31/2022 21:50:16' prior: 50557730!
+test02CanNotCreateCardWithMoreThan16DigitNumber
+
+	self should: [CreditCard for: 'Homero Simpsons' withNumber: '12345678123456781' withExpirationDate: FixedGregorianDate today ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: CreditCard cardNumberMustBe16DigitsLongErrorMessage.]! !
+!CardTests methodsFor: 'as yet unclassified' stamp: 'AS 10/31/2022 21:50:16' prior: 50557666!
+test01CanNotCreateCardWithLessThan16DigitNumber
+
+	self should: [CreditCard for: 'Homero Simpsons' withNumber: '123456781234567' withExpirationDate: FixedGregorianDate today ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: CreditCard cardNumberMustBe16DigitsLongErrorMessage.]! !
+!CashierTests methodsFor: 'as yet unclassified' stamp: 'AS 10/31/2022 21:50:16' prior: 50557546 overrides: 16961394!
+setUp 
+	
+	| cardNumber |
+	storeCatalog := OrderedCollection with: self item1SoldByStore with: self item2SoldByStore.
+	cart := Cart withCatalog: storeCatalog.
+	salesBook := OrderedCollection new.
+	priceList := Dictionary newFromPairs: (Array with: self item1SoldByStore with: self item1Price with: self item2SoldByStore with: self item2Price).
+	cardNumber := '1234567812345678'.
+	creditCard := CreditCard for: 'Homero Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.
+	expiredCreditCard := CreditCard for: 'Homero Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current next.! !
+
+!methodRemoval: CreditCard class #withNumber:withExpirationDate: stamp: 'AS 10/31/2022 21:50:16'!
+withNumber: aCardNumber withExpirationDate: aGregorianMonthOfYear 
+
+	self assertIsSixteenDigitsLong: aCardNumber.
+	^self new initializeWithExpirationDate: aGregorianMonthOfYear !
+
+!testRun: #CardTests #test01CanNotCreateCardWithLessThan16DigitNumber stamp: 'AS 10/31/2022 21:50:36'!
+PASSED!
+
+!testRun: #CardTests #test02CanNotCreateCardWithMoreThan16DigitNumber stamp: 'AS 10/31/2022 21:50:36'!
+PASSED!
+
+!testRun: #CartTests #test01CartIsEmptyWhenCreated stamp: 'AS 10/31/2022 21:50:36'!
+PASSED!
+
+!testRun: #CartTests #test02CartIsNotEmptyAfterAddingItemsAndIncludesThem stamp: 'AS 10/31/2022 21:50:36'!
+PASSED!
+
+!testRun: #CartTests #test03CartSizeIsAmountOfNewAddedItems stamp: 'AS 10/31/2022 21:50:36'!
+PASSED!
+
+!testRun: #CartTests #test04CanNotAddItemNotInStoreCatalog stamp: 'AS 10/31/2022 21:50:36'!
+PASSED!
+
+!testRun: #CartTests #test05CanAddToCartManyOfSameItem stamp: 'AS 10/31/2022 21:50:36'!
+PASSED!
+
+!testRun: #CartTests #test06CanNotAddNegativeQuantityOfItem stamp: 'AS 10/31/2022 21:50:36'!
+PASSED!
+
+!testRun: #CartTests #test07CanNotAddZeroQuantityOfItem stamp: 'AS 10/31/2022 21:50:36'!
+PASSED!
+
+!testRun: #CartTests #test08CanGetItemsInCart stamp: 'AS 10/31/2022 21:50:36'!
+PASSED!
+
+!testRun: #CartTests #test09CanNotAddNonIntegerQuantityOfItem stamp: 'AS 10/31/2022 21:50:36'!
+PASSED!
+
+!testRun: #CashierTests #test01CanNotCheckoutEmptyCart stamp: 'AS 10/31/2022 21:50:36'!
+PASSED!
+
+!testRun: #CashierTests #test02CanCheckoutCartWithItemsAndCorrectlyChargeCard stamp: 'AS 10/31/2022 21:50:36'!
+PASSED!
+
+!testRun: #CashierTests #test03CanNotCheckoutWithExpiredCard stamp: 'AS 10/31/2022 21:50:36'!
+PASSED!
+!CardTests methodsFor: 'tests' stamp: 'AS 10/31/2022 21:51:29'!
+test03CanNotCreateCardWithEmptyName
+
+	self should: [CreditCard for: '' withNumber: '12345678123456781' withExpirationDate: FixedGregorianDate today ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: CreditCard cardOwnerNameCanNotBeEmptyErrorMessage.]! !
+
+!testRun: #CardTests #test03CanNotCreateCardWithEmptyName stamp: 'AS 10/31/2022 21:51:32'!
+ERROR!
+!CreditCard class methodsFor: 'error message' stamp: 'AS 10/31/2022 21:51:37'!
+cardOwnerNameCanNotBeEmptyErrorMessage
+	self shouldBeImplemented.! !
+!CreditCard class methodsFor: 'error message' stamp: 'AS 10/31/2022 21:51:51' prior: 50558078!
+cardOwnerNameCanNotBeEmptyErrorMessage
+	
+	^'Card owner name can not be empty!!'! !
+
+!testRun: #CardTests #test03CanNotCreateCardWithEmptyName stamp: 'AS 10/31/2022 21:51:52'!
+FAILURE!
+!CardTests methodsFor: 'tests' stamp: 'AS 10/31/2022 21:52:04' prior: 50558062!
+test03CanNotCreateCardWithEmptyName
+
+	self should: [CreditCard for: '' withNumber: '1234567812345678' withExpirationDate: FixedGregorianDate today ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: CreditCard cardOwnerNameCanNotBeEmptyErrorMessage.]! !
+
+!testRun: #CardTests #test03CanNotCreateCardWithEmptyName stamp: 'AS 10/31/2022 21:52:04'!
+FAILURE!
+!CreditCard class methodsFor: 'instance creation' stamp: 'AS 10/31/2022 21:52:48' prior: 50557946!
+for: aCardOwnerName withNumber: aCardNumber withExpirationDate: aGregorianMonthOfYear 
+
+	self assertIsSixteenDigitsLong: aCardNumber.
+	aCardOwnerName isEmpty ifTrue: [self error: self cardOwnerNameCanNotBeEmptyErrorMessage].
+	^self new initializeWithExpirationDate: aGregorianMonthOfYear ! !
+
+!testRun: #CardTests #test01CanNotCreateCardWithLessThan16DigitNumber stamp: 'AS 10/31/2022 21:52:49'!
+PASSED!
+
+!testRun: #CardTests #test02CanNotCreateCardWithMoreThan16DigitNumber stamp: 'AS 10/31/2022 21:52:49'!
+PASSED!
+
+!testRun: #CardTests #test03CanNotCreateCardWithEmptyName stamp: 'AS 10/31/2022 21:52:49'!
+PASSED!
+
+!testRun: #CashierTests #test01CanNotCheckoutEmptyCart stamp: 'AS 10/31/2022 21:52:49'!
+PASSED!
+
+!testRun: #CashierTests #test02CanCheckoutCartWithItemsAndCorrectlyChargeCard stamp: 'AS 10/31/2022 21:52:49'!
+PASSED!
+
+!testRun: #CashierTests #test03CanNotCheckoutWithExpiredCard stamp: 'AS 10/31/2022 21:52:49'!
+PASSED!
+!CreditCard class methodsFor: 'instance creation' stamp: 'AS 10/31/2022 21:53:02'!
+cardOwnerNameCanNotBeEmptyErrorSignal
+
+	^ self error: self cardOwnerNameCanNotBeEmptyErrorMessage! !
+!CreditCard class methodsFor: 'instance creation' stamp: 'AS 10/31/2022 21:53:02' prior: 50558110!
+for: aCardOwnerName withNumber: aCardNumber withExpirationDate: aGregorianMonthOfYear 
+
+	self assertIsSixteenDigitsLong: aCardNumber.
+	aCardOwnerName isEmpty ifTrue: [self cardOwnerNameCanNotBeEmptyErrorSignal].
+	^self new initializeWithExpirationDate: aGregorianMonthOfYear ! !
+!CreditCard class methodsFor: 'instance creation' stamp: 'AS 10/31/2022 21:53:13'!
+cardNumberMustBe16DigitsLongErrorSignal
+
+	^ self error: self cardNumberMustBe16DigitsLongErrorMessage! !
+!CreditCard class methodsFor: 'instance creation' stamp: 'AS 10/31/2022 21:53:13' prior: 50557812!
+assertIsSixteenDigitsLong: aCardNumber
+
+	^ aCardNumber size  ~= 16 ifTrue: [self cardNumberMustBe16DigitsLongErrorSignal]! !
+!CreditCard class methodsFor: 'instance creation' stamp: 'AS 10/31/2022 21:53:44'!
+assertIsNotEmpty: aCardOwnerName
+
+	^ aCardOwnerName isEmpty ifTrue: [self cardOwnerNameCanNotBeEmptyErrorSignal]! !
+!CreditCard class methodsFor: 'instance creation' stamp: 'AS 10/31/2022 21:53:44' prior: 50558149!
+for: aCardOwnerName withNumber: aCardNumber withExpirationDate: aGregorianMonthOfYear 
+
+	self assertIsSixteenDigitsLong: aCardNumber.
+	self assertIsNotEmpty: aCardOwnerName.
+	^self new initializeWithExpirationDate: aGregorianMonthOfYear ! !
+
+!testRun: #CardTests #test01CanNotCreateCardWithLessThan16DigitNumber stamp: 'AS 10/31/2022 21:53:46'!
+PASSED!
+
+!testRun: #CardTests #test02CanNotCreateCardWithMoreThan16DigitNumber stamp: 'AS 10/31/2022 21:53:46'!
+PASSED!
+
+!testRun: #CardTests #test03CanNotCreateCardWithEmptyName stamp: 'AS 10/31/2022 21:53:46'!
+PASSED!
+
+!testRun: #CashierTests #test01CanNotCheckoutEmptyCart stamp: 'AS 10/31/2022 21:53:46'!
+PASSED!
+
+!testRun: #CashierTests #test02CanCheckoutCartWithItemsAndCorrectlyChargeCard stamp: 'AS 10/31/2022 21:53:46'!
+PASSED!
+
+!testRun: #CashierTests #test03CanNotCheckoutWithExpiredCard stamp: 'AS 10/31/2022 21:53:46'!
+PASSED!
+
+----SNAPSHOT----(31 October 2022 21:54:01) CuisUniversity-5481.image priorSource: 7223302!
