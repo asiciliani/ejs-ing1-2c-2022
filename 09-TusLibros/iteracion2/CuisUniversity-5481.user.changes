@@ -6448,3 +6448,667 @@ PASSED!
 ----SNAPSHOT----(2 November 2022 00:58:03) CuisUniversity-5481.image priorSource: 7317649!
 
 ----SNAPSHOT----(2 November 2022 00:58:20) CuisUniversity-5481.image priorSource: 7337470!
+
+!testRun: #CartTests #test01CartIsEmptyWhenCreated stamp: 'AS 11/2/2022 01:02:42'!
+PASSED!
+
+!testRun: #CartTests #test02CartIsNotEmptyAfterAddingItemsAndIncludesThem stamp: 'AS 11/2/2022 01:02:42'!
+PASSED!
+
+!testRun: #CartTests #test03CartSizeIsAmountOfNewAddedItems stamp: 'AS 11/2/2022 01:02:42'!
+PASSED!
+
+!testRun: #CartTests #test04CanNotAddItemNotInStoreCatalog stamp: 'AS 11/2/2022 01:02:42'!
+PASSED!
+
+!testRun: #CartTests #test05CanAddToCartManyOfSameItem stamp: 'AS 11/2/2022 01:02:42'!
+PASSED!
+
+!testRun: #CartTests #test06CanNotAddNegativeQuantityOfItem stamp: 'AS 11/2/2022 01:02:42'!
+PASSED!
+
+!testRun: #CartTests #test07CanNotAddZeroQuantityOfItem stamp: 'AS 11/2/2022 01:02:42'!
+PASSED!
+
+!testRun: #CartTests #test08CanGetItemsInCart stamp: 'AS 11/2/2022 01:02:42'!
+PASSED!
+
+!testRun: #CartTests #test09CanNotAddNonIntegerQuantityOfItem stamp: 'AS 11/2/2022 01:02:42'!
+PASSED!
+
+!testRun: #CashierTests #test01CanNotCheckoutEmptyCart stamp: 'AS 11/2/2022 01:02:42'!
+PASSED!
+
+!testRun: #CashierTests #test02CanCheckoutCartWithItemsAndCorrectlyChargeCard stamp: 'AS 11/2/2022 01:02:42'!
+PASSED!
+
+!testRun: #CashierTests #test03CanNotCheckoutWithExpiredCard stamp: 'AS 11/2/2022 01:02:42'!
+PASSED!
+
+!testRun: #CashierTests #test04CanNotCheckoutWithStolenCard stamp: 'AS 11/2/2022 01:02:42'!
+PASSED!
+
+!testRun: #CashierTests #test05CanNotCheckoutWithCardWithNotEnoughBalance stamp: 'AS 11/2/2022 01:02:42'!
+PASSED!
+
+!testRun: #CreditCardTests #test01CanNotCreateCardWithLessThan16DigitNumber stamp: 'AS 11/2/2022 01:02:42'!
+PASSED!
+
+!testRun: #CreditCardTests #test02CanNotCreateCardWithMoreThan16DigitNumber stamp: 'AS 11/2/2022 01:02:42'!
+PASSED!
+
+!testRun: #CreditCardTests #test03CanNotCreateCardWithEmptyName stamp: 'AS 11/2/2022 01:02:42'!
+PASSED!
+
+!testRun: #CreditCardTests #test04CanNotCreateCardWithNameWithOnlySeparators stamp: 'AS 11/2/2022 01:02:42'!
+PASSED!
+
+!classDefinition: #MerchanProcessorDouble category: 'TusLibros' stamp: 'AS 11/2/2022 01:04:58'!
+Object subclass: #MerchanProcessorDouble
+	instanceVariableNames: 'stolenCards negativeBalanceCards processedCards'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+Object subclass: #StoreFactory
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #StoreFactory category: 'TusLibros' stamp: 'AS 11/2/2022 01:06:10'!
+Object subclass: #StoreFactory
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!StoreFactory methodsFor: 'nil' stamp: 'AS 11/2/2022 01:06:41'!
+item1SoldByStore
+
+	^ 'item1'! !
+!StoreFactory methodsFor: 'store items' stamp: 'AS 11/2/2022 01:07:08'!
+item2SoldByStore
+
+	^ 'item2'! !
+!StoreFactory methodsFor: 'store items' stamp: 'AS 11/2/2022 01:07:19'!
+itemNotSoldByStore
+	
+	^'itemNotSoldByStore'! !
+!StoreFactory methodsFor: 'item prices' stamp: 'AS 11/2/2022 01:07:50'!
+item1Price
+	^5! !
+!StoreFactory methodsFor: 'item prices' stamp: 'AS 11/2/2022 01:07:58'!
+item2Price
+	^3! !
+
+!classDefinition: #CartTests category: 'TusLibros' stamp: 'AS 11/2/2022 01:09:05'!
+TestCase subclass: #CartTests
+	instanceVariableNames: 'storeCatalog cart storeFactory'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!CartTests methodsFor: 'setup' stamp: 'AS 11/2/2022 01:09:03' prior: 50553111 overrides: 16961394!
+setUp
+	
+	storeFactory := StoreFactory new.
+	storeCatalog := OrderedCollection with: self item1SoldByStore with: self item2SoldByStore.
+	cart := Cart withCatalog: storeCatalog.! !
+
+!classDefinition: #CashierTests category: 'TusLibros' stamp: 'AS 11/2/2022 01:09:43'!
+TestCase subclass: #CashierTests
+	instanceVariableNames: 'storeCatalog cart salesBook priceList validCreditCard expiredCreditCard merchantProcessorDouble stolenCreditCard notEnoughBalanceCreditCard storeFactory'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!CashierTests methodsFor: 'setup - tear down' stamp: 'AS 11/2/2022 01:09:41' prior: 50559746 overrides: 16961394!
+setUp 
+	
+	| cardNumber |
+	storeFactory := StoreFactory new.
+	storeCatalog := OrderedCollection with: self item1SoldByStore with: self item2SoldByStore.
+	cart := Cart withCatalog: storeCatalog.
+	salesBook := OrderedCollection new.
+	priceList := Dictionary newFromPairs: (Array with: self item1SoldByStore with: self item1Price with: self item2SoldByStore with: self item2Price).
+	cardNumber := '1234567812345678'.
+	validCreditCard := CreditCard for: 'Homero Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.
+	expiredCreditCard := CreditCard for: 'Bart Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current next.
+	stolenCreditCard := CreditCard for: 'Lisa Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.
+	notEnoughBalanceCreditCard := CreditCard for: 'Marge Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.
+
+	merchantProcessorDouble := MerchanProcessorDouble withStolenCards: (OrderedCollection with: stolenCreditCard) 
+												withNegativeBalanceCards: (OrderedCollection with: notEnoughBalanceCreditCard).! !
+
+!testRun: #CashierTests #test01CanNotCheckoutEmptyCart stamp: 'AS 11/2/2022 01:09:44'!
+PASSED!
+
+!testRun: #CashierTests #test02CanCheckoutCartWithItemsAndCorrectlyChargeCard stamp: 'AS 11/2/2022 01:09:44'!
+PASSED!
+
+!testRun: #CashierTests #test03CanNotCheckoutWithExpiredCard stamp: 'AS 11/2/2022 01:09:44'!
+PASSED!
+
+!testRun: #CashierTests #test04CanNotCheckoutWithStolenCard stamp: 'AS 11/2/2022 01:09:44'!
+PASSED!
+
+!testRun: #CashierTests #test05CanNotCheckoutWithCardWithNotEnoughBalance stamp: 'AS 11/2/2022 01:09:44'!
+PASSED!
+!CartTests methodsFor: 'setup' stamp: 'AS 11/2/2022 01:10:05' prior: 50561058 overrides: 16961394!
+setUp
+	
+	storeFactory := StoreFactory new.
+	storeCatalog := OrderedCollection with: storeFactory item1SoldByStore with: self item2SoldByStore.
+	cart := Cart withCatalog: storeCatalog.! !
+
+!testRun: #CartTests #test01CartIsEmptyWhenCreated stamp: 'AS 11/2/2022 01:10:05'!
+PASSED!
+
+!testRun: #CartTests #test02CartIsNotEmptyAfterAddingItemsAndIncludesThem stamp: 'AS 11/2/2022 01:10:05'!
+PASSED!
+
+!testRun: #CartTests #test03CartSizeIsAmountOfNewAddedItems stamp: 'AS 11/2/2022 01:10:05'!
+PASSED!
+
+!testRun: #CartTests #test04CanNotAddItemNotInStoreCatalog stamp: 'AS 11/2/2022 01:10:05'!
+PASSED!
+
+!testRun: #CartTests #test05CanAddToCartManyOfSameItem stamp: 'AS 11/2/2022 01:10:05'!
+PASSED!
+
+!testRun: #CartTests #test06CanNotAddNegativeQuantityOfItem stamp: 'AS 11/2/2022 01:10:05'!
+PASSED!
+
+!testRun: #CartTests #test07CanNotAddZeroQuantityOfItem stamp: 'AS 11/2/2022 01:10:05'!
+PASSED!
+
+!testRun: #CartTests #test08CanGetItemsInCart stamp: 'AS 11/2/2022 01:10:05'!
+PASSED!
+
+!testRun: #CartTests #test09CanNotAddNonIntegerQuantityOfItem stamp: 'AS 11/2/2022 01:10:05'!
+PASSED!
+!CartTests methodsFor: 'setup' stamp: 'AS 11/2/2022 01:10:10' prior: 50561136 overrides: 16961394!
+setUp
+	
+	storeFactory := StoreFactory new.
+	storeCatalog := OrderedCollection with: storeFactory item1SoldByStore with: storeFactory item2SoldByStore.
+	cart := Cart withCatalog: storeCatalog.! !
+
+!testRun: #CartTests #test01CartIsEmptyWhenCreated stamp: 'AS 11/2/2022 01:10:10'!
+PASSED!
+
+!testRun: #CartTests #test02CartIsNotEmptyAfterAddingItemsAndIncludesThem stamp: 'AS 11/2/2022 01:10:10'!
+PASSED!
+
+!testRun: #CartTests #test03CartSizeIsAmountOfNewAddedItems stamp: 'AS 11/2/2022 01:10:10'!
+PASSED!
+
+!testRun: #CartTests #test04CanNotAddItemNotInStoreCatalog stamp: 'AS 11/2/2022 01:10:10'!
+PASSED!
+
+!testRun: #CartTests #test05CanAddToCartManyOfSameItem stamp: 'AS 11/2/2022 01:10:10'!
+PASSED!
+
+!testRun: #CartTests #test06CanNotAddNegativeQuantityOfItem stamp: 'AS 11/2/2022 01:10:10'!
+PASSED!
+
+!testRun: #CartTests #test07CanNotAddZeroQuantityOfItem stamp: 'AS 11/2/2022 01:10:10'!
+PASSED!
+
+!testRun: #CartTests #test08CanGetItemsInCart stamp: 'AS 11/2/2022 01:10:10'!
+PASSED!
+
+!testRun: #CartTests #test09CanNotAddNonIntegerQuantityOfItem stamp: 'AS 11/2/2022 01:10:10'!
+PASSED!
+!CartTests methodsFor: 'support' stamp: 'AS 11/2/2022 01:10:16' prior: 50554683!
+shouldFailWithMustBePositiveQuantityOfItemAddingQuantityOfItem: aQuantityOfItemToAdd
+	
+	self should: [cart add: aQuantityOfItemToAdd of: storeFactory item1SoldByStore]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: Cart quantityOfItemToAddMustBePositiveErrorMessage.
+							   self assert: cart isEmpty].! !
+
+!testRun: #CartTests #test01CartIsEmptyWhenCreated stamp: 'AS 11/2/2022 01:10:16'!
+PASSED!
+
+!testRun: #CartTests #test02CartIsNotEmptyAfterAddingItemsAndIncludesThem stamp: 'AS 11/2/2022 01:10:16'!
+PASSED!
+
+!testRun: #CartTests #test03CartSizeIsAmountOfNewAddedItems stamp: 'AS 11/2/2022 01:10:16'!
+PASSED!
+
+!testRun: #CartTests #test04CanNotAddItemNotInStoreCatalog stamp: 'AS 11/2/2022 01:10:16'!
+PASSED!
+
+!testRun: #CartTests #test05CanAddToCartManyOfSameItem stamp: 'AS 11/2/2022 01:10:16'!
+PASSED!
+
+!testRun: #CartTests #test06CanNotAddNegativeQuantityOfItem stamp: 'AS 11/2/2022 01:10:16'!
+PASSED!
+
+!testRun: #CartTests #test07CanNotAddZeroQuantityOfItem stamp: 'AS 11/2/2022 01:10:16'!
+PASSED!
+
+!testRun: #CartTests #test08CanGetItemsInCart stamp: 'AS 11/2/2022 01:10:16'!
+PASSED!
+
+!testRun: #CartTests #test09CanNotAddNonIntegerQuantityOfItem stamp: 'AS 11/2/2022 01:10:16'!
+PASSED!
+!CartTests methodsFor: 'tests' stamp: 'AS 11/2/2022 01:10:20' prior: 50554446!
+test02CartIsNotEmptyAfterAddingItemsAndIncludesThem
+	
+	cart add: self item1SoldByStore.
+	
+	self deny: cart isEmpty.
+	self assert: cart includes: storeFactory item1SoldByStore ! !
+!CartTests methodsFor: 'tests' stamp: 'AS 11/2/2022 01:10:37' prior: 50553119!
+test03CartSizeIsAmountOfNewAddedItems
+	
+	cart add: storeFactory item1SoldByStore.
+	cart add: storeFactory item2SoldByStore.
+	
+	self assert: 2 equals: cart size.
+	self deny: cart isEmpty ! !
+!CartTests methodsFor: 'tests' stamp: 'AS 11/2/2022 01:10:40' prior: 50553187!
+test05CanAddToCartManyOfSameItem
+	
+	cart add: 5 of: storeFactory item1SoldByStore.
+	
+	self assert: 5 equals: cart size.
+	self deny: cart isEmpty ! !
+!CartTests methodsFor: 'tests' stamp: 'AS 11/2/2022 01:10:58' prior: 50554069!
+test08CanGetItemsInCart
+	
+	cart add: 2 of: storeFactory item1SoldByStore.
+	cart add: storeFactory item2SoldByStore.
+	
+	self assert: (Bag with: storeFactory item1SoldByStore with: storeFactory item1SoldByStore with: self item2SoldByStore) equals: cart content.
+	
+	self assert: 3 equals: cart size.
+	self deny: cart isEmpty ! !
+!CartTests methodsFor: 'tests' stamp: 'AS 11/2/2022 01:11:11' prior: 50561278!
+test08CanGetItemsInCart
+	
+	cart add: 2 of: storeFactory item1SoldByStore.
+	cart add: storeFactory item2SoldByStore.
+	
+	self assert: (Bag with: storeFactory item1SoldByStore with: storeFactory item1SoldByStore with: storeFactory item2SoldByStore) equals: cart content.
+	
+	self assert: 3 equals: cart size.
+	self deny: cart isEmpty ! !
+!CartTests methodsFor: 'tests' stamp: 'AS 11/2/2022 01:11:16' prior: 50554794!
+test09CanNotAddNonIntegerQuantityOfItem
+	
+	self should: [cart add: 1.5 of: storeFactory item1SoldByStore]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: Cart quantityOfItemToAddMustBePositiveIntegerErrorMessage.
+							   self assert: cart isEmpty].! !
+!CashierTests methodsFor: 'setup - tear down' stamp: 'AS 11/2/2022 01:11:20' prior: 50561079 overrides: 16961394!
+setUp 
+	
+	| cardNumber |
+	storeFactory := StoreFactory new.
+	storeCatalog := OrderedCollection with: self item1SoldByStore with: self item2SoldByStore.
+	cart := Cart withCatalog: storeCatalog.
+	salesBook := OrderedCollection new.
+	priceList := Dictionary newFromPairs: (Array with: storeFactory item1SoldByStore with: self item1Price with: self item2SoldByStore with: self item2Price).
+	cardNumber := '1234567812345678'.
+	validCreditCard := CreditCard for: 'Homero Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.
+	expiredCreditCard := CreditCard for: 'Bart Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current next.
+	stolenCreditCard := CreditCard for: 'Lisa Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.
+	notEnoughBalanceCreditCard := CreditCard for: 'Marge Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.
+
+	merchantProcessorDouble := MerchanProcessorDouble withStolenCards: (OrderedCollection with: stolenCreditCard) 
+												withNegativeBalanceCards: (OrderedCollection with: notEnoughBalanceCreditCard).! !
+!CashierTests methodsFor: 'setup - tear down' stamp: 'AS 11/2/2022 01:11:21' prior: 50561318 overrides: 16961394!
+setUp 
+	
+	| cardNumber |
+	storeFactory := StoreFactory new.
+	storeCatalog := OrderedCollection with: self item1SoldByStore with: storeFactory item2SoldByStore.
+	cart := Cart withCatalog: storeCatalog.
+	salesBook := OrderedCollection new.
+	priceList := Dictionary newFromPairs: (Array with: storeFactory item1SoldByStore with: self item1Price with: self item2SoldByStore with: self item2Price).
+	cardNumber := '1234567812345678'.
+	validCreditCard := CreditCard for: 'Homero Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.
+	expiredCreditCard := CreditCard for: 'Bart Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current next.
+	stolenCreditCard := CreditCard for: 'Lisa Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.
+	notEnoughBalanceCreditCard := CreditCard for: 'Marge Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.
+
+	merchantProcessorDouble := MerchanProcessorDouble withStolenCards: (OrderedCollection with: stolenCreditCard) 
+												withNegativeBalanceCards: (OrderedCollection with: notEnoughBalanceCreditCard).! !
+!CashierTests methodsFor: 'setup - tear down' stamp: 'AS 11/2/2022 01:11:23' prior: 50561359 overrides: 16961394!
+setUp 
+	
+	| cardNumber |
+	storeFactory := StoreFactory new.
+	storeCatalog := OrderedCollection with: storeFactory item1SoldByStore with: storeFactory item2SoldByStore.
+	cart := Cart withCatalog: storeCatalog.
+	salesBook := OrderedCollection new.
+	priceList := Dictionary newFromPairs: (Array with: storeFactory item1SoldByStore with: self item1Price with: self item2SoldByStore with: self item2Price).
+	cardNumber := '1234567812345678'.
+	validCreditCard := CreditCard for: 'Homero Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.
+	expiredCreditCard := CreditCard for: 'Bart Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current next.
+	stolenCreditCard := CreditCard for: 'Lisa Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.
+	notEnoughBalanceCreditCard := CreditCard for: 'Marge Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.
+
+	merchantProcessorDouble := MerchanProcessorDouble withStolenCards: (OrderedCollection with: stolenCreditCard) 
+												withNegativeBalanceCards: (OrderedCollection with: notEnoughBalanceCreditCard).! !
+!CashierTests methodsFor: 'setup - tear down' stamp: 'AS 11/2/2022 01:11:28' prior: 50561400 overrides: 16961394!
+setUp 
+	
+	| cardNumber |
+	storeFactory := StoreFactory new.
+	storeCatalog := OrderedCollection with: storeFactory item1SoldByStore with: storeFactory item2SoldByStore.
+	cart := Cart withCatalog: storeCatalog.
+	salesBook := OrderedCollection new.
+	priceList := Dictionary newFromPairs: (Array with: storeFactory item1SoldByStore with: self item1Price with: storeFactory item2SoldByStore with: self item2Price).
+	cardNumber := '1234567812345678'.
+	validCreditCard := CreditCard for: 'Homero Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.
+	expiredCreditCard := CreditCard for: 'Bart Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current next.
+	stolenCreditCard := CreditCard for: 'Lisa Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.
+	notEnoughBalanceCreditCard := CreditCard for: 'Marge Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.
+
+	merchantProcessorDouble := MerchanProcessorDouble withStolenCards: (OrderedCollection with: stolenCreditCard) 
+												withNegativeBalanceCards: (OrderedCollection with: notEnoughBalanceCreditCard).! !
+!CashierTests methodsFor: 'setup - tear down' stamp: 'AS 11/2/2022 01:11:31' prior: 50561441 overrides: 16961394!
+setUp 
+	
+	| cardNumber |
+	storeFactory := StoreFactory new.
+	storeCatalog := OrderedCollection with: storeFactory item1SoldByStore with: storeFactory item2SoldByStore.
+	cart := Cart withCatalog: storeCatalog.
+	salesBook := OrderedCollection new.
+	priceList := Dictionary newFromPairs: (Array with: storeFactory item1SoldByStore with: self item1Price with: storeFactory item2SoldByStore with: storeFactory item2Price).
+	cardNumber := '1234567812345678'.
+	validCreditCard := CreditCard for: 'Homero Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.
+	expiredCreditCard := CreditCard for: 'Bart Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current next.
+	stolenCreditCard := CreditCard for: 'Lisa Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.
+	notEnoughBalanceCreditCard := CreditCard for: 'Marge Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.
+
+	merchantProcessorDouble := MerchanProcessorDouble withStolenCards: (OrderedCollection with: stolenCreditCard) 
+												withNegativeBalanceCards: (OrderedCollection with: notEnoughBalanceCreditCard).! !
+!CashierTests methodsFor: 'setup - tear down' stamp: 'AS 11/2/2022 01:11:33' prior: 50561483 overrides: 16961394!
+setUp 
+	
+	| cardNumber |
+	storeFactory := StoreFactory new.
+	storeCatalog := OrderedCollection with: storeFactory item1SoldByStore with: storeFactory item2SoldByStore.
+	cart := Cart withCatalog: storeCatalog.
+	salesBook := OrderedCollection new.
+	priceList := Dictionary newFromPairs: (Array with: storeFactory item1SoldByStore with: storeFactory item1Price with: storeFactory item2SoldByStore with: storeFactory item2Price).
+	cardNumber := '1234567812345678'.
+	validCreditCard := CreditCard for: 'Homero Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.
+	expiredCreditCard := CreditCard for: 'Bart Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current next.
+	stolenCreditCard := CreditCard for: 'Lisa Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.
+	notEnoughBalanceCreditCard := CreditCard for: 'Marge Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.
+
+	merchantProcessorDouble := MerchanProcessorDouble withStolenCards: (OrderedCollection with: stolenCreditCard) 
+												withNegativeBalanceCards: (OrderedCollection with: notEnoughBalanceCreditCard).! !
+!CashierTests methodsFor: 'tests' stamp: 'AS 11/2/2022 01:11:44' prior: 50560220!
+test02CanCheckoutCartWithItemsAndCorrectlyChargeCard
+	
+	| sale |
+	
+	cart add: storeFactory item1SoldByStore.
+	cart add: self item2SoldByStore.
+	
+	(Cashier for: cart chargingWith: merchantProcessorDouble withCard: validCreditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today) checkout.
+	
+	sale := salesBook first.
+	self assert: validCreditCard equals: sale chargedCreditCard.
+	self assert: (priceList at: self item1SoldByStore) + (priceList at: self item2SoldByStore) equals: sale chargedAmount.
+	self assert: (Bag with: self item1SoldByStore with: self item2SoldByStore) equals: sale itemsSold.
+	! !
+!CashierTests methodsFor: 'tests' stamp: 'AS 11/2/2022 01:11:45' prior: 50561566!
+test02CanCheckoutCartWithItemsAndCorrectlyChargeCard
+	
+	| sale |
+	
+	cart add: storeFactory item1SoldByStore.
+	cart add: storeFactory item2SoldByStore.
+	
+	(Cashier for: cart chargingWith: merchantProcessorDouble withCard: validCreditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today) checkout.
+	
+	sale := salesBook first.
+	self assert: validCreditCard equals: sale chargedCreditCard.
+	self assert: (priceList at: self item1SoldByStore) + (priceList at: self item2SoldByStore) equals: sale chargedAmount.
+	self assert: (Bag with: self item1SoldByStore with: self item2SoldByStore) equals: sale itemsSold.
+	! !
+!CashierTests methodsFor: 'tests' stamp: 'AS 11/2/2022 01:11:48' prior: 50561589!
+test02CanCheckoutCartWithItemsAndCorrectlyChargeCard
+	
+	| sale |
+	
+	cart add: storeFactory item1SoldByStore.
+	cart add: storeFactory item2SoldByStore.
+	
+	(Cashier for: cart chargingWith: merchantProcessorDouble withCard: validCreditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today) checkout.
+	
+	sale := salesBook first.
+	self assert: validCreditCard equals: sale chargedCreditCard.
+	self assert: (priceList at: storeFactory item1SoldByStore) + (priceList at: self item2SoldByStore) equals: sale chargedAmount.
+	self assert: (Bag with: self item1SoldByStore with: self item2SoldByStore) equals: sale itemsSold.
+	! !
+!CashierTests methodsFor: 'tests' stamp: 'AS 11/2/2022 01:11:51' prior: 50561612!
+test02CanCheckoutCartWithItemsAndCorrectlyChargeCard
+	
+	| sale |
+	
+	cart add: storeFactory item1SoldByStore.
+	cart add: storeFactory item2SoldByStore.
+	
+	(Cashier for: cart chargingWith: merchantProcessorDouble withCard: validCreditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today) checkout.
+	
+	sale := salesBook first.
+	self assert: validCreditCard equals: sale chargedCreditCard.
+	self assert: (priceList at: storeFactory item1SoldByStore) + (priceList at: storeFactory item2SoldByStore) equals: sale chargedAmount.
+	self assert: (Bag with: self item1SoldByStore with: self item2SoldByStore) equals: sale itemsSold.
+	! !
+!CashierTests methodsFor: 'tests' stamp: 'AS 11/2/2022 01:11:57' prior: 50561636!
+test02CanCheckoutCartWithItemsAndCorrectlyChargeCard
+	
+	| sale |
+	
+	cart add: storeFactory item1SoldByStore.
+	cart add: storeFactory item2SoldByStore.
+	
+	(Cashier for: cart chargingWith: merchantProcessorDouble withCard: validCreditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today) checkout.
+	
+	sale := salesBook first.
+	self assert: validCreditCard equals: sale chargedCreditCard.
+	self assert: (priceList at: storeFactory item1SoldByStore) + (priceList at: storeFactory item2SoldByStore) equals: sale chargedAmount.
+	self assert: (Bag with: storeFactory item1SoldByStore with: storeFactory item2SoldByStore) equals: sale itemsSold.
+	! !
+!CashierTests methodsFor: 'tests' stamp: 'AS 11/2/2022 01:12:02' prior: 50560480!
+test03CanNotCheckoutWithExpiredCard
+	
+	cart add: storeFactory item1SoldByStore.
+	
+	self should: [(Cashier for: cart chargingWith: merchantProcessorDouble withCard: expiredCreditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today) checkout]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: Cashier canNotCheckoutWithExpiredCardErrorMessage.
+							    self deny: (merchantProcessorDouble hasProcessedCard: expiredCreditCard).].! !
+!CashierTests methodsFor: 'tests' stamp: 'AS 11/2/2022 01:12:06' prior: 50560558!
+test04CanNotCheckoutWithStolenCard
+	
+	cart add: storeFactory item1SoldByStore.
+	
+	self should: [(Cashier for: cart chargingWith: merchantProcessorDouble withCard: stolenCreditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today) checkout]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: Cashier canNotCheckoutWithStolenCardErrorMessage.
+							    self assert: (merchantProcessorDouble hasProcessedCard: stolenCreditCard).].! !
+
+!testRun: #CashierTests #test04CanNotCheckoutWithStolenCard stamp: 'AS 11/2/2022 01:12:06'!
+PASSED!
+
+!testRun: #CashierTests #test01CanNotCheckoutEmptyCart stamp: 'AS 11/2/2022 01:12:06'!
+PASSED!
+
+!testRun: #CashierTests #test02CanCheckoutCartWithItemsAndCorrectlyChargeCard stamp: 'AS 11/2/2022 01:12:06'!
+PASSED!
+
+!testRun: #CashierTests #test03CanNotCheckoutWithExpiredCard stamp: 'AS 11/2/2022 01:12:06'!
+PASSED!
+
+!testRun: #CashierTests #test04CanNotCheckoutWithStolenCard stamp: 'AS 11/2/2022 01:12:06'!
+PASSED!
+
+!testRun: #CashierTests #test05CanNotCheckoutWithCardWithNotEnoughBalance stamp: 'AS 11/2/2022 01:12:06'!
+PASSED!
+!CashierTests methodsFor: 'tests' stamp: 'AS 11/2/2022 01:12:09' prior: 50560906!
+test05CanNotCheckoutWithCardWithNotEnoughBalance
+	
+	cart add: storeFactory item1SoldByStore.
+	
+	self should: [(Cashier for: cart chargingWith: merchantProcessorDouble withCard: notEnoughBalanceCreditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today) checkout]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: Cashier canNotCheckoutIfCardDoesNotHaveEnoughBalanceErrorMessage.
+							   self assert: (merchantProcessorDouble hasProcessedCard: notEnoughBalanceCreditCard)].! !
+
+!testRun: #CashierTests #test05CanNotCheckoutWithCardWithNotEnoughBalance stamp: 'AS 11/2/2022 01:12:09'!
+PASSED!
+
+!testRun: #CashierTests #test01CanNotCheckoutEmptyCart stamp: 'AS 11/2/2022 01:12:09'!
+PASSED!
+
+!testRun: #CashierTests #test02CanCheckoutCartWithItemsAndCorrectlyChargeCard stamp: 'AS 11/2/2022 01:12:09'!
+PASSED!
+
+!testRun: #CashierTests #test03CanNotCheckoutWithExpiredCard stamp: 'AS 11/2/2022 01:12:09'!
+PASSED!
+
+!testRun: #CashierTests #test04CanNotCheckoutWithStolenCard stamp: 'AS 11/2/2022 01:12:09'!
+PASSED!
+
+!testRun: #CashierTests #test05CanNotCheckoutWithCardWithNotEnoughBalance stamp: 'AS 11/2/2022 01:12:09'!
+PASSED!
+!CartTests methodsFor: 'tests' stamp: 'AS 11/2/2022 01:12:23' prior: 50561252!
+test02CartIsNotEmptyAfterAddingItemsAndIncludesThem
+	
+	cart add: storeFactory item1SoldByStore.
+	
+	self deny: cart isEmpty.
+	self assert: cart includes: storeFactory item1SoldByStore ! !
+
+!testRun: #CartTests #test02CartIsNotEmptyAfterAddingItemsAndIncludesThem stamp: 'AS 11/2/2022 01:12:24'!
+PASSED!
+
+!testRun: #CartTests #test01CartIsEmptyWhenCreated stamp: 'AS 11/2/2022 01:12:24'!
+PASSED!
+
+!testRun: #CartTests #test02CartIsNotEmptyAfterAddingItemsAndIncludesThem stamp: 'AS 11/2/2022 01:12:24'!
+PASSED!
+
+!testRun: #CartTests #test03CartSizeIsAmountOfNewAddedItems stamp: 'AS 11/2/2022 01:12:24'!
+PASSED!
+
+!testRun: #CartTests #test04CanNotAddItemNotInStoreCatalog stamp: 'AS 11/2/2022 01:12:24'!
+PASSED!
+
+!testRun: #CartTests #test05CanAddToCartManyOfSameItem stamp: 'AS 11/2/2022 01:12:24'!
+PASSED!
+
+!testRun: #CartTests #test06CanNotAddNegativeQuantityOfItem stamp: 'AS 11/2/2022 01:12:24'!
+PASSED!
+
+!testRun: #CartTests #test07CanNotAddZeroQuantityOfItem stamp: 'AS 11/2/2022 01:12:24'!
+PASSED!
+
+!testRun: #CartTests #test08CanGetItemsInCart stamp: 'AS 11/2/2022 01:12:24'!
+PASSED!
+
+!testRun: #CartTests #test09CanNotAddNonIntegerQuantityOfItem stamp: 'AS 11/2/2022 01:12:24'!
+PASSED!
+
+!methodRemoval: CartTests #item1SoldByStore stamp: 'AS 11/2/2022 01:12:35'!
+item1SoldByStore
+
+	^ 'item1'!
+
+!methodRemoval: CartTests #item2SoldByStore stamp: 'AS 11/2/2022 01:12:43'!
+item2SoldByStore
+
+	^ 'item2'!
+!CartTests methodsFor: 'tests' stamp: 'AS 11/2/2022 01:12:56' prior: 50554729!
+test04CanNotAddItemNotInStoreCatalog
+	
+	self should: [cart add: storeFactory itemNotSoldByStore]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: Cart canNotAddItemNotSoldByStoreErrorMessage.
+							   self assert: cart isEmpty].! !
+
+!methodRemoval: CartTests #itemNotSoldByStore stamp: 'AS 11/2/2022 01:13:26'!
+itemNotSoldByStore
+	
+	^'itemNotSoldByStore'!
+
+!methodRemoval: CashierTests #item1Price stamp: 'AS 11/2/2022 01:13:33'!
+item1Price
+	^5!
+
+!methodRemoval: CashierTests #item1SoldByStore stamp: 'AS 11/2/2022 01:13:36'!
+item1SoldByStore
+	^'item1'!
+
+!methodRemoval: CashierTests #item2Price stamp: 'AS 11/2/2022 01:13:39'!
+item2Price
+	^3!
+
+!methodRemoval: CashierTests #item2SoldByStore stamp: 'AS 11/2/2022 01:13:42'!
+item2SoldByStore
+	^'item2'!
+
+!testRun: #CartTests #test01CartIsEmptyWhenCreated stamp: 'AS 11/2/2022 01:13:46'!
+PASSED!
+
+!testRun: #CartTests #test02CartIsNotEmptyAfterAddingItemsAndIncludesThem stamp: 'AS 11/2/2022 01:13:46'!
+PASSED!
+
+!testRun: #CartTests #test03CartSizeIsAmountOfNewAddedItems stamp: 'AS 11/2/2022 01:13:46'!
+PASSED!
+
+!testRun: #CartTests #test04CanNotAddItemNotInStoreCatalog stamp: 'AS 11/2/2022 01:13:46'!
+PASSED!
+
+!testRun: #CartTests #test05CanAddToCartManyOfSameItem stamp: 'AS 11/2/2022 01:13:46'!
+PASSED!
+
+!testRun: #CartTests #test06CanNotAddNegativeQuantityOfItem stamp: 'AS 11/2/2022 01:13:46'!
+PASSED!
+
+!testRun: #CartTests #test07CanNotAddZeroQuantityOfItem stamp: 'AS 11/2/2022 01:13:46'!
+PASSED!
+
+!testRun: #CartTests #test08CanGetItemsInCart stamp: 'AS 11/2/2022 01:13:46'!
+PASSED!
+
+!testRun: #CartTests #test09CanNotAddNonIntegerQuantityOfItem stamp: 'AS 11/2/2022 01:13:46'!
+PASSED!
+
+!testRun: #CashierTests #test01CanNotCheckoutEmptyCart stamp: 'AS 11/2/2022 01:13:46'!
+PASSED!
+
+!testRun: #CashierTests #test02CanCheckoutCartWithItemsAndCorrectlyChargeCard stamp: 'AS 11/2/2022 01:13:46'!
+PASSED!
+
+!testRun: #CashierTests #test03CanNotCheckoutWithExpiredCard stamp: 'AS 11/2/2022 01:13:46'!
+PASSED!
+
+!testRun: #CashierTests #test04CanNotCheckoutWithStolenCard stamp: 'AS 11/2/2022 01:13:46'!
+PASSED!
+
+!testRun: #CashierTests #test05CanNotCheckoutWithCardWithNotEnoughBalance stamp: 'AS 11/2/2022 01:13:46'!
+PASSED!
+
+!testRun: #CreditCardTests #test01CanNotCreateCardWithLessThan16DigitNumber stamp: 'AS 11/2/2022 01:13:46'!
+PASSED!
+
+!testRun: #CreditCardTests #test02CanNotCreateCardWithMoreThan16DigitNumber stamp: 'AS 11/2/2022 01:13:46'!
+PASSED!
+
+!testRun: #CreditCardTests #test03CanNotCreateCardWithEmptyName stamp: 'AS 11/2/2022 01:13:46'!
+PASSED!
+
+!testRun: #CreditCardTests #test04CanNotCreateCardWithNameWithOnlySeparators stamp: 'AS 11/2/2022 01:13:46'!
+PASSED!
+
+----SNAPSHOT----(2 November 2022 01:14:03) CuisUniversity-5481.image priorSource: 7337562!

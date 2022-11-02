@@ -1,38 +1,24 @@
 !classDefinition: #CartTests category: 'TusLibros'!
 TestCase subclass: #CartTests
-	instanceVariableNames: 'storeCatalog cart'
+	instanceVariableNames: 'storeCatalog cart storeFactory'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TusLibros'!
 
-!CartTests methodsFor: 'support' stamp: 'AS 10/27/2022 23:16:38'!
-item1SoldByStore
-
-	^ 'item1'! !
-
-!CartTests methodsFor: 'support' stamp: 'AS 10/27/2022 23:16:42'!
-item2SoldByStore
-
-	^ 'item2'! !
-
-!CartTests methodsFor: 'support' stamp: 'AS 10/27/2022 21:17:51'!
-itemNotSoldByStore
-	
-	^'itemNotSoldByStore'! !
-
-!CartTests methodsFor: 'support' stamp: 'AS 10/31/2022 17:57:12'!
+!CartTests methodsFor: 'support' stamp: 'AS 11/2/2022 01:10:16'!
 shouldFailWithMustBePositiveQuantityOfItemAddingQuantityOfItem: aQuantityOfItemToAdd
 	
-	self should: [cart add: aQuantityOfItemToAdd of: self item1SoldByStore]
+	self should: [cart add: aQuantityOfItemToAdd of: storeFactory item1SoldByStore]
 		raise: Error - MessageNotUnderstood 
 		withExceptionDo: [:anError | self assert: anError messageText equals: Cart quantityOfItemToAddMustBePositiveErrorMessage.
 							   self assert: cart isEmpty].! !
 
 
-!CartTests methodsFor: 'setup' stamp: 'AS 10/27/2022 21:20:48'!
+!CartTests methodsFor: 'setup' stamp: 'AS 11/2/2022 01:10:10'!
 setUp
 	
-	storeCatalog := OrderedCollection with: self item1SoldByStore with: self item2SoldByStore.
+	storeFactory := StoreFactory new.
+	storeCatalog := OrderedCollection with: storeFactory item1SoldByStore with: storeFactory item2SoldByStore.
 	cart := Cart withCatalog: storeCatalog.! !
 
 
@@ -41,35 +27,35 @@ test01CartIsEmptyWhenCreated
 	
 	self assert: cart isEmpty.! !
 
-!CartTests methodsFor: 'tests' stamp: 'AS 10/31/2022 17:41:56'!
+!CartTests methodsFor: 'tests' stamp: 'AS 11/2/2022 01:12:23'!
 test02CartIsNotEmptyAfterAddingItemsAndIncludesThem
 	
-	cart add: self item1SoldByStore.
+	cart add: storeFactory item1SoldByStore.
 	
 	self deny: cart isEmpty.
-	self assert: cart includes: self item1SoldByStore ! !
+	self assert: cart includes: storeFactory item1SoldByStore ! !
 
-!CartTests methodsFor: 'tests' stamp: 'AS 10/27/2022 21:20:48'!
+!CartTests methodsFor: 'tests' stamp: 'AS 11/2/2022 01:10:37'!
 test03CartSizeIsAmountOfNewAddedItems
 	
-	cart add: self item1SoldByStore.
-	cart add: self item2SoldByStore.
+	cart add: storeFactory item1SoldByStore.
+	cart add: storeFactory item2SoldByStore.
 	
 	self assert: 2 equals: cart size.
 	self deny: cart isEmpty ! !
 
-!CartTests methodsFor: 'tests' stamp: 'AS 10/31/2022 17:57:39'!
+!CartTests methodsFor: 'tests' stamp: 'AS 11/2/2022 01:12:56'!
 test04CanNotAddItemNotInStoreCatalog
 	
-	self should: [cart add: self itemNotSoldByStore]
+	self should: [cart add: storeFactory itemNotSoldByStore]
 		raise: Error - MessageNotUnderstood 
 		withExceptionDo: [:anError | self assert: anError messageText equals: Cart canNotAddItemNotSoldByStoreErrorMessage.
 							   self assert: cart isEmpty].! !
 
-!CartTests methodsFor: 'tests' stamp: 'AS 10/27/2022 21:26:25'!
+!CartTests methodsFor: 'tests' stamp: 'AS 11/2/2022 01:10:40'!
 test05CanAddToCartManyOfSameItem
 	
-	cart add: 5 of: self item1SoldByStore.
+	cart add: 5 of: storeFactory item1SoldByStore.
 	
 	self assert: 5 equals: cart size.
 	self deny: cart isEmpty ! !
@@ -84,21 +70,21 @@ test07CanNotAddZeroQuantityOfItem
 	
 	self shouldFailWithMustBePositiveQuantityOfItemAddingQuantityOfItem: 	0! !
 
-!CartTests methodsFor: 'tests' stamp: 'AS 10/27/2022 23:13:21'!
+!CartTests methodsFor: 'tests' stamp: 'AS 11/2/2022 01:11:11'!
 test08CanGetItemsInCart
 	
-	cart add: 2 of: self item1SoldByStore.
-	cart add: self item2SoldByStore.
+	cart add: 2 of: storeFactory item1SoldByStore.
+	cart add: storeFactory item2SoldByStore.
 	
-	self assert: (Bag with: self item1SoldByStore with: self item1SoldByStore with: self item2SoldByStore) equals: cart content.
+	self assert: (Bag with: storeFactory item1SoldByStore with: storeFactory item1SoldByStore with: storeFactory item2SoldByStore) equals: cart content.
 	
 	self assert: 3 equals: cart size.
 	self deny: cart isEmpty ! !
 
-!CartTests methodsFor: 'tests' stamp: 'AS 10/31/2022 18:11:42'!
+!CartTests methodsFor: 'tests' stamp: 'AS 11/2/2022 01:11:16'!
 test09CanNotAddNonIntegerQuantityOfItem
 	
-	self should: [cart add: 1.5 of: self item1SoldByStore]
+	self should: [cart add: 1.5 of: storeFactory item1SoldByStore]
 		raise: Error - MessageNotUnderstood 
 		withExceptionDo: [:anError | self assert: anError messageText equals: Cart quantityOfItemToAddMustBePositiveIntegerErrorMessage.
 							   self assert: cart isEmpty].! !
@@ -106,36 +92,21 @@ test09CanNotAddNonIntegerQuantityOfItem
 
 !classDefinition: #CashierTests category: 'TusLibros'!
 TestCase subclass: #CashierTests
-	instanceVariableNames: 'storeCatalog cart salesBook priceList validCreditCard expiredCreditCard merchantProcessorDouble stolenCreditCard notEnoughBalanceCreditCard'
+	instanceVariableNames: 'storeCatalog cart salesBook priceList validCreditCard expiredCreditCard merchantProcessorDouble stolenCreditCard notEnoughBalanceCreditCard storeFactory'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TusLibros'!
 
-!CashierTests methodsFor: 'support' stamp: 'AS 10/31/2022 18:50:48'!
-item1Price
-	^5! !
 
-!CashierTests methodsFor: 'support' stamp: 'AS 10/31/2022 18:22:53'!
-item1SoldByStore
-	^'item1'! !
-
-!CashierTests methodsFor: 'support' stamp: 'AS 10/31/2022 19:25:38'!
-item2Price
-	^3! !
-
-!CashierTests methodsFor: 'support' stamp: 'AS 10/31/2022 18:23:09'!
-item2SoldByStore
-	^'item2'! !
-
-
-!CashierTests methodsFor: 'setup - tear down' stamp: 'AS 11/2/2022 00:16:24'!
+!CashierTests methodsFor: 'setup - tear down' stamp: 'AS 11/2/2022 01:11:33'!
 setUp 
 	
 	| cardNumber |
-	storeCatalog := OrderedCollection with: self item1SoldByStore with: self item2SoldByStore.
+	storeFactory := StoreFactory new.
+	storeCatalog := OrderedCollection with: storeFactory item1SoldByStore with: storeFactory item2SoldByStore.
 	cart := Cart withCatalog: storeCatalog.
 	salesBook := OrderedCollection new.
-	priceList := Dictionary newFromPairs: (Array with: self item1SoldByStore with: self item1Price with: self item2SoldByStore with: self item2Price).
+	priceList := Dictionary newFromPairs: (Array with: storeFactory item1SoldByStore with: storeFactory item1Price with: storeFactory item2SoldByStore with: storeFactory item2Price).
 	cardNumber := '1234567812345678'.
 	validCreditCard := CreditCard for: 'Homero Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.
 	expiredCreditCard := CreditCard for: 'Bart Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current next.
@@ -154,46 +125,46 @@ test01CanNotCheckoutEmptyCart
 		withExceptionDo: [:anError | self assert: anError messageText equals: Cashier canNotCheckoutEmptyCartErrorMessage.
 							   self deny: (merchantProcessorDouble hasProcessedCard: validCreditCard)].! !
 
-!CashierTests methodsFor: 'tests' stamp: 'AS 11/2/2022 00:37:42'!
+!CashierTests methodsFor: 'tests' stamp: 'AS 11/2/2022 01:11:57'!
 test02CanCheckoutCartWithItemsAndCorrectlyChargeCard
 	
 	| sale |
 	
-	cart add: self item1SoldByStore.
-	cart add: self item2SoldByStore.
+	cart add: storeFactory item1SoldByStore.
+	cart add: storeFactory item2SoldByStore.
 	
 	(Cashier for: cart chargingWith: merchantProcessorDouble withCard: validCreditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today) checkout.
 	
 	sale := salesBook first.
 	self assert: validCreditCard equals: sale chargedCreditCard.
-	self assert: (priceList at: self item1SoldByStore) + (priceList at: self item2SoldByStore) equals: sale chargedAmount.
-	self assert: (Bag with: self item1SoldByStore with: self item2SoldByStore) equals: sale itemsSold.
+	self assert: (priceList at: storeFactory item1SoldByStore) + (priceList at: storeFactory item2SoldByStore) equals: sale chargedAmount.
+	self assert: (Bag with: storeFactory item1SoldByStore with: storeFactory item2SoldByStore) equals: sale itemsSold.
 	! !
 
-!CashierTests methodsFor: 'tests' stamp: 'AS 11/2/2022 00:50:18'!
+!CashierTests methodsFor: 'tests' stamp: 'AS 11/2/2022 01:12:02'!
 test03CanNotCheckoutWithExpiredCard
 	
-	cart add: self item1SoldByStore.
+	cart add: storeFactory item1SoldByStore.
 	
 	self should: [(Cashier for: cart chargingWith: merchantProcessorDouble withCard: expiredCreditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today) checkout]
 		raise: Error - MessageNotUnderstood 
 		withExceptionDo: [:anError | self assert: anError messageText equals: Cashier canNotCheckoutWithExpiredCardErrorMessage.
 							    self deny: (merchantProcessorDouble hasProcessedCard: expiredCreditCard).].! !
 
-!CashierTests methodsFor: 'tests' stamp: 'AS 11/2/2022 00:52:24'!
+!CashierTests methodsFor: 'tests' stamp: 'AS 11/2/2022 01:12:06'!
 test04CanNotCheckoutWithStolenCard
 	
-	cart add: self item1SoldByStore.
+	cart add: storeFactory item1SoldByStore.
 	
 	self should: [(Cashier for: cart chargingWith: merchantProcessorDouble withCard: stolenCreditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today) checkout]
 		raise: Error - MessageNotUnderstood 
 		withExceptionDo: [:anError | self assert: anError messageText equals: Cashier canNotCheckoutWithStolenCardErrorMessage.
 							    self assert: (merchantProcessorDouble hasProcessedCard: stolenCreditCard).].! !
 
-!CashierTests methodsFor: 'tests' stamp: 'AS 11/2/2022 00:57:45'!
+!CashierTests methodsFor: 'tests' stamp: 'AS 11/2/2022 01:12:09'!
 test05CanNotCheckoutWithCardWithNotEnoughBalance
 	
-	cart add: self item1SoldByStore.
+	cart add: storeFactory item1SoldByStore.
 	
 	self should: [(Cashier for: cart chargingWith: merchantProcessorDouble withCard: notEnoughBalanceCreditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today) checkout]
 		raise: Error - MessageNotUnderstood 
@@ -540,7 +511,7 @@ cardOwnerNameCanNotBeEmptyErrorMessage
 
 !classDefinition: #MerchanProcessorDouble category: 'TusLibros'!
 Object subclass: #MerchanProcessorDouble
-	instanceVariableNames: 'stolenCards collectionOfStolenCards negativeBalanceCards processedCards'
+	instanceVariableNames: 'stolenCards negativeBalanceCards processedCards'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TusLibros'!
@@ -632,3 +603,35 @@ Sale class
 of: aBagOfItems havingCharged: aChargedAmount on: aChargedCard 
 
 	^self new initializeOf: aBagOfItems havingCharged: aChargedAmount on: aChargedCard ! !
+
+
+!classDefinition: #StoreFactory category: 'TusLibros'!
+Object subclass: #StoreFactory
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!StoreFactory methodsFor: 'item prices' stamp: 'AS 11/2/2022 01:07:50'!
+item1Price
+	^5! !
+
+!StoreFactory methodsFor: 'item prices' stamp: 'AS 11/2/2022 01:07:58'!
+item2Price
+	^3! !
+
+
+!StoreFactory methodsFor: 'store items' stamp: 'AS 11/2/2022 01:06:41'!
+item1SoldByStore
+
+	^ 'item1'! !
+
+!StoreFactory methodsFor: 'store items' stamp: 'AS 11/2/2022 01:07:08'!
+item2SoldByStore
+
+	^ 'item2'! !
+
+!StoreFactory methodsFor: 'store items' stamp: 'AS 11/2/2022 01:07:19'!
+itemNotSoldByStore
+	
+	^'itemNotSoldByStore'! !
