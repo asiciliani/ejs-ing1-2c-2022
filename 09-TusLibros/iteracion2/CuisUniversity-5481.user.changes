@@ -5564,3 +5564,215 @@ debit: anAmountToDebit fromCard: aCreditCardToDebitFrom
 ! !
 
 ----SNAPSHOT----(2 November 2022 00:03:52) CuisUniversity-5481.image priorSource: 7292238!
+
+!classDefinition: #CashierTests category: 'TusLibros' stamp: 'AS 11/2/2022 00:10:29'!
+TestCase subclass: #CashierTests
+	instanceVariableNames: 'storeCatalog cart salesBook priceList validCreditCard expiredCreditCard merchantProcessorDouble stolenCreditCard notEnoughBalanceCreditCard'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!CashierTests methodsFor: 'tests' stamp: 'AS 11/2/2022 00:10:28'!
+test05CanNotCheckoutWithCardWithNotEnoughBalance
+	
+	cart add: self item1SoldByStore.
+	
+	self should: [Cashier checkout: cart chargingWith: merchantProcessorDouble withCard: notEnoughBalanceCreditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: Cashier canNotCheckoutIfCardDoesNotHaveEnoughBalanceErrorMessage.].! !
+
+!testRun: #CashierTests #test05CanNotCheckoutWithCardWithNotEnoughBalance stamp: 'AS 11/2/2022 00:10:35'!
+ERROR!
+!CashierTests methodsFor: 'setup - tear down' stamp: 'AS 11/2/2022 00:14:51' prior: 50559541 overrides: 16961394!
+setUp 
+	
+	| cardNumber |
+	storeCatalog := OrderedCollection with: self item1SoldByStore with: self item2SoldByStore.
+	cart := Cart withCatalog: storeCatalog.
+	salesBook := OrderedCollection new.
+	priceList := Dictionary newFromPairs: (Array with: self item1SoldByStore with: self item1Price with: self item2SoldByStore with: self item2Price).
+	cardNumber := '1234567812345678'.
+	validCreditCard := CreditCard for: 'Homero Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.
+	expiredCreditCard := CreditCard for: 'Bart Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current next.
+	stolenCreditCard := CreditCard for: 'Lisa Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.
+	notEnoughBalanceCreditCard := CreditCard for: 'Marge Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.
+
+	merchantProcessorDouble := MerchanProcessorDouble withStolenCards: (OrderedCollection with: stolenCreditCard).! !
+
+!testRun: #CashierTests #test01CanNotCheckoutEmptyCart stamp: 'AS 11/2/2022 00:14:52'!
+PASSED!
+
+!testRun: #CashierTests #test02CanCheckoutCartWithItemsAndCorrectlyChargeCard stamp: 'AS 11/2/2022 00:14:52'!
+PASSED!
+
+!testRun: #CashierTests #test03CanNotCheckoutWithExpiredCard stamp: 'AS 11/2/2022 00:14:52'!
+PASSED!
+
+!testRun: #CashierTests #test04CanNotCheckoutWithStolenCard stamp: 'AS 11/2/2022 00:14:52'!
+PASSED!
+
+!testRun: #CashierTests #test05CanNotCheckoutWithCardWithNotEnoughBalance stamp: 'AS 11/2/2022 00:14:52'!
+FAILURE!
+
+!testRun: #CashierTests #test05CanNotCheckoutWithCardWithNotEnoughBalance stamp: 'AS 11/2/2022 00:14:52'!
+FAILURE!
+!MerchanProcessorDouble class methodsFor: 'instance creation' stamp: 'AS 11/2/2022 00:16:04'!
+withStolenCards: aCollectionOfStolenCards withNegativeBalanceCards: aCollectionOfNegativeBalanceCards 
+
+	^self new initializeWithStolenCards: aCollectionOfStolenCards ! !
+!CashierTests methodsFor: 'as yet unclassified' stamp: 'AS 11/2/2022 00:16:04' prior: 50559635 overrides: 16961394!
+setUp 
+	
+	| cardNumber |
+	storeCatalog := OrderedCollection with: self item1SoldByStore with: self item2SoldByStore.
+	cart := Cart withCatalog: storeCatalog.
+	salesBook := OrderedCollection new.
+	priceList := Dictionary newFromPairs: (Array with: self item1SoldByStore with: self item1Price with: self item2SoldByStore with: self item2Price).
+	cardNumber := '1234567812345678'.
+	validCreditCard := CreditCard for: 'Homero Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.
+	expiredCreditCard := CreditCard for: 'Bart Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current next.
+	stolenCreditCard := CreditCard for: 'Lisa Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.
+	notEnoughBalanceCreditCard := CreditCard for: 'Marge Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.
+
+	merchantProcessorDouble := MerchanProcessorDouble withStolenCards: (OrderedCollection with: stolenCreditCard) withNegativeBalanceCards: ((OrderedCollection with: notEnoughBalanceCreditCard)).! !
+
+!methodRemoval: MerchanProcessorDouble class #withStolenCards: stamp: 'AS 11/2/2022 00:16:04'!
+withStolenCards: aCollectionOfStolenCards
+
+	^self new initializeWithStolenCards: aCollectionOfStolenCards !
+!CashierTests methodsFor: 'setup - tear down' stamp: 'AS 11/2/2022 00:16:24' prior: 50559700 overrides: 16961394!
+setUp 
+	
+	| cardNumber |
+	storeCatalog := OrderedCollection with: self item1SoldByStore with: self item2SoldByStore.
+	cart := Cart withCatalog: storeCatalog.
+	salesBook := OrderedCollection new.
+	priceList := Dictionary newFromPairs: (Array with: self item1SoldByStore with: self item1Price with: self item2SoldByStore with: self item2Price).
+	cardNumber := '1234567812345678'.
+	validCreditCard := CreditCard for: 'Homero Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.
+	expiredCreditCard := CreditCard for: 'Bart Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current next.
+	stolenCreditCard := CreditCard for: 'Lisa Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.
+	notEnoughBalanceCreditCard := CreditCard for: 'Marge Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.
+
+	merchantProcessorDouble := MerchanProcessorDouble withStolenCards: (OrderedCollection with: stolenCreditCard) 
+												withNegativeBalanceCards: (OrderedCollection with: notEnoughBalanceCreditCard).! !
+
+!testRun: #CashierTests #test05CanNotCheckoutWithCardWithNotEnoughBalance stamp: 'AS 11/2/2022 00:16:32'!
+FAILURE!
+
+!classDefinition: #MerchanProcessorDouble category: 'TusLibros' stamp: 'AS 11/2/2022 00:20:21'!
+Object subclass: #MerchanProcessorDouble
+	instanceVariableNames: 'stolenCards collectionOfStolenCards negativeBalanceCards'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!MerchanProcessorDouble methodsFor: 'debit' stamp: 'AS 11/2/2022 00:20:20' prior: 50559593!
+debit: anAmountToDebit fromCard: aCreditCardToDebitFrom 
+
+	self assertIsNotStolen: aCreditCardToDebitFrom.
+	(negativeBalanceCards includes: aCreditCardToDebitFrom) ifTrue: [Cashier canNotCheckoutIfCardDoesNotHaveEnoughBalanceErrorSignal]
+
+	
+! !
+
+!testRun: #CashierTests #test05CanNotCheckoutWithCardWithNotEnoughBalance stamp: 'AS 11/2/2022 00:20:24'!
+ERROR!
+!MerchanProcessorDouble methodsFor: 'initialization' stamp: 'AS 11/2/2022 00:21:55'!
+initializeWithStolenCards: aCollectionOfStolenCards withNegativeBalanceCards: aColecctionOfNegativeBalanceCards  
+
+	stolenCards := aCollectionOfStolenCards.! !
+!MerchanProcessorDouble class methodsFor: 'as yet unclassified' stamp: 'AS 11/2/2022 00:21:55' prior: 50559691!
+withStolenCards: aCollectionOfStolenCards withNegativeBalanceCards: aCollectionOfNegativeBalanceCards 
+
+	^self new initializeWithStolenCards: aCollectionOfStolenCards withNegativeBalanceCards: aCollectionOfNegativeBalanceCards ! !
+
+!methodRemoval: MerchanProcessorDouble #initializeWithStolenCards: stamp: 'AS 11/2/2022 00:21:55'!
+initializeWithStolenCards: aCollectionOfStolenCards 
+
+	stolenCards := aCollectionOfStolenCards.!
+!MerchanProcessorDouble methodsFor: 'initialization' stamp: 'AS 11/2/2022 00:22:29' prior: 50559812!
+initializeWithStolenCards: aCollectionOfStolenCards withNegativeBalanceCards: aCollectionOfNegativeBalanceCards  
+
+	stolenCards := aCollectionOfStolenCards.
+	negativeBalanceCards := aCollectionOfNegativeBalanceCards.! !
+
+!testRun: #CashierTests #test01CanNotCheckoutEmptyCart stamp: 'AS 11/2/2022 00:22:31'!
+PASSED!
+
+!testRun: #CashierTests #test02CanCheckoutCartWithItemsAndCorrectlyChargeCard stamp: 'AS 11/2/2022 00:22:31'!
+PASSED!
+
+!testRun: #CashierTests #test03CanNotCheckoutWithExpiredCard stamp: 'AS 11/2/2022 00:22:31'!
+PASSED!
+
+!testRun: #CashierTests #test04CanNotCheckoutWithStolenCard stamp: 'AS 11/2/2022 00:22:31'!
+PASSED!
+
+!testRun: #CashierTests #test05CanNotCheckoutWithCardWithNotEnoughBalance stamp: 'AS 11/2/2022 00:22:31'!
+ERROR!
+
+!testRun: #CashierTests #test05CanNotCheckoutWithCardWithNotEnoughBalance stamp: 'AS 11/2/2022 00:22:31'!
+ERROR!
+!Cashier class methodsFor: 'error signal' stamp: 'AS 11/2/2022 00:22:38'!
+canNotCheckoutIfCardDoesNotHaveEnoughBalanceErrorSignal
+	self shouldBeImplemented.! !
+!Cashier class methodsFor: 'error signal' stamp: 'AS 11/2/2022 00:23:49' prior: 50559868!
+canNotCheckoutIfCardDoesNotHaveEnoughBalanceErrorSignal
+	
+	self error: self canNotCheckoutIfCardDoesNotHaveEnoughBalanceErrorMessage! !
+
+!testRun: #CashierTests #test05CanNotCheckoutWithCardWithNotEnoughBalance stamp: 'AS 11/2/2022 00:23:50'!
+ERROR!
+!Cashier class methodsFor: 'error message' stamp: 'AS 11/2/2022 00:23:55'!
+canNotCheckoutIfCardDoesNotHaveEnoughBalanceErrorMessage
+	self shouldBeImplemented.! !
+!Cashier class methodsFor: 'error message' stamp: 'AS 11/2/2022 00:25:10' prior: 50559885!
+canNotCheckoutIfCardDoesNotHaveEnoughBalanceErrorMessage
+	
+	^'Can not checkout, card does not have enough balance!!'! !
+
+!testRun: #CashierTests #test05CanNotCheckoutWithCardWithNotEnoughBalance stamp: 'AS 11/2/2022 00:25:10'!
+PASSED!
+
+!testRun: #CashierTests #test01CanNotCheckoutEmptyCart stamp: 'AS 11/2/2022 00:25:15'!
+PASSED!
+
+!testRun: #CashierTests #test02CanCheckoutCartWithItemsAndCorrectlyChargeCard stamp: 'AS 11/2/2022 00:25:15'!
+PASSED!
+
+!testRun: #CashierTests #test03CanNotCheckoutWithExpiredCard stamp: 'AS 11/2/2022 00:25:15'!
+PASSED!
+
+!testRun: #CashierTests #test04CanNotCheckoutWithStolenCard stamp: 'AS 11/2/2022 00:25:15'!
+PASSED!
+
+!testRun: #CashierTests #test05CanNotCheckoutWithCardWithNotEnoughBalance stamp: 'AS 11/2/2022 00:25:15'!
+PASSED!
+!MerchanProcessorDouble methodsFor: 'debit' stamp: 'AS 11/2/2022 00:30:46'!
+assertHasEnoughBalance: aCreditCardToDebitFrom
+
+	^ (negativeBalanceCards includes: aCreditCardToDebitFrom) ifTrue: [Cashier canNotCheckoutIfCardDoesNotHaveEnoughBalanceErrorSignal]! !
+!MerchanProcessorDouble methodsFor: 'debit' stamp: 'AS 11/2/2022 00:30:46' prior: 50559798!
+debit: anAmountToDebit fromCard: aCreditCardToDebitFrom 
+
+	self assertIsNotStolen: aCreditCardToDebitFrom.
+	self assertHasEnoughBalance: aCreditCardToDebitFrom
+
+	
+! !
+
+!testRun: #CashierTests #test01CanNotCheckoutEmptyCart stamp: 'AS 11/2/2022 00:30:49'!
+PASSED!
+
+!testRun: #CashierTests #test02CanCheckoutCartWithItemsAndCorrectlyChargeCard stamp: 'AS 11/2/2022 00:30:49'!
+PASSED!
+
+!testRun: #CashierTests #test03CanNotCheckoutWithExpiredCard stamp: 'AS 11/2/2022 00:30:49'!
+PASSED!
+
+!testRun: #CashierTests #test04CanNotCheckoutWithStolenCard stamp: 'AS 11/2/2022 00:30:49'!
+PASSED!
+
+!testRun: #CashierTests #test05CanNotCheckoutWithCardWithNotEnoughBalance stamp: 'AS 11/2/2022 00:30:49'!
+PASSED!
+
+----SNAPSHOT----(2 November 2022 00:30:57) CuisUniversity-5481.image priorSource: 7294352!

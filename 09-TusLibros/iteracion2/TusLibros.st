@@ -163,7 +163,7 @@ test09CanNotAddNonIntegerQuantityOfItem
 
 !classDefinition: #CashierTests category: 'TusLibros'!
 TestCase subclass: #CashierTests
-	instanceVariableNames: 'storeCatalog cart salesBook priceList validCreditCard expiredCreditCard merchantProcessorDouble stolenCreditCard'
+	instanceVariableNames: 'storeCatalog cart salesBook priceList validCreditCard expiredCreditCard merchantProcessorDouble stolenCreditCard notEnoughBalanceCreditCard'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TusLibros'!
@@ -185,7 +185,7 @@ item2SoldByStore
 	^'item2'! !
 
 
-!CashierTests methodsFor: 'setup - tear down' stamp: 'AS 11/2/2022 00:02:01'!
+!CashierTests methodsFor: 'setup - tear down' stamp: 'AS 11/2/2022 00:16:24'!
 setUp 
 	
 	| cardNumber |
@@ -197,7 +197,10 @@ setUp
 	validCreditCard := CreditCard for: 'Homero Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.
 	expiredCreditCard := CreditCard for: 'Bart Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current next.
 	stolenCreditCard := CreditCard for: 'Lisa Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.
-	merchantProcessorDouble := MerchanProcessorDouble withStolenCards: (OrderedCollection with: stolenCreditCard).! !
+	notEnoughBalanceCreditCard := CreditCard for: 'Marge Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.
+
+	merchantProcessorDouble := MerchanProcessorDouble withStolenCards: (OrderedCollection with: stolenCreditCard) 
+												withNegativeBalanceCards: (OrderedCollection with: notEnoughBalanceCreditCard).! !
 
 
 !CashierTests methodsFor: 'tests' stamp: 'AS 11/1/2022 23:51:12'!
@@ -240,6 +243,15 @@ test04CanNotCheckoutWithStolenCard
 	self should: [Cashier checkout: cart chargingWith: merchantProcessorDouble withCard: stolenCreditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today]
 		raise: Error - MessageNotUnderstood 
 		withExceptionDo: [:anError | self assert: anError messageText equals: Cashier canNotCheckoutWithStolenCardErrorMessage.].! !
+
+!CashierTests methodsFor: 'tests' stamp: 'AS 11/2/2022 00:10:28'!
+test05CanNotCheckoutWithCardWithNotEnoughBalance
+	
+	cart add: self item1SoldByStore.
+	
+	self should: [Cashier checkout: cart chargingWith: merchantProcessorDouble withCard: notEnoughBalanceCreditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: Cashier canNotCheckoutIfCardDoesNotHaveEnoughBalanceErrorMessage.].! !
 
 
 !classDefinition: #Cart category: 'TusLibros'!
@@ -417,6 +429,11 @@ checkout: aCart chargingWith: aMerchantProcessor withCard: aCardToCharge usingPr
 canNotCheckoutEmptyCartErrorMessage
 	^'Can not checkout an empty cart!!'.! !
 
+!Cashier class methodsFor: 'error message' stamp: 'AS 11/2/2022 00:25:10'!
+canNotCheckoutIfCardDoesNotHaveEnoughBalanceErrorMessage
+	
+	^'Can not checkout, card does not have enough balance!!'! !
+
 !Cashier class methodsFor: 'error message' stamp: 'AS 10/31/2022 19:42:39'!
 canNotCheckoutWithExpiredCardErrorMessage
 	
@@ -432,6 +449,11 @@ canNotCheckoutWithStolenCardErrorMessage
 canNotCheckoutEmptyCartErrorSignal
 
 	^ self error: self canNotCheckoutEmptyCartErrorMessage! !
+
+!Cashier class methodsFor: 'error signal' stamp: 'AS 11/2/2022 00:23:49'!
+canNotCheckoutIfCardDoesNotHaveEnoughBalanceErrorSignal
+	
+	self error: self canNotCheckoutIfCardDoesNotHaveEnoughBalanceErrorMessage! !
 
 !Cashier class methodsFor: 'error signal' stamp: 'AS 10/31/2022 21:47:06'!
 canNotCheckoutWithExpiredCardErrorSignal
@@ -509,21 +531,28 @@ cardOwnerNameCanNotBeEmptyErrorMessage
 
 !classDefinition: #MerchanProcessorDouble category: 'TusLibros'!
 Object subclass: #MerchanProcessorDouble
-	instanceVariableNames: 'stolenCards collectionOfStolenCards'
+	instanceVariableNames: 'stolenCards collectionOfStolenCards negativeBalanceCards'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TusLibros'!
 
-!MerchanProcessorDouble methodsFor: 'initialization' stamp: 'AS 11/1/2022 23:58:08'!
-initializeWithStolenCards: aCollectionOfStolenCards 
+!MerchanProcessorDouble methodsFor: 'initialization' stamp: 'AS 11/2/2022 00:22:29'!
+initializeWithStolenCards: aCollectionOfStolenCards withNegativeBalanceCards: aCollectionOfNegativeBalanceCards  
 
-	stolenCards := aCollectionOfStolenCards.! !
+	stolenCards := aCollectionOfStolenCards.
+	negativeBalanceCards := aCollectionOfNegativeBalanceCards.! !
 
 
-!MerchanProcessorDouble methodsFor: 'debit' stamp: 'AS 11/2/2022 00:03:00'!
+!MerchanProcessorDouble methodsFor: 'debit' stamp: 'AS 11/2/2022 00:30:46'!
+assertHasEnoughBalance: aCreditCardToDebitFrom
+
+	^ (negativeBalanceCards includes: aCreditCardToDebitFrom) ifTrue: [Cashier canNotCheckoutIfCardDoesNotHaveEnoughBalanceErrorSignal]! !
+
+!MerchanProcessorDouble methodsFor: 'debit' stamp: 'AS 11/2/2022 00:30:46'!
 debit: anAmountToDebit fromCard: aCreditCardToDebitFrom 
 
-	self assertIsNotStolen: aCreditCardToDebitFrom
+	self assertIsNotStolen: aCreditCardToDebitFrom.
+	self assertHasEnoughBalance: aCreditCardToDebitFrom
 
 	
 ! !
@@ -540,10 +569,10 @@ assertIsNotStolen: aCreditCardToDebitFrom
 MerchanProcessorDouble class
 	instanceVariableNames: ''!
 
-!MerchanProcessorDouble class methodsFor: 'instance creation' stamp: 'AS 11/1/2022 23:57:52'!
-withStolenCards: aCollectionOfStolenCards
+!MerchanProcessorDouble class methodsFor: 'instance creation' stamp: 'AS 11/2/2022 00:21:55'!
+withStolenCards: aCollectionOfStolenCards withNegativeBalanceCards: aCollectionOfNegativeBalanceCards 
 
-	^self new initializeWithStolenCards: aCollectionOfStolenCards ! !
+	^self new initializeWithStolenCards: aCollectionOfStolenCards withNegativeBalanceCards: aCollectionOfNegativeBalanceCards ! !
 
 
 !classDefinition: #Sale category: 'TusLibros'!
