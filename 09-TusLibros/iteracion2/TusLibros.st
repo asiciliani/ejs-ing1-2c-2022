@@ -5,26 +5,54 @@ TestCase subclass: #CardTests
 	poolDictionaries: ''
 	category: 'TusLibros'!
 
-!CardTests methodsFor: 'tests' stamp: 'AS 10/31/2022 21:50:16'!
+!CardTests methodsFor: 'tests' stamp: 'AS 11/1/2022 23:06:58'!
 test01CanNotCreateCardWithLessThan16DigitNumber
 
-	self should: [CreditCard for: 'Homero Simpsons' withNumber: '123456781234567' withExpirationDate: FixedGregorianDate today ]
+	self should: [CreditCard for: self validOwnerName withNumber: self lessThan16DigitNumber withExpirationDate: FixedGregorianDate today ]
 		raise: Error - MessageNotUnderstood 
 		withExceptionDo: [:anError | self assert: anError messageText equals: CreditCard cardNumberMustBe16DigitsLongErrorMessage.]! !
 
-!CardTests methodsFor: 'tests' stamp: 'AS 10/31/2022 21:50:16'!
+!CardTests methodsFor: 'tests' stamp: 'AS 11/1/2022 23:07:16'!
 test02CanNotCreateCardWithMoreThan16DigitNumber
 
-	self should: [CreditCard for: 'Homero Simpsons' withNumber: '12345678123456781' withExpirationDate: FixedGregorianDate today ]
+	self should: [CreditCard for: self validOwnerName withNumber: self overSixteenDigitNumber withExpirationDate: FixedGregorianDate today ]
 		raise: Error - MessageNotUnderstood 
 		withExceptionDo: [:anError | self assert: anError messageText equals: CreditCard cardNumberMustBe16DigitsLongErrorMessage.]! !
 
-!CardTests methodsFor: 'tests' stamp: 'AS 10/31/2022 21:52:04'!
+!CardTests methodsFor: 'tests' stamp: 'AS 11/1/2022 23:07:28'!
 test03CanNotCreateCardWithEmptyName
 
-	self should: [CreditCard for: '' withNumber: '1234567812345678' withExpirationDate: FixedGregorianDate today ]
+	self should: [CreditCard for: '' withNumber: self sixteenDigitNumber withExpirationDate: FixedGregorianDate today ]
 		raise: Error - MessageNotUnderstood 
 		withExceptionDo: [:anError | self assert: anError messageText equals: CreditCard cardOwnerNameCanNotBeEmptyErrorMessage.]! !
+
+!CardTests methodsFor: 'tests' stamp: 'AS 11/1/2022 23:12:35'!
+test04CanNotCreateCardWithNameWithOnlySeparators
+
+	self should: [CreditCard for: '  ' withNumber: self sixteenDigitNumber withExpirationDate: FixedGregorianDate today ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: CreditCard cardOwnerNameCanNotBeEmptyErrorMessage.]! !
+
+
+!CardTests methodsFor: 'support' stamp: 'AS 11/1/2022 23:06:58'!
+lessThan16DigitNumber
+
+	^ '123456781234567'! !
+
+!CardTests methodsFor: 'support' stamp: 'AS 11/1/2022 23:07:16'!
+overSixteenDigitNumber
+
+	^ '12345678123456781'! !
+
+!CardTests methodsFor: 'support' stamp: 'AS 11/1/2022 23:07:28'!
+sixteenDigitNumber
+
+	^ '1234567812345678'! !
+
+!CardTests methodsFor: 'support' stamp: 'AS 11/1/2022 23:06:23'!
+validOwnerName
+
+	^ 'Homero Simpsons'! !
 
 
 !classDefinition: #CartTests category: 'TusLibros'!
@@ -429,10 +457,10 @@ cardOwnerNameCanNotBeEmptyErrorSignal
 	^ self error: self cardOwnerNameCanNotBeEmptyErrorMessage! !
 
 
-!CreditCard class methodsFor: 'instance creation' stamp: 'AS 10/31/2022 21:53:44'!
+!CreditCard class methodsFor: 'instance creation' stamp: 'AS 11/1/2022 23:11:53'!
 assertIsNotEmpty: aCardOwnerName
 
-	^ aCardOwnerName isEmpty ifTrue: [self cardOwnerNameCanNotBeEmptyErrorSignal]! !
+	^aCardOwnerName withoutSeparators isEmpty ifTrue: [self cardOwnerNameCanNotBeEmptyErrorSignal]! !
 
 !CreditCard class methodsFor: 'instance creation' stamp: 'AS 10/31/2022 21:53:13'!
 assertIsSixteenDigitsLong: aCardNumber

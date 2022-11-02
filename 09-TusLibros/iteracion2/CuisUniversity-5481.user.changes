@@ -4624,3 +4624,108 @@ PASSED!
 PASSED!
 
 ----SNAPSHOT----(31 October 2022 21:54:01) CuisUniversity-5481.image priorSource: 7223302!
+
+----QUIT----(31 October 2022 21:55:54) CuisUniversity-5481.image priorSource: 7249972!
+
+----STARTUP---- (1 November 2022 23:05:37) as /home/andisici/Documents/2022/ing-2c2022/cuisTusLibros/CuisUniversity-5481.image!
+
+!CardTests methodsFor: 'tests' stamp: 'AS 11/1/2022 23:06:23'!
+validOwnerName
+
+	^ 'Homero Simpsons'! !
+!CardTests methodsFor: 'tests' stamp: 'AS 11/1/2022 23:06:24' prior: 50557970!
+test01CanNotCreateCardWithLessThan16DigitNumber
+
+	self should: [CreditCard for: self validOwnerName withNumber: '123456781234567' withExpirationDate: FixedGregorianDate today ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: CreditCard cardNumberMustBe16DigitsLongErrorMessage.]! !
+!CardTests methodsFor: 'tests' stamp: 'AS 11/1/2022 23:06:24' prior: 50557956!
+test02CanNotCreateCardWithMoreThan16DigitNumber
+
+	self should: [CreditCard for: self validOwnerName withNumber: '12345678123456781' withExpirationDate: FixedGregorianDate today ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: CreditCard cardNumberMustBe16DigitsLongErrorMessage.]! !
+!CardTests methodsFor: 'tests' stamp: 'AS 11/1/2022 23:06:58'!
+lessThan16DigitNumber
+
+	^ '123456781234567'! !
+!CardTests methodsFor: 'tests' stamp: 'AS 11/1/2022 23:06:58' prior: 50558226!
+test01CanNotCreateCardWithLessThan16DigitNumber
+
+	self should: [CreditCard for: self validOwnerName withNumber: self lessThan16DigitNumber withExpirationDate: FixedGregorianDate today ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: CreditCard cardNumberMustBe16DigitsLongErrorMessage.]! !
+!CardTests methodsFor: 'tests' stamp: 'AS 11/1/2022 23:07:16'!
+overSixteenDigitNumber
+
+	^ '12345678123456781'! !
+!CardTests methodsFor: 'tests' stamp: 'AS 11/1/2022 23:07:16' prior: 50558240!
+test02CanNotCreateCardWithMoreThan16DigitNumber
+
+	self should: [CreditCard for: self validOwnerName withNumber: self overSixteenDigitNumber withExpirationDate: FixedGregorianDate today ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: CreditCard cardNumberMustBe16DigitsLongErrorMessage.]! !
+!CardTests methodsFor: 'tests' stamp: 'AS 11/1/2022 23:07:28'!
+sixteenDigitNumber
+
+	^ '1234567812345678'! !
+!CardTests methodsFor: 'tests' stamp: 'AS 11/1/2022 23:07:28' prior: 50558093!
+test03CanNotCreateCardWithEmptyName
+
+	self should: [CreditCard for: '' withNumber: self sixteenDigitNumber withExpirationDate: FixedGregorianDate today ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: CreditCard cardOwnerNameCanNotBeEmptyErrorMessage.]! !
+!CardTests methodsFor: 'tests' stamp: 'AS 11/1/2022 23:08:32'!
+test04CanNotCreateCardWithNameWithSpaces
+
+	self should: [CreditCard for: '  ' withNumber: self sixteenDigitNumber withExpirationDate: FixedGregorianDate today ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: CreditCard cardOwnerNameCanNotBeEmptyErrorMessage.]! !
+
+!testRun: #CardTests #test04CanNotCreateCardWithNameWithSpaces stamp: 'AS 11/1/2022 23:08:33'!
+FAILURE!
+
+'  ' withoutSeparators !
+!CreditCard class methodsFor: 'instance creation' stamp: 'AS 11/1/2022 23:11:53' prior: 50558175!
+assertIsNotEmpty: aCardOwnerName
+
+	^aCardOwnerName withoutSeparators isEmpty ifTrue: [self cardOwnerNameCanNotBeEmptyErrorSignal]! !
+
+!testRun: #CardTests #test04CanNotCreateCardWithNameWithSpaces stamp: 'AS 11/1/2022 23:11:54'!
+PASSED!
+
+!testRun: #CardTests #test01CanNotCreateCardWithLessThan16DigitNumber stamp: 'AS 11/1/2022 23:11:54'!
+PASSED!
+
+!testRun: #CardTests #test02CanNotCreateCardWithMoreThan16DigitNumber stamp: 'AS 11/1/2022 23:11:54'!
+PASSED!
+
+!testRun: #CardTests #test03CanNotCreateCardWithEmptyName stamp: 'AS 11/1/2022 23:11:54'!
+PASSED!
+
+!testRun: #CardTests #test04CanNotCreateCardWithNameWithSpaces stamp: 'AS 11/1/2022 23:11:54'!
+PASSED!
+!CardTests methodsFor: 'tests' stamp: 'AS 11/1/2022 23:12:35'!
+test04CanNotCreateCardWithNameWithOnlySeparators
+
+	self should: [CreditCard for: '  ' withNumber: self sixteenDigitNumber withExpirationDate: FixedGregorianDate today ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: CreditCard cardOwnerNameCanNotBeEmptyErrorMessage.]! !
+
+!methodRemoval: CardTests #test04CanNotCreateCardWithNameWithSpaces stamp: 'AS 11/1/2022 23:12:35'!
+test04CanNotCreateCardWithNameWithSpaces
+
+	self should: [CreditCard for: '  ' withNumber: self sixteenDigitNumber withExpirationDate: FixedGregorianDate today ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: CreditCard cardOwnerNameCanNotBeEmptyErrorMessage.]!
+
+!testRun: #CashierTests #test01CanNotCheckoutEmptyCart stamp: 'AS 11/1/2022 23:13:19'!
+PASSED!
+
+!testRun: #CashierTests #test02CanCheckoutCartWithItemsAndCorrectlyChargeCard stamp: 'AS 11/1/2022 23:13:19'!
+PASSED!
+
+!testRun: #CashierTests #test03CanNotCheckoutWithExpiredCard stamp: 'AS 11/1/2022 23:13:19'!
+PASSED!
+
+----SNAPSHOT----(1 November 2022 23:18:21) CuisUniversity-5481.image priorSource: 7250064!
