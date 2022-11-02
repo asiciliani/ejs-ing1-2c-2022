@@ -4729,3 +4729,838 @@ PASSED!
 PASSED!
 
 ----SNAPSHOT----(1 November 2022 23:18:21) CuisUniversity-5481.image priorSource: 7250064!
+!Cashier class methodsFor: 'instance creation' stamp: 'AS 11/1/2022 23:22:30'!
+checkout: aCart chargingWith: aMerchantProcessor withCard: aCardToCharge usingPriceList: aPriceList registeringOn: aSalesBook onDate: aFixedGregorianDate 
+
+	self assertIsNotEmpty: aCart.
+	self assertCard: aCardToCharge isNotExpiredOn: aFixedGregorianDate.
+	^self new initializeCheckout: aCart withCard: aCardToCharge usingPriceList: aPriceList registeringOn: aSalesBook ! !
+!CashierTests methodsFor: 'as yet unclassified' stamp: 'AS 11/1/2022 23:22:30' prior: 50556953!
+test02CanCheckoutCartWithItemsAndCorrectlyChargeCard
+	
+	| sale |
+	
+	cart add: self item1SoldByStore.
+	cart add: self item2SoldByStore.
+	
+	Cashier checkout: cart chargingWith: merchantProcessorDouble withCard: creditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today.
+	
+	sale := salesBook first.
+	self assert: creditCard equals: sale chargedCreditCard.
+	self assert: (priceList at: self item1SoldByStore) + (priceList at: self item2SoldByStore) equals: sale chargedAmount.
+	self assert: (Bag with: self item1SoldByStore with: self item2SoldByStore) equals: sale itemsSold.
+	! !
+!CashierTests methodsFor: 'as yet unclassified' stamp: 'AS 11/1/2022 23:22:30' prior: 50556939!
+test01CanNotCheckoutEmptyCart
+	
+	self should: [Cashier checkout: cart chargingWith: merchantProcessorDouble withCard: creditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: Cashier canNotCheckoutEmptyCartErrorMessage.].! !
+!CashierTests methodsFor: 'as yet unclassified' stamp: 'AS 11/1/2022 23:22:30' prior: 50556974!
+test03CanNotCheckoutWithExpiredCard
+	
+	cart add: self item1SoldByStore.
+	
+	self should: [Cashier checkout: cart chargingWith: merchantProcessorDouble withCard: expiredCreditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: Cashier canNotCheckoutWithExpiredCardErrorMessage.].! !
+
+!methodRemoval: Cashier class #checkout:withCard:usingPriceList:registeringOn:onDate: stamp: 'AS 11/1/2022 23:22:30'!
+checkout: aCart withCard: aCardToCharge usingPriceList: aPriceList registeringOn: aSalesBook onDate: aFixedGregorianDate 
+
+	self assertIsNotEmpty: aCart.
+	self assertCard: aCardToCharge isNotExpiredOn: aFixedGregorianDate.
+	^self new initializeCheckout: aCart withCard: aCardToCharge usingPriceList: aPriceList registeringOn: aSalesBook !
+
+!classDefinition: #CashierTests category: 'TusLibros' stamp: 'AS 11/1/2022 23:24:30'!
+TestCase subclass: #CashierTests
+	instanceVariableNames: 'storeCatalog cart salesBook priceList creditCard expiredCreditCard merchantProcessorDouble'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!CashierTests methodsFor: 'tests' stamp: 'AS 11/1/2022 23:24:28'!
+test04CanNotCheckoutWithExpiredCard
+	
+	cart add: self item1SoldByStore.
+	
+	self should: [Cashier checkout: cart chargingWith: merchantProcessorDouble withCard: expiredCreditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: Cashier canNotCheckoutWithStolenCardErrorMessage.].! !
+
+!testRun: #CashierTests #test04CanNotCheckoutWithExpiredCard stamp: 'AS 11/1/2022 23:24:42'!
+ERROR!
+!Cashier class methodsFor: 'error message' stamp: 'AS 11/1/2022 23:24:53'!
+canNotCheckoutWithStolenCardErrorMessage
+	self shouldBeImplemented.! !
+!Cashier class methodsFor: 'error message' stamp: 'AS 11/1/2022 23:26:13' prior: 50558499!
+canNotCheckoutWithStolenCardErrorMessage
+	
+	^'Can not check out with a stolen card!!'! !
+
+!testRun: #CashierTests #test04CanNotCheckoutWithExpiredCard stamp: 'AS 11/1/2022 23:26:15'!
+FAILURE!
+
+!testRun: #CashierTests #test04CanNotCheckoutWithExpiredCard stamp: 'AS 11/1/2022 23:26:21'!
+FAILURE!
+!Cashier methodsFor: 'initialization' stamp: 'AS 11/1/2022 23:28:19'!
+initializeCheckout: aCart chargingWith: aMerchantProcessor withCard: aCardToCharge usingPriceList: aPriceList registeringOn: aSalesBook 
+	
+	| amountToDebit |
+	
+	cart := aCart.
+	cardToCharge := aCardToCharge.
+	priceList := aPriceList.
+	salesBook := aSalesBook.
+	amountToDebit := (cart content inject: 0 into: [:accumulatedAmount :anItem | accumulatedAmount + priceList at: anItem]) .
+	self debit: amountToDebit fromCard: cardToCharge.
+	salesBook add: (Sale of: cart content havingCharged: amountToDebit on: cardToCharge).! !
+!Cashier class methodsFor: 'as yet unclassified' stamp: 'AS 11/1/2022 23:28:20' prior: 50558387!
+checkout: aCart chargingWith: aMerchantProcessor withCard: aCardToCharge usingPriceList: aPriceList registeringOn: aSalesBook onDate: aFixedGregorianDate 
+
+	self assertIsNotEmpty: aCart.
+	self assertCard: aCardToCharge isNotExpiredOn: aFixedGregorianDate.
+	^self new initializeCheckout: aCart chargingWith: aMerchantProcessor withCard: aCardToCharge usingPriceList: aPriceList registeringOn: aSalesBook ! !
+
+!methodRemoval: Cashier #initializeCheckout:withCard:usingPriceList:registeringOn: stamp: 'AS 11/1/2022 23:28:20'!
+initializeCheckout: aCart withCard: aCardToCharge usingPriceList: aPriceList registeringOn: aSalesBook 
+	
+	| amountToDebit |
+	
+	cart := aCart.
+	cardToCharge := aCardToCharge.
+	priceList := aPriceList.
+	salesBook := aSalesBook.
+	amountToDebit := (cart content inject: 0 into: [:accumulatedAmount :anItem | accumulatedAmount + priceList at: anItem]) .
+	self debit: amountToDebit fromCard: cardToCharge.
+	salesBook add: (Sale of: cart content havingCharged: amountToDebit on: cardToCharge).!
+
+!testRun: #CashierTests #test04CanNotCheckoutWithExpiredCard stamp: 'AS 11/1/2022 23:28:34'!
+FAILURE!
+
+!classDefinition: #CashierTests category: 'TusLibros' stamp: 'AS 11/1/2022 23:29:20'!
+TestCase subclass: #CashierTests
+	instanceVariableNames: 'storeCatalog cart salesBook priceList validCreditCard expiredCreditCard merchantProcessorDouble'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!CashierTests methodsFor: 'as yet unclassified' stamp: 'AS 11/1/2022 23:29:20' prior: 50557985 overrides: 16961394!
+setUp 
+	
+	| cardNumber |
+	storeCatalog := OrderedCollection with: self item1SoldByStore with: self item2SoldByStore.
+	cart := Cart withCatalog: storeCatalog.
+	salesBook := OrderedCollection new.
+	priceList := Dictionary newFromPairs: (Array with: self item1SoldByStore with: self item1Price with: self item2SoldByStore with: self item2Price).
+	cardNumber := '1234567812345678'.
+	validCreditCard := CreditCard for: 'Homero Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.
+	expiredCreditCard := CreditCard for: 'Homero Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current next.! !
+!CashierTests methodsFor: 'as yet unclassified' stamp: 'AS 11/1/2022 23:29:20' prior: 50558425!
+test01CanNotCheckoutEmptyCart
+	
+	self should: [Cashier checkout: cart chargingWith: merchantProcessorDouble withCard: validCreditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: Cashier canNotCheckoutEmptyCartErrorMessage.].! !
+!CashierTests methodsFor: 'as yet unclassified' stamp: 'AS 11/1/2022 23:29:20' prior: 50558402!
+test02CanCheckoutCartWithItemsAndCorrectlyChargeCard
+	
+	| sale |
+	
+	cart add: self item1SoldByStore.
+	cart add: self item2SoldByStore.
+	
+	Cashier checkout: cart chargingWith: merchantProcessorDouble withCard: validCreditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today.
+	
+	sale := salesBook first.
+	self assert: validCreditCard equals: sale chargedCreditCard.
+	self assert: (priceList at: self item1SoldByStore) + (priceList at: self item2SoldByStore) equals: sale chargedAmount.
+	self assert: (Bag with: self item1SoldByStore with: self item2SoldByStore) equals: sale itemsSold.
+	! !
+
+!classDefinition: #CashierTests category: 'TusLibros' stamp: 'AS 11/1/2022 23:30:06'!
+TestCase subclass: #CashierTests
+	instanceVariableNames: 'storeCatalog cart salesBook priceList validCreditCard expiredCreditCard merchantProcessorDouble stolenCreditCard'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!CashierTests methodsFor: 'setup - tear down' stamp: 'AS 11/1/2022 23:30:04' prior: 50558586 overrides: 16961394!
+setUp 
+	
+	| cardNumber |
+	storeCatalog := OrderedCollection with: self item1SoldByStore with: self item2SoldByStore.
+	cart := Cart withCatalog: storeCatalog.
+	salesBook := OrderedCollection new.
+	priceList := Dictionary newFromPairs: (Array with: self item1SoldByStore with: self item1Price with: self item2SoldByStore with: self item2Price).
+	cardNumber := '1234567812345678'.
+	validCreditCard := CreditCard for: 'Homero Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.
+	expiredCreditCard := CreditCard for: 'Homero Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current next.
+	stolenCreditCard := CreditCard for: 'Lisa Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.! !
+!CashierTests methodsFor: 'tests' stamp: 'AS 11/1/2022 23:30:51' prior: 50558480!
+test04CanNotCheckoutWithExpiredCard
+	
+	cart add: self item1SoldByStore.
+	
+	self should: [Cashier checkout: cart chargingWith: merchantProcessorDouble withCard: stolenCreditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: Cashier canNotCheckoutWithStolenCardErrorMessage.].! !
+
+!testRun: #CashierTests #test04CanNotCheckoutWithExpiredCard stamp: 'AS 11/1/2022 23:30:51'!
+FAILURE!
+!Cashier methodsFor: 'initialization' stamp: 'AS 11/1/2022 23:32:01' prior: 50558517!
+initializeCheckout: aCart chargingWith: aMerchantProcessor withCard: aCardToCharge usingPriceList: aPriceList registeringOn: aSalesBook 
+	
+	| amountToDebit |
+	
+	cart := aCart.
+	cardToCharge := aCardToCharge.
+	priceList := aPriceList.
+	salesBook := aSalesBook.
+	amountToDebit := (cart content inject: 0 into: [:accumulatedAmount :anItem | accumulatedAmount + priceList at: anItem]) .
+	aMerchantProcessor debit: amountToDebit fromCard: cardToCharge.
+	salesBook add: (Sale of: cart content havingCharged: amountToDebit on: cardToCharge).! !
+
+!testRun: #CashierTests #test04CanNotCheckoutWithExpiredCard stamp: 'AS 11/1/2022 23:32:04'!
+ERROR!
+
+!classDefinition: #MerchantProcessorDouble category: 'TusLibros' stamp: 'AS 11/1/2022 23:32:58'!
+Object subclass: #MerchantProcessorDouble
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!CashierTests methodsFor: 'setup - tear down' stamp: 'AS 11/1/2022 23:32:29' prior: 50558659 overrides: 16961394!
+setUp 
+	
+	| cardNumber |
+	storeCatalog := OrderedCollection with: self item1SoldByStore with: self item2SoldByStore.
+	cart := Cart withCatalog: storeCatalog.
+	salesBook := OrderedCollection new.
+	priceList := Dictionary newFromPairs: (Array with: self item1SoldByStore with: self item1Price with: self item2SoldByStore with: self item2Price).
+	cardNumber := '1234567812345678'.
+	validCreditCard := CreditCard for: 'Homero Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.
+	expiredCreditCard := CreditCard for: 'Homero Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current next.
+	stolenCreditCard := CreditCard for: 'Lisa Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.
+	merchantProcessorDouble := MerchantProcessorDouble new.! !
+
+!testRun: #CashierTests #test01CanNotCheckoutEmptyCart stamp: 'AS 11/1/2022 23:33:01'!
+PASSED!
+
+!testRun: #CashierTests #test02CanCheckoutCartWithItemsAndCorrectlyChargeCard stamp: 'AS 11/1/2022 23:33:01'!
+ERROR!
+
+!testRun: #CashierTests #test03CanNotCheckoutWithExpiredCard stamp: 'AS 11/1/2022 23:33:01'!
+PASSED!
+
+!testRun: #CashierTests #test04CanNotCheckoutWithExpiredCard stamp: 'AS 11/1/2022 23:33:01'!
+ERROR!
+
+!testRun: #CashierTests #test02CanCheckoutCartWithItemsAndCorrectlyChargeCard stamp: 'AS 11/1/2022 23:33:03'!
+ERROR!
+!CashierTests methodsFor: 'setup - tear down' stamp: 'AS 11/1/2022 23:33:36' prior: 50558738 overrides: 16961394!
+setUp 
+	
+	| cardNumber |
+	storeCatalog := OrderedCollection with: self item1SoldByStore with: self item2SoldByStore.
+	cart := Cart withCatalog: storeCatalog.
+	salesBook := OrderedCollection new.
+	priceList := Dictionary newFromPairs: (Array with: self item1SoldByStore with: self item1Price with: self item2SoldByStore with: self item2Price).
+	cardNumber := '1234567812345678'.
+	validCreditCard := CreditCard for: 'Homero Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.
+	expiredCreditCard := CreditCard for: 'Homero Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current next.
+	stolenCreditCard := CreditCard for: 'Lisa Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.
+	merchantProcessorDouble := MerchantProcessorDouble withStolenCards: (OrderedCollection with: stolenCreditCard).! !
+!MerchantProcessorDouble class methodsFor: 'instance creation' stamp: 'AS 11/1/2022 23:33:46'!
+withStolenCards: anOrderedCollection 
+	"DO NOT FORGET TO RENAME COLLABORATORS AND REMOVE THIS COMMENT!!!!"
+	self shouldBeImplemented.
+	^self new initializeWithStolenCards: anOrderedCollection ! !
+!MerchantProcessorDouble class methodsFor: 'instance creation' stamp: 'AS 11/1/2022 23:34:02' prior: 50558817!
+withStolenCards: aCollectionOfStolenCards 
+	
+	^self new initializeWithStolenCards: aCollectionOfStolenCards ! !
+
+!classDefinition: #MerchantProcessorDouble category: 'TusLibros' stamp: 'AS 11/1/2022 23:34:11'!
+Object subclass: #MerchantProcessorDouble
+	instanceVariableNames: 'collectionOfStolenCards'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!MerchantProcessorDouble methodsFor: 'initialization' stamp: 'AS 11/1/2022 23:34:11'!
+initializeWithStolenCards: aCollectionOfStolenCards 
+	self shouldBeImplemented.
+	collectionOfStolenCards := aCollectionOfStolenCards.! !
+!MerchantProcessorDouble methodsFor: 'initialization' stamp: 'AS 11/1/2022 23:34:16' prior: 50558842!
+initializeWithStolenCards: aCollectionOfStolenCards 
+
+	collectionOfStolenCards := aCollectionOfStolenCards.! !
+
+!classDefinition: #MerchantProcessorDouble category: 'TusLibros' stamp: 'AS 11/1/2022 23:34:22'!
+Object subclass: #MerchantProcessorDouble
+	instanceVariableNames: 'stolenCards'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!MerchantProcessorDouble methodsFor: 'as yet unclassified' stamp: 'AS 11/1/2022 23:34:22' prior: 50558850!
+initializeWithStolenCards: aCollectionOfStolenCards 
+
+	stolenCards := aCollectionOfStolenCards.! !
+
+!testRun: #CashierTests #test01CanNotCheckoutEmptyCart stamp: 'AS 11/1/2022 23:34:45'!
+PASSED!
+
+!testRun: #CashierTests #test02CanCheckoutCartWithItemsAndCorrectlyChargeCard stamp: 'AS 11/1/2022 23:34:46'!
+ERROR!
+!MerchantProcessorDouble methodsFor: 'debit' stamp: 'AS 11/1/2022 23:34:58'!
+debit: aSmallInteger fromCard: aCreditCard 
+	self shouldBeImplemented.! !
+!MerchantProcessorDouble methodsFor: 'debit' stamp: 'AS 11/1/2022 23:36:57' prior: 50558878!
+debit: anAmountToDebit fromCard: aCreditCardToDebitFrom
+	
+	(stolenCards includes: aCreditCardToDebitFrom) ifTrue: [Cashier canNotCheckoutWithStolenCardErrorSignal].! !
+
+!testRun: #CashierTests #test02CanCheckoutCartWithItemsAndCorrectlyChargeCard stamp: 'AS 11/1/2022 23:37:10'!
+PASSED!
+
+!testRun: #CashierTests #test03CanNotCheckoutWithExpiredCard stamp: 'AS 11/1/2022 23:37:12'!
+PASSED!
+
+!testRun: #CashierTests #test04CanNotCheckoutWithExpiredCard stamp: 'AS 11/1/2022 23:37:12'!
+ERROR!
+!Cashier class methodsFor: 'error signal' stamp: 'AS 11/1/2022 23:37:17'!
+canNotCheckoutWithStolenCardErrorSignal
+	self shouldBeImplemented.! !
+!Cashier class methodsFor: 'error signal' stamp: 'AS 11/1/2022 23:37:26' prior: 50558902!
+canNotCheckoutWithStolenCardErrorSignal
+
+	self error: self class canNotCheckoutWithStolenCardErrorMessage! !
+
+!testRun: #CashierTests #test04CanNotCheckoutWithExpiredCard stamp: 'AS 11/1/2022 23:37:27'!
+ERROR!
+!Cashier class methodsFor: 'error signal' stamp: 'AS 11/1/2022 23:37:34' prior: 50558907!
+canNotCheckoutWithStolenCardErrorSignal
+
+	self error: self canNotCheckoutWithStolenCardErrorMessage! !
+
+!testRun: #CashierTests #test04CanNotCheckoutWithExpiredCard stamp: 'AS 11/1/2022 23:37:35'!
+PASSED!
+
+!testRun: #CardTests #test01CanNotCreateCardWithLessThan16DigitNumber stamp: 'AS 11/1/2022 23:37:40'!
+PASSED!
+
+!testRun: #CardTests #test02CanNotCreateCardWithMoreThan16DigitNumber stamp: 'AS 11/1/2022 23:37:40'!
+PASSED!
+
+!testRun: #CardTests #test03CanNotCreateCardWithEmptyName stamp: 'AS 11/1/2022 23:37:40'!
+PASSED!
+
+!testRun: #CardTests #test04CanNotCreateCardWithNameWithOnlySeparators stamp: 'AS 11/1/2022 23:37:40'!
+PASSED!
+
+!testRun: #CartTests #test01CartIsEmptyWhenCreated stamp: 'AS 11/1/2022 23:37:40'!
+PASSED!
+
+!testRun: #CartTests #test02CartIsNotEmptyAfterAddingItemsAndIncludesThem stamp: 'AS 11/1/2022 23:37:40'!
+PASSED!
+
+!testRun: #CartTests #test03CartSizeIsAmountOfNewAddedItems stamp: 'AS 11/1/2022 23:37:40'!
+PASSED!
+
+!testRun: #CartTests #test04CanNotAddItemNotInStoreCatalog stamp: 'AS 11/1/2022 23:37:40'!
+PASSED!
+
+!testRun: #CartTests #test05CanAddToCartManyOfSameItem stamp: 'AS 11/1/2022 23:37:40'!
+PASSED!
+
+!testRun: #CartTests #test06CanNotAddNegativeQuantityOfItem stamp: 'AS 11/1/2022 23:37:40'!
+PASSED!
+
+!testRun: #CartTests #test07CanNotAddZeroQuantityOfItem stamp: 'AS 11/1/2022 23:37:40'!
+PASSED!
+
+!testRun: #CartTests #test08CanGetItemsInCart stamp: 'AS 11/1/2022 23:37:40'!
+PASSED!
+
+!testRun: #CartTests #test09CanNotAddNonIntegerQuantityOfItem stamp: 'AS 11/1/2022 23:37:40'!
+PASSED!
+
+!testRun: #CashierTests #test01CanNotCheckoutEmptyCart stamp: 'AS 11/1/2022 23:37:40'!
+PASSED!
+
+!testRun: #CashierTests #test02CanCheckoutCartWithItemsAndCorrectlyChargeCard stamp: 'AS 11/1/2022 23:37:40'!
+PASSED!
+
+!testRun: #CashierTests #test03CanNotCheckoutWithExpiredCard stamp: 'AS 11/1/2022 23:37:40'!
+PASSED!
+
+!testRun: #CashierTests #test04CanNotCheckoutWithExpiredCard stamp: 'AS 11/1/2022 23:37:40'!
+PASSED!
+
+----STARTUP---- (1 November 2022 23:47:25) as /home/andisici/Documents/2022/ing-2c2022/cuisTusLibros/CuisUniversity-5481.image!
+
+!Cashier class methodsFor: 'instance creation' stamp: 'AS 11/1/2022 23:22:30'!
+checkout: aCart chargingWith: aMerchantProcessor withCard: aCardToCharge usingPriceList: aPriceList registeringOn: aSalesBook onDate: aFixedGregorianDate 
+
+	self assertIsNotEmpty: aCart.
+	self assertCard: aCardToCharge isNotExpiredOn: aFixedGregorianDate.
+	^self new initializeCheckout: aCart withCard: aCardToCharge usingPriceList: aPriceList registeringOn: aSalesBook ! !
+!CashierTests methodsFor: 'as yet unclassified' stamp: 'AS 11/1/2022 23:22:30' prior: 50556953!
+test02CanCheckoutCartWithItemsAndCorrectlyChargeCard
+	
+	| sale |
+	
+	cart add: self item1SoldByStore.
+	cart add: self item2SoldByStore.
+	
+	Cashier checkout: cart chargingWith: merchantProcessorDouble withCard: creditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today.
+	
+	sale := salesBook first.
+	self assert: creditCard equals: sale chargedCreditCard.
+	self assert: (priceList at: self item1SoldByStore) + (priceList at: self item2SoldByStore) equals: sale chargedAmount.
+	self assert: (Bag with: self item1SoldByStore with: self item2SoldByStore) equals: sale itemsSold.
+	! !
+!CashierTests methodsFor: 'as yet unclassified' stamp: 'AS 11/1/2022 23:22:30' prior: 50556939!
+test01CanNotCheckoutEmptyCart
+	
+	self should: [Cashier checkout: cart chargingWith: merchantProcessorDouble withCard: creditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: Cashier canNotCheckoutEmptyCartErrorMessage.].! !
+!CashierTests methodsFor: 'as yet unclassified' stamp: 'AS 11/1/2022 23:22:30' prior: 50556974!
+test03CanNotCheckoutWithExpiredCard
+	
+	cart add: self item1SoldByStore.
+	
+	self should: [Cashier checkout: cart chargingWith: merchantProcessorDouble withCard: expiredCreditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: Cashier canNotCheckoutWithExpiredCardErrorMessage.].! !
+
+!methodRemoval: Cashier class #checkout:withCard:usingPriceList:registeringOn:onDate: stamp: 'AS 11/1/2022 23:47:33'!
+checkout: aCart withCard: aCardToCharge usingPriceList: aPriceList registeringOn: aSalesBook onDate: aFixedGregorianDate 
+
+	self assertIsNotEmpty: aCart.
+	self assertCard: aCardToCharge isNotExpiredOn: aFixedGregorianDate.
+	^self new initializeCheckout: aCart withCard: aCardToCharge usingPriceList: aPriceList registeringOn: aSalesBook !
+
+----STARTUP---- (1 November 2022 23:48:10) as /home/andisici/Documents/2022/ing-2c2022/cuisTusLibros/CuisUniversity-5481.image!
+
+!Cashier class methodsFor: 'instance creation' stamp: 'AS 11/1/2022 23:22:30'!
+checkout: aCart chargingWith: aMerchantProcessor withCard: aCardToCharge usingPriceList: aPriceList registeringOn: aSalesBook onDate: aFixedGregorianDate 
+
+	self assertIsNotEmpty: aCart.
+	self assertCard: aCardToCharge isNotExpiredOn: aFixedGregorianDate.
+	^self new initializeCheckout: aCart withCard: aCardToCharge usingPriceList: aPriceList registeringOn: aSalesBook ! !
+!CashierTests methodsFor: 'as yet unclassified' stamp: 'AS 11/1/2022 23:22:30' prior: 50556953!
+test02CanCheckoutCartWithItemsAndCorrectlyChargeCard
+	
+	| sale |
+	
+	cart add: self item1SoldByStore.
+	cart add: self item2SoldByStore.
+	
+	Cashier checkout: cart chargingWith: merchantProcessorDouble withCard: creditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today.
+	
+	sale := salesBook first.
+	self assert: creditCard equals: sale chargedCreditCard.
+	self assert: (priceList at: self item1SoldByStore) + (priceList at: self item2SoldByStore) equals: sale chargedAmount.
+	self assert: (Bag with: self item1SoldByStore with: self item2SoldByStore) equals: sale itemsSold.
+	! !
+!CashierTests methodsFor: 'as yet unclassified' stamp: 'AS 11/1/2022 23:22:30' prior: 50556939!
+test01CanNotCheckoutEmptyCart
+	
+	self should: [Cashier checkout: cart chargingWith: merchantProcessorDouble withCard: creditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: Cashier canNotCheckoutEmptyCartErrorMessage.].! !
+!CashierTests methodsFor: 'as yet unclassified' stamp: 'AS 11/1/2022 23:22:30' prior: 50556974!
+test03CanNotCheckoutWithExpiredCard
+	
+	cart add: self item1SoldByStore.
+	
+	self should: [Cashier checkout: cart chargingWith: merchantProcessorDouble withCard: expiredCreditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: Cashier canNotCheckoutWithExpiredCardErrorMessage.].! !
+
+!methodRemoval: Cashier class #checkout:withCard:usingPriceList:registeringOn:onDate: stamp: 'AS 11/1/2022 23:48:16'!
+checkout: aCart withCard: aCardToCharge usingPriceList: aPriceList registeringOn: aSalesBook onDate: aFixedGregorianDate 
+
+	self assertIsNotEmpty: aCart.
+	self assertCard: aCardToCharge isNotExpiredOn: aFixedGregorianDate.
+	^self new initializeCheckout: aCart withCard: aCardToCharge usingPriceList: aPriceList registeringOn: aSalesBook !
+
+----STARTUP---- (1 November 2022 23:49:17) as /home/andisici/Documents/2022/ing-2c2022/cuisTusLibros/CuisUniversity-5481.image!
+
+!Cashier class methodsFor: 'instance creation' stamp: 'AS 11/1/2022 23:22:30'!
+checkout: aCart chargingWith: aMerchantProcessor withCard: aCardToCharge usingPriceList: aPriceList registeringOn: aSalesBook onDate: aFixedGregorianDate 
+
+	self assertIsNotEmpty: aCart.
+	self assertCard: aCardToCharge isNotExpiredOn: aFixedGregorianDate.
+	^self new initializeCheckout: aCart withCard: aCardToCharge usingPriceList: aPriceList registeringOn: aSalesBook ! !
+!CashierTests methodsFor: 'as yet unclassified' stamp: 'AS 11/1/2022 23:22:30' prior: 50556953!
+test02CanCheckoutCartWithItemsAndCorrectlyChargeCard
+	
+	| sale |
+	
+	cart add: self item1SoldByStore.
+	cart add: self item2SoldByStore.
+	
+	Cashier checkout: cart chargingWith: merchantProcessorDouble withCard: creditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today.
+	
+	sale := salesBook first.
+	self assert: creditCard equals: sale chargedCreditCard.
+	self assert: (priceList at: self item1SoldByStore) + (priceList at: self item2SoldByStore) equals: sale chargedAmount.
+	self assert: (Bag with: self item1SoldByStore with: self item2SoldByStore) equals: sale itemsSold.
+	! !
+!CashierTests methodsFor: 'as yet unclassified' stamp: 'AS 11/1/2022 23:22:30' prior: 50556939!
+test01CanNotCheckoutEmptyCart
+	
+	self should: [Cashier checkout: cart chargingWith: merchantProcessorDouble withCard: creditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: Cashier canNotCheckoutEmptyCartErrorMessage.].! !
+!CashierTests methodsFor: 'as yet unclassified' stamp: 'AS 11/1/2022 23:22:30' prior: 50556974!
+test03CanNotCheckoutWithExpiredCard
+	
+	cart add: self item1SoldByStore.
+	
+	self should: [Cashier checkout: cart chargingWith: merchantProcessorDouble withCard: expiredCreditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: Cashier canNotCheckoutWithExpiredCardErrorMessage.].! !
+
+!methodRemoval: Cashier class #checkout:withCard:usingPriceList:registeringOn:onDate: stamp: 'AS 11/1/2022 23:49:18'!
+checkout: aCart withCard: aCardToCharge usingPriceList: aPriceList registeringOn: aSalesBook onDate: aFixedGregorianDate 
+
+	self assertIsNotEmpty: aCart.
+	self assertCard: aCardToCharge isNotExpiredOn: aFixedGregorianDate.
+	^self new initializeCheckout: aCart withCard: aCardToCharge usingPriceList: aPriceList registeringOn: aSalesBook !
+
+TestCase subclass: #CashierTests
+	instanceVariableNames: 'storeCatalog cart salesBook priceList creditCard expiredCreditCard merchantProcessorDouble'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+TestCase subclass: #CashierTests
+	instanceVariableNames: 'storeCatalog cart salesBook priceList creditCard expiredCreditCard merchantProcessorDouble'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #CashierTests category: 'TusLibros' stamp: 'AS 11/1/2022 23:49:59'!
+TestCase subclass: #CashierTests
+	instanceVariableNames: 'storeCatalog cart salesBook priceList creditCard expiredCreditCard merchantProcessorDouble'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #CashierTests category: 'TusLibros' stamp: 'AS 11/1/2022 23:51:12'!
+TestCase subclass: #CashierTests
+	instanceVariableNames: 'storeCatalog cart salesBook priceList validCreditCard expiredCreditCard merchantProcessorDouble'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!CashierTests methodsFor: 'as yet unclassified' stamp: 'AS 11/1/2022 23:51:12' prior: 50557985 overrides: 16961394!
+setUp 
+	
+	| cardNumber |
+	storeCatalog := OrderedCollection with: self item1SoldByStore with: self item2SoldByStore.
+	cart := Cart withCatalog: storeCatalog.
+	salesBook := OrderedCollection new.
+	priceList := Dictionary newFromPairs: (Array with: self item1SoldByStore with: self item1Price with: self item2SoldByStore with: self item2Price).
+	cardNumber := '1234567812345678'.
+	validCreditCard := CreditCard for: 'Homero Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.
+	expiredCreditCard := CreditCard for: 'Homero Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current next.! !
+!CashierTests methodsFor: 'as yet unclassified' stamp: 'AS 11/1/2022 23:51:12' prior: 50559023!
+test01CanNotCheckoutEmptyCart
+	
+	self should: [Cashier checkout: cart chargingWith: merchantProcessorDouble withCard: validCreditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: Cashier canNotCheckoutEmptyCartErrorMessage.].! !
+!CashierTests methodsFor: 'as yet unclassified' stamp: 'AS 11/1/2022 23:51:12' prior: 50559000!
+test02CanCheckoutCartWithItemsAndCorrectlyChargeCard
+	
+	| sale |
+	
+	cart add: self item1SoldByStore.
+	cart add: self item2SoldByStore.
+	
+	Cashier checkout: cart chargingWith: merchantProcessorDouble withCard: validCreditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today.
+	
+	sale := salesBook first.
+	self assert: validCreditCard equals: sale chargedCreditCard.
+	self assert: (priceList at: self item1SoldByStore) + (priceList at: self item2SoldByStore) equals: sale chargedAmount.
+	self assert: (Bag with: self item1SoldByStore with: self item2SoldByStore) equals: sale itemsSold.
+	! !
+
+!classDefinition: #CashierTests category: 'TusLibros' stamp: 'AS 11/1/2022 23:52:23'!
+TestCase subclass: #CashierTests
+	instanceVariableNames: 'storeCatalog cart salesBook priceList validCreditCard expiredCreditCard merchantProcessorDouble stolenCreditCard'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!CashierTests methodsFor: 'tests' stamp: 'AS 11/1/2022 23:52:21'!
+test04CanNotCheckoutWithStolenCard
+	
+	cart add: self item1SoldByStore.
+	
+	self should: [Cashier checkout: cart chargingWith: merchantProcessorDouble withCard: stolenCreditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: Cashier canNotCheckoutWithStolenCardErrorMessage.].! !
+
+!testRun: #CashierTests #test04CanNotCheckoutWithStolenCard stamp: 'AS 11/1/2022 23:54:31'!
+ERROR!
+!CashierTests methodsFor: 'setup - tear down' stamp: 'AS 11/1/2022 23:54:51' prior: 50559103 overrides: 16961394!
+setUp 
+	
+	| cardNumber |
+	storeCatalog := OrderedCollection with: self item1SoldByStore with: self item2SoldByStore.
+	cart := Cart withCatalog: storeCatalog.
+	salesBook := OrderedCollection new.
+	priceList := Dictionary newFromPairs: (Array with: self item1SoldByStore with: self item1Price with: self item2SoldByStore with: self item2Price).
+	cardNumber := '1234567812345678'.
+	validCreditCard := CreditCard for: 'Homero Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.
+	expiredCreditCard := CreditCard for: 'Homero Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current next.
+	stolenCreditCard := CreditCard for: 'Lisa Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current next.! !
+
+!testRun: #CashierTests #test01CanNotCheckoutEmptyCart stamp: 'AS 11/1/2022 23:54:52'!
+PASSED!
+
+!testRun: #CashierTests #test02CanCheckoutCartWithItemsAndCorrectlyChargeCard stamp: 'AS 11/1/2022 23:54:52'!
+PASSED!
+
+!testRun: #CashierTests #test03CanNotCheckoutWithExpiredCard stamp: 'AS 11/1/2022 23:54:52'!
+PASSED!
+
+!testRun: #CashierTests #test04CanNotCheckoutWithStolenCard stamp: 'AS 11/1/2022 23:54:52'!
+ERROR!
+
+!testRun: #CashierTests #test04CanNotCheckoutWithStolenCard stamp: 'AS 11/1/2022 23:54:52'!
+ERROR!
+!Cashier class methodsFor: 'error message' stamp: 'AS 11/1/2022 23:54:57'!
+canNotCheckoutWithStolenCardErrorMessage
+	self shouldBeImplemented.! !
+!Cashier class methodsFor: 'error message' stamp: 'AS 11/1/2022 23:55:13' prior: 50559238!
+canNotCheckoutWithStolenCardErrorMessage
+	
+	^'Can not checkout with stolen card!!'! !
+
+!testRun: #CashierTests #test04CanNotCheckoutWithStolenCard stamp: 'AS 11/1/2022 23:55:14'!
+FAILURE!
+!CashierTests methodsFor: 'setup - tear down' stamp: 'AS 11/1/2022 23:55:23' prior: 50559195 overrides: 16961394!
+setUp 
+	
+	| cardNumber |
+	storeCatalog := OrderedCollection with: self item1SoldByStore with: self item2SoldByStore.
+	cart := Cart withCatalog: storeCatalog.
+	salesBook := OrderedCollection new.
+	priceList := Dictionary newFromPairs: (Array with: self item1SoldByStore with: self item1Price with: self item2SoldByStore with: self item2Price).
+	cardNumber := '1234567812345678'.
+	validCreditCard := CreditCard for: 'Homero Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.
+	expiredCreditCard := CreditCard for: 'Homero Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current next.
+	stolenCreditCard := CreditCard for: 'Lisa Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.! !
+
+!testRun: #CashierTests #test01CanNotCheckoutEmptyCart stamp: 'AS 11/1/2022 23:55:23'!
+PASSED!
+
+!testRun: #CashierTests #test02CanCheckoutCartWithItemsAndCorrectlyChargeCard stamp: 'AS 11/1/2022 23:55:23'!
+PASSED!
+
+!testRun: #CashierTests #test03CanNotCheckoutWithExpiredCard stamp: 'AS 11/1/2022 23:55:23'!
+PASSED!
+
+!testRun: #CashierTests #test04CanNotCheckoutWithStolenCard stamp: 'AS 11/1/2022 23:55:23'!
+FAILURE!
+
+!testRun: #CashierTests #test04CanNotCheckoutWithStolenCard stamp: 'AS 11/1/2022 23:55:23'!
+FAILURE!
+!Cashier methodsFor: 'initialization' stamp: 'AS 11/1/2022 23:56:23'!
+initializeCheckout: aCart chargingWith: aMerchantProcessor withCard: aCardToCharge usingPriceList: aPriceList registeringOn: aSalesBook 
+	
+	| amountToDebit |
+	
+	cart := aCart.
+	cardToCharge := aCardToCharge.
+	priceList := aPriceList.
+	salesBook := aSalesBook.
+	amountToDebit := (cart content inject: 0 into: [:accumulatedAmount :anItem | accumulatedAmount + priceList at: anItem]) .
+	self debit: amountToDebit fromCard: cardToCharge.
+	salesBook add: (Sale of: cart content havingCharged: amountToDebit on: cardToCharge).! !
+!Cashier class methodsFor: 'as yet unclassified' stamp: 'AS 11/1/2022 23:56:23' prior: 50558985!
+checkout: aCart chargingWith: aMerchantProcessor withCard: aCardToCharge usingPriceList: aPriceList registeringOn: aSalesBook onDate: aFixedGregorianDate 
+
+	self assertIsNotEmpty: aCart.
+	self assertCard: aCardToCharge isNotExpiredOn: aFixedGregorianDate.
+	^self new initializeCheckout: aCart chargingWith: aMerchantProcessor withCard: aCardToCharge usingPriceList: aPriceList registeringOn: aSalesBook ! !
+
+!methodRemoval: Cashier #initializeCheckout:withCard:usingPriceList:registeringOn: stamp: 'AS 11/1/2022 23:56:23'!
+initializeCheckout: aCart withCard: aCardToCharge usingPriceList: aPriceList registeringOn: aSalesBook 
+	
+	| amountToDebit |
+	
+	cart := aCart.
+	cardToCharge := aCardToCharge.
+	priceList := aPriceList.
+	salesBook := aSalesBook.
+	amountToDebit := (cart content inject: 0 into: [:accumulatedAmount :anItem | accumulatedAmount + priceList at: anItem]) .
+	self debit: amountToDebit fromCard: cardToCharge.
+	salesBook add: (Sale of: cart content havingCharged: amountToDebit on: cardToCharge).!
+!Cashier methodsFor: 'initialization' stamp: 'AS 11/1/2022 23:56:34' prior: 50559298!
+initializeCheckout: aCart chargingWith: aMerchantProcessor withCard: aCardToCharge usingPriceList: aPriceList registeringOn: aSalesBook 
+	
+	| amountToDebit |
+	
+	cart := aCart.
+	cardToCharge := aCardToCharge.
+	priceList := aPriceList.
+	salesBook := aSalesBook.
+	amountToDebit := (cart content inject: 0 into: [:accumulatedAmount :anItem | accumulatedAmount + priceList at: anItem]) .
+	aMerchantProcessor debit: amountToDebit fromCard: cardToCharge.
+	salesBook add: (Sale of: cart content havingCharged: amountToDebit on: cardToCharge).! !
+
+!testRun: #CashierTests #test01CanNotCheckoutEmptyCart stamp: 'AS 11/1/2022 23:56:35'!
+PASSED!
+
+!testRun: #CashierTests #test02CanCheckoutCartWithItemsAndCorrectlyChargeCard stamp: 'AS 11/1/2022 23:56:35'!
+ERROR!
+
+!testRun: #CashierTests #test03CanNotCheckoutWithExpiredCard stamp: 'AS 11/1/2022 23:56:35'!
+PASSED!
+
+!testRun: #CashierTests #test04CanNotCheckoutWithStolenCard stamp: 'AS 11/1/2022 23:56:35'!
+ERROR!
+
+!testRun: #CashierTests #test02CanCheckoutCartWithItemsAndCorrectlyChargeCard stamp: 'AS 11/1/2022 23:56:38'!
+ERROR!
+
+!classDefinition: #MerchanProcessorDouble category: 'TusLibros' stamp: 'AS 11/1/2022 23:57:27'!
+Object subclass: #MerchanProcessorDouble
+	instanceVariableNames: 'stolenCards'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!CashierTests methodsFor: 'setup - tear down' stamp: 'AS 11/1/2022 23:57:19' prior: 50559254 overrides: 16961394!
+setUp 
+	
+	| cardNumber |
+	storeCatalog := OrderedCollection with: self item1SoldByStore with: self item2SoldByStore.
+	cart := Cart withCatalog: storeCatalog.
+	salesBook := OrderedCollection new.
+	priceList := Dictionary newFromPairs: (Array with: self item1SoldByStore with: self item1Price with: self item2SoldByStore with: self item2Price).
+	cardNumber := '1234567812345678'.
+	validCreditCard := CreditCard for: 'Homero Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.
+	expiredCreditCard := CreditCard for: 'Homero Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current next.
+	stolenCreditCard := CreditCard for: 'Lisa Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.
+	merchantProcessorDouble := MerchanProcessorDouble withStolenCards: (OrderedCollection with: stolenCreditCard).! !
+!MerchanProcessorDouble class methodsFor: 'instance creation' stamp: 'AS 11/1/2022 23:57:38'!
+withStolenCards: anOrderedCollection 
+	"DO NOT FORGET TO RENAME COLLABORATORS AND REMOVE THIS COMMENT!!!!"
+	self shouldBeImplemented.
+	^self new initializeWithStolenCards: anOrderedCollection ! !
+!MerchanProcessorDouble class methodsFor: 'instance creation' stamp: 'AS 11/1/2022 23:57:52' prior: 50559429!
+withStolenCards: aCollectionOfStolenCards
+
+	^self new initializeWithStolenCards: aCollectionOfStolenCards ! !
+
+!classDefinition: #MerchanProcessorDouble category: 'TusLibros' stamp: 'AS 11/1/2022 23:58:00'!
+Object subclass: #MerchanProcessorDouble
+	instanceVariableNames: 'stolenCards collectionOfStolenCards'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!MerchanProcessorDouble methodsFor: 'initialization' stamp: 'AS 11/1/2022 23:58:00'!
+initializeWithStolenCards: aCollectionOfStolenCards 
+	self shouldBeImplemented.
+	collectionOfStolenCards := aCollectionOfStolenCards.! !
+!MerchanProcessorDouble methodsFor: 'initialization' stamp: 'AS 11/1/2022 23:58:04' prior: 50559454!
+initializeWithStolenCards: aCollectionOfStolenCards 
+
+	collectionOfStolenCards := aCollectionOfStolenCards.! !
+!MerchanProcessorDouble methodsFor: 'initialization' stamp: 'AS 11/1/2022 23:58:08' prior: 50559462!
+initializeWithStolenCards: aCollectionOfStolenCards 
+
+	stolenCards := aCollectionOfStolenCards.! !
+
+!testRun: #CashierTests #test01CanNotCheckoutEmptyCart stamp: 'AS 11/1/2022 23:58:09'!
+PASSED!
+
+!testRun: #CashierTests #test02CanCheckoutCartWithItemsAndCorrectlyChargeCard stamp: 'AS 11/1/2022 23:58:10'!
+ERROR!
+!MerchanProcessorDouble methodsFor: 'debit' stamp: 'AS 11/1/2022 23:58:17'!
+debit: aSmallInteger fromCard: aCreditCard 
+	self shouldBeImplemented.! !
+!MerchanProcessorDouble methodsFor: 'debit' stamp: 'AS 11/1/2022 23:59:02' prior: 50559482!
+debit: anAmountToDebit fromCard: aCreditCardToDebitFrom 
+
+	(stolenCards includes: aCreditCardToDebitFrom) ifTrue: [Cashier canNotCheckoutWithStolenCardErrorSignal]
+
+	
+! !
+
+!testRun: #CashierTests #test02CanCheckoutCartWithItemsAndCorrectlyChargeCard stamp: 'AS 11/1/2022 23:59:07'!
+PASSED!
+
+!testRun: #CashierTests #test03CanNotCheckoutWithExpiredCard stamp: 'AS 11/1/2022 23:59:09'!
+PASSED!
+
+!testRun: #CashierTests #test04CanNotCheckoutWithStolenCard stamp: 'AS 11/1/2022 23:59:10'!
+ERROR!
+!Cashier class methodsFor: 'error signal' stamp: 'AS 11/1/2022 23:59:15'!
+canNotCheckoutWithStolenCardErrorSignal
+	self shouldBeImplemented.! !
+!Cashier class methodsFor: 'error signal' stamp: 'AS 11/1/2022 23:59:24' prior: 50559506!
+canNotCheckoutWithStolenCardErrorSignal
+
+	self error: self canNotCheckoutWithStolenCardErrorMessage ! !
+
+!testRun: #CashierTests #test04CanNotCheckoutWithStolenCard stamp: 'AS 11/1/2022 23:59:29'!
+PASSED!
+
+!testRun: #CashierTests #test01CanNotCheckoutEmptyCart stamp: 'AS 11/1/2022 23:59:31'!
+PASSED!
+
+!testRun: #CashierTests #test02CanCheckoutCartWithItemsAndCorrectlyChargeCard stamp: 'AS 11/1/2022 23:59:31'!
+PASSED!
+
+!testRun: #CashierTests #test03CanNotCheckoutWithExpiredCard stamp: 'AS 11/1/2022 23:59:31'!
+PASSED!
+
+!testRun: #CashierTests #test04CanNotCheckoutWithStolenCard stamp: 'AS 11/1/2022 23:59:31'!
+PASSED!
+
+----QUIT----(1 November 2022 23:59:39) CuisUniversity-5481.image priorSource: 7255445!
+
+----STARTUP---- (1 November 2022 23:59:44) as /home/andisici/Documents/2022/ing-2c2022/cuisTusLibros/CuisUniversity-5481.image!
+
+!CashierTests methodsFor: 'setup - tear down' stamp: 'AS 11/2/2022 00:02:01' prior: 50559398 overrides: 16961394!
+setUp 
+	
+	| cardNumber |
+	storeCatalog := OrderedCollection with: self item1SoldByStore with: self item2SoldByStore.
+	cart := Cart withCatalog: storeCatalog.
+	salesBook := OrderedCollection new.
+	priceList := Dictionary newFromPairs: (Array with: self item1SoldByStore with: self item1Price with: self item2SoldByStore with: self item2Price).
+	cardNumber := '1234567812345678'.
+	validCreditCard := CreditCard for: 'Homero Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.
+	expiredCreditCard := CreditCard for: 'Bart Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current next.
+	stolenCreditCard := CreditCard for: 'Lisa Simpsons' withNumber: cardNumber withExpirationDate: GregorianMonthOfYear current previous.
+	merchantProcessorDouble := MerchanProcessorDouble withStolenCards: (OrderedCollection with: stolenCreditCard).! !
+
+!testRun: #CashierTests #test01CanNotCheckoutEmptyCart stamp: 'AS 11/2/2022 00:02:01'!
+PASSED!
+
+!testRun: #CashierTests #test02CanCheckoutCartWithItemsAndCorrectlyChargeCard stamp: 'AS 11/2/2022 00:02:01'!
+PASSED!
+
+!testRun: #CashierTests #test03CanNotCheckoutWithExpiredCard stamp: 'AS 11/2/2022 00:02:01'!
+PASSED!
+
+!testRun: #CashierTests #test04CanNotCheckoutWithStolenCard stamp: 'AS 11/2/2022 00:02:01'!
+PASSED!
+!MerchanProcessorDouble methodsFor: 'debit' stamp: 'AS 11/2/2022 00:03:00'!
+assertIsNotStolen: aCreditCardToDebitFrom
+
+	^ (stolenCards includes: aCreditCardToDebitFrom) ifTrue: [Cashier canNotCheckoutWithStolenCardErrorSignal]! !
+!MerchanProcessorDouble methodsFor: 'debit' stamp: 'AS 11/2/2022 00:03:00' prior: 50559488!
+debit: anAmountToDebit fromCard: aCreditCardToDebitFrom 
+
+	self assertIsNotStolen: aCreditCardToDebitFrom
+
+	
+! !
+
+----SNAPSHOT----(2 November 2022 00:03:52) CuisUniversity-5481.image priorSource: 7292238!
