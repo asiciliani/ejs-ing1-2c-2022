@@ -146,12 +146,13 @@ setUp
 												withNegativeBalanceCards: (OrderedCollection with: notEnoughBalanceCreditCard).! !
 
 
-!CashierTests methodsFor: 'tests' stamp: 'AS 11/2/2022 00:37:42'!
+!CashierTests methodsFor: 'tests' stamp: 'AS 11/2/2022 00:57:00'!
 test01CanNotCheckoutEmptyCart
 	
 	self should: [(Cashier for: cart chargingWith: merchantProcessorDouble withCard: validCreditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today) checkout ]
 		raise: Error - MessageNotUnderstood 
-		withExceptionDo: [:anError | self assert: anError messageText equals: Cashier canNotCheckoutEmptyCartErrorMessage.].! !
+		withExceptionDo: [:anError | self assert: anError messageText equals: Cashier canNotCheckoutEmptyCartErrorMessage.
+							   self deny: (merchantProcessorDouble hasProcessedCard: validCreditCard)].! !
 
 !CashierTests methodsFor: 'tests' stamp: 'AS 11/2/2022 00:37:42'!
 test02CanCheckoutCartWithItemsAndCorrectlyChargeCard
@@ -169,32 +170,35 @@ test02CanCheckoutCartWithItemsAndCorrectlyChargeCard
 	self assert: (Bag with: self item1SoldByStore with: self item2SoldByStore) equals: sale itemsSold.
 	! !
 
-!CashierTests methodsFor: 'tests' stamp: 'AS 11/2/2022 00:37:42'!
+!CashierTests methodsFor: 'tests' stamp: 'AS 11/2/2022 00:50:18'!
 test03CanNotCheckoutWithExpiredCard
 	
 	cart add: self item1SoldByStore.
 	
 	self should: [(Cashier for: cart chargingWith: merchantProcessorDouble withCard: expiredCreditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today) checkout]
 		raise: Error - MessageNotUnderstood 
-		withExceptionDo: [:anError | self assert: anError messageText equals: Cashier canNotCheckoutWithExpiredCardErrorMessage.].! !
+		withExceptionDo: [:anError | self assert: anError messageText equals: Cashier canNotCheckoutWithExpiredCardErrorMessage.
+							    self deny: (merchantProcessorDouble hasProcessedCard: expiredCreditCard).].! !
 
-!CashierTests methodsFor: 'tests' stamp: 'AS 11/2/2022 00:37:42'!
+!CashierTests methodsFor: 'tests' stamp: 'AS 11/2/2022 00:52:24'!
 test04CanNotCheckoutWithStolenCard
 	
 	cart add: self item1SoldByStore.
 	
 	self should: [(Cashier for: cart chargingWith: merchantProcessorDouble withCard: stolenCreditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today) checkout]
 		raise: Error - MessageNotUnderstood 
-		withExceptionDo: [:anError | self assert: anError messageText equals: Cashier canNotCheckoutWithStolenCardErrorMessage.].! !
+		withExceptionDo: [:anError | self assert: anError messageText equals: Cashier canNotCheckoutWithStolenCardErrorMessage.
+							    self assert: (merchantProcessorDouble hasProcessedCard: stolenCreditCard).].! !
 
-!CashierTests methodsFor: 'tests' stamp: 'AS 11/2/2022 00:37:43'!
+!CashierTests methodsFor: 'tests' stamp: 'AS 11/2/2022 00:57:45'!
 test05CanNotCheckoutWithCardWithNotEnoughBalance
 	
 	cart add: self item1SoldByStore.
 	
 	self should: [(Cashier for: cart chargingWith: merchantProcessorDouble withCard: notEnoughBalanceCreditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today) checkout]
 		raise: Error - MessageNotUnderstood 
-		withExceptionDo: [:anError | self assert: anError messageText equals: Cashier canNotCheckoutIfCardDoesNotHaveEnoughBalanceErrorMessage.].! !
+		withExceptionDo: [:anError | self assert: anError messageText equals: Cashier canNotCheckoutIfCardDoesNotHaveEnoughBalanceErrorMessage.
+							   self assert: (merchantProcessorDouble hasProcessedCard: notEnoughBalanceCreditCard)].! !
 
 
 !classDefinition: #CreditCardTests category: 'TusLibros'!
@@ -422,7 +426,7 @@ assertIsNotEmpty: aCart
 	^ aCart isEmpty ifTrue: [self canNotCheckoutEmptyCartErrorSignal]! !
 
 
-!Cashier class methodsFor: 'instance creation' stamp: 'AS 11/2/2022 00:37:42'!
+!Cashier class methodsFor: 'instance creation' stamp: 'AS 11/2/2022 00:56:10'!
 for: aCart chargingWith: aMerchantProcessor withCard: aCardToCharge usingPriceList: aPriceList registeringOn: aSalesBook onDate: aFixedGregorianDate 
 
 	self assertIsNotEmpty: aCart.
@@ -536,16 +540,17 @@ cardOwnerNameCanNotBeEmptyErrorMessage
 
 !classDefinition: #MerchanProcessorDouble category: 'TusLibros'!
 Object subclass: #MerchanProcessorDouble
-	instanceVariableNames: 'stolenCards collectionOfStolenCards negativeBalanceCards'
+	instanceVariableNames: 'stolenCards collectionOfStolenCards negativeBalanceCards processedCards'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TusLibros'!
 
-!MerchanProcessorDouble methodsFor: 'initialization' stamp: 'AS 11/2/2022 00:22:29'!
+!MerchanProcessorDouble methodsFor: 'initialization' stamp: 'AS 11/2/2022 00:49:10'!
 initializeWithStolenCards: aCollectionOfStolenCards withNegativeBalanceCards: aCollectionOfNegativeBalanceCards  
 
 	stolenCards := aCollectionOfStolenCards.
-	negativeBalanceCards := aCollectionOfNegativeBalanceCards.! !
+	negativeBalanceCards := aCollectionOfNegativeBalanceCards.
+	processedCards := OrderedCollection new.! !
 
 
 !MerchanProcessorDouble methodsFor: 'debit' stamp: 'AS 11/2/2022 00:30:46'!
@@ -553,9 +558,10 @@ assertHasEnoughBalance: aCreditCardToDebitFrom
 
 	^ (negativeBalanceCards includes: aCreditCardToDebitFrom) ifTrue: [Cashier canNotCheckoutIfCardDoesNotHaveEnoughBalanceErrorSignal]! !
 
-!MerchanProcessorDouble methodsFor: 'debit' stamp: 'AS 11/2/2022 00:30:46'!
+!MerchanProcessorDouble methodsFor: 'debit' stamp: 'AS 11/2/2022 00:55:59'!
 debit: anAmountToDebit fromCard: aCreditCardToDebitFrom 
-
+	
+	processedCards add: aCreditCardToDebitFrom.
 	self assertIsNotStolen: aCreditCardToDebitFrom.
 	self assertHasEnoughBalance: aCreditCardToDebitFrom
 
@@ -567,6 +573,12 @@ debit: anAmountToDebit fromCard: aCreditCardToDebitFrom
 assertIsNotStolen: aCreditCardToDebitFrom
 
 	^ (stolenCards includes: aCreditCardToDebitFrom) ifTrue: [Cashier canNotCheckoutWithStolenCardErrorSignal]! !
+
+
+!MerchanProcessorDouble methodsFor: 'testing' stamp: 'AS 11/2/2022 00:48:49'!
+hasProcessedCard: aCardToCheckIfHasBeenProcessed
+	
+	^processedCards includes: aCardToCheckIfHasBeenProcessed ! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 

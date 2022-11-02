@@ -6008,3 +6008,443 @@ checkout: aCart chargingWith: aMerchantProcessor withCard: aCardToCharge usingPr
 	^self new initializeCheckout: aCart chargingWith: aMerchantProcessor withCard: aCardToCharge usingPriceList: aPriceList registeringOn: aSalesBook !
 
 ----SNAPSHOT----(2 November 2022 00:38:10) CuisUniversity-5481.image priorSource: 7305627!
+!CashierTests methodsFor: 'tests' stamp: 'AS 11/2/2022 00:47:25' prior: 50560276!
+test04CanNotCheckoutWithStolenCard
+	
+	cart add: self item1SoldByStore.
+	
+	self should: [(Cashier for: cart chargingWith: merchantProcessorDouble withCard: stolenCreditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today) checkout]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: Cashier canNotCheckoutWithStolenCardErrorMessage.
+							   self deny: merchantProcessorDouble hasProcessedCard: stolenCreditCard.].! !
+
+!testRun: #CashierTests #test04CanNotCheckoutWithStolenCard stamp: 'AS 11/2/2022 00:47:28'!
+ERROR!
+!CashierTests methodsFor: 'tests' stamp: 'AS 11/2/2022 00:47:46' prior: 50560330!
+test04CanNotCheckoutWithStolenCard
+	
+	cart add: self item1SoldByStore.
+	
+	self should: [(Cashier for: cart chargingWith: merchantProcessorDouble withCard: stolenCreditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today) checkout]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: Cashier canNotCheckoutWithStolenCardErrorMessage.
+							   self deny: (merchantProcessorDouble hasProcessedCard: stolenCreditCard).].! !
+
+!testRun: #CashierTests #test04CanNotCheckoutWithStolenCard stamp: 'AS 11/2/2022 00:47:47'!
+ERROR!
+!MerchanProcessorDouble methodsFor: 'testing' stamp: 'AS 11/2/2022 00:47:55'!
+hasProcessedCard: aCreditCard 
+	self shouldBeImplemented.! !
+
+!classDefinition: #MerchanProcessorDouble category: 'TusLibros' stamp: 'AS 11/2/2022 00:48:43'!
+Object subclass: #MerchanProcessorDouble
+	instanceVariableNames: 'stolenCards collectionOfStolenCards negativeBalanceCards processedCards'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!MerchanProcessorDouble methodsFor: 'testing' stamp: 'AS 11/2/2022 00:48:49' prior: 50560374!
+hasProcessedCard: aCardToCheckIfHasBeenProcessed
+	
+	^processedCards includes: aCardToCheckIfHasBeenProcessed ! !
+
+!testRun: #CashierTests #test04CanNotCheckoutWithStolenCard stamp: 'AS 11/2/2022 00:48:50'!
+ERROR!
+!MerchanProcessorDouble methodsFor: 'initialization' stamp: 'AS 11/2/2022 00:49:10' prior: 50559838!
+initializeWithStolenCards: aCollectionOfStolenCards withNegativeBalanceCards: aCollectionOfNegativeBalanceCards  
+
+	stolenCards := aCollectionOfStolenCards.
+	negativeBalanceCards := aCollectionOfNegativeBalanceCards.
+	processedCards := OrderedCollection new.! !
+
+!testRun: #CashierTests #test01CanNotCheckoutEmptyCart stamp: 'AS 11/2/2022 00:49:10'!
+PASSED!
+
+!testRun: #CashierTests #test02CanCheckoutCartWithItemsAndCorrectlyChargeCard stamp: 'AS 11/2/2022 00:49:10'!
+PASSED!
+
+!testRun: #CashierTests #test03CanNotCheckoutWithExpiredCard stamp: 'AS 11/2/2022 00:49:10'!
+PASSED!
+
+!testRun: #CashierTests #test04CanNotCheckoutWithStolenCard stamp: 'AS 11/2/2022 00:49:10'!
+PASSED!
+
+!testRun: #CashierTests #test05CanNotCheckoutWithCardWithNotEnoughBalance stamp: 'AS 11/2/2022 00:49:10'!
+PASSED!
+
+!testRun: #CashierTests #test01CanNotCheckoutEmptyCart stamp: 'AS 11/2/2022 00:49:15'!
+PASSED!
+
+!testRun: #CashierTests #test02CanCheckoutCartWithItemsAndCorrectlyChargeCard stamp: 'AS 11/2/2022 00:49:15'!
+PASSED!
+
+!testRun: #CashierTests #test03CanNotCheckoutWithExpiredCard stamp: 'AS 11/2/2022 00:49:15'!
+PASSED!
+
+!testRun: #CashierTests #test04CanNotCheckoutWithStolenCard stamp: 'AS 11/2/2022 00:49:16'!
+PASSED!
+
+!testRun: #CashierTests #test05CanNotCheckoutWithCardWithNotEnoughBalance stamp: 'AS 11/2/2022 00:49:16'!
+PASSED!
+!CashierTests methodsFor: 'tests' stamp: 'AS 11/2/2022 00:50:04' prior: 50560352!
+test04CanNotCheckoutWithStolenCard
+	
+	cart add: self item1SoldByStore.
+	
+	self should: [(Cashier for: cart chargingWith: merchantProcessorDouble withCard: stolenCreditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today) checkout]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: Cashier canNotCheckoutWithStolenCardErrorMessage.].! !
+
+!testRun: #CashierTests #test04CanNotCheckoutWithStolenCard stamp: 'AS 11/2/2022 00:50:04'!
+PASSED!
+
+!testRun: #CashierTests #test01CanNotCheckoutEmptyCart stamp: 'AS 11/2/2022 00:50:04'!
+PASSED!
+
+!testRun: #CashierTests #test02CanCheckoutCartWithItemsAndCorrectlyChargeCard stamp: 'AS 11/2/2022 00:50:04'!
+PASSED!
+
+!testRun: #CashierTests #test03CanNotCheckoutWithExpiredCard stamp: 'AS 11/2/2022 00:50:04'!
+PASSED!
+
+!testRun: #CashierTests #test04CanNotCheckoutWithStolenCard stamp: 'AS 11/2/2022 00:50:04'!
+PASSED!
+
+!testRun: #CashierTests #test05CanNotCheckoutWithCardWithNotEnoughBalance stamp: 'AS 11/2/2022 00:50:04'!
+PASSED!
+!CashierTests methodsFor: 'tests' stamp: 'AS 11/2/2022 00:50:18' prior: 50560243!
+test03CanNotCheckoutWithExpiredCard
+	
+	cart add: self item1SoldByStore.
+	
+	self should: [(Cashier for: cart chargingWith: merchantProcessorDouble withCard: expiredCreditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today) checkout]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: Cashier canNotCheckoutWithExpiredCardErrorMessage.
+							    self deny: (merchantProcessorDouble hasProcessedCard: expiredCreditCard).].! !
+
+!testRun: #CashierTests #test03CanNotCheckoutWithExpiredCard stamp: 'AS 11/2/2022 00:50:18'!
+PASSED!
+
+!testRun: #CashierTests #test01CanNotCheckoutEmptyCart stamp: 'AS 11/2/2022 00:50:18'!
+PASSED!
+
+!testRun: #CashierTests #test02CanCheckoutCartWithItemsAndCorrectlyChargeCard stamp: 'AS 11/2/2022 00:50:18'!
+PASSED!
+
+!testRun: #CashierTests #test03CanNotCheckoutWithExpiredCard stamp: 'AS 11/2/2022 00:50:18'!
+PASSED!
+
+!testRun: #CashierTests #test04CanNotCheckoutWithStolenCard stamp: 'AS 11/2/2022 00:50:18'!
+PASSED!
+
+!testRun: #CashierTests #test05CanNotCheckoutWithCardWithNotEnoughBalance stamp: 'AS 11/2/2022 00:50:18'!
+PASSED!
+!CashierTests methodsFor: 'tests' stamp: 'AS 11/2/2022 00:50:51' prior: 50560444!
+test04CanNotCheckoutWithStolenCard
+	
+	cart add: self item1SoldByStore.
+	
+	self should: [(Cashier for: cart chargingWith: merchantProcessorDouble withCard: stolenCreditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today) checkout]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: Cashier canNotCheckoutWithStolenCardErrorMessage.
+							    self assert: (merchantProcessorDouble hasProcessedCard: expiredCreditCard).].! !
+
+!testRun: #CashierTests #test04CanNotCheckoutWithStolenCard stamp: 'AS 11/2/2022 00:50:51'!
+FAILURE!
+
+!testRun: #CashierTests #test04CanNotCheckoutWithStolenCard stamp: 'AS 11/2/2022 00:50:57'!
+FAILURE!
+!MerchanProcessorDouble methodsFor: 'debit' stamp: 'AS 11/2/2022 00:51:38' prior: 50559927!
+debit: anAmountToDebit fromCard: aCreditCardToDebitFrom 
+	
+	processedCards add: aCreditCardToDebitFrom.
+	self assertIsNotStolen: aCreditCardToDebitFrom.
+	self assertHasEnoughBalance: aCreditCardToDebitFrom
+
+	
+! !
+
+!testRun: #CashierTests #test04CanNotCheckoutWithStolenCard stamp: 'AS 11/2/2022 00:51:40'!
+FAILURE!
+!CashierTests methodsFor: 'tests' stamp: 'AS 11/2/2022 00:52:24' prior: 50560519!
+test04CanNotCheckoutWithStolenCard
+	
+	cart add: self item1SoldByStore.
+	
+	self should: [(Cashier for: cart chargingWith: merchantProcessorDouble withCard: stolenCreditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today) checkout]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: Cashier canNotCheckoutWithStolenCardErrorMessage.
+							    self assert: (merchantProcessorDouble hasProcessedCard: stolenCreditCard).].! !
+
+!testRun: #CashierTests #test03CanNotCheckoutWithExpiredCard stamp: 'AS 11/2/2022 00:52:28'!
+PASSED!
+
+!testRun: #CashierTests #test03CanNotCheckoutWithExpiredCard stamp: 'AS 11/2/2022 00:52:30'!
+PASSED!
+
+!testRun: #CashierTests #test01CanNotCheckoutEmptyCart stamp: 'AS 11/2/2022 00:52:30'!
+PASSED!
+
+!testRun: #CashierTests #test02CanCheckoutCartWithItemsAndCorrectlyChargeCard stamp: 'AS 11/2/2022 00:52:30'!
+PASSED!
+
+!testRun: #CashierTests #test03CanNotCheckoutWithExpiredCard stamp: 'AS 11/2/2022 00:52:30'!
+PASSED!
+
+!testRun: #CashierTests #test04CanNotCheckoutWithStolenCard stamp: 'AS 11/2/2022 00:52:30'!
+PASSED!
+
+!testRun: #CashierTests #test05CanNotCheckoutWithCardWithNotEnoughBalance stamp: 'AS 11/2/2022 00:52:30'!
+PASSED!
+!Cashier class methodsFor: 'instance creation' stamp: 'AS 11/2/2022 00:53:24' prior: 50560204!
+for: aCart chargingWith: aMerchantProcessor withCard: aCardToCharge usingPriceList: aPriceList registeringOn: aSalesBook onDate: aFixedGregorianDate 
+
+	self assertIsNotEmpty: aCart.
+	'self assertCard: aCardToCharge isNotExpiredOn: aFixedGregorianDate.'
+	^self new initializeCheckout: aCart chargingWith: aMerchantProcessor withCard: aCardToCharge usingPriceList: aPriceList registeringOn: aSalesBook ! !
+
+!testRun: #CashierTests #test01CanNotCheckoutEmptyCart stamp: 'AS 11/2/2022 00:53:24'!
+PASSED!
+
+!testRun: #CashierTests #test02CanCheckoutCartWithItemsAndCorrectlyChargeCard stamp: 'AS 11/2/2022 00:53:24'!
+ERROR!
+
+!testRun: #CashierTests #test03CanNotCheckoutWithExpiredCard stamp: 'AS 11/2/2022 00:53:24'!
+ERROR!
+
+!testRun: #CashierTests #test04CanNotCheckoutWithStolenCard stamp: 'AS 11/2/2022 00:53:24'!
+ERROR!
+
+!testRun: #CashierTests #test05CanNotCheckoutWithCardWithNotEnoughBalance stamp: 'AS 11/2/2022 00:53:24'!
+ERROR!
+
+!testRun: #CashierTests #test02CanCheckoutCartWithItemsAndCorrectlyChargeCard stamp: 'AS 11/2/2022 00:53:26'!
+ERROR!
+!Cashier class methodsFor: 'instance creation' stamp: 'AS 11/2/2022 00:53:34' prior: 50560601!
+for: aCart chargingWith: aMerchantProcessor withCard: aCardToCharge usingPriceList: aPriceList registeringOn: aSalesBook onDate: aFixedGregorianDate 
+
+	self assertIsNotEmpty: aCart.
+	'self assertCard: aCardToCharge isNotExpiredOn: aFixedGregorianDate.'.
+	^self new initializeCheckout: aCart chargingWith: aMerchantProcessor withCard: aCardToCharge usingPriceList: aPriceList registeringOn: aSalesBook ! !
+
+!testRun: #CashierTests #test01CanNotCheckoutEmptyCart stamp: 'AS 11/2/2022 00:53:34'!
+PASSED!
+
+!testRun: #CashierTests #test02CanCheckoutCartWithItemsAndCorrectlyChargeCard stamp: 'AS 11/2/2022 00:53:34'!
+PASSED!
+
+!testRun: #CashierTests #test03CanNotCheckoutWithExpiredCard stamp: 'AS 11/2/2022 00:53:34'!
+FAILURE!
+
+!testRun: #CashierTests #test04CanNotCheckoutWithStolenCard stamp: 'AS 11/2/2022 00:53:34'!
+PASSED!
+
+!testRun: #CashierTests #test05CanNotCheckoutWithCardWithNotEnoughBalance stamp: 'AS 11/2/2022 00:53:34'!
+PASSED!
+
+!testRun: #CashierTests #test03CanNotCheckoutWithExpiredCard stamp: 'AS 11/2/2022 00:53:34'!
+FAILURE!
+
+!testRun: #CashierTests #test01CanNotCheckoutEmptyCart stamp: 'AS 11/2/2022 00:54:01'!
+PASSED!
+
+!testRun: #CashierTests #test02CanCheckoutCartWithItemsAndCorrectlyChargeCard stamp: 'AS 11/2/2022 00:54:01'!
+PASSED!
+
+!testRun: #CashierTests #test03CanNotCheckoutWithExpiredCard stamp: 'AS 11/2/2022 00:54:01'!
+FAILURE!
+
+!testRun: #CashierTests #test04CanNotCheckoutWithStolenCard stamp: 'AS 11/2/2022 00:54:01'!
+PASSED!
+
+!testRun: #CashierTests #test05CanNotCheckoutWithCardWithNotEnoughBalance stamp: 'AS 11/2/2022 00:54:01'!
+PASSED!
+
+!testRun: #CashierTests #test03CanNotCheckoutWithExpiredCard stamp: 'AS 11/2/2022 00:54:01'!
+FAILURE!
+!MerchanProcessorDouble methodsFor: 'debit' stamp: 'AS 11/2/2022 00:55:31' prior: 50560545!
+debit: anAmountToDebit fromCard: aCreditCardToDebitFrom 
+	
+	processedCards add: aCreditCardToDebitFrom.
+	self assertCard: aCreditCardToDebitFrom isNotExpiredOn: FixedGregorianDate today.
+	self assertIsNotStolen: aCreditCardToDebitFrom.
+	self assertHasEnoughBalance: aCreditCardToDebitFrom
+
+	
+! !
+
+!testRun: #CashierTests #test01CanNotCheckoutEmptyCart stamp: 'AS 11/2/2022 00:55:31'!
+PASSED!
+
+!testRun: #CashierTests #test02CanCheckoutCartWithItemsAndCorrectlyChargeCard stamp: 'AS 11/2/2022 00:55:31'!
+ERROR!
+
+!testRun: #CashierTests #test03CanNotCheckoutWithExpiredCard stamp: 'AS 11/2/2022 00:55:31'!
+ERROR!
+
+!testRun: #CashierTests #test04CanNotCheckoutWithStolenCard stamp: 'AS 11/2/2022 00:55:31'!
+ERROR!
+
+!testRun: #CashierTests #test05CanNotCheckoutWithCardWithNotEnoughBalance stamp: 'AS 11/2/2022 00:55:31'!
+ERROR!
+
+!testRun: #CashierTests #test02CanCheckoutCartWithItemsAndCorrectlyChargeCard stamp: 'AS 11/2/2022 00:55:33'!
+ERROR!
+!MerchanProcessorDouble methodsFor: 'debit' stamp: 'AS 11/2/2022 00:55:42' prior: 50560693!
+debit: anAmountToDebit fromCard: aCreditCardToDebitFrom 
+	
+	processedCards add: aCreditCardToDebitFrom.
+	Cashier assertCard: aCreditCardToDebitFrom isNotExpiredOn: FixedGregorianDate today.
+	self assertIsNotStolen: aCreditCardToDebitFrom.
+	self assertHasEnoughBalance: aCreditCardToDebitFrom
+
+	
+! !
+
+!testRun: #CashierTests #test01CanNotCheckoutEmptyCart stamp: 'AS 11/2/2022 00:55:42'!
+PASSED!
+
+!testRun: #CashierTests #test02CanCheckoutCartWithItemsAndCorrectlyChargeCard stamp: 'AS 11/2/2022 00:55:42'!
+PASSED!
+
+!testRun: #CashierTests #test03CanNotCheckoutWithExpiredCard stamp: 'AS 11/2/2022 00:55:42'!
+FAILURE!
+
+!testRun: #CashierTests #test04CanNotCheckoutWithStolenCard stamp: 'AS 11/2/2022 00:55:42'!
+PASSED!
+
+!testRun: #CashierTests #test05CanNotCheckoutWithCardWithNotEnoughBalance stamp: 'AS 11/2/2022 00:55:42'!
+PASSED!
+
+!testRun: #CashierTests #test03CanNotCheckoutWithExpiredCard stamp: 'AS 11/2/2022 00:55:42'!
+FAILURE!
+!MerchanProcessorDouble methodsFor: 'debit' stamp: 'AS 11/2/2022 00:55:54' prior: 50560726!
+debit: anAmountToDebit fromCard: aCreditCardToDebitFrom 
+	
+	processedCards add: aCreditCardToDebitFrom.
+	
+	self assertIsNotStolen: aCreditCardToDebitFrom.
+	self assertHasEnoughBalance: aCreditCardToDebitFrom
+
+	
+! !
+!MerchanProcessorDouble methodsFor: 'debit' stamp: 'AS 11/2/2022 00:55:59' prior: 50560759!
+debit: anAmountToDebit fromCard: aCreditCardToDebitFrom 
+	
+	processedCards add: aCreditCardToDebitFrom.
+	self assertIsNotStolen: aCreditCardToDebitFrom.
+	self assertHasEnoughBalance: aCreditCardToDebitFrom
+
+	
+! !
+!Cashier class methodsFor: 'instance creation' stamp: 'AS 11/2/2022 00:56:10' prior: 50560637!
+for: aCart chargingWith: aMerchantProcessor withCard: aCardToCharge usingPriceList: aPriceList registeringOn: aSalesBook onDate: aFixedGregorianDate 
+
+	self assertIsNotEmpty: aCart.
+	self assertCard: aCardToCharge isNotExpiredOn: aFixedGregorianDate.
+	^self new initializeCheckout: aCart chargingWith: aMerchantProcessor withCard: aCardToCharge usingPriceList: aPriceList registeringOn: aSalesBook ! !
+
+!testRun: #CashierTests #test01CanNotCheckoutEmptyCart stamp: 'AS 11/2/2022 00:56:10'!
+PASSED!
+
+!testRun: #CashierTests #test02CanCheckoutCartWithItemsAndCorrectlyChargeCard stamp: 'AS 11/2/2022 00:56:10'!
+PASSED!
+
+!testRun: #CashierTests #test03CanNotCheckoutWithExpiredCard stamp: 'AS 11/2/2022 00:56:10'!
+PASSED!
+
+!testRun: #CashierTests #test04CanNotCheckoutWithStolenCard stamp: 'AS 11/2/2022 00:56:10'!
+PASSED!
+
+!testRun: #CashierTests #test05CanNotCheckoutWithCardWithNotEnoughBalance stamp: 'AS 11/2/2022 00:56:10'!
+PASSED!
+!CashierTests methodsFor: 'tests' stamp: 'AS 11/2/2022 00:56:47' prior: 50560260!
+test01CanNotCheckoutEmptyCart
+	
+	self should: [(Cashier for: cart chargingWith: merchantProcessorDouble withCard: validCreditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today) checkout ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: Cashier canNotCheckoutEmptyCartErrorMessage.
+							   self deny: (merchantProcessorDouble hasProcessedCard: validCreditCard)].! !
+
+!testRun: #CashierTests #test01CanNotCheckoutEmptyCart stamp: 'AS 11/2/2022 00:56:47'!
+PASSED!
+
+!testRun: #CashierTests #test01CanNotCheckoutEmptyCart stamp: 'AS 11/2/2022 00:56:47'!
+PASSED!
+
+!testRun: #CashierTests #test02CanCheckoutCartWithItemsAndCorrectlyChargeCard stamp: 'AS 11/2/2022 00:56:47'!
+PASSED!
+
+!testRun: #CashierTests #test03CanNotCheckoutWithExpiredCard stamp: 'AS 11/2/2022 00:56:47'!
+PASSED!
+
+!testRun: #CashierTests #test04CanNotCheckoutWithStolenCard stamp: 'AS 11/2/2022 00:56:47'!
+PASSED!
+
+!testRun: #CashierTests #test05CanNotCheckoutWithCardWithNotEnoughBalance stamp: 'AS 11/2/2022 00:56:47'!
+PASSED!
+!CashierTests methodsFor: 'tests' stamp: 'AS 11/2/2022 00:56:53' prior: 50560811!
+test01CanNotCheckoutEmptyCart
+	
+	self should: [(Cashier for: cart chargingWith: merchantProcessorDouble withCard: validCreditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today) checkout ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: Cashier canNotCheckoutEmptyCartErrorMessage.
+							   self assert: (merchantProcessorDouble hasProcessedCard: validCreditCard)].! !
+
+!testRun: #CashierTests #test01CanNotCheckoutEmptyCart stamp: 'AS 11/2/2022 00:56:53'!
+FAILURE!
+!CashierTests methodsFor: 'tests' stamp: 'AS 11/2/2022 00:57:00' prior: 50560848!
+test01CanNotCheckoutEmptyCart
+	
+	self should: [(Cashier for: cart chargingWith: merchantProcessorDouble withCard: validCreditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today) checkout ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: Cashier canNotCheckoutEmptyCartErrorMessage.
+							   self deny: (merchantProcessorDouble hasProcessedCard: validCreditCard)].! !
+
+!testRun: #CashierTests #test01CanNotCheckoutEmptyCart stamp: 'AS 11/2/2022 00:57:01'!
+PASSED!
+
+!testRun: #CashierTests #test01CanNotCheckoutEmptyCart stamp: 'AS 11/2/2022 00:57:01'!
+PASSED!
+
+!testRun: #CashierTests #test02CanCheckoutCartWithItemsAndCorrectlyChargeCard stamp: 'AS 11/2/2022 00:57:01'!
+PASSED!
+
+!testRun: #CashierTests #test03CanNotCheckoutWithExpiredCard stamp: 'AS 11/2/2022 00:57:01'!
+PASSED!
+
+!testRun: #CashierTests #test04CanNotCheckoutWithStolenCard stamp: 'AS 11/2/2022 00:57:01'!
+PASSED!
+
+!testRun: #CashierTests #test05CanNotCheckoutWithCardWithNotEnoughBalance stamp: 'AS 11/2/2022 00:57:01'!
+PASSED!
+!CashierTests methodsFor: 'tests' stamp: 'AS 11/2/2022 00:57:45' prior: 50560293!
+test05CanNotCheckoutWithCardWithNotEnoughBalance
+	
+	cart add: self item1SoldByStore.
+	
+	self should: [(Cashier for: cart chargingWith: merchantProcessorDouble withCard: notEnoughBalanceCreditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today) checkout]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: Cashier canNotCheckoutIfCardDoesNotHaveEnoughBalanceErrorMessage.
+							   self assert: (merchantProcessorDouble hasProcessedCard: notEnoughBalanceCreditCard)].! !
+
+!testRun: #CashierTests #test05CanNotCheckoutWithCardWithNotEnoughBalance stamp: 'AS 11/2/2022 00:57:45'!
+PASSED!
+
+!testRun: #CashierTests #test01CanNotCheckoutEmptyCart stamp: 'AS 11/2/2022 00:57:45'!
+PASSED!
+
+!testRun: #CashierTests #test02CanCheckoutCartWithItemsAndCorrectlyChargeCard stamp: 'AS 11/2/2022 00:57:45'!
+PASSED!
+
+!testRun: #CashierTests #test03CanNotCheckoutWithExpiredCard stamp: 'AS 11/2/2022 00:57:45'!
+PASSED!
+
+!testRun: #CashierTests #test04CanNotCheckoutWithStolenCard stamp: 'AS 11/2/2022 00:57:45'!
+PASSED!
+
+!testRun: #CashierTests #test05CanNotCheckoutWithCardWithNotEnoughBalance stamp: 'AS 11/2/2022 00:57:45'!
+PASSED!
+
+----SNAPSHOT----(2 November 2022 00:58:03) CuisUniversity-5481.image priorSource: 7317649!
+
+----SNAPSHOT----(2 November 2022 00:58:20) CuisUniversity-5481.image priorSource: 7337470!
