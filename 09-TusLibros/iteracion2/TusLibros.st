@@ -1,60 +1,3 @@
-!classDefinition: #CardTests category: 'TusLibros'!
-TestCase subclass: #CardTests
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	category: 'TusLibros'!
-
-!CardTests methodsFor: 'tests' stamp: 'AS 11/1/2022 23:06:58'!
-test01CanNotCreateCardWithLessThan16DigitNumber
-
-	self should: [CreditCard for: self validOwnerName withNumber: self lessThan16DigitNumber withExpirationDate: FixedGregorianDate today ]
-		raise: Error - MessageNotUnderstood 
-		withExceptionDo: [:anError | self assert: anError messageText equals: CreditCard cardNumberMustBe16DigitsLongErrorMessage.]! !
-
-!CardTests methodsFor: 'tests' stamp: 'AS 11/1/2022 23:07:16'!
-test02CanNotCreateCardWithMoreThan16DigitNumber
-
-	self should: [CreditCard for: self validOwnerName withNumber: self overSixteenDigitNumber withExpirationDate: FixedGregorianDate today ]
-		raise: Error - MessageNotUnderstood 
-		withExceptionDo: [:anError | self assert: anError messageText equals: CreditCard cardNumberMustBe16DigitsLongErrorMessage.]! !
-
-!CardTests methodsFor: 'tests' stamp: 'AS 11/1/2022 23:07:28'!
-test03CanNotCreateCardWithEmptyName
-
-	self should: [CreditCard for: '' withNumber: self sixteenDigitNumber withExpirationDate: FixedGregorianDate today ]
-		raise: Error - MessageNotUnderstood 
-		withExceptionDo: [:anError | self assert: anError messageText equals: CreditCard cardOwnerNameCanNotBeEmptyErrorMessage.]! !
-
-!CardTests methodsFor: 'tests' stamp: 'AS 11/1/2022 23:12:35'!
-test04CanNotCreateCardWithNameWithOnlySeparators
-
-	self should: [CreditCard for: '  ' withNumber: self sixteenDigitNumber withExpirationDate: FixedGregorianDate today ]
-		raise: Error - MessageNotUnderstood 
-		withExceptionDo: [:anError | self assert: anError messageText equals: CreditCard cardOwnerNameCanNotBeEmptyErrorMessage.]! !
-
-
-!CardTests methodsFor: 'support' stamp: 'AS 11/1/2022 23:06:58'!
-lessThan16DigitNumber
-
-	^ '123456781234567'! !
-
-!CardTests methodsFor: 'support' stamp: 'AS 11/1/2022 23:07:16'!
-overSixteenDigitNumber
-
-	^ '12345678123456781'! !
-
-!CardTests methodsFor: 'support' stamp: 'AS 11/1/2022 23:07:28'!
-sixteenDigitNumber
-
-	^ '1234567812345678'! !
-
-!CardTests methodsFor: 'support' stamp: 'AS 11/1/2022 23:06:23'!
-validOwnerName
-
-	^ 'Homero Simpsons'! !
-
-
 !classDefinition: #CartTests category: 'TusLibros'!
 TestCase subclass: #CartTests
 	instanceVariableNames: 'storeCatalog cart'
@@ -203,14 +146,14 @@ setUp
 												withNegativeBalanceCards: (OrderedCollection with: notEnoughBalanceCreditCard).! !
 
 
-!CashierTests methodsFor: 'tests' stamp: 'AS 11/1/2022 23:51:12'!
+!CashierTests methodsFor: 'tests' stamp: 'AS 11/2/2022 00:37:42'!
 test01CanNotCheckoutEmptyCart
 	
-	self should: [Cashier checkout: cart chargingWith: merchantProcessorDouble withCard: validCreditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today ]
+	self should: [(Cashier for: cart chargingWith: merchantProcessorDouble withCard: validCreditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today) checkout ]
 		raise: Error - MessageNotUnderstood 
 		withExceptionDo: [:anError | self assert: anError messageText equals: Cashier canNotCheckoutEmptyCartErrorMessage.].! !
 
-!CashierTests methodsFor: 'tests' stamp: 'AS 11/1/2022 23:51:12'!
+!CashierTests methodsFor: 'tests' stamp: 'AS 11/2/2022 00:37:42'!
 test02CanCheckoutCartWithItemsAndCorrectlyChargeCard
 	
 	| sale |
@@ -218,7 +161,7 @@ test02CanCheckoutCartWithItemsAndCorrectlyChargeCard
 	cart add: self item1SoldByStore.
 	cart add: self item2SoldByStore.
 	
-	Cashier checkout: cart chargingWith: merchantProcessorDouble withCard: validCreditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today.
+	(Cashier for: cart chargingWith: merchantProcessorDouble withCard: validCreditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today) checkout.
 	
 	sale := salesBook first.
 	self assert: validCreditCard equals: sale chargedCreditCard.
@@ -226,32 +169,89 @@ test02CanCheckoutCartWithItemsAndCorrectlyChargeCard
 	self assert: (Bag with: self item1SoldByStore with: self item2SoldByStore) equals: sale itemsSold.
 	! !
 
-!CashierTests methodsFor: 'tests' stamp: 'AS 11/1/2022 23:22:30'!
+!CashierTests methodsFor: 'tests' stamp: 'AS 11/2/2022 00:37:42'!
 test03CanNotCheckoutWithExpiredCard
 	
 	cart add: self item1SoldByStore.
 	
-	self should: [Cashier checkout: cart chargingWith: merchantProcessorDouble withCard: expiredCreditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today]
+	self should: [(Cashier for: cart chargingWith: merchantProcessorDouble withCard: expiredCreditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today) checkout]
 		raise: Error - MessageNotUnderstood 
 		withExceptionDo: [:anError | self assert: anError messageText equals: Cashier canNotCheckoutWithExpiredCardErrorMessage.].! !
 
-!CashierTests methodsFor: 'tests' stamp: 'AS 11/1/2022 23:52:21'!
+!CashierTests methodsFor: 'tests' stamp: 'AS 11/2/2022 00:37:42'!
 test04CanNotCheckoutWithStolenCard
 	
 	cart add: self item1SoldByStore.
 	
-	self should: [Cashier checkout: cart chargingWith: merchantProcessorDouble withCard: stolenCreditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today]
+	self should: [(Cashier for: cart chargingWith: merchantProcessorDouble withCard: stolenCreditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today) checkout]
 		raise: Error - MessageNotUnderstood 
 		withExceptionDo: [:anError | self assert: anError messageText equals: Cashier canNotCheckoutWithStolenCardErrorMessage.].! !
 
-!CashierTests methodsFor: 'tests' stamp: 'AS 11/2/2022 00:10:28'!
+!CashierTests methodsFor: 'tests' stamp: 'AS 11/2/2022 00:37:43'!
 test05CanNotCheckoutWithCardWithNotEnoughBalance
 	
 	cart add: self item1SoldByStore.
 	
-	self should: [Cashier checkout: cart chargingWith: merchantProcessorDouble withCard: notEnoughBalanceCreditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today]
+	self should: [(Cashier for: cart chargingWith: merchantProcessorDouble withCard: notEnoughBalanceCreditCard usingPriceList: priceList registeringOn: salesBook onDate: FixedGregorianDate today) checkout]
 		raise: Error - MessageNotUnderstood 
 		withExceptionDo: [:anError | self assert: anError messageText equals: Cashier canNotCheckoutIfCardDoesNotHaveEnoughBalanceErrorMessage.].! !
+
+
+!classDefinition: #CreditCardTests category: 'TusLibros'!
+TestCase subclass: #CreditCardTests
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!CreditCardTests methodsFor: 'tests' stamp: 'AS 11/1/2022 23:06:58'!
+test01CanNotCreateCardWithLessThan16DigitNumber
+
+	self should: [CreditCard for: self validOwnerName withNumber: self lessThan16DigitNumber withExpirationDate: FixedGregorianDate today ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: CreditCard cardNumberMustBe16DigitsLongErrorMessage.]! !
+
+!CreditCardTests methodsFor: 'tests' stamp: 'AS 11/1/2022 23:07:16'!
+test02CanNotCreateCardWithMoreThan16DigitNumber
+
+	self should: [CreditCard for: self validOwnerName withNumber: self overSixteenDigitNumber withExpirationDate: FixedGregorianDate today ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: CreditCard cardNumberMustBe16DigitsLongErrorMessage.]! !
+
+!CreditCardTests methodsFor: 'tests' stamp: 'AS 11/1/2022 23:07:28'!
+test03CanNotCreateCardWithEmptyName
+
+	self should: [CreditCard for: '' withNumber: self sixteenDigitNumber withExpirationDate: FixedGregorianDate today ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: CreditCard cardOwnerNameCanNotBeEmptyErrorMessage.]! !
+
+!CreditCardTests methodsFor: 'tests' stamp: 'AS 11/1/2022 23:12:35'!
+test04CanNotCreateCardWithNameWithOnlySeparators
+
+	self should: [CreditCard for: '  ' withNumber: self sixteenDigitNumber withExpirationDate: FixedGregorianDate today ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: CreditCard cardOwnerNameCanNotBeEmptyErrorMessage.]! !
+
+
+!CreditCardTests methodsFor: 'support' stamp: 'AS 11/1/2022 23:06:58'!
+lessThan16DigitNumber
+
+	^ '123456781234567'! !
+
+!CreditCardTests methodsFor: 'support' stamp: 'AS 11/1/2022 23:07:16'!
+overSixteenDigitNumber
+
+	^ '12345678123456781'! !
+
+!CreditCardTests methodsFor: 'support' stamp: 'AS 11/1/2022 23:07:28'!
+sixteenDigitNumber
+
+	^ '1234567812345678'! !
+
+!CreditCardTests methodsFor: 'support' stamp: 'AS 11/1/2022 23:06:23'!
+validOwnerName
+
+	^ 'Homero Simpsons'! !
 
 
 !classDefinition: #Cart category: 'TusLibros'!
@@ -377,23 +377,28 @@ quantityOfItemToAddMustBePositiveIntegerErrorMessage
 
 !classDefinition: #Cashier category: 'TusLibros'!
 Object subclass: #Cashier
-	instanceVariableNames: 'cart cardToCharge priceList salesBook'
+	instanceVariableNames: 'cart cardToCharge priceList salesBook merchanProcessor'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TusLibros'!
 
-!Cashier methodsFor: 'initialization' stamp: 'AS 11/1/2022 23:56:34'!
-initializeCheckout: aCart chargingWith: aMerchantProcessor withCard: aCardToCharge usingPriceList: aPriceList registeringOn: aSalesBook 
-	
+!Cashier methodsFor: 'checkout' stamp: 'AS 11/2/2022 00:35:04'!
+checkout	
 	| amountToDebit |
+	
+	amountToDebit := (cart content inject: 0 into: [:accumulatedAmount :anItem | accumulatedAmount + priceList at: anItem]) .
+	merchanProcessor debit: amountToDebit fromCard: cardToCharge.
+	salesBook add: (Sale of: cart content havingCharged: amountToDebit on: cardToCharge).! !
+
+
+!Cashier methodsFor: 'initialization' stamp: 'AS 11/2/2022 00:36:02'!
+initializeCheckout: aCart chargingWith: aMerchantProcessor withCard: aCardToCharge usingPriceList: aPriceList registeringOn: aSalesBook 
 	
 	cart := aCart.
 	cardToCharge := aCardToCharge.
 	priceList := aPriceList.
 	salesBook := aSalesBook.
-	amountToDebit := (cart content inject: 0 into: [:accumulatedAmount :anItem | accumulatedAmount + priceList at: anItem]) .
-	aMerchantProcessor debit: amountToDebit fromCard: cardToCharge.
-	salesBook add: (Sale of: cart content havingCharged: amountToDebit on: cardToCharge).! !
+	merchanProcessor := aMerchantProcessor.! !
 
 
 !Cashier methodsFor: 'debit' stamp: 'AS 10/31/2022 19:18:33'!
@@ -417,8 +422,8 @@ assertIsNotEmpty: aCart
 	^ aCart isEmpty ifTrue: [self canNotCheckoutEmptyCartErrorSignal]! !
 
 
-!Cashier class methodsFor: 'instance creation' stamp: 'AS 11/1/2022 23:56:23'!
-checkout: aCart chargingWith: aMerchantProcessor withCard: aCardToCharge usingPriceList: aPriceList registeringOn: aSalesBook onDate: aFixedGregorianDate 
+!Cashier class methodsFor: 'instance creation' stamp: 'AS 11/2/2022 00:37:42'!
+for: aCart chargingWith: aMerchantProcessor withCard: aCardToCharge usingPriceList: aPriceList registeringOn: aSalesBook onDate: aFixedGregorianDate 
 
 	self assertIsNotEmpty: aCart.
 	self assertCard: aCardToCharge isNotExpiredOn: aFixedGregorianDate.
