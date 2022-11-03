@@ -1,0 +1,1604 @@
+
+
+----QUIT----(11 September 2022 19:10:09) CuisUniversity-5481.image priorSource: 2810882!
+
+----STARTUP---- (11 September 2022 19:10:10) as /Users/hernan/Documents/Cuis/5.0-64Bits/Cuis-University-Installer/CuisUniversity-5481.image!
+
+
+----QUIT----(11 September 2022 19:10:10) CuisUniversity-5481.image priorSource: 7059465!
+
+----STARTUP---- (3 November 2022 19:30:58) as /home/andisici/Documents/2022/ing-2c2022/cuisTusLibrosIt3/CuisUniversity-5481.image!
+
+
+----End fileIn of /home/andisici/Documents/2022/ing-2c2022/2022-2c/09-TusLibros/Iteracion2/TusLibros-33.st----!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'AS 11/3/2022 19:31:33'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'AS 11/3/2022 19:31:33'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'AS 11/3/2022 19:31:33'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'AS 11/3/2022 19:31:33'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'AS 11/3/2022 19:31:33'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'AS 11/3/2022 19:31:33'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'AS 11/3/2022 19:31:33'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'AS 11/3/2022 19:31:33'!
+PASSED!
+
+!testRun: #CashierTest #test01CanNotCheckoutAnEmptyCart stamp: 'AS 11/3/2022 19:31:33'!
+PASSED!
+
+!testRun: #CashierTest #test02CalculatedTotalIsCorrect stamp: 'AS 11/3/2022 19:31:33'!
+PASSED!
+
+!testRun: #CashierTest #test03CanNotCheckoutWithAnExpiredCreditCart stamp: 'AS 11/3/2022 19:31:33'!
+PASSED!
+
+!testRun: #CashierTest #test04CheckoutRegistersASale stamp: 'AS 11/3/2022 19:31:33'!
+PASSED!
+
+!testRun: #CashierTest #test05CashierChargesCreditCardUsingMerchantProcessor stamp: 'AS 11/3/2022 19:31:33'!
+PASSED!
+
+!testRun: #CashierTest #test06CashierDoesNotSaleWhenTheCreditCardHasNoCredit stamp: 'AS 11/3/2022 19:31:33'!
+PASSED!
+
+TestCase subclass: #SystemFacadeTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #SystemFacadeTest category: 'TusLibros' stamp: 'AS 11/3/2022 19:33:33'!
+TestCase subclass: #SystemFacadeTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #SystemFacade category: 'TusLibros' stamp: 'AS 11/3/2022 19:36:29'!
+Object subclass: #SystemFacade
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!SystemFacadeTest methodsFor: 'nil' stamp: 'AS 11/3/2022 19:36:25'!
+test01CanNotCreateCartWithInvalidPassword
+
+	self should: [SystemFacade createCart] 
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [:anError | self assert: anError messageText equals: SystemFacade invalidUserOrPassErrorMessage].
+	
+	! !
+!SystemFacadeTest methodsFor: 'as yet unclassified' stamp: 'AS 11/3/2022 19:37:53' prior: 50552891!
+test01CanNotCreateCartWithInvalidPassword
+
+	self should: [SystemFacade createCartForClientId: 'validId' withPassword: 'invalidPassword'] 
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [:anError | self assert: anError messageText equals: SystemFacade invalidUserOrPassErrorMessage].
+	
+	! !
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidPassword stamp: 'AS 11/3/2022 19:37:58'!
+ERROR!
+!SystemFacade class methodsFor: 'instance creation' stamp: 'AS 11/3/2022 19:38:08'!
+createCartForClientId: aString withPassword: aString2 
+	"DO NOT FORGET TO RENAME COLLABORATORS AND REMOVE THIS COMMENT!!!!"
+	self shouldBeImplemented.
+	^self new initializeCreateCartForClientId: aString withPassword: aString2 ! !
+!SystemFacade class methodsFor: 'instance creation' stamp: 'AS 11/3/2022 19:38:27' prior: 50552918!
+createCartForClientId: aClientId withPassword: aClientPassword 
+	
+	^self new initializeCreateCartForClientId: aClientId withPassword: aClientPassword ! !
+!SystemFacade class methodsFor: 'instance creation' stamp: 'AS 11/3/2022 19:39:20' prior: 50552929!
+createCartForClientId: aClientId withPassword: aClientPassword 
+	aClientPassword = 'invalidPassword' ifTrue: [self error: self invalidUserOrPassErrorMessage].
+	^self new initializeCreateCartForClientId: aClientId withPassword: aClientPassword ! !
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidPassword stamp: 'AS 11/3/2022 19:39:22'!
+ERROR!
+!SystemFacade class methodsFor: 'error message' stamp: 'AS 11/3/2022 19:39:28'!
+invalidUserOrPassErrorMessage
+	self shouldBeImplemented.! !
+!SystemFacade class methodsFor: 'error message' stamp: 'AS 11/3/2022 19:39:48' prior: 50552951!
+invalidUserOrPassErrorMessage
+	
+	^'User id or password is invalid!!'! !
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidPassword stamp: 'AS 11/3/2022 19:39:49'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidPassword stamp: 'AS 11/3/2022 19:39:49'!
+PASSED!
+
+!classDefinition: #ClientAuthenticatorDouble category: 'TusLibros' stamp: 'AS 11/3/2022 19:43:43'!
+Object subclass: #ClientAuthenticatorDouble
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!SystemFacadeTest methodsFor: 'tests' stamp: 'AS 11/3/2022 19:43:37' prior: 50552902!
+test01CanNotCreateCartWithInvalidPassword
+	
+	| systemFacade |
+
+	systemFacade := SystemFacade withClientAuthenticator: ClientAuthenticatorDouble new.
+	
+	self should: [systemFacade createCartForClientId: 'validId' withPassword: 'invalidPassword'] 
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [:anError | self assert: anError messageText equals: SystemFacade invalidUserOrPassErrorMessage].
+	
+	! !
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidPassword stamp: 'AS 11/3/2022 19:43:53'!
+ERROR!
+!SystemFacade class methodsFor: 'instance creation' stamp: 'AS 11/3/2022 19:44:00'!
+withClientAuthenticator: aClientAuthenticatorDouble 
+	"DO NOT FORGET TO RENAME COLLABORATORS AND REMOVE THIS COMMENT!!!!"
+	self shouldBeImplemented.
+	^self new initializeWithClientAuthenticator: aClientAuthenticatorDouble ! !
+!SystemFacade class methodsFor: 'instance creation' stamp: 'AS 11/3/2022 19:44:07' prior: 50552995!
+withClientAuthenticator: aClientAuthenticator 
+	"DO NOT FORGET TO RENAME COLLABORATORS AND REMOVE THIS COMMENT!!!!"
+	self shouldBeImplemented.
+	^self new initializeWithClientAuthenticator: aClientAuthenticator ! !
+!SystemFacade class methodsFor: 'instance creation' stamp: 'AS 11/3/2022 19:44:14' prior: 50553006!
+withClientAuthenticator: aClientAuthenticator
+
+	^self new initializeWithClientAuthenticator: aClientAuthenticator ! !
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidPassword stamp: 'AS 11/3/2022 19:44:19'!
+ERROR!
+
+!classDefinition: #SystemFacade category: 'TusLibros' stamp: 'AS 11/3/2022 19:44:26'!
+Object subclass: #SystemFacade
+	instanceVariableNames: 'clientAuthenticator'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!SystemFacade methodsFor: 'initialization' stamp: 'AS 11/3/2022 19:44:26'!
+initializeWithClientAuthenticator: aClientAuthenticator 
+	self shouldBeImplemented.
+	clientAuthenticator := aClientAuthenticator.! !
+!SystemFacade methodsFor: 'initialization' stamp: 'AS 11/3/2022 19:44:31' prior: 50553033!
+initializeWithClientAuthenticator: aClientAuthenticator 
+
+	clientAuthenticator := aClientAuthenticator.! !
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidPassword stamp: 'AS 11/3/2022 19:44:39'!
+ERROR!
+!SystemFacade methodsFor: 'cart' stamp: 'AS 11/3/2022 19:44:53'!
+createCartForClientId: aString withPassword: aString2 
+	self shouldBeImplemented.! !
+!SystemFacade methodsFor: 'cart' stamp: 'AS 11/3/2022 19:45:05' prior: 50553049!
+createCartForClientId: aClientId withPassword: aClientPassword
+ 
+	! !
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidPassword stamp: 'AS 11/3/2022 19:45:06'!
+FAILURE!
+!SystemFacade methodsFor: 'cart' stamp: 'AS 11/3/2022 19:46:25' prior: 50553055!
+createCartForClientId: aClientId withPassword: aClientPassword
+
+	
+	clientAuthenticator authenticateClientId: aClientId withPassword: aClientPassword.
+ 
+	! !
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidPassword stamp: 'AS 11/3/2022 19:46:29'!
+ERROR!
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidPassword stamp: 'AS 11/3/2022 19:46:29'!
+ERROR!
+!ClientAuthenticatorDouble methodsFor: 'authentication' stamp: 'AS 11/3/2022 19:46:37'!
+authenticateClientId: aString withPassword: aString2 
+	self shouldBeImplemented.! !
+!ClientAuthenticatorDouble methodsFor: 'authentication' stamp: 'AS 11/3/2022 19:47:20' prior: 50553079!
+authenticateClientId: aClientId withPassword: aClientPassword
+ 
+	
+	self error: self class invalidUserOrPassErrorMessage! !
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidPassword stamp: 'AS 11/3/2022 19:47:21'!
+ERROR!
+!ClientAuthenticatorDouble class methodsFor: 'error message' stamp: 'AS 11/3/2022 19:47:30'!
+invalidUserOrPassErrorMessage
+	self shouldBeImplemented.! !
+!ClientAuthenticatorDouble class methodsFor: 'error message' stamp: 'AS 11/3/2022 19:47:43' prior: 50553096!
+invalidUserOrPassErrorMessage
+	
+	^'Client ID or password is invalid!!'! !
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidPassword stamp: 'AS 11/3/2022 19:47:44'!
+FAILURE!
+!SystemFacadeTest methodsFor: 'tests' stamp: 'AS 11/3/2022 19:47:57' prior: 50552976!
+test01CanNotCreateCartWithInvalidPassword
+	
+	| systemFacade |
+
+	systemFacade := SystemFacade withClientAuthenticator: ClientAuthenticatorDouble new.
+	
+	self should: [systemFacade createCartForClientId: 'validId' withPassword: 'invalidPassword'] 
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [:anError | self assert: anError messageText equals: ClientAuthenticatorDouble invalidUserOrPassErrorMessage].
+	
+	! !
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidPassword stamp: 'AS 11/3/2022 19:47:57'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidPassword stamp: 'AS 11/3/2022 19:47:57'!
+PASSED!
+
+!methodRemoval: SystemFacade class #createCartForClientId:withPassword: stamp: 'AS 11/3/2022 19:48:08'!
+createCartForClientId: aClientId withPassword: aClientPassword 
+	aClientPassword = 'invalidPassword' ifTrue: [self error: self invalidUserOrPassErrorMessage].
+	^self new initializeCreateCartForClientId: aClientId withPassword: aClientPassword !
+
+!methodRemoval: SystemFacade class #invalidUserOrPassErrorMessage stamp: 'AS 11/3/2022 19:48:14'!
+invalidUserOrPassErrorMessage
+	
+	^'User id or password is invalid!!'!
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidPassword stamp: 'AS 11/3/2022 19:48:20'!
+PASSED!
+!SystemFacadeTest methodsFor: 'tests' stamp: 'AS 11/3/2022 19:49:40'!
+test02CanNotCreateCartWithInvalidUsername
+	
+	| systemFacade |
+
+	systemFacade := SystemFacade withClientAuthenticator: ClientAuthenticatorDouble new.
+	
+	self should: [systemFacade createCartForClientId: 'invalidId' withPassword: 'validPassword'] 
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [:anError | self assert: anError messageText equals: ClientAuthenticatorDouble invalidUserOrPassErrorMessage].
+	
+	! !
+
+!testRun: #SystemFacadeTest #test02CanNotCreateCartWithInvalidUsername stamp: 'AS 11/3/2022 19:49:40'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidPassword stamp: 'AS 11/3/2022 19:49:40'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test02CanNotCreateCartWithInvalidUsername stamp: 'AS 11/3/2022 19:49:40'!
+PASSED!
+
+!methodRemoval: SystemFacadeTest #test02CanNotCreateCartWithInvalidUsername stamp: 'AS 11/3/2022 19:50:06'!
+test02CanNotCreateCartWithInvalidUsername
+	
+	| systemFacade |
+
+	systemFacade := SystemFacade withClientAuthenticator: ClientAuthenticatorDouble new.
+	
+	self should: [systemFacade createCartForClientId: 'invalidId' withPassword: 'validPassword'] 
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [:anError | self assert: anError messageText equals: ClientAuthenticatorDouble invalidUserOrPassErrorMessage].
+	
+	!
+!SystemFacadeTest methodsFor: 'tests' stamp: 'AS 11/3/2022 19:53:27'!
+test01CanCreateCartWithValidClientIdAndPassword
+	
+	| systemFacade cartId |
+
+	systemFacade := SystemFacade withClientAuthenticator: ClientAuthenticatorDouble new.
+	
+	cartId := systemFacade createCartForClientId: 'validId' withPassword: 'validPassword'.
+	
+	self assert: (systemFacade listCartOf: cartId) isEmpty! !
+!SystemFacadeTest methodsFor: 'tests' stamp: 'AS 11/3/2022 19:53:35'!
+test02CanCreateCartWithValidClientIdAndPassword
+	
+	| systemFacade cartId |
+
+	systemFacade := SystemFacade withClientAuthenticator: ClientAuthenticatorDouble new.
+	
+	cartId := systemFacade createCartForClientId: 'validId' withPassword: 'validPassword'.
+	
+	self assert: (systemFacade listCartOf: cartId) isEmpty! !
+
+!methodRemoval: SystemFacadeTest #test01CanCreateCartWithValidClientIdAndPassword stamp: 'AS 11/3/2022 19:53:35'!
+test01CanCreateCartWithValidClientIdAndPassword
+	
+	| systemFacade cartId |
+
+	systemFacade := SystemFacade withClientAuthenticator: ClientAuthenticatorDouble new.
+	
+	cartId := systemFacade createCartForClientId: 'validId' withPassword: 'validPassword'.
+	
+	self assert: (systemFacade listCartOf: cartId) isEmpty!
+
+!testRun: #SystemFacadeTest #test02CanCreateCartWithValidClientIdAndPassword stamp: 'AS 11/3/2022 19:53:37'!
+ERROR!
+!ClientAuthenticatorDouble methodsFor: 'authentication' stamp: 'AS 11/3/2022 19:54:23' prior: 50553085!
+authenticateClientId: aClientId withPassword: aClientPassword
+ 
+	
+	'self error: self class invalidUserOrPassErrorMessage'! !
+
+!testRun: #SystemFacadeTest #test02CanCreateCartWithValidClientIdAndPassword stamp: 'AS 11/3/2022 19:54:24'!
+ERROR!
+!SystemFacade methodsFor: 'cart' stamp: 'AS 11/3/2022 19:54:29'!
+listCartOf: aSystemFacade 
+	self shouldBeImplemented.! !
+!SystemFacade methodsFor: 'cart' stamp: 'AS 11/3/2022 19:54:49' prior: 50553249!
+listCartOf: aCartId
+	
+	^OrderedCollection new.! !
+
+!testRun: #SystemFacadeTest #test02CanCreateCartWithValidClientIdAndPassword stamp: 'AS 11/3/2022 19:54:53'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test02CanCreateCartWithValidClientIdAndPassword stamp: 'AS 11/3/2022 19:54:56'!
+PASSED!
+!Behavior method!
+withClientAuthenticator: aClientAuthenticator
+	#_coverageTracker1441553_ markAsExecuted.
+	^ #_coverageTracker1441553_
+		coverAll:
+			{59 to: 92}
+		evaluating: [
+			(#_coverageTracker1441553_
+				coverAll:
+					{55 to: 57}
+				evaluating: [
+					(#_coverageTracker1441553_
+						coverAll:
+							{50 to: 53}
+						byLiteralOrPseudoVariable: self) new ]) initializeWithClientAuthenticator:
+				(#_coverageTracker1441553_
+					cover: (94 to: 113)
+					declaredAt: (26 to: 45)
+					by: aClientAuthenticator) ].! !
+!Behavior method!
+initializeWithClientAuthenticator: aClientAuthenticator
+	#_coverageTracker1440895_ markAsExecuted.
+	#_coverageTracker1440895_
+		cover: (60 to: 78)
+		declaredAt: (60 to: 78)
+		by:
+			(clientAuthenticator _ #_coverageTracker1440895_
+				cover: (83 to: 102)
+				declaredAt: (36 to: 55)
+				by: aClientAuthenticator).! !
+!Behavior method!
+createCartForClientId: aClientId withPassword: aClientPassword
+	#_coverageTracker1441271_ markAsExecuted.
+	#_coverageTracker1441271_
+		coverAll:
+			{88 to: 108. 120 to: 132}
+		evaluating: [
+			(#_coverageTracker1441271_
+				cover: (68 to: 86)
+				declaredAt: (68 to: 86)
+				by: clientAuthenticator)
+				authenticateClientId:
+					(#_coverageTracker1441271_
+						cover: (110 to: 118)
+						declaredAt: (24 to: 32)
+						by: aClientId)
+				withPassword:
+					(#_coverageTracker1441271_
+						cover: (134 to: 148)
+						declaredAt: (48 to: 62)
+						by: aClientPassword) ].! !
+!Behavior method!
+authenticateClientId: aClientId withPassword: aClientPassword
+	#_coverageTracker1441354_ markAsExecuted.
+	#_coverageTracker1441354_
+		coverAll:
+			{68 to: 121}
+		byLiteralOrPseudoVariable: 'self error: self class invalidUserOrPassErrorMessage'.! !
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidPassword stamp: 'AS 11/3/2022 19:55:00'!
+FAILURE!
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidPassword stamp: 'AS 11/3/2022 19:55:00'!
+FAILURE!
+
+!classDefinition: #ClientAuthenticatorDouble category: 'TusLibros' stamp: 'AS 11/3/2022 19:57:11'!
+Object subclass: #ClientAuthenticatorDouble
+	instanceVariableNames: 'clientCredentials'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!ClientAuthenticatorDouble methodsFor: 'authentication' stamp: 'AS 11/3/2022 19:57:10' prior: 50553239!
+authenticateClientId: aClientId withPassword: aClientPassword
+ 
+	
+	(clientCredentials at: aClientId) = aClientPassword ifFalse: [self error: self class invalidUserOrPassErrorMessage].! !
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidPassword stamp: 'AS 11/3/2022 19:57:13'!
+FAILURE!
+!SystemFacadeTest methodsFor: 'tests' stamp: 'AS 11/3/2022 19:59:58' prior: 50553111!
+test01CanNotCreateCartWithInvalidPassword
+	
+	| systemFacade |
+
+	systemFacade := 
+		SystemFacade withClientAuthenticator: 
+				(ClientAuthenticatorDouble withClientCredentials: (Dictionary newFromPairs: (OrderedCollection with: 'validId' with: 'invalidPassword'))).
+	
+	self should: [systemFacade createCartForClientId: 'validId' withPassword: 'invalidPassword'] 
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [:anError | self assert: anError messageText equals: ClientAuthenticatorDouble invalidUserOrPassErrorMessage].
+	
+	! !
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidPassword stamp: 'AS 11/3/2022 20:00:01'!
+ERROR!
+!ClientAuthenticatorDouble class methodsFor: 'instance creation' stamp: 'AS 11/3/2022 20:00:06'!
+withClientCredentials: aDictionary 
+	"DO NOT FORGET TO RENAME COLLABORATORS AND REMOVE THIS COMMENT!!!!"
+	self shouldBeImplemented.
+	^self new initializeWithClientCredentials: aDictionary ! !
+!ClientAuthenticatorDouble class methodsFor: 'instance creation' stamp: 'AS 11/3/2022 20:00:16' prior: 50553375!
+withClientCredentials: aDictionaryOfClientCredentials 
+	
+	^self new initializeWithClientCredentials: aDictionaryOfClientCredentials ! !
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidPassword stamp: 'AS 11/3/2022 20:00:19'!
+ERROR!
+
+!classDefinition: #ClientAuthenticatorDouble category: 'TusLibros' stamp: 'AS 11/3/2022 20:00:27'!
+Object subclass: #ClientAuthenticatorDouble
+	instanceVariableNames: 'clientCredentials dictionaryOfClientCredentials'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!ClientAuthenticatorDouble methodsFor: 'initialization' stamp: 'AS 11/3/2022 20:00:27'!
+initializeWithClientCredentials: aDictionaryOfClientCredentials 
+	self shouldBeImplemented.
+	dictionaryOfClientCredentials := aDictionaryOfClientCredentials.! !
+!ClientAuthenticatorDouble methodsFor: 'initialization' stamp: 'AS 11/3/2022 20:00:31' prior: 50553405!
+initializeWithClientCredentials: aDictionaryOfClientCredentials 
+
+	dictionaryOfClientCredentials := aDictionaryOfClientCredentials.! !
+!ClientAuthenticatorDouble methodsFor: 'initialization' stamp: 'AS 11/3/2022 20:00:42' prior: 50553414!
+initializeWithClientCredentials: aDictionaryOfClientCredentials 
+
+	clientCredentials := aDictionaryOfClientCredentials.! !
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidPassword stamp: 'AS 11/3/2022 20:00:43'!
+FAILURE!
+
+!classDefinition: #ClientAuthenticatorDouble category: 'TusLibros' stamp: 'AS 11/3/2022 20:01:06'!
+Object subclass: #ClientAuthenticatorDouble
+	instanceVariableNames: 'clientCredentials'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!Behavior method!
+withClientCredentials: aDictionaryOfClientCredentials
+	#_coverageTracker1813730_ markAsExecuted.
+	^ #_coverageTracker1813730_
+		coverAll:
+			{69 to: 100}
+		evaluating: [
+			(#_coverageTracker1813730_
+				coverAll:
+					{65 to: 67}
+				evaluating: [
+					(#_coverageTracker1813730_
+						coverAll:
+							{60 to: 63}
+						byLiteralOrPseudoVariable: self) new ]) initializeWithClientCredentials:
+				(#_coverageTracker1813730_
+					cover: (102 to: 131)
+					declaredAt: (24 to: 53)
+					by: aDictionaryOfClientCredentials) ].! !
+!Behavior method!
+initializeWithClientCredentials: aDictionaryOfClientCredentials
+	#_coverageTracker1814326_ markAsExecuted.
+	#_coverageTracker1814326_
+		cover: (68 to: 84)
+		declaredAt: (68 to: 84)
+		by:
+			(clientCredentials _ #_coverageTracker1814326_
+				cover: (89 to: 118)
+				declaredAt: (34 to: 63)
+				by: aDictionaryOfClientCredentials).! !
+!Behavior method!
+withClientAuthenticator: aClientAuthenticator
+	#_coverageTracker1814136_ markAsExecuted.
+	^ #_coverageTracker1814136_
+		coverAll:
+			{59 to: 92}
+		evaluating: [
+			(#_coverageTracker1814136_
+				coverAll:
+					{55 to: 57}
+				evaluating: [
+					(#_coverageTracker1814136_
+						coverAll:
+							{50 to: 53}
+						byLiteralOrPseudoVariable: self) new ]) initializeWithClientAuthenticator:
+				(#_coverageTracker1814136_
+					cover: (94 to: 113)
+					declaredAt: (26 to: 45)
+					by: aClientAuthenticator) ].! !
+!Behavior method!
+initializeWithClientAuthenticator: aClientAuthenticator
+	#_coverageTracker1813726_ markAsExecuted.
+	#_coverageTracker1813726_
+		cover: (60 to: 78)
+		declaredAt: (60 to: 78)
+		by:
+			(clientAuthenticator _ #_coverageTracker1813726_
+				cover: (83 to: 102)
+				declaredAt: (36 to: 55)
+				by: aClientAuthenticator).! !
+!Behavior method!
+createCartForClientId: aClientId withPassword: aClientPassword
+	#_coverageTracker1813983_ markAsExecuted.
+	#_coverageTracker1813983_
+		coverAll:
+			{88 to: 108. 120 to: 132}
+		evaluating: [
+			(#_coverageTracker1813983_
+				cover: (68 to: 86)
+				declaredAt: (68 to: 86)
+				by: clientAuthenticator)
+				authenticateClientId:
+					(#_coverageTracker1813983_
+						cover: (110 to: 118)
+						declaredAt: (24 to: 32)
+						by: aClientId)
+				withPassword:
+					(#_coverageTracker1813983_
+						cover: (134 to: 148)
+						declaredAt: (48 to: 62)
+						by: aClientPassword) ].! !
+!Behavior method!
+authenticateClientId: aClientId withPassword: aClientPassword
+	#_coverageTracker1813991_ markAsExecuted.
+	#_coverageTracker1813991_
+		coverAll:
+			{120 to: 127}
+		evaluating: [
+			(#_coverageTracker1813991_
+				coverAll:
+					{102 to: 102}
+				evaluating: [
+					(#_coverageTracker1813991_
+						coverAll:
+							{87 to: 89}
+						evaluating: [
+							(#_coverageTracker1813991_
+								cover: (69 to: 85)
+								declaredAt: (69 to: 85)
+								by: clientCredentials) at:
+								(#_coverageTracker1813991_
+									cover: (91 to: 99)
+									declaredAt: (23 to: 31)
+									by: aClientId) ]) =
+						(#_coverageTracker1813991_
+							cover: (104 to: 118)
+							declaredAt: (47 to: 61)
+							by: aClientPassword) ]) ifFalse: [
+				#_coverageTracker1813991_
+					coverAll:
+						{135 to: 140}
+					evaluating: [
+						(#_coverageTracker1813991_
+							coverAll:
+								{130 to: 133}
+							byLiteralOrPseudoVariable: self) error:
+							(#_coverageTracker1813991_
+								coverAll:
+									{153 to: 181}
+								evaluating: [
+									(#_coverageTracker1813991_
+										coverAll:
+											{147 to: 151}
+										evaluating: [
+											(#_coverageTracker1813991_
+												coverAll:
+													{142 to: 145}
+												byLiteralOrPseudoVariable: self) class ]) invalidUserOrPassErrorMessage ]) ]]].! !
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidPassword stamp: 'AS 11/3/2022 20:01:12'!
+FAILURE!
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidPassword stamp: 'AS 11/3/2022 20:01:12'!
+FAILURE!
+
+(clientCredentials at: aClientId)!
+!SystemFacadeTest methodsFor: 'tests' stamp: 'AS 11/3/2022 20:01:58' prior: 50553351!
+test01CanNotCreateCartWithInvalidPassword
+	
+	| systemFacade |
+
+	systemFacade := 
+		SystemFacade withClientAuthenticator: 
+				(ClientAuthenticatorDouble withClientCredentials: (Dictionary newFromPairs: (OrderedCollection with: 'validId' with: 'validPassword'))).
+	
+	self should: [systemFacade createCartForClientId: 'validId' withPassword: 'invalidPassword'] 
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [:anError | self assert: anError messageText equals: ClientAuthenticatorDouble invalidUserOrPassErrorMessage].
+	
+	! !
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidPassword stamp: 'AS 11/3/2022 20:01:58'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidPassword stamp: 'AS 11/3/2022 20:01:58'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test02CanCreateCartWithValidClientIdAndPassword stamp: 'AS 11/3/2022 20:01:58'!
+ERROR!
+
+!testRun: #SystemFacadeTest #test02CanCreateCartWithValidClientIdAndPassword stamp: 'AS 11/3/2022 20:01:58'!
+ERROR!
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidPassword stamp: 'AS 11/3/2022 20:02:03'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test02CanCreateCartWithValidClientIdAndPassword stamp: 'AS 11/3/2022 20:02:06'!
+ERROR!
+
+!testRun: #SystemFacadeTest #test02CanCreateCartWithValidClientIdAndPassword stamp: 'AS 11/3/2022 20:02:06'!
+ERROR!
+!SystemFacadeTest methodsFor: 'tests' stamp: 'AS 11/3/2022 20:02:36' prior: 50553209!
+test02CanCreateCartWithValidClientIdAndPassword
+	
+	| systemFacade cartId |
+
+	systemFacade := 
+		SystemFacade withClientAuthenticator: 
+				(ClientAuthenticatorDouble withClientCredentials: (Dictionary newFromPairs: (OrderedCollection with: 'validId' with: 'validPassword'))).
+	
+	cartId := systemFacade createCartForClientId: 'validId' withPassword: 'validPassword'.
+	
+	self assert: (systemFacade listCartOf: cartId) isEmpty! !
+
+!testRun: #SystemFacadeTest #test02CanCreateCartWithValidClientIdAndPassword stamp: 'AS 11/3/2022 20:02:36'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidPassword stamp: 'AS 11/3/2022 20:02:36'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test02CanCreateCartWithValidClientIdAndPassword stamp: 'AS 11/3/2022 20:02:36'!
+PASSED!
+
+!classDefinition: #SystemFacadeTest category: 'TusLibros' stamp: 'AS 11/3/2022 20:03:58'!
+TestCase subclass: #SystemFacadeTest
+	instanceVariableNames: 'systemFacadee'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!SystemFacadeTest methodsFor: 'tests' stamp: 'AS 11/3/2022 20:04:20' overrides: 16961394!
+setUp
+	
+	| clientCredentials |
+	
+	clientCredentials :=  Dictionary newFromPairs: (OrderedCollection with: 'validId' with: 'validPassword').
+	
+	systemFacadee := SystemFacade withClientAuthenticator: (ClientAuthenticatorDouble withClientCredentials: clientCredentials)! !
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidPassword stamp: 'AS 11/3/2022 20:04:21'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test02CanCreateCartWithValidClientIdAndPassword stamp: 'AS 11/3/2022 20:04:21'!
+PASSED!
+!SystemFacadeTest methodsFor: 'tests' stamp: 'AS 11/3/2022 20:04:28' prior: 50553567!
+test01CanNotCreateCartWithInvalidPassword
+	
+	
+
+	systemFacadee := 
+		SystemFacade withClientAuthenticator: 
+				(ClientAuthenticatorDouble withClientCredentials: (Dictionary newFromPairs: (OrderedCollection with: 'validId' with: 'validPassword'))).
+	
+	self should: [systemFacadee createCartForClientId: 'validId' withPassword: 'invalidPassword'] 
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [:anError | self assert: anError messageText equals: ClientAuthenticatorDouble invalidUserOrPassErrorMessage].
+	
+	! !
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidPassword stamp: 'AS 11/3/2022 20:04:31'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidPassword stamp: 'AS 11/3/2022 20:04:31'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test02CanCreateCartWithValidClientIdAndPassword stamp: 'AS 11/3/2022 20:04:31'!
+PASSED!
+!SystemFacadeTest methodsFor: 'tests' stamp: 'AS 11/3/2022 20:04:38' prior: 50553666!
+test01CanNotCreateCartWithInvalidPassword
+	
+	self should: [systemFacadee createCartForClientId: 'validId' withPassword: 'invalidPassword'] 
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [:anError | self assert: anError messageText equals: ClientAuthenticatorDouble invalidUserOrPassErrorMessage].
+	
+	! !
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidPassword stamp: 'AS 11/3/2022 20:04:38'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidPassword stamp: 'AS 11/3/2022 20:04:38'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test02CanCreateCartWithValidClientIdAndPassword stamp: 'AS 11/3/2022 20:04:38'!
+PASSED!
+!SystemFacadeTest methodsFor: 'tests' stamp: 'AS 11/3/2022 20:04:53' prior: 50553612!
+test02CanCreateCartWithValidClientIdAndPassword
+	
+	| cartId |
+
+	cartId := systemFacadee createCartForClientId: 'validId' withPassword: 'validPassword'.
+	
+	self assert: (systemFacadee listCartOf: cartId) isEmpty! !
+
+!testRun: #SystemFacadeTest #test02CanCreateCartWithValidClientIdAndPassword stamp: 'AS 11/3/2022 20:04:54'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidPassword stamp: 'AS 11/3/2022 20:04:54'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test02CanCreateCartWithValidClientIdAndPassword stamp: 'AS 11/3/2022 20:04:54'!
+PASSED!
+
+!classDefinition: #SystemFacadeTest category: 'TusLibros' stamp: 'AS 11/3/2022 20:05:30'!
+TestCase subclass: #SystemFacadeTest
+	instanceVariableNames: 'systemFacade'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!SystemFacadeTest methodsFor: 'as yet unclassified' stamp: 'AS 11/3/2022 20:05:30' prior: 50553647 overrides: 16961394!
+setUp
+	
+	| clientCredentials |
+	
+	clientCredentials :=  Dictionary newFromPairs: (OrderedCollection with: 'validId' with: 'validPassword').
+	
+	systemFacade := SystemFacade withClientAuthenticator: (ClientAuthenticatorDouble withClientCredentials: clientCredentials)! !
+!SystemFacadeTest methodsFor: 'as yet unclassified' stamp: 'AS 11/3/2022 20:05:30' prior: 50553696!
+test01CanNotCreateCartWithInvalidPassword
+	
+	self should: [systemFacade createCartForClientId: 'validId' withPassword: 'invalidPassword'] 
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [:anError | self assert: anError messageText equals: ClientAuthenticatorDouble invalidUserOrPassErrorMessage].
+	
+	! !
+!SystemFacadeTest methodsFor: 'as yet unclassified' stamp: 'AS 11/3/2022 20:05:30' prior: 50553720!
+test02CanCreateCartWithValidClientIdAndPassword
+	
+	| cartId |
+
+	cartId := systemFacade createCartForClientId: 'validId' withPassword: 'validPassword'.
+	
+	self assert: (systemFacade listCartOf: cartId) isEmpty! !
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidPassword stamp: 'AS 11/3/2022 20:05:31'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidPassword stamp: 'AS 11/3/2022 20:05:31'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test02CanCreateCartWithValidClientIdAndPassword stamp: 'AS 11/3/2022 20:05:31'!
+PASSED!
+!SystemFacadeTest methodsFor: 'tests' stamp: 'AS 11/3/2022 20:05:48'!
+validClientId
+
+	^ 'validId'! !
+!SystemFacadeTest methodsFor: 'setup' stamp: 'AS 11/3/2022 20:05:48' prior: 50553749 overrides: 16961394!
+setUp
+	
+	| clientCredentials |
+	
+	clientCredentials :=  Dictionary newFromPairs: (OrderedCollection with: self validClientId with: 'validPassword').
+	
+	systemFacade := SystemFacade withClientAuthenticator: (ClientAuthenticatorDouble withClientCredentials: clientCredentials)! !
+!SystemFacadeTest methodsFor: 'tests' stamp: 'AS 11/3/2022 20:05:48' prior: 50553774!
+test02CanCreateCartWithValidClientIdAndPassword
+	
+	| cartId |
+
+	cartId := systemFacade createCartForClientId: self validClientId withPassword: 'validPassword'.
+	
+	self assert: (systemFacade listCartOf: cartId) isEmpty! !
+!SystemFacadeTest methodsFor: 'tests' stamp: 'AS 11/3/2022 20:05:48' prior: 50553761!
+test01CanNotCreateCartWithInvalidPassword
+	
+	self should: [systemFacade createCartForClientId: self validClientId withPassword: 'invalidPassword'] 
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [:anError | self assert: anError messageText equals: ClientAuthenticatorDouble invalidUserOrPassErrorMessage].
+	
+	! !
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidPassword stamp: 'AS 11/3/2022 20:05:50'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidPassword stamp: 'AS 11/3/2022 20:05:50'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test02CanCreateCartWithValidClientIdAndPassword stamp: 'AS 11/3/2022 20:05:50'!
+PASSED!
+!SystemFacadeTest methodsFor: 'tests' stamp: 'AS 11/3/2022 20:06:01'!
+invalidClientPassword
+
+	^ 'invalidPassword'! !
+!SystemFacadeTest methodsFor: 'tests' stamp: 'AS 11/3/2022 20:06:01' prior: 50553821!
+test01CanNotCreateCartWithInvalidPassword
+	
+	self should: [systemFacade createCartForClientId: self validClientId withPassword: self invalidClientPassword] 
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [:anError | self assert: anError messageText equals: ClientAuthenticatorDouble invalidUserOrPassErrorMessage].
+	
+	! !
+!SystemFacadeTest methodsFor: 'tests' stamp: 'AS 11/3/2022 20:06:16'!
+validClientPassword
+
+	^ 'validPassword'! !
+!SystemFacadeTest methodsFor: 'setup' stamp: 'AS 11/3/2022 20:06:16' prior: 50553799 overrides: 16961394!
+setUp
+	
+	| clientCredentials |
+	
+	clientCredentials :=  Dictionary newFromPairs: (OrderedCollection with: self validClientId with: self validClientPassword).
+	
+	systemFacade := SystemFacade withClientAuthenticator: (ClientAuthenticatorDouble withClientCredentials: clientCredentials)! !
+!SystemFacadeTest methodsFor: 'tests' stamp: 'AS 11/3/2022 20:06:16' prior: 50553811!
+test02CanCreateCartWithValidClientIdAndPassword
+	
+	| cartId |
+
+	cartId := systemFacade createCartForClientId: self validClientId withPassword: self validClientPassword.
+	
+	self assert: (systemFacade listCartOf: cartId) isEmpty! !
+!SystemFacadeTest methodsFor: 'tests' stamp: 'AS 11/3/2022 20:06:57'!
+test01CanNotCreateCartWithInvalidId
+	
+	self should: [systemFacade createCartForClientId: self invalidClientId withPassword: self validClientPassword] 
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [:anError | self assert: anError messageText equals: ClientAuthenticatorDouble invalidUserOrPassErrorMessage].
+	
+	! !
+!SystemFacadeTest methodsFor: 'tests' stamp: 'AS 11/3/2022 20:07:09'!
+test03CanNotCreateCartWithInvalidId
+	
+	self should: [systemFacade createCartForClientId: self invalidClientId withPassword: self validClientPassword] 
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [:anError | self assert: anError messageText equals: ClientAuthenticatorDouble invalidUserOrPassErrorMessage].
+	
+	! !
+
+!methodRemoval: SystemFacadeTest #test01CanNotCreateCartWithInvalidId stamp: 'AS 11/3/2022 20:07:09'!
+test01CanNotCreateCartWithInvalidId
+	
+	self should: [systemFacade createCartForClientId: self invalidClientId withPassword: self validClientPassword] 
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [:anError | self assert: anError messageText equals: ClientAuthenticatorDouble invalidUserOrPassErrorMessage].
+	
+	!
+
+!testRun: #SystemFacadeTest #test03CanNotCreateCartWithInvalidId stamp: 'AS 11/3/2022 20:07:13'!
+ERROR!
+!SystemFacadeTest methodsFor: 'support' stamp: 'AS 11/3/2022 20:07:16'!
+invalidClientId
+	self shouldBeImplemented.! !
+!SystemFacadeTest methodsFor: 'support' stamp: 'AS 11/3/2022 20:07:35' prior: 50553932!
+invalidClientId
+	
+	^'invalidClientId'! !
+
+!testRun: #SystemFacadeTest #test03CanNotCreateCartWithInvalidId stamp: 'AS 11/3/2022 20:07:36'!
+FAILURE!
+!ClientAuthenticatorDouble methodsFor: 'authentication' stamp: 'AS 11/3/2022 20:10:40' prior: 50553338!
+authenticateClientId: aClientId withPassword: aClientPassword
+ 
+	
+	((clientCredentials keys includes: aClientId) and: [(clientCredentials at: aClientId) = aClientPassword]) ifFalse: [self error: self class invalidUserOrPassErrorMessage].! !
+
+!testRun: #SystemFacadeTest #test03CanNotCreateCartWithInvalidId stamp: 'AS 11/3/2022 20:10:44'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test03CanNotCreateCartWithInvalidId stamp: 'AS 11/3/2022 20:10:45'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidPassword stamp: 'AS 11/3/2022 20:10:45'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test02CanCreateCartWithValidClientIdAndPassword stamp: 'AS 11/3/2022 20:10:45'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test03CanNotCreateCartWithInvalidId stamp: 'AS 11/3/2022 20:10:45'!
+PASSED!
+
+----SNAPSHOT----(3 November 2022 20:37:22) CuisUniversity-5481.image priorSource: 7059698!
+!SystemFacadeTest methodsFor: 'tests' stamp: 'AS 11/3/2022 20:38:27' prior: 50553849!
+test01CanNotCreateCartWithInvalidPassword
+	
+	| systemFacadee |
+	
+	systemFacadee := SystemFacade withClientAuthenticator: (ClientAuthenticatorDouble thatAlwaysFails).
+	
+	self should: [systemFacadee createCartForClientId: self validClientId withPassword: self invalidClientPassword] 
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [:anError | self assert: anError messageText equals: ClientAuthenticatorDouble invalidUserOrPassErrorMessage].
+	
+	! !
+!SystemFacadeTest methodsFor: 'tests' stamp: 'AS 11/3/2022 20:39:12'!
+test01CanNotCreateCartWithInvalidClientIdOrPassword
+	
+	| systemFacadee |
+	
+	systemFacadee := SystemFacade withClientAuthenticator: (ClientAuthenticatorDouble thatAlwaysFails).
+	
+	self should: [systemFacadee createCartForClientId: self validClientId withPassword: self invalidClientPassword] 
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [:anError | self assert: anError messageText equals: ClientAuthenticatorDouble invalidUserOrPassErrorMessage].
+	
+	! !
+
+!methodRemoval: SystemFacadeTest #test01CanNotCreateCartWithInvalidPassword stamp: 'AS 11/3/2022 20:39:12'!
+test01CanNotCreateCartWithInvalidPassword
+	
+	| systemFacadee |
+	
+	systemFacadee := SystemFacade withClientAuthenticator: (ClientAuthenticatorDouble thatAlwaysFails).
+	
+	self should: [systemFacadee createCartForClientId: self validClientId withPassword: self invalidClientPassword] 
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [:anError | self assert: anError messageText equals: ClientAuthenticatorDouble invalidUserOrPassErrorMessage].
+	
+	!
+!SystemFacadeTest methodsFor: 'tests' stamp: 'AS 11/3/2022 20:39:45' prior: 50553993!
+test01CanNotCreateCartWithInvalidClientIdOrPassword
+	
+	| systemFacadee |
+	
+	systemFacadee := SystemFacade withClientAuthenticator: (ClientAuthenticatorDouble thatAlwaysFails).
+	
+	self should: [systemFacadee createCartForClientId: self validClientId withPassword: self invalidClientPassword] 
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [:anError | self assert: anError messageText equals: SystemFacade invalidClientIdOrPasswordErrorMessage].
+	
+	! !
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidClientIdOrPassword stamp: 'AS 11/3/2022 20:39:55'!
+ERROR!
+!ClientAuthenticatorDouble class methodsFor: 'instance creation' stamp: 'AS 11/3/2022 20:40:11'!
+thatAlwaysFails
+	"DO NOT FORGET TO RENAME COLLABORATORS AND REMOVE THIS COMMENT!!!!"
+	self shouldBeImplemented.
+	^self new initializeThatAlwaysFails! !
+!ClientAuthenticatorDouble class methodsFor: 'instance creation' stamp: 'AS 11/3/2022 20:40:16' prior: 50554050!
+thatAlwaysFails
+
+	^self new initializeThatAlwaysFails! !
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidClientIdOrPassword stamp: 'AS 11/3/2022 20:40:17'!
+ERROR!
+!ClientAuthenticatorDouble methodsFor: 'initialization' stamp: 'AS 11/3/2022 20:40:21'!
+initializeThatAlwaysFails
+	self shouldBeImplemented.! !
+
+!classDefinition: #ClientAuthenticatorDouble category: 'TusLibros' stamp: 'AS 11/3/2022 20:41:15'!
+Object subclass: #ClientAuthenticatorDouble
+	instanceVariableNames: 'clientCredentials succeed'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!ClientAuthenticatorDouble methodsFor: 'initialization' stamp: 'AS 11/3/2022 20:41:14' prior: 50554068!
+initializeThatAlwaysFails
+	
+	succeed := false.! !
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidClientIdOrPassword stamp: 'AS 11/3/2022 20:41:16'!
+ERROR!
+!ClientAuthenticatorDouble methodsFor: 'authentication' stamp: 'AS 11/3/2022 20:41:30' prior: 50553945!
+authenticateClientId: aClientId withPassword: aClientPassword
+ 
+	
+	succeed ifFalse: [self error: self class invalidUserOrPassErrorMessage].! !
+!ClientAuthenticatorDouble methodsFor: 'authentication' stamp: 'AS 11/3/2022 20:43:33' prior: 50554091!
+authenticateClientId: aClientId withPassword: aClientPassword
+ 
+	
+	^succeed.! !
+
+!classDefinition: #ClientAuthenticatorDouble category: 'TusLibros' stamp: 'AS 11/3/2022 20:43:43'!
+Object subclass: #ClientAuthenticatorDouble
+	instanceVariableNames: 'clientCredentials authenticationResult'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!ClientAuthenticatorDouble methodsFor: 'as yet unclassified' stamp: 'AS 11/3/2022 20:43:43' prior: 50554099!
+authenticateClientId: aClientId withPassword: aClientPassword
+ 
+	
+	^authenticationResult.! !
+!ClientAuthenticatorDouble methodsFor: 'as yet unclassified' stamp: 'AS 11/3/2022 20:43:43' prior: 50554082!
+initializeThatAlwaysFails
+	
+	authenticationResult := false.! !
+!SystemFacade methodsFor: 'cart' stamp: 'AS 11/3/2022 20:44:43' prior: 50553064!
+createCartForClientId: aClientId withPassword: aClientPassword
+
+	
+	(clientAuthenticator authenticateClientId: aClientId withPassword: aClientPassword) ifFalse: [self error: self class invalidClientIdOrPasswordErrorMessage].
+ 
+	! !
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidClientIdOrPassword stamp: 'AS 11/3/2022 20:44:47'!
+ERROR!
+!SystemFacade class methodsFor: 'error message' stamp: 'AS 11/3/2022 20:44:53'!
+invalidClientIdOrPasswordErrorMessage
+	self shouldBeImplemented.! !
+!SystemFacade class methodsFor: 'error message' stamp: 'AS 11/3/2022 20:45:13' prior: 50554140!
+invalidClientIdOrPasswordErrorMessage
+	
+	^'Could not authenticate client, invalid id or password!!'! !
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidClientIdOrPassword stamp: 'AS 11/3/2022 20:45:16'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidClientIdOrPassword stamp: 'AS 11/3/2022 20:45:16'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test02CanCreateCartWithValidClientIdAndPassword stamp: 'AS 11/3/2022 20:45:16'!
+ERROR!
+
+!testRun: #SystemFacadeTest #test03CanNotCreateCartWithInvalidId stamp: 'AS 11/3/2022 20:45:16'!
+FAILURE!
+
+!testRun: #SystemFacadeTest #test02CanCreateCartWithValidClientIdAndPassword stamp: 'AS 11/3/2022 20:45:18'!
+ERROR!
+!SystemFacadeTest methodsFor: 'tests' stamp: 'AS 11/3/2022 20:46:01' prior: 50553879!
+test02CanCreateCartWithValidClientIdAndPassword
+	
+	| cartId systemFacadee |
+	
+	systemFacadee := SystemFacade withClientAuthenticator: (ClientAuthenticatorDouble thatAlwaysSucceeds).
+	
+	cartId := systemFacadee createCartForClientId: self validClientId withPassword: self validClientPassword.
+	
+	self assert: (systemFacadee listCartOf: cartId) isEmpty! !
+
+!testRun: #SystemFacadeTest #test02CanCreateCartWithValidClientIdAndPassword stamp: 'AS 11/3/2022 20:46:04'!
+ERROR!
+!ClientAuthenticatorDouble class methodsFor: 'instance creation' stamp: 'AS 11/3/2022 20:46:09'!
+thatAlwaysSucceeds
+	"DO NOT FORGET TO RENAME COLLABORATORS AND REMOVE THIS COMMENT!!!!"
+	self shouldBeImplemented.
+	^self new initializeThatAlwaysSucceeds! !
+!ClientAuthenticatorDouble class methodsFor: 'instance creation' stamp: 'AS 11/3/2022 20:46:31' prior: 50554189!
+thatAlwaysSucceeds
+	
+	^self new initializeThatAlwaysSucceeds! !
+
+!testRun: #SystemFacadeTest #test02CanCreateCartWithValidClientIdAndPassword stamp: 'AS 11/3/2022 20:46:31'!
+ERROR!
+!ClientAuthenticatorDouble methodsFor: 'initialization' stamp: 'AS 11/3/2022 20:46:36'!
+initializeThatAlwaysSucceeds
+	self shouldBeImplemented.! !
+!ClientAuthenticatorDouble methodsFor: 'initialization' stamp: 'AS 11/3/2022 20:46:43' prior: 50554207!
+initializeThatAlwaysSucceeds
+	
+	authenticationResult := true.! !
+
+!testRun: #SystemFacadeTest #test02CanCreateCartWithValidClientIdAndPassword stamp: 'AS 11/3/2022 20:46:44'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidClientIdOrPassword stamp: 'AS 11/3/2022 20:46:44'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test02CanCreateCartWithValidClientIdAndPassword stamp: 'AS 11/3/2022 20:46:44'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test03CanNotCreateCartWithInvalidId stamp: 'AS 11/3/2022 20:46:44'!
+FAILURE!
+
+!testRun: #SystemFacadeTest #test03CanNotCreateCartWithInvalidId stamp: 'AS 11/3/2022 20:46:44'!
+FAILURE!
+
+!methodRemoval: SystemFacadeTest #test03CanNotCreateCartWithInvalidId stamp: 'AS 11/3/2022 20:46:49'!
+test03CanNotCreateCartWithInvalidId
+	
+	self should: [systemFacade createCartForClientId: self invalidClientId withPassword: self validClientPassword] 
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [:anError | self assert: anError messageText equals: ClientAuthenticatorDouble invalidUserOrPassErrorMessage].
+	
+	!
+
+!methodRemoval: ClientAuthenticatorDouble class #withClientCredentials: stamp: 'AS 11/3/2022 20:47:07'!
+withClientCredentials: aDictionaryOfClientCredentials 
+	
+	^self new initializeWithClientCredentials: aDictionaryOfClientCredentials !
+
+!methodRemoval: ClientAuthenticatorDouble class #invalidUserOrPassErrorMessage stamp: 'AS 11/3/2022 20:47:09'!
+invalidUserOrPassErrorMessage
+	
+	^'Client ID or password is invalid!!'!
+
+!methodRemoval: ClientAuthenticatorDouble #initializeWithClientCredentials: stamp: 'AS 11/3/2022 20:47:13'!
+initializeWithClientCredentials: aDictionaryOfClientCredentials 
+
+	clientCredentials := aDictionaryOfClientCredentials.!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'AS 11/3/2022 20:48:00'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'AS 11/3/2022 20:48:00'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'AS 11/3/2022 20:48:00'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'AS 11/3/2022 20:48:00'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'AS 11/3/2022 20:48:00'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'AS 11/3/2022 20:48:00'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'AS 11/3/2022 20:48:00'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'AS 11/3/2022 20:48:00'!
+PASSED!
+
+!testRun: #CashierTest #test01CanNotCheckoutAnEmptyCart stamp: 'AS 11/3/2022 20:48:00'!
+PASSED!
+
+!testRun: #CashierTest #test02CalculatedTotalIsCorrect stamp: 'AS 11/3/2022 20:48:00'!
+PASSED!
+
+!testRun: #CashierTest #test03CanNotCheckoutWithAnExpiredCreditCart stamp: 'AS 11/3/2022 20:48:00'!
+PASSED!
+
+!testRun: #CashierTest #test04CheckoutRegistersASale stamp: 'AS 11/3/2022 20:48:00'!
+PASSED!
+
+!testRun: #CashierTest #test05CashierChargesCreditCardUsingMerchantProcessor stamp: 'AS 11/3/2022 20:48:00'!
+PASSED!
+
+!testRun: #CashierTest #test06CashierDoesNotSaleWhenTheCreditCardHasNoCredit stamp: 'AS 11/3/2022 20:48:00'!
+PASSED!
+!SystemFacadeTest methodsFor: 'setup' stamp: 'AS 11/3/2022 20:48:14' prior: 50553867 overrides: 16961394!
+setUp
+	
+	| clientCredentials |
+	
+	clientCredentials :=  Dictionary newFromPairs: (OrderedCollection with: self validClientId with: self validClientPassword).
+! !
+
+----STARTUP---- (3 November 2022 20:48:45) as /home/andisici/Documents/2022/ing-2c2022/cuisTusLibrosIt3/CuisUniversity-5481.image!
+
+!SystemFacadeTest methodsFor: 'tests' stamp: 'AS 11/3/2022 20:38:27' prior: 50553849!
+test01CanNotCreateCartWithInvalidPassword
+	
+	| systemFacadee |
+	
+	systemFacadee := SystemFacade withClientAuthenticator: (ClientAuthenticatorDouble thatAlwaysFails).
+	
+	self should: [systemFacadee createCartForClientId: self validClientId withPassword: self invalidClientPassword] 
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [:anError | self assert: anError messageText equals: ClientAuthenticatorDouble invalidUserOrPassErrorMessage].
+	
+	! !
+!SystemFacadeTest methodsFor: 'tests' stamp: 'AS 11/3/2022 20:39:12'!
+test01CanNotCreateCartWithInvalidClientIdOrPassword
+	
+	| systemFacadee |
+	
+	systemFacadee := SystemFacade withClientAuthenticator: (ClientAuthenticatorDouble thatAlwaysFails).
+	
+	self should: [systemFacadee createCartForClientId: self validClientId withPassword: self invalidClientPassword] 
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [:anError | self assert: anError messageText equals: ClientAuthenticatorDouble invalidUserOrPassErrorMessage].
+	
+	! !
+
+!methodRemoval: SystemFacadeTest #test01CanNotCreateCartWithInvalidPassword stamp: 'AS 11/3/2022 20:48:47'!
+test01CanNotCreateCartWithInvalidPassword
+	
+	| systemFacadee |
+	
+	systemFacadee := SystemFacade withClientAuthenticator: (ClientAuthenticatorDouble thatAlwaysFails).
+	
+	self should: [systemFacadee createCartForClientId: self validClientId withPassword: self invalidClientPassword] 
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [:anError | self assert: anError messageText equals: ClientAuthenticatorDouble invalidUserOrPassErrorMessage].
+	
+	!
+!SystemFacadeTest methodsFor: 'tests' stamp: 'AS 11/3/2022 20:39:45' prior: 50554345!
+test01CanNotCreateCartWithInvalidClientIdOrPassword
+	
+	| systemFacadee |
+	
+	systemFacadee := SystemFacade withClientAuthenticator: (ClientAuthenticatorDouble thatAlwaysFails).
+	
+	self should: [systemFacadee createCartForClientId: self validClientId withPassword: self invalidClientPassword] 
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [:anError | self assert: anError messageText equals: SystemFacade invalidClientIdOrPasswordErrorMessage].
+	
+	! !
+!ClientAuthenticatorDouble class methodsFor: 'instance creation' stamp: 'AS 11/3/2022 20:40:11'!
+thatAlwaysFails
+	"DO NOT FORGET TO RENAME COLLABORATORS AND REMOVE THIS COMMENT!!!!"
+	self shouldBeImplemented.
+	^self new initializeThatAlwaysFails! !
+!ClientAuthenticatorDouble class methodsFor: 'instance creation' stamp: 'AS 11/3/2022 20:40:16' prior: 50554398!
+thatAlwaysFails
+
+	^self new initializeThatAlwaysFails! !
+!ClientAuthenticatorDouble methodsFor: 'initialization' stamp: 'AS 11/3/2022 20:40:21'!
+initializeThatAlwaysFails
+	self shouldBeImplemented.! !
+
+!classDefinition: #ClientAuthenticatorDouble category: 'TusLibros' stamp: 'AS 11/3/2022 20:48:47'!
+Object subclass: #ClientAuthenticatorDouble
+	instanceVariableNames: 'clientCredentials succeed'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!ClientAuthenticatorDouble methodsFor: 'initialization' stamp: 'AS 11/3/2022 20:41:14' prior: 50554412!
+initializeThatAlwaysFails
+	
+	succeed := false.! !
+!ClientAuthenticatorDouble methodsFor: 'authentication' stamp: 'AS 11/3/2022 20:41:30' prior: 50553945!
+authenticateClientId: aClientId withPassword: aClientPassword
+ 
+	
+	succeed ifFalse: [self error: self class invalidUserOrPassErrorMessage].! !
+!ClientAuthenticatorDouble methodsFor: 'authentication' stamp: 'AS 11/3/2022 20:43:33' prior: 50554431!
+authenticateClientId: aClientId withPassword: aClientPassword
+ 
+	
+	^succeed.! !
+
+!classDefinition: #ClientAuthenticatorDouble category: 'TusLibros' stamp: 'AS 11/3/2022 20:48:47'!
+Object subclass: #ClientAuthenticatorDouble
+	instanceVariableNames: 'clientCredentials authenticationResult'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!ClientAuthenticatorDouble methodsFor: 'as yet unclassified' stamp: 'AS 11/3/2022 20:43:43' prior: 50554439!
+authenticateClientId: aClientId withPassword: aClientPassword
+ 
+	
+	^authenticationResult.! !
+!ClientAuthenticatorDouble methodsFor: 'as yet unclassified' stamp: 'AS 11/3/2022 20:43:43' prior: 50554426!
+initializeThatAlwaysFails
+	
+	authenticationResult := false.! !
+!SystemFacade methodsFor: 'cart' stamp: 'AS 11/3/2022 20:44:43' prior: 50553064!
+createCartForClientId: aClientId withPassword: aClientPassword
+
+	
+	(clientAuthenticator authenticateClientId: aClientId withPassword: aClientPassword) ifFalse: [self error: self class invalidClientIdOrPasswordErrorMessage].
+ 
+	! !
+!SystemFacade class methodsFor: 'error message' stamp: 'AS 11/3/2022 20:44:53'!
+invalidClientIdOrPasswordErrorMessage
+	self shouldBeImplemented.! !
+!SystemFacade class methodsFor: 'error message' stamp: 'AS 11/3/2022 20:45:13' prior: 50554476!
+invalidClientIdOrPasswordErrorMessage
+	
+	^'Could not authenticate client, invalid id or password!!'! !
+!SystemFacadeTest methodsFor: 'tests' stamp: 'AS 11/3/2022 20:46:01' prior: 50553879!
+test02CanCreateCartWithValidClientIdAndPassword
+	
+	| cartId systemFacadee |
+	
+	systemFacadee := SystemFacade withClientAuthenticator: (ClientAuthenticatorDouble thatAlwaysSucceeds).
+	
+	cartId := systemFacadee createCartForClientId: self validClientId withPassword: self validClientPassword.
+	
+	self assert: (systemFacadee listCartOf: cartId) isEmpty! !
+!ClientAuthenticatorDouble class methodsFor: 'instance creation' stamp: 'AS 11/3/2022 20:46:09'!
+thatAlwaysSucceeds
+	"DO NOT FORGET TO RENAME COLLABORATORS AND REMOVE THIS COMMENT!!!!"
+	self shouldBeImplemented.
+	^self new initializeThatAlwaysSucceeds! !
+!ClientAuthenticatorDouble class methodsFor: 'instance creation' stamp: 'AS 11/3/2022 20:46:31' prior: 50554503!
+thatAlwaysSucceeds
+	
+	^self new initializeThatAlwaysSucceeds! !
+!ClientAuthenticatorDouble methodsFor: 'initialization' stamp: 'AS 11/3/2022 20:46:36'!
+initializeThatAlwaysSucceeds
+	self shouldBeImplemented.! !
+!ClientAuthenticatorDouble methodsFor: 'initialization' stamp: 'AS 11/3/2022 20:46:43' prior: 50554517!
+initializeThatAlwaysSucceeds
+	
+	authenticationResult := true.! !
+
+!methodRemoval: SystemFacadeTest #test03CanNotCreateCartWithInvalidId stamp: 'AS 11/3/2022 20:48:47'!
+test03CanNotCreateCartWithInvalidId
+	
+	self should: [systemFacade createCartForClientId: self invalidClientId withPassword: self validClientPassword] 
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [:anError | self assert: anError messageText equals: ClientAuthenticatorDouble invalidUserOrPassErrorMessage].
+	
+	!
+
+!methodRemoval: ClientAuthenticatorDouble class #withClientCredentials: stamp: 'AS 11/3/2022 20:48:47'!
+withClientCredentials: aDictionaryOfClientCredentials 
+	
+	^self new initializeWithClientCredentials: aDictionaryOfClientCredentials !
+
+!methodRemoval: ClientAuthenticatorDouble class #invalidUserOrPassErrorMessage stamp: 'AS 11/3/2022 20:48:47'!
+invalidUserOrPassErrorMessage
+	
+	^'Client ID or password is invalid!!'!
+
+!methodRemoval: ClientAuthenticatorDouble #initializeWithClientCredentials: stamp: 'AS 11/3/2022 20:48:47'!
+initializeWithClientCredentials: aDictionaryOfClientCredentials 
+
+	clientCredentials := aDictionaryOfClientCredentials.!
+!SystemFacadeTest methodsFor: 'setup' stamp: 'AS 11/3/2022 20:48:14' prior: 50553867 overrides: 16961394!
+setUp
+	
+	| clientCredentials |
+	
+	clientCredentials :=  Dictionary newFromPairs: (OrderedCollection with: self validClientId with: self validClientPassword).
+! !
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'AS 11/3/2022 20:49:29'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'AS 11/3/2022 20:49:29'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'AS 11/3/2022 20:49:29'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'AS 11/3/2022 20:49:29'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'AS 11/3/2022 20:49:29'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'AS 11/3/2022 20:49:29'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'AS 11/3/2022 20:49:29'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'AS 11/3/2022 20:49:29'!
+PASSED!
+
+!testRun: #CashierTest #test01CanNotCheckoutAnEmptyCart stamp: 'AS 11/3/2022 20:49:29'!
+PASSED!
+
+!testRun: #CashierTest #test02CalculatedTotalIsCorrect stamp: 'AS 11/3/2022 20:49:29'!
+PASSED!
+
+!testRun: #CashierTest #test03CanNotCheckoutWithAnExpiredCreditCart stamp: 'AS 11/3/2022 20:49:29'!
+PASSED!
+
+!testRun: #CashierTest #test04CheckoutRegistersASale stamp: 'AS 11/3/2022 20:49:29'!
+PASSED!
+
+!testRun: #CashierTest #test05CashierChargesCreditCardUsingMerchantProcessor stamp: 'AS 11/3/2022 20:49:29'!
+PASSED!
+
+!testRun: #CashierTest #test06CashierDoesNotSaleWhenTheCreditCardHasNoCredit stamp: 'AS 11/3/2022 20:49:29'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidClientIdOrPassword stamp: 'AS 11/3/2022 20:49:29'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test02CanCreateCartWithValidClientIdAndPassword stamp: 'AS 11/3/2022 20:49:29'!
+PASSED!
+
+----SNAPSHOT----(3 November 2022 20:49:37) CuisUniversity-5481.image priorSource: 7114292!
+!ClientAuthenticatorDouble class methodsFor: 'instance creation' stamp: 'AS 11/3/2022 20:49:52' prior: 50554407!
+thatAlwaysFails
+
+	^self new initializeWithAuthenticationResult: false! !
+!ClientAuthenticatorDouble class methodsFor: 'instance creation' stamp: 'AS 11/3/2022 20:50:03' prior: 50554512!
+thatAlwaysSucceeds
+
+	^self new initializeWithAuthenticationResult: true! !
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidClientIdOrPassword stamp: 'AS 11/3/2022 20:50:08'!
+ERROR!
+
+!testRun: #SystemFacadeTest #test02CanCreateCartWithValidClientIdAndPassword stamp: 'AS 11/3/2022 20:50:08'!
+ERROR!
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidClientIdOrPassword stamp: 'AS 11/3/2022 20:50:10'!
+ERROR!
+
+!classDefinition: #ClientAuthenticatorDouble category: 'TusLibros' stamp: 'AS 11/3/2022 20:50:14'!
+Object subclass: #ClientAuthenticatorDouble
+	instanceVariableNames: 'clientCredentials authenticationResult false_CHANGE_ME'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidClientIdOrPassword stamp: 'AS 11/3/2022 20:50:30'!
+ERROR!
+
+!testRun: #SystemFacadeTest #test02CanCreateCartWithValidClientIdAndPassword stamp: 'AS 11/3/2022 20:50:30'!
+ERROR!
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidClientIdOrPassword stamp: 'AS 11/3/2022 20:50:32'!
+ERROR!
+!ClientAuthenticatorDouble methodsFor: 'initialization' stamp: 'AS 11/3/2022 20:51:39'!
+initializeWithAuthenticationResult: anAuthenticationResult
+	
+	authenticationResult := anAuthenticationResult.! !
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidClientIdOrPassword stamp: 'AS 11/3/2022 20:51:40'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test02CanCreateCartWithValidClientIdAndPassword stamp: 'AS 11/3/2022 20:51:40'!
+PASSED!
+
+!methodRemoval: ClientAuthenticatorDouble #initializeThatAlwaysFails stamp: 'AS 11/3/2022 20:51:58'!
+initializeThatAlwaysFails
+	
+	authenticationResult := false.!
+
+!methodRemoval: ClientAuthenticatorDouble #initializeThatAlwaysSucceeds stamp: 'AS 11/3/2022 20:51:59'!
+initializeThatAlwaysSucceeds
+	
+	authenticationResult := true.!
+
+!classDefinition: #ClientAuthenticatorDouble category: 'TusLibros' stamp: 'AS 11/3/2022 20:52:05'!
+Object subclass: #ClientAuthenticatorDouble
+	instanceVariableNames: 'authenticationResult false_CHANGE_ME'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!classDefinition: #ClientAuthenticatorDouble category: 'TusLibros' stamp: 'AS 11/3/2022 20:52:05'!
+Object subclass: #ClientAuthenticatorDouble
+	instanceVariableNames: 'authenticationResult'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+
+!testRun: #CartTest #test01NewCartsAreCreatedEmpty stamp: 'AS 11/3/2022 20:52:18'!
+PASSED!
+
+!testRun: #CartTest #test02CanNotAddItemsThatDoNotBelongToStore stamp: 'AS 11/3/2022 20:52:18'!
+PASSED!
+
+!testRun: #CartTest #test03AfterAddingAnItemTheCartIsNotEmptyAnymore stamp: 'AS 11/3/2022 20:52:18'!
+PASSED!
+
+!testRun: #CartTest #test04CanNotAddNonPositiveNumberOfItems stamp: 'AS 11/3/2022 20:52:18'!
+PASSED!
+
+!testRun: #CartTest #test05CanNotAddMoreThanOneItemNotSellByTheStore stamp: 'AS 11/3/2022 20:52:18'!
+PASSED!
+
+!testRun: #CartTest #test06CartRemembersAddedItems stamp: 'AS 11/3/2022 20:52:18'!
+PASSED!
+
+!testRun: #CartTest #test07CartDoesNotHoldNotAddedItems stamp: 'AS 11/3/2022 20:52:18'!
+PASSED!
+
+!testRun: #CartTest #test08CartRemembersTheNumberOfAddedItems stamp: 'AS 11/3/2022 20:52:18'!
+PASSED!
+
+!testRun: #CashierTest #test01CanNotCheckoutAnEmptyCart stamp: 'AS 11/3/2022 20:52:18'!
+PASSED!
+
+!testRun: #CashierTest #test02CalculatedTotalIsCorrect stamp: 'AS 11/3/2022 20:52:18'!
+PASSED!
+
+!testRun: #CashierTest #test03CanNotCheckoutWithAnExpiredCreditCart stamp: 'AS 11/3/2022 20:52:18'!
+PASSED!
+
+!testRun: #CashierTest #test04CheckoutRegistersASale stamp: 'AS 11/3/2022 20:52:18'!
+PASSED!
+
+!testRun: #CashierTest #test05CashierChargesCreditCardUsingMerchantProcessor stamp: 'AS 11/3/2022 20:52:18'!
+PASSED!
+
+!testRun: #CashierTest #test06CashierDoesNotSaleWhenTheCreditCardHasNoCredit stamp: 'AS 11/3/2022 20:52:18'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidClientIdOrPassword stamp: 'AS 11/3/2022 20:52:18'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test02CanCreateCartWithValidClientIdAndPassword stamp: 'AS 11/3/2022 20:52:18'!
+PASSED!
+
+!methodRemoval: SystemFacadeTest #setUp stamp: 'AS 11/3/2022 20:52:24'!
+setUp
+	
+	| clientCredentials |
+	
+	clientCredentials :=  Dictionary newFromPairs: (OrderedCollection with: self validClientId with: self validClientPassword).
+!
+
+!classDefinition: #SystemFacadeTest category: 'TusLibros' stamp: 'AS 11/3/2022 20:52:50'!
+TestCase subclass: #SystemFacadeTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!SystemFacadeTest methodsFor: 'tests' stamp: 'AS 11/3/2022 20:52:55' prior: 50554380!
+test01CanNotCreateCartWithInvalidClientIdOrPassword
+	
+	| systemFacade |
+	
+	systemFacade := SystemFacade withClientAuthenticator: (ClientAuthenticatorDouble thatAlwaysFails).
+	
+	self should: [systemFacade createCartForClientId: self validClientId withPassword: self invalidClientPassword] 
+		raise: Error - MessageNotUnderstood
+		withExceptionDo: [:anError | self assert: anError messageText equals: SystemFacade invalidClientIdOrPasswordErrorMessage].
+	
+	! !
+!SystemFacadeTest methodsFor: 'tests' stamp: 'AS 11/3/2022 20:52:59' prior: 50554488!
+test02CanCreateCartWithValidClientIdAndPassword
+	
+	| cartId systemFacade |
+	
+	systemFacade := SystemFacade withClientAuthenticator: (ClientAuthenticatorDouble thatAlwaysSucceeds).
+	
+	cartId := systemFacade createCartForClientId: self validClientId withPassword: self validClientPassword.
+	
+	self assert: (systemFacade listCartOf: cartId) isEmpty! !
+
+!testRun: #SystemFacadeTest #test02CanCreateCartWithValidClientIdAndPassword stamp: 'AS 11/3/2022 20:53:03'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidClientIdOrPassword stamp: 'AS 11/3/2022 20:53:03'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test02CanCreateCartWithValidClientIdAndPassword stamp: 'AS 11/3/2022 20:53:03'!
+PASSED!
+!SystemFacade methodsFor: 'cart' stamp: 'AS 11/3/2022 20:53:20' prior: 50554466!
+createCartForClientId: aClientId withPassword: aClientPassword
+
+	(clientAuthenticator authenticateClientId: aClientId withPassword: aClientPassword) ifFalse: [self error: self class invalidClientIdOrPasswordErrorMessage].
+ 
+	! !
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidClientIdOrPassword stamp: 'AS 11/3/2022 20:53:20'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test02CanCreateCartWithValidClientIdAndPassword stamp: 'AS 11/3/2022 20:53:20'!
+PASSED!
+!SystemFacade methodsFor: 'cart' stamp: 'AS 11/3/2022 20:53:37'!
+invalidClientIdOrPasswordErrorSignal
+
+	^ self error: self class invalidClientIdOrPasswordErrorMessage! !
+!SystemFacade methodsFor: 'cart' stamp: 'AS 11/3/2022 20:53:37' prior: 50554822!
+createCartForClientId: aClientId withPassword: aClientPassword
+
+	(clientAuthenticator authenticateClientId: aClientId withPassword: aClientPassword) ifFalse: [self invalidClientIdOrPasswordErrorSignal].
+ 
+	! !
+!SystemFacade methodsFor: 'cart' stamp: 'AS 11/3/2022 20:54:40'!
+assertId: aClientId authenticatesWithPassword: aClientPassword
+
+	(clientAuthenticator authenticateClientId: aClientId withPassword: aClientPassword) ifFalse: [self invalidClientIdOrPasswordErrorSignal].
+ 
+	! !
+!SystemFacade methodsFor: 'cart' stamp: 'AS 11/3/2022 20:54:54' prior: 50554845!
+createCartForClientId: aClientId withPassword: aClientPassword
+
+	self assertId: aClientId authenticatesWithPassword: aClientPassword.
+ 
+	! !
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidClientIdOrPassword stamp: 'AS 11/3/2022 20:54:54'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test02CanCreateCartWithValidClientIdAndPassword stamp: 'AS 11/3/2022 20:54:54'!
+PASSED!
+
+----SNAPSHOT----(3 November 2022 20:56:50) CuisUniversity-5481.image priorSource: 7135124!
