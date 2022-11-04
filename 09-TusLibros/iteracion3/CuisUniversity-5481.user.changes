@@ -1602,3 +1602,271 @@ PASSED!
 PASSED!
 
 ----SNAPSHOT----(3 November 2022 20:56:50) CuisUniversity-5481.image priorSource: 7135124!
+!SystemFacadeTest methodsFor: 'tests' stamp: 'AS 11/3/2022 21:01:53'!
+test03CanNotListCartOfInvalidCartId
+	
+	|  systemFacade |
+	
+	systemFacade := SystemFacade withClientAuthenticator: (ClientAuthenticatorDouble thatAlwaysSucceeds).
+	
+	self should: (systemFacade listCartOf: self invalidCartId)
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: SystemFacade canNotListCartOfInvalidCartIdErrorMessage]! !
+
+!testRun: #SystemFacadeTest #test03CanNotListCartOfInvalidCartId stamp: 'AS 11/3/2022 21:02:15'!
+ERROR!
+!SystemFacadeTest methodsFor: 'support' stamp: 'AS 11/3/2022 21:02:29'!
+invalidCartId
+	self shouldBeImplemented.! !
+!SystemFacadeTest methodsFor: 'support' stamp: 'AS 11/3/2022 21:02:43' prior: 50554899!
+invalidCartId
+	
+	^'invalidCartId'! !
+
+!testRun: #SystemFacadeTest #test03CanNotListCartOfInvalidCartId stamp: 'AS 11/3/2022 21:02:44'!
+FAILURE!
+
+!classDefinition: #SystemFacade category: 'TusLibros' stamp: 'AS 11/3/2022 21:04:27'!
+Object subclass: #SystemFacade
+	instanceVariableNames: 'clientAuthenticator cartsContent'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!SystemFacade methodsFor: 'cart' stamp: 'AS 11/3/2022 21:04:26' prior: 50553254!
+listCartOf: aCartId
+	
+	cartsContent at: aCartId ifAbsent: [self error: self class canNotListCartOfInvalidCartIdErrorMessage].
+	^OrderedCollection new.! !
+!SystemFacade methodsFor: 'cart' stamp: 'AS 11/3/2022 21:04:34' prior: 50554919!
+listCartOf: aCartId
+	
+	^cartsContent at: aCartId ifAbsent: [self error: self class canNotListCartOfInvalidCartIdErrorMessage].! !
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidClientIdOrPassword stamp: 'AS 11/3/2022 21:04:36'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test02CanCreateCartWithValidClientIdAndPassword stamp: 'AS 11/3/2022 21:04:36'!
+ERROR!
+
+!testRun: #SystemFacadeTest #test03CanNotListCartOfInvalidCartId stamp: 'AS 11/3/2022 21:04:36'!
+ERROR!
+
+!testRun: #SystemFacadeTest #test02CanCreateCartWithValidClientIdAndPassword stamp: 'AS 11/3/2022 21:04:38'!
+ERROR!
+!SystemFacade methodsFor: 'initialization' stamp: 'AS 11/3/2022 21:05:12' prior: 50553040!
+initializeWithClientAuthenticator: aClientAuthenticator 
+
+	clientAuthenticator := aClientAuthenticator.
+	cartsContent := Dictionary new.! !
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidClientIdOrPassword stamp: 'AS 11/3/2022 21:05:14'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test02CanCreateCartWithValidClientIdAndPassword stamp: 'AS 11/3/2022 21:05:14'!
+ERROR!
+
+!testRun: #SystemFacadeTest #test03CanNotListCartOfInvalidCartId stamp: 'AS 11/3/2022 21:05:14'!
+ERROR!
+
+!testRun: #SystemFacadeTest #test02CanCreateCartWithValidClientIdAndPassword stamp: 'AS 11/3/2022 21:05:15'!
+ERROR!
+!SystemFacade class methodsFor: 'error message' stamp: 'AS 11/3/2022 21:05:21'!
+canNotListCartOfInvalidCartIdErrorMessage
+	self shouldBeImplemented.! !
+!SystemFacade class methodsFor: 'error message' stamp: 'AS 11/3/2022 21:05:36' prior: 50554971!
+canNotListCartOfInvalidCartIdErrorMessage
+	
+	^'Can not list cart of an invalid cart id!!'! !
+
+!testRun: #SystemFacadeTest #test02CanCreateCartWithValidClientIdAndPassword stamp: 'AS 11/3/2022 21:05:37'!
+ERROR!
+!SystemFacade methodsFor: 'cart' stamp: 'AS 11/3/2022 21:06:10' prior: 50554864!
+createCartForClientId: aClientId withPassword: aClientPassword
+
+	self assertId: aClientId authenticatesWithPassword: aClientPassword.
+	
+	cartsContent at: aClientId put: OrderedCollection new.
+ 
+	! !
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidClientIdOrPassword stamp: 'AS 11/3/2022 21:06:11'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test02CanCreateCartWithValidClientIdAndPassword stamp: 'AS 11/3/2022 21:06:11'!
+ERROR!
+
+!testRun: #SystemFacadeTest #test03CanNotListCartOfInvalidCartId stamp: 'AS 11/3/2022 21:06:11'!
+ERROR!
+
+!testRun: #SystemFacadeTest #test02CanCreateCartWithValidClientIdAndPassword stamp: 'AS 11/3/2022 21:06:13'!
+ERROR!
+
+!classDefinition: #SystemFacade category: 'TusLibros' stamp: 'AS 11/3/2022 21:07:09'!
+Object subclass: #SystemFacade
+	instanceVariableNames: 'clientAuthenticator cartsContent id'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros'!
+!SystemFacade methodsFor: 'cart' stamp: 'AS 11/3/2022 21:07:07' prior: 50554987!
+createCartForClientId: aClientId withPassword: aClientPassword
+
+	self assertId: aClientId authenticatesWithPassword: aClientPassword.
+	
+	cartsContent at: aClientId put: OrderedCollection new.
+	^id+1. 
+	! !
+
+!testRun: #SystemFacadeTest #test02CanCreateCartWithValidClientIdAndPassword stamp: 'AS 11/3/2022 21:07:10'!
+ERROR!
+!SystemFacade methodsFor: 'initialization' stamp: 'AS 11/3/2022 21:07:20' prior: 50554949!
+initializeWithClientAuthenticator: aClientAuthenticator 
+
+	clientAuthenticator := aClientAuthenticator.
+	cartsContent := Dictionary new.
+	id := 1! !
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidClientIdOrPassword stamp: 'AS 11/3/2022 21:07:21'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test02CanCreateCartWithValidClientIdAndPassword stamp: 'AS 11/3/2022 21:07:21'!
+ERROR!
+
+!testRun: #SystemFacadeTest #test03CanNotListCartOfInvalidCartId stamp: 'AS 11/3/2022 21:07:21'!
+ERROR!
+
+!testRun: #SystemFacadeTest #test02CanCreateCartWithValidClientIdAndPassword stamp: 'AS 11/3/2022 21:07:23'!
+ERROR!
+
+!testRun: #SystemFacadeTest #test02CanCreateCartWithValidClientIdAndPassword stamp: 'AS 11/3/2022 21:07:52'!
+ERROR!
+!SystemFacade methodsFor: 'cart' stamp: 'AS 11/3/2022 21:08:31' prior: 50555018!
+createCartForClientId: aClientId withPassword: aClientPassword
+
+	| cartId |
+	
+	self assertId: aClientId authenticatesWithPassword: aClientPassword.
+	
+	cartId := id+1.
+	cartsContent at: cartId put: OrderedCollection new.
+	^cartId. 
+	! !
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidClientIdOrPassword stamp: 'AS 11/3/2022 21:08:31'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test02CanCreateCartWithValidClientIdAndPassword stamp: 'AS 11/3/2022 21:08:31'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test03CanNotListCartOfInvalidCartId stamp: 'AS 11/3/2022 21:08:31'!
+ERROR!
+
+!testRun: #SystemFacadeTest #test03CanNotListCartOfInvalidCartId stamp: 'AS 11/3/2022 21:08:31'!
+ERROR!
+
+!testRun: #SystemFacadeTest #test02CanCreateCartWithValidClientIdAndPassword stamp: 'AS 11/3/2022 21:08:36'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test03CanNotListCartOfInvalidCartId stamp: 'AS 11/3/2022 21:08:36'!
+ERROR!
+!SystemFacadeTest methodsFor: 'tests' stamp: 'AS 11/3/2022 21:09:02' prior: 50554881!
+test03CanNotListCartOfInvalidCartId
+	
+	|  systemFacade |
+	
+	systemFacade := SystemFacade withClientAuthenticator: (ClientAuthenticatorDouble thatAlwaysSucceeds).
+	
+	self should: (systemFacade listCartOf: self invalidCartId)
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: SystemFacade canNotListCartOfInvalidCartIdErrorMessage]! !
+
+!testRun: #SystemFacadeTest #test03CanNotListCartOfInvalidCartId stamp: 'AS 11/3/2022 21:09:02'!
+ERROR!
+
+!testRun: #SystemFacadeTest #test03CanNotListCartOfInvalidCartId stamp: 'AS 11/3/2022 21:09:39'!
+ERROR!
+!SystemFacadeTest methodsFor: 'tests' stamp: 'AS 11/3/2022 21:10:13' prior: 50555089!
+test03CanNotListCartOfInvalidCartId
+	
+	|  systemFacade |
+	
+	systemFacade := SystemFacade withClientAuthenticator: (ClientAuthenticatorDouble thatAlwaysSucceeds).
+	
+	self should: [systemFacade listCartOf: self invalidCartId]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: SystemFacade canNotListCartOfInvalidCartIdErrorMessage]! !
+
+!testRun: #SystemFacadeTest #test03CanNotListCartOfInvalidCartId stamp: 'AS 11/3/2022 21:10:14'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidClientIdOrPassword stamp: 'AS 11/3/2022 21:10:14'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test02CanCreateCartWithValidClientIdAndPassword stamp: 'AS 11/3/2022 21:10:14'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test03CanNotListCartOfInvalidCartId stamp: 'AS 11/3/2022 21:10:14'!
+PASSED!
+!SystemFacadeTest methodsFor: 'tests' stamp: 'AS 11/3/2022 21:17:07'!
+test04CanCorrectlyAddToCart
+	
+	| cartId systemFacade |
+	
+	systemFacade := SystemFacade withClientAuthenticator: (ClientAuthenticatorDouble thatAlwaysSucceeds).
+	
+	cartId := systemFacade createCartForClientId: self validClientId withPassword: self validClientPassword.
+	systemFacade add: 2 of: 'bookISBN1' to: cartId.
+	
+	self assert: (OrderedCollection with: 0 with: 'bookISBN1' with: 2) 	equals: (systemFacade listCartOf: cartId) first! !
+!SystemFacadeTest methodsFor: 'tests' stamp: 'AS 11/3/2022 21:17:32' prior: 50555140!
+test04CanCorrectlyAddToCart
+	
+	| cartId systemFacade |
+	
+	systemFacade := SystemFacade withClientAuthenticator: (ClientAuthenticatorDouble thatAlwaysSucceeds).
+	
+	cartId := systemFacade createCartForClientId: self validClientId withPassword: self validClientPassword.
+	systemFacade add: 2 of: 'bookISBN1' to: cartId.
+	
+	self assert: (OrderedCollection with: 0 with: 'bookISBN1' with: 2) 	equals: (systemFacade listCartOf: cartId)! !
+
+!testRun: #SystemFacadeTest #test04CanCorrectlyAddToCart stamp: 'AS 11/3/2022 21:17:33'!
+ERROR!
+!SystemFacade methodsFor: 'adding' stamp: 'AS 11/3/2022 21:17:39'!
+add: aSmallInteger of: aString to: aSmallInteger3 
+	self shouldBeImplemented.! !
+!SystemFacade methodsFor: 'adding' stamp: 'AS 11/3/2022 21:19:34' prior: 50555176!
+add: aQuantityToAdd of: aBookISBNToAdd to: aCartIdToAddTo 
+
+	cartsContent at: aCartIdToAddTo put: (OrderedCollection with: 0 with: aBookISBNToAdd with: aQuantityToAdd).! !
+
+!testRun: #SystemFacadeTest #test04CanCorrectlyAddToCart stamp: 'AS 11/3/2022 21:19:35'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidClientIdOrPassword stamp: 'AS 11/3/2022 21:19:35'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test02CanCreateCartWithValidClientIdAndPassword stamp: 'AS 11/3/2022 21:19:35'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test03CanNotListCartOfInvalidCartId stamp: 'AS 11/3/2022 21:19:35'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test04CanCorrectlyAddToCart stamp: 'AS 11/3/2022 21:19:35'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test04CanCorrectlyAddToCart stamp: 'AS 11/3/2022 21:19:37'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test01CanNotCreateCartWithInvalidClientIdOrPassword stamp: 'AS 11/3/2022 21:19:37'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test02CanCreateCartWithValidClientIdAndPassword stamp: 'AS 11/3/2022 21:19:37'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test03CanNotListCartOfInvalidCartId stamp: 'AS 11/3/2022 21:19:37'!
+PASSED!
+
+!testRun: #SystemFacadeTest #test04CanCorrectlyAddToCart stamp: 'AS 11/3/2022 21:19:37'!
+PASSED!
+
+----SNAPSHOT----(3 November 2022 21:19:44) CuisUniversity-5481.image priorSource: 7143292!

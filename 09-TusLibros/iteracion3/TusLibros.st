@@ -254,6 +254,11 @@ TestCase subclass: #SystemFacadeTest
 	category: 'TusLibros'!
 
 
+!SystemFacadeTest methodsFor: 'support' stamp: 'AS 11/3/2022 21:02:43'!
+invalidCartId
+	
+	^'invalidCartId'! !
+
 !SystemFacadeTest methodsFor: 'support' stamp: 'AS 11/3/2022 20:07:35'!
 invalidClientId
 	
@@ -298,6 +303,29 @@ test02CanCreateCartWithValidClientIdAndPassword
 	cartId := systemFacade createCartForClientId: self validClientId withPassword: self validClientPassword.
 	
 	self assert: (systemFacade listCartOf: cartId) isEmpty! !
+
+!SystemFacadeTest methodsFor: 'tests' stamp: 'AS 11/3/2022 21:10:13'!
+test03CanNotListCartOfInvalidCartId
+	
+	|  systemFacade |
+	
+	systemFacade := SystemFacade withClientAuthenticator: (ClientAuthenticatorDouble thatAlwaysSucceeds).
+	
+	self should: [systemFacade listCartOf: self invalidCartId]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: anError messageText equals: SystemFacade canNotListCartOfInvalidCartIdErrorMessage]! !
+
+!SystemFacadeTest methodsFor: 'tests' stamp: 'AS 11/3/2022 21:17:32'!
+test04CanCorrectlyAddToCart
+	
+	| cartId systemFacade |
+	
+	systemFacade := SystemFacade withClientAuthenticator: (ClientAuthenticatorDouble thatAlwaysSucceeds).
+	
+	cartId := systemFacade createCartForClientId: self validClientId withPassword: self validClientPassword.
+	systemFacade add: 2 of: 'bookISBN1' to: cartId.
+	
+	self assert: (OrderedCollection with: 0 with: 'bookISBN1' with: 2) 	equals: (systemFacade listCartOf: cartId)! !
 
 
 !classDefinition: #Cart category: 'TusLibros'!
@@ -633,15 +661,17 @@ today
 
 !classDefinition: #SystemFacade category: 'TusLibros'!
 Object subclass: #SystemFacade
-	instanceVariableNames: 'clientAuthenticator'
+	instanceVariableNames: 'clientAuthenticator cartsContent id'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TusLibros'!
 
-!SystemFacade methodsFor: 'initialization' stamp: 'AS 11/3/2022 19:44:31'!
+!SystemFacade methodsFor: 'initialization' stamp: 'AS 11/3/2022 21:07:20'!
 initializeWithClientAuthenticator: aClientAuthenticator 
 
-	clientAuthenticator := aClientAuthenticator.! !
+	clientAuthenticator := aClientAuthenticator.
+	cartsContent := Dictionary new.
+	id := 1! !
 
 
 !SystemFacade methodsFor: 'error signal' stamp: 'AS 11/3/2022 20:53:37'!
@@ -658,17 +688,28 @@ assertId: aClientId authenticatesWithPassword: aClientPassword
 	! !
 
 
-!SystemFacade methodsFor: 'cart' stamp: 'AS 11/3/2022 20:54:54'!
+!SystemFacade methodsFor: 'cart' stamp: 'AS 11/3/2022 21:08:31'!
 createCartForClientId: aClientId withPassword: aClientPassword
 
+	| cartId |
+	
 	self assertId: aClientId authenticatesWithPassword: aClientPassword.
- 
+	
+	cartId := id+1.
+	cartsContent at: cartId put: OrderedCollection new.
+	^cartId. 
 	! !
 
-!SystemFacade methodsFor: 'cart' stamp: 'AS 11/3/2022 19:54:49'!
+!SystemFacade methodsFor: 'cart' stamp: 'AS 11/3/2022 21:04:34'!
 listCartOf: aCartId
 	
-	^OrderedCollection new.! !
+	^cartsContent at: aCartId ifAbsent: [self error: self class canNotListCartOfInvalidCartIdErrorMessage].! !
+
+
+!SystemFacade methodsFor: 'adding' stamp: 'AS 11/3/2022 21:19:34'!
+add: aQuantityToAdd of: aBookISBNToAdd to: aCartIdToAddTo 
+
+	cartsContent at: aCartIdToAddTo put: (OrderedCollection with: 0 with: aBookISBNToAdd with: aQuantityToAdd).! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -681,6 +722,11 @@ withClientAuthenticator: aClientAuthenticator
 
 	^self new initializeWithClientAuthenticator: aClientAuthenticator ! !
 
+
+!SystemFacade class methodsFor: 'error message' stamp: 'AS 11/3/2022 21:05:36'!
+canNotListCartOfInvalidCartIdErrorMessage
+	
+	^'Can not list cart of an invalid cart id!!'! !
 
 !SystemFacade class methodsFor: 'error message' stamp: 'AS 11/3/2022 20:45:13'!
 invalidClientIdOrPasswordErrorMessage
