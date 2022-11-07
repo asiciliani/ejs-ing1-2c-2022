@@ -248,10 +248,23 @@ debit: anAmount from: aCreditCard
 
 !classDefinition: #SystemFacadeTest category: 'TusLibros'!
 TestCase subclass: #SystemFacadeTest
-	instanceVariableNames: ''
+	instanceVariableNames: 'testObjectsFactory salesBook debitBehavior'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TusLibros'!
+
+!SystemFacadeTest methodsFor: 'merchant processor protocol' stamp: 'AS 11/6/2022 01:05:46'!
+debit: anAmount from: aCreditCard 
+
+	^debitBehavior value: anAmount value: aCreditCard ! !
+
+
+!SystemFacadeTest methodsFor: 'setup' stamp: 'AS 11/6/2022 01:05:27'!
+setUp 
+
+	testObjectsFactory := StoreTestObjectsFactory new.
+	salesBook := OrderedCollection new.
+	debitBehavior := [ :anAmount :aCreditCard | ].! !
 
 
 !SystemFacadeTest methodsFor: 'support' stamp: 'AS 11/3/2022 21:02:43'!
@@ -280,12 +293,12 @@ validClientPassword
 	^ 'validPassword'! !
 
 
-!SystemFacadeTest methodsFor: 'tests' stamp: 'AS 11/3/2022 20:52:55'!
+!SystemFacadeTest methodsFor: 'tests' stamp: 'AS 11/6/2022 01:06:18'!
 test01CanNotCreateCartWithInvalidClientIdOrPassword
 	
 	| systemFacade |
 	
-	systemFacade := SystemFacade withClientAuthenticator: (ClientAuthenticatorDouble thatAlwaysFails).
+	systemFacade := SystemFacade withClientAuthenticator: (ClientAuthenticatorDouble thatAlwaysFails) acceptingItemsOf: testObjectsFactory defaultCatalog chargingWith: self onDate: testObjectsFactory today registeringOn: salesBook.
 	
 	self should: [systemFacade createCartForClientId: self validClientId withPassword: self invalidClientPassword] 
 		raise: Error - MessageNotUnderstood
@@ -293,39 +306,51 @@ test01CanNotCreateCartWithInvalidClientIdOrPassword
 	
 	! !
 
-!SystemFacadeTest methodsFor: 'tests' stamp: 'AS 11/3/2022 20:52:59'!
+!SystemFacadeTest methodsFor: 'tests' stamp: 'AS 11/6/2022 01:06:22'!
 test02CanCreateCartWithValidClientIdAndPassword
 	
 	| cartId systemFacade |
 	
-	systemFacade := SystemFacade withClientAuthenticator: (ClientAuthenticatorDouble thatAlwaysSucceeds).
+	systemFacade := SystemFacade withClientAuthenticator: (ClientAuthenticatorDouble thatAlwaysSucceeds) acceptingItemsOf: testObjectsFactory defaultCatalog chargingWith: self onDate: testObjectsFactory today registeringOn: salesBook.
 	
 	cartId := systemFacade createCartForClientId: self validClientId withPassword: self validClientPassword.
 	
-	self assert: (systemFacade listCartOf: cartId) isEmpty! !
+	self assert: (OrderedCollection with: 0) equals: (systemFacade listCartOf: cartId)! !
 
-!SystemFacadeTest methodsFor: 'tests' stamp: 'AS 11/3/2022 21:10:13'!
+!SystemFacadeTest methodsFor: 'tests' stamp: 'AS 11/6/2022 01:06:27'!
 test03CanNotListCartOfInvalidCartId
 	
 	|  systemFacade |
 	
-	systemFacade := SystemFacade withClientAuthenticator: (ClientAuthenticatorDouble thatAlwaysSucceeds).
+	systemFacade := SystemFacade withClientAuthenticator: (ClientAuthenticatorDouble thatAlwaysSucceeds) acceptingItemsOf: testObjectsFactory defaultCatalog chargingWith: self onDate: testObjectsFactory today registeringOn: salesBook.
 	
 	self should: [systemFacade listCartOf: self invalidCartId]
 		raise: Error - MessageNotUnderstood 
 		withExceptionDo: [:anError | self assert: anError messageText equals: SystemFacade canNotListCartOfInvalidCartIdErrorMessage]! !
 
-!SystemFacadeTest methodsFor: 'tests' stamp: 'AS 11/3/2022 21:17:32'!
+!SystemFacadeTest methodsFor: 'tests' stamp: 'AS 11/6/2022 01:06:31'!
 test04CanCorrectlyAddToCart
 	
 	| cartId systemFacade |
 	
-	systemFacade := SystemFacade withClientAuthenticator: (ClientAuthenticatorDouble thatAlwaysSucceeds).
+	systemFacade := SystemFacade withClientAuthenticator: (ClientAuthenticatorDouble thatAlwaysSucceeds) acceptingItemsOf: testObjectsFactory defaultCatalog chargingWith: self onDate: testObjectsFactory today registeringOn: salesBook.
 	
 	cartId := systemFacade createCartForClientId: self validClientId withPassword: self validClientPassword.
-	systemFacade add: 2 of: 'bookISBN1' to: cartId.
+	systemFacade add: 2 of: testObjectsFactory itemSellByTheStore to: cartId.
 	
-	self assert: (OrderedCollection with: 0 with: 'bookISBN1' with: 2) 	equals: (systemFacade listCartOf: cartId)! !
+	self assert: (OrderedCollection with: 0 with: testObjectsFactory itemSellByTheStore with: 2) 	equals: (systemFacade listCartOf: cartId)! !
+
+!SystemFacadeTest methodsFor: 'tests' stamp: 'AS 11/7/2022 15:44:44'!
+test05CanCheckoutCartAndCorrectlyListPurchases
+	
+	| cartId systemFacade |
+	
+	systemFacade := SystemFacade withClientAuthenticator: (ClientAuthenticatorDouble thatAlwaysSucceeds) acceptingItemsOf: testObjectsFactory defaultCatalog chargingWith: self onDate: testObjectsFactory today registeringOn: salesBook.
+	
+	cartId := systemFacade createCartForClientId: self validClientId withPassword: self validClientPassword.
+	systemFacade add: 2 of: testObjectsFactory itemSellByTheStore to: cartId.
+	systemFacade checkout: cartId withCard: testObjectsFactory notExpiredCreditCard.
+	self assert: (OrderedCollection with: salesBook first) equals: (systemFacade listPurchasesOf: self validClientId withPassword: self validClientPassword).! !
 
 
 !classDefinition: #Cart category: 'TusLibros'!
@@ -425,10 +450,10 @@ calculateTotal
 	total := cart total.
 	! !
 
-!Cashier methodsFor: 'checkout - private' stamp: 'HernanWilkinson 6/17/2013 19:07'!
+!Cashier methodsFor: 'checkout - private' stamp: 'AS 11/7/2022 14:43:29'!
 createSale
 
-	^ Sale of: total
+	^ Sale of: cart amountingTo: total
 ! !
 
 !Cashier methodsFor: 'checkout - private' stamp: 'HernanWilkinson 6/17/2013 19:06'!
@@ -571,7 +596,7 @@ expiringOn: aMonth
 
 !classDefinition: #Sale category: 'TusLibros'!
 Object subclass: #Sale
-	instanceVariableNames: 'total'
+	instanceVariableNames: 'total cart id'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TusLibros'!
@@ -582,10 +607,25 @@ total
 	^ total! !
 
 
-!Sale methodsFor: 'initialization' stamp: 'HernanWilkinson 6/17/2013 18:47'!
-initializeTotal: aTotal
+!Sale methodsFor: 'initialization' stamp: 'AS 11/7/2022 14:20:03'!
+initializeOf: aCart amountToTotal: aTotal
 
-	total := aTotal ! !
+	total := aTotal.
+	cart := aCart ! !
+
+
+!Sale methodsFor: 'cart' stamp: 'AS 11/7/2022 14:49:19'!
+isAssociatedToCart: aCart 
+	^cart == aCart.! !
+
+
+!Sale methodsFor: 'id' stamp: 'AS 11/7/2022 16:02:19'!
+id
+	^id! !
+
+!Sale methodsFor: 'id' stamp: 'AS 11/7/2022 15:11:36'!
+saleId: aSaleId 
+	id := aSaleId.! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -593,11 +633,11 @@ initializeTotal: aTotal
 Sale class
 	instanceVariableNames: ''!
 
-!Sale class methodsFor: 'instance creation' stamp: 'HernanWilkinson 6/17/2013 18:47'!
-of: aTotal
+!Sale class methodsFor: 'instance creation' stamp: 'AS 11/7/2022 00:51:31'!
+of: aCart amountingTo: aTotal
 
 	"should assert total is not negative or 0!!"
-	^self new initializeTotal: aTotal ! !
+	^self new initializeOf: aCart amountToTotal: aTotal ! !
 
 
 !classDefinition: #StoreTestObjectsFactory category: 'TusLibros'!
@@ -661,17 +701,25 @@ today
 
 !classDefinition: #SystemFacade category: 'TusLibros'!
 Object subclass: #SystemFacade
-	instanceVariableNames: 'clientAuthenticator cartsContent id'
+	instanceVariableNames: 'clientAuthenticator carts lastCartId storeCatalog cartItems merchantProcessor date salesBook lastTransactionId clientCartIds clientSalesIds'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'TusLibros'!
 
-!SystemFacade methodsFor: 'initialization' stamp: 'AS 11/3/2022 21:07:20'!
-initializeWithClientAuthenticator: aClientAuthenticator 
+!SystemFacade methodsFor: 'initialization' stamp: 'AS 11/7/2022 15:27:33'!
+initializeWithClientAuthenticator: aClientAuthenticator acceptingItemsOf: aStoreCatalog chargingWith: aMerchantProcessor onDate: aDate registeringOn: aSalesBook     
 
 	clientAuthenticator := aClientAuthenticator.
-	cartsContent := Dictionary new.
-	id := 1! !
+	storeCatalog := aStoreCatalog.
+	merchantProcessor := aMerchantProcessor.
+	date := aDate.
+	salesBook := aSalesBook.
+	carts := Dictionary new.
+	cartItems := Dictionary new.
+	clientCartIds := Dictionary new.
+	clientSalesIds := Dictionary new.
+	lastCartId := 1.
+	lastTransactionId := 1.! !
 
 
 !SystemFacade methodsFor: 'error signal' stamp: 'AS 11/3/2022 20:53:37'!
@@ -688,28 +736,70 @@ assertId: aClientId authenticatesWithPassword: aClientPassword
 	! !
 
 
-!SystemFacade methodsFor: 'cart' stamp: 'AS 11/3/2022 21:08:31'!
+!SystemFacade methodsFor: 'cart' stamp: 'AS 11/7/2022 15:26:53'!
 createCartForClientId: aClientId withPassword: aClientPassword
 
 	| cartId |
 	
 	self assertId: aClientId authenticatesWithPassword: aClientPassword.
 	
-	cartId := id+1.
-	cartsContent at: cartId put: OrderedCollection new.
+	cartId := lastCartId+1.
+	carts at: cartId put: (Cart acceptingItemsOf: storeCatalog).
+	cartItems at: cartId put: OrderedCollection new.
+	clientCartIds at: aClientId put: (OrderedCollection with: cartId).
 	^cartId. 
 	! !
 
-!SystemFacade methodsFor: 'cart' stamp: 'AS 11/3/2022 21:04:34'!
+!SystemFacade methodsFor: 'cart' stamp: 'AS 11/5/2022 22:40:53'!
 listCartOf: aCartId
 	
-	^cartsContent at: aCartId ifAbsent: [self error: self class canNotListCartOfInvalidCartIdErrorMessage].! !
+	| cart listCartResult | 
+	
+	cart := carts at: aCartId ifAbsent: [self error: self class canNotListCartOfInvalidCartIdErrorMessage].
+	listCartResult := OrderedCollection with: 0.
+	(cartItems at: aCartId) do: [:anItemInCart | listCartResult add: anItemInCart.
+									 listCartResult add: (cart occurrencesOf: anItemInCart)].
+	^listCartResult ! !
 
 
-!SystemFacade methodsFor: 'adding' stamp: 'AS 11/3/2022 21:19:34'!
+!SystemFacade methodsFor: 'adding' stamp: 'AS 11/5/2022 22:37:30'!
 add: aQuantityToAdd of: aBookISBNToAdd to: aCartIdToAddTo 
+	
+	| cart |
+	cart := (carts at: aCartIdToAddTo).
+	cart add: aQuantityToAdd of: aBookISBNToAdd.
+	(cartItems at: aCartIdToAddTo ifAbsent: [OrderedCollection new]) add: aBookISBNToAdd.! !
 
-	cartsContent at: aCartIdToAddTo put: (OrderedCollection with: 0 with: aBookISBNToAdd with: aQuantityToAdd).! !
+
+!SystemFacade methodsFor: 'checkout' stamp: 'AS 11/7/2022 16:03:03'!
+checkout: aCartIdToCheckout withCard: aCreditCardToCharge 
+
+	| clientId saleId |
+	
+	(Cashier toCheckout: (carts at: aCartIdToCheckout) 
+			charging: aCreditCardToCharge 
+			throught: merchantProcessor
+			on: date 
+			registeringOn: salesBook) checkOut.
+	
+	saleId := lastTransactionId + 1.
+	salesBook last saleId: saleId. 
+	'Fue lo que se nos ocurrio para no acoplar id al checkout del cashier... No es lo mejor pues: no se crea el objeto completo, si otro sistema usa el modelo, el id no se estaría utilizando.'.
+	
+	clientId := (clientCartIds keys select: [:key | (clientCartIds at: key) includes: aCartIdToCheckout]) first.
+	
+	clientSalesIds at: clientId put: (OrderedCollection with: saleId).
+	^saleId.! !
+
+
+!SystemFacade methodsFor: 'purchases' stamp: 'AS 11/7/2022 16:09:30'!
+listPurchasesOf: aClientId withPassword: aClientPassword
+	 
+	
+	
+	self assertId: aClientId authenticatesWithPassword: aClientPassword.
+	
+	^salesBook select: [:aSale | (clientSalesIds at: aClientId) includes: aSale id].! !
 
 "-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
 
@@ -717,10 +807,10 @@ add: aQuantityToAdd of: aBookISBNToAdd to: aCartIdToAddTo
 SystemFacade class
 	instanceVariableNames: ''!
 
-!SystemFacade class methodsFor: 'instance creation' stamp: 'AS 11/3/2022 19:44:14'!
-withClientAuthenticator: aClientAuthenticator
+!SystemFacade class methodsFor: 'instance creation' stamp: 'AS 11/6/2022 00:58:24'!
+withClientAuthenticator: aClientAuthenticator acceptingItemsOf: aStoreCatalog chargingWith: aMerchantProcessor onDate: aDate registeringOn: aSalesBook    
 
-	^self new initializeWithClientAuthenticator: aClientAuthenticator ! !
+	^self new initializeWithClientAuthenticator: aClientAuthenticator acceptingItemsOf: aStoreCatalog chargingWith: aMerchantProcessor onDate: aDate registeringOn: aSalesBook ! !
 
 
 !SystemFacade class methodsFor: 'error message' stamp: 'AS 11/3/2022 21:05:36'!
