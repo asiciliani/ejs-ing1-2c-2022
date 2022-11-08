@@ -487,6 +487,44 @@ debit: anAmount from: aCreditCard
 	self subclassResponsibility ! !
 
 
+!classDefinition: #ParallelizeBlocks category: 'TusLibros-Model'!
+Object subclass: #ParallelizeBlocks
+	instanceVariableNames: 'orderedCollectionOfBlocksToParallelize'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'TusLibros-Model'!
+
+!ParallelizeBlocks methodsFor: 'initialization' stamp: 'AS 11/8/2022 17:29:04'!
+initializeFor: anOrderedCollectionOfBlocksToParallelize 
+
+	orderedCollectionOfBlocksToParallelize := anOrderedCollectionOfBlocksToParallelize.! !
+
+
+!ParallelizeBlocks methodsFor: 'execute' stamp: 'AS 11/8/2022 17:31:42'!
+execute
+	
+	| firstBlock secondBlock readySemaphore|
+	
+	firstBlock := orderedCollectionOfBlocksToParallelize first.
+	secondBlock := orderedCollectionOfBlocksToParallelize second.
+	
+	readySemaphore := Semaphore new.
+	[firstBlock value. readySemaphore signal.] fork.
+	secondBlock value.
+	readySemaphore wait.! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'ParallelizeBlocks class' category: 'TusLibros-Model'!
+ParallelizeBlocks class
+	instanceVariableNames: ''!
+
+!ParallelizeBlocks class methodsFor: 'instance creation' stamp: 'AS 11/8/2022 17:28:25'!
+for: anOrderedCollectionOfBlocksToParallelize
+	
+	^self new initializeFor: anOrderedCollectionOfBlocksToParallelize.! !
+
+
 !classDefinition: #Sale category: 'TusLibros-Model'!
 Object subclass: #Sale
 	instanceVariableNames: 'customer ticket'
@@ -753,17 +791,16 @@ salesBook
 	^ salesBook! !
 
 
-!TusLibrosSystemFacade methodsFor: 'private' stamp: 'AS 11/8/2022 17:14:21'!
+!TusLibrosSystemFacade methodsFor: 'private' stamp: 'AS 11/8/2022 17:33:25'!
 bookPerformance: anItem
 
-	| bookPerformance totalMoney totalSales readySemaphore |
+	| bookPerformance totalMoney totalSales |
 
 	bookPerformance := Dictionary new.
 	
-	readySemaphore := Semaphore new.
-	[totalSales := self totalSalesOf: anItem. readySemaphore signal.] fork.
-	totalMoney := self totalMoneyRaisedBy: anItem.
-	readySemaphore wait.
+	(ParallelizeBlocks for: 
+		(OrderedCollection with: [totalSales := self totalSalesOf: anItem.]
+						with: [totalMoney := self totalMoneyRaisedBy: anItem.])) execute.
 	
 	bookPerformance at: 'quantity' put: totalSales.
 	bookPerformance at: 'total' put: totalMoney.
@@ -789,17 +826,16 @@ salesDoneBy: aUser
 	"Esto es un indicio de que por ahi conviene empezar a pensar en modelar un SaleBook - Hernan"
 	^ salesBook select: [ :aSale | aSale wasDoneBy: aUser ]! !
 
-!TusLibrosSystemFacade methodsFor: 'private' stamp: 'AS 11/8/2022 17:15:15'!
+!TusLibrosSystemFacade methodsFor: 'private' stamp: 'AS 11/8/2022 17:34:27'!
 storePerformance
 
-	| totalMoney totalSales performance readySemaphore |
+	| totalMoney totalSales performance |
 	
 	performance := Dictionary new.
 	
-	readySemaphore := Semaphore new.
-	[totalSales := self totalSales. readySemaphore signal.] fork.
-	totalMoney := self totalMoneyRaised.
-	readySemaphore wait.
+	(ParallelizeBlocks for: 
+		(OrderedCollection with: [totalSales := self totalSales.]
+						with: [totalMoney := self totalMoneyRaised.])) execute.
 	
 	performance at: 'quantity' put: totalSales.
 	performance at: 'total' put: totalMoney.
