@@ -5,55 +5,23 @@ TestCase subclass: #ImportTest
 	poolDictionaries: ''
 	category: 'CustomerImporter'!
 
-!ImportTest methodsFor: 'tests' stamp: 'AS 11/10/2022 19:50:59'!
-assertCustomerPepeWasCorrectlyImported
-	
-	| customerPepe customerPepeFirstAddress customerPepeSecondAddress |
-	
-	customerPepe := (session select: [:aCustomer | aCustomer idIs: '22333444'] ofType: Customer) anyOne. 
-	self assert: (customerPepe firstNameIs: 'Pepe').
-	self assert: (customerPepe lastNameIs: 'Sanchez').
-	self assert: (customerPepe idTypeIs: 'D').
-	
-	customerPepeFirstAddress := customerPepe addressWithStreetName: 'San Martin' ifNone: [self fail].
-	
-	self assert: (customerPepeFirstAddress streetNumberIs: 3322).
-	self assert: (customerPepeFirstAddress townIs: 'Olivos').
-	self assert: (customerPepeFirstAddress zipCodeIs: 1636).
-	self assert: (customerPepeFirstAddress provinceIs: 'BsAs').
-	
-	customerPepeSecondAddress := customerPepe addressWithStreetName: 'Maipu' ifNone: [self fail].
-	
-	self assert: (customerPepeSecondAddress streetNumberIs: 888).
-	self assert: (customerPepeSecondAddress townIs: 'Florida').
-	self assert: (customerPepeSecondAddress zipCodeIs: 1122).
-	self assert: (customerPepeSecondAddress provinceIs: 'Buenos Aires').! !
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/10/2022 20:23:08'!
+assertNumberOfImportedCustomersIs: aNumberOfCustomers
 
-!ImportTest methodsFor: 'tests' stamp: 'AS 11/10/2022 19:53:13'!
+	^ self assert: aNumberOfCustomers equals: (session selectAllOfType: Customer) size! !
+
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/10/2022 20:23:12'!
 test01Import
 	
 	
 	(CustomerImporter from: readStream into: session) value. 
 	
-	self assert: 2 equals: (session selectAllOfType: Customer) size.
-	
-	self assertCustomerPepeWasCorrectlyImported ! !
+	self assertNumberOfImportedCustomersIs: 2.
+	self assertCustomerPepeSanchezWasCorrectlyImported.
+	self assertCustomerJuanPerezWasCorrectlyImported.! !
 
 
-!ImportTest methodsFor: 'as yet unclassified' stamp: 'AS 11/10/2022 19:52:07'!
-setUp
-	
-	readStream := self validData.
-	session := DataBaseSession for: (Array with: Address with: Customer).
-	session beginTransaction! !
-
-!ImportTest methodsFor: 'as yet unclassified'!
-tearDown
-
-	session commit.
-	session close! !
-
-!ImportTest methodsFor: 'as yet unclassified' stamp: 'AS 11/10/2022 19:31:38'!
+!ImportTest methodsFor: 'support' stamp: 'AS 11/10/2022 19:31:38'!
 validData
 
 	^ReadStream on:
@@ -62,6 +30,67 @@ A,San Martin,3322,Olivos,1636,BsAs
 A,Maipu,888,Florida,1122,Buenos Aires
 C,Juan,Perez,C,23-25666777-9
 A,Alem,1122,CABA,1001,CABA'! !
+
+
+!ImportTest methodsFor: 'assertions' stamp: 'AS 11/10/2022 20:23:48'!
+assertCustomerJuanPerezWasCorrectlyImported
+	
+	| customerJuanPerez customerPepeFirstAddress |
+	
+	customerJuanPerez := self customerWithId: '23-25666777-9'.
+	self assertImportedCustomer: customerJuanPerez importedNameIs: 'Juan' lastNameIs: 'Perez' idTypeIs: 'C'.
+
+	customerPepeFirstAddress := customerJuanPerez addressWithStreetName: 'Alem' ifNone: [self fail].
+	self assertImportedAddress: customerPepeFirstAddress importedStreetNumberIs: 1122 townIs: 'CABA'  zipCodeIs: 1001 provinceIs: 'CABA'.! !
+
+!ImportTest methodsFor: 'assertions' stamp: 'AS 11/10/2022 20:18:35'!
+assertCustomerPepeSanchezWasCorrectlyImported
+	
+	| customerPepe customerPepeFirstAddress customerPepeSecondAddress |
+	
+	customerPepe := self customerWithId: '22333444'.
+	self assertImportedCustomer: customerPepe importedNameIs: 'Pepe' lastNameIs: 'Sanchez' idTypeIs: 'D'.
+	
+	customerPepeFirstAddress := customerPepe addressWithStreetName: 'San Martin' ifNone: [self fail].
+	self assertImportedAddress: customerPepeFirstAddress importedStreetNumberIs: 3322 townIs: 'Olivos' zipCodeIs: 1636 provinceIs: 'BsAs'.
+	
+	customerPepeSecondAddress := customerPepe addressWithStreetName: 'Maipu' ifNone: [self fail].
+	self assertImportedAddress: customerPepeSecondAddress importedStreetNumberIs: 888 townIs: 'Florida' zipCodeIs: 1122 provinceIs: 'Buenos Aires'.! !
+
+!ImportTest methodsFor: 'assertions' stamp: 'AS 11/10/2022 20:18:35'!
+assertImportedAddress: customerPepeFirstAddress importedStreetNumberIs: aStreetNumber townIs: aTown zipCodeIs: aZipCode provinceIs: aProvince    
+
+	self assert: (customerPepeFirstAddress streetNumberIs: aStreetNumber).
+	self assert: (customerPepeFirstAddress townIs: aTown).
+	self assert: (customerPepeFirstAddress zipCodeIs: aZipCode).
+	self assert: (customerPepeFirstAddress provinceIs: aProvince)! !
+
+!ImportTest methodsFor: 'assertions' stamp: 'AS 11/10/2022 20:06:28'!
+assertImportedCustomer: aCustomer importedNameIs: aCustomerFirstName lastNameIs: aCustomerLastName idTypeIs: aCustomerIdType
+	
+	self assert: (aCustomer firstNameIs: aCustomerFirstName).
+	self assert: (aCustomer lastNameIs: aCustomerLastName).
+	self assert: (aCustomer idTypeIs: aCustomerIdType).
+! !
+
+!ImportTest methodsFor: 'assertions' stamp: 'AS 11/10/2022 20:03:31'!
+customerWithId: aCustomerId
+	
+	^(session select: [:aCustomer | aCustomer idIs: aCustomerId] ofType: Customer) anyOne. ! !
+
+
+!ImportTest methodsFor: 'set up / tear down' stamp: 'AS 11/10/2022 19:52:07'!
+setUp
+	
+	readStream := self validData.
+	session := DataBaseSession for: (Array with: Address with: Customer).
+	session beginTransaction! !
+
+!ImportTest methodsFor: 'set up / tear down'!
+tearDown
+
+	session commit.
+	session close! !
 
 
 !classDefinition: #Address category: 'CustomerImporter'!

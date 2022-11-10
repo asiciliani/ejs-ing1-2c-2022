@@ -605,3 +605,763 @@ PASSED!
 PASSED!
 
 ----SNAPSHOT----(10 November 2022 19:54:16) CuisUniversity-5481.image priorSource: 7059698!
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/10/2022 19:57:11'!
+assertCustomerJuanPerezWasCorrectlyImported
+	
+	| customerPepe customerPepeFirstAddress customerPepeSecondAddress |
+	
+	customerPepe := (session select: [:aCustomer | aCustomer idIs: '23-25666777-9'] ofType: Customer) anyOne. 
+	self assert: (customerPepe firstNameIs: 'Juan').
+	self assert: (customerPepe lastNameIs: 'Perez').
+	self assert: (customerPepe idTypeIs: 'C').! !
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/10/2022 19:57:15'!
+PASSED!
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/10/2022 19:57:59' prior: 50553264!
+assertCustomerJuanPerezWasCorrectlyImported
+	
+	| customerPepe customerPepeFirstAddress |
+	
+	customerPepe := (session select: [:aCustomer | aCustomer idIs: '23-25666777-9'] ofType: Customer) anyOne. 
+	self assert: (customerPepe firstNameIs: 'Juan').
+	self assert: (customerPepe lastNameIs: 'Perez').
+	self assert: (customerPepe idTypeIs: 'C').
+
+	customerPepeFirstAddress := customerPepe addressWithStreetName: 'Alem' ifNone: [self fail].
+	
+	self assert: (customerPepeFirstAddress streetNumberIs: 1122).
+	self assert: (customerPepeFirstAddress townIs: 'CABA').
+	self assert: (customerPepeFirstAddress zipCodeIs: 1001).
+	self assert: (customerPepeFirstAddress provinceIs: 'CABA').
+! !
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/10/2022 19:58:03'!
+PASSED!
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/10/2022 19:58:21'!
+assertCustomerPepeSanchezWasCorrectlyImported
+	
+	| customerPepe customerPepeFirstAddress customerPepeSecondAddress |
+	
+	customerPepe := (session select: [:aCustomer | aCustomer idIs: '22333444'] ofType: Customer) anyOne. 
+	self assert: (customerPepe firstNameIs: 'Pepe').
+	self assert: (customerPepe lastNameIs: 'Sanchez').
+	self assert: (customerPepe idTypeIs: 'D').
+	
+	customerPepeFirstAddress := customerPepe addressWithStreetName: 'San Martin' ifNone: [self fail].
+	
+	self assert: (customerPepeFirstAddress streetNumberIs: 3322).
+	self assert: (customerPepeFirstAddress townIs: 'Olivos').
+	self assert: (customerPepeFirstAddress zipCodeIs: 1636).
+	self assert: (customerPepeFirstAddress provinceIs: 'BsAs').
+	
+	customerPepeSecondAddress := customerPepe addressWithStreetName: 'Maipu' ifNone: [self fail].
+	
+	self assert: (customerPepeSecondAddress streetNumberIs: 888).
+	self assert: (customerPepeSecondAddress townIs: 'Florida').
+	self assert: (customerPepeSecondAddress zipCodeIs: 1122).
+	self assert: (customerPepeSecondAddress provinceIs: 'Buenos Aires').! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'AS 11/10/2022 19:58:21' prior: 50553248!
+test01Import
+	
+	
+	(CustomerImporter from: readStream into: session) value. 
+	
+	self assert: 2 equals: (session selectAllOfType: Customer) size.
+	
+	self assertCustomerPepeSanchezWasCorrectlyImported ! !
+
+!methodRemoval: ImportTest #assertCustomerPepeWasCorrectlyImported stamp: 'AS 11/10/2022 19:58:21'!
+assertCustomerPepeWasCorrectlyImported
+	
+	| customerPepe customerPepeFirstAddress customerPepeSecondAddress |
+	
+	customerPepe := (session select: [:aCustomer | aCustomer idIs: '22333444'] ofType: Customer) anyOne. 
+	self assert: (customerPepe firstNameIs: 'Pepe').
+	self assert: (customerPepe lastNameIs: 'Sanchez').
+	self assert: (customerPepe idTypeIs: 'D').
+	
+	customerPepeFirstAddress := customerPepe addressWithStreetName: 'San Martin' ifNone: [self fail].
+	
+	self assert: (customerPepeFirstAddress streetNumberIs: 3322).
+	self assert: (customerPepeFirstAddress townIs: 'Olivos').
+	self assert: (customerPepeFirstAddress zipCodeIs: 1636).
+	self assert: (customerPepeFirstAddress provinceIs: 'BsAs').
+	
+	customerPepeSecondAddress := customerPepe addressWithStreetName: 'Maipu' ifNone: [self fail].
+	
+	self assert: (customerPepeSecondAddress streetNumberIs: 888).
+	self assert: (customerPepeSecondAddress townIs: 'Florida').
+	self assert: (customerPepeSecondAddress zipCodeIs: 1122).
+	self assert: (customerPepeSecondAddress provinceIs: 'Buenos Aires').!
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/10/2022 20:01:17'!
+assertImportedCustomerWithId: aCustomerId nameIs: aCustomerFirstName lastNameIs: aCustomerLastName idTypeIs: aCustomerIdType
+	
+	| customerPepe |
+	
+	customerPepe := (session select: [:aCustomer | aCustomer idIs: aCustomerId] ofType: Customer) anyOne. 
+	self assert: (customerPepe firstNameIs: aCustomerFirstName).
+	self assert: (customerPepe lastNameIs: aCustomerLastName).
+	self assert: (customerPepe idTypeIs: aCustomerIdType).
+! !
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/10/2022 20:01:24' prior: 50553389!
+assertImportedCustomerWithId: aCustomerId nameIs: aCustomerFirstName lastNameIs: aCustomerLastName idTypeIs: aCustomerIdType
+	
+	| customer |
+	
+	customer := (session select: [:aCustomer | aCustomer idIs: aCustomerId] ofType: Customer) anyOne. 
+	self assert: (customer firstNameIs: aCustomerFirstName).
+	self assert: (customer lastNameIs: aCustomerLastName).
+	self assert: (customer idTypeIs: aCustomerIdType).
+! !
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/10/2022 20:02:01' prior: 50553307!
+assertCustomerPepeSanchezWasCorrectlyImported
+	
+	| customerPepe customerPepeFirstAddress customerPepeSecondAddress |
+	
+	self assertImportedCustomerWithId: '22333444' nameIs: 'Pepe' lastNameIs: 'Sanchez' idTypeIs: 'D'.
+	
+	customerPepe := (session select: [:aCustomer | aCustomer idIs: '22333444'] ofType: Customer) anyOne. 
+	self assert: (customerPepe firstNameIs: 'Pepe').
+	self assert: (customerPepe lastNameIs: 'Sanchez').
+	self assert: (customerPepe idTypeIs: 'D').
+	
+	customerPepeFirstAddress := customerPepe addressWithStreetName: 'San Martin' ifNone: [self fail].
+	
+	self assert: (customerPepeFirstAddress streetNumberIs: 3322).
+	self assert: (customerPepeFirstAddress townIs: 'Olivos').
+	self assert: (customerPepeFirstAddress zipCodeIs: 1636).
+	self assert: (customerPepeFirstAddress provinceIs: 'BsAs').
+	
+	customerPepeSecondAddress := customerPepe addressWithStreetName: 'Maipu' ifNone: [self fail].
+	
+	self assert: (customerPepeSecondAddress streetNumberIs: 888).
+	self assert: (customerPepeSecondAddress townIs: 'Florida').
+	self assert: (customerPepeSecondAddress zipCodeIs: 1122).
+	self assert: (customerPepeSecondAddress provinceIs: 'Buenos Aires').! !
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/10/2022 20:02:01'!
+PASSED!
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/10/2022 20:02:05' prior: 50553422!
+assertCustomerPepeSanchezWasCorrectlyImported
+	
+	| customerPepe customerPepeFirstAddress customerPepeSecondAddress |
+	
+	self assertImportedCustomerWithId: '22333444' nameIs: 'Pepe' lastNameIs: 'Sanchez' idTypeIs: 'D'.
+	
+	customerPepeFirstAddress := customerPepe addressWithStreetName: 'San Martin' ifNone: [self fail].
+	
+	self assert: (customerPepeFirstAddress streetNumberIs: 3322).
+	self assert: (customerPepeFirstAddress townIs: 'Olivos').
+	self assert: (customerPepeFirstAddress zipCodeIs: 1636).
+	self assert: (customerPepeFirstAddress provinceIs: 'BsAs').
+	
+	customerPepeSecondAddress := customerPepe addressWithStreetName: 'Maipu' ifNone: [self fail].
+	
+	self assert: (customerPepeSecondAddress streetNumberIs: 888).
+	self assert: (customerPepeSecondAddress townIs: 'Florida').
+	self assert: (customerPepeSecondAddress zipCodeIs: 1122).
+	self assert: (customerPepeSecondAddress provinceIs: 'Buenos Aires').! !
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/10/2022 20:02:09'!
+ERROR!
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/10/2022 20:02:10'!
+ERROR!
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/10/2022 20:02:26' prior: 50553464!
+assertCustomerPepeSanchezWasCorrectlyImported
+	
+	| customerPepe customerPepeFirstAddress customerPepeSecondAddress |
+	
+	self assertImportedCustomerWithId: '22333444' nameIs: 'Pepe' lastNameIs: 'Sanchez' idTypeIs: 'D'.
+	
+	customerPepe := (session select: [:aCustomer | aCustomer idIs: '22333444'] ofType: Customer) anyOne. 
+	customerPepeFirstAddress := customerPepe addressWithStreetName: 'San Martin' ifNone: [self fail].
+	
+	self assert: (customerPepeFirstAddress streetNumberIs: 3322).
+	self assert: (customerPepeFirstAddress townIs: 'Olivos').
+	self assert: (customerPepeFirstAddress zipCodeIs: 1636).
+	self assert: (customerPepeFirstAddress provinceIs: 'BsAs').
+	
+	customerPepeSecondAddress := customerPepe addressWithStreetName: 'Maipu' ifNone: [self fail].
+	
+	self assert: (customerPepeSecondAddress streetNumberIs: 888).
+	self assert: (customerPepeSecondAddress townIs: 'Florida').
+	self assert: (customerPepeSecondAddress zipCodeIs: 1122).
+	self assert: (customerPepeSecondAddress provinceIs: 'Buenos Aires').! !
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/10/2022 20:02:27'!
+PASSED!
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/10/2022 20:03:31'!
+customerWithId: aCustomerId
+	
+	^(session select: [:aCustomer | aCustomer idIs: aCustomerId] ofType: Customer) anyOne. ! !
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/10/2022 20:03:49' prior: 50553406!
+assertImportedCustomerWithId: aCustomer nameIs: aCustomerFirstName lastNameIs: aCustomerLastName idTypeIs: aCustomerIdType
+	
+	self assert: (aCustomer firstNameIs: aCustomerFirstName).
+	self assert: (aCustomer lastNameIs: aCustomerLastName).
+	self assert: (aCustomer idTypeIs: aCustomerIdType).
+! !
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/10/2022 20:04:28' prior: 50553500!
+assertCustomerPepeSanchezWasCorrectlyImported
+	
+	| customerPepe customerPepeFirstAddress customerPepeSecondAddress |
+	
+	customerPepe := self customerWithId: '22333444'.
+	self assertImportedCustomerWithId: customerPepe nameIs: 'Pepe' lastNameIs: 'Sanchez' idTypeIs: 'D'.
+	
+	customerPepeFirstAddress := customerPepe addressWithStreetName: 'San Martin' ifNone: [self fail].
+	
+	self assert: (customerPepeFirstAddress streetNumberIs: 3322).
+	self assert: (customerPepeFirstAddress townIs: 'Olivos').
+	self assert: (customerPepeFirstAddress zipCodeIs: 1636).
+	self assert: (customerPepeFirstAddress provinceIs: 'BsAs').
+	
+	customerPepeSecondAddress := customerPepe addressWithStreetName: 'Maipu' ifNone: [self fail].
+	
+	self assert: (customerPepeSecondAddress streetNumberIs: 888).
+	self assert: (customerPepeSecondAddress townIs: 'Florida').
+	self assert: (customerPepeSecondAddress zipCodeIs: 1122).
+	self assert: (customerPepeSecondAddress provinceIs: 'Buenos Aires').! !
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/10/2022 20:04:29'!
+PASSED!
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/10/2022 20:04:38'!
+assertImportedCustomer: aCustomer nameIs: aCustomerFirstName lastNameIs: aCustomerLastName idTypeIs: aCustomerIdType
+	
+	self assert: (aCustomer firstNameIs: aCustomerFirstName).
+	self assert: (aCustomer lastNameIs: aCustomerLastName).
+	self assert: (aCustomer idTypeIs: aCustomerIdType).
+! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'AS 11/10/2022 20:04:38' prior: 50553556!
+assertCustomerPepeSanchezWasCorrectlyImported
+	
+	| customerPepe customerPepeFirstAddress customerPepeSecondAddress |
+	
+	customerPepe := self customerWithId: '22333444'.
+	self assertImportedCustomer: customerPepe nameIs: 'Pepe' lastNameIs: 'Sanchez' idTypeIs: 'D'.
+	
+	customerPepeFirstAddress := customerPepe addressWithStreetName: 'San Martin' ifNone: [self fail].
+	
+	self assert: (customerPepeFirstAddress streetNumberIs: 3322).
+	self assert: (customerPepeFirstAddress townIs: 'Olivos').
+	self assert: (customerPepeFirstAddress zipCodeIs: 1636).
+	self assert: (customerPepeFirstAddress provinceIs: 'BsAs').
+	
+	customerPepeSecondAddress := customerPepe addressWithStreetName: 'Maipu' ifNone: [self fail].
+	
+	self assert: (customerPepeSecondAddress streetNumberIs: 888).
+	self assert: (customerPepeSecondAddress townIs: 'Florida').
+	self assert: (customerPepeSecondAddress zipCodeIs: 1122).
+	self assert: (customerPepeSecondAddress provinceIs: 'Buenos Aires').! !
+
+!methodRemoval: ImportTest #assertImportedCustomerWithId:nameIs:lastNameIs:idTypeIs: stamp: 'AS 11/10/2022 20:04:38'!
+assertImportedCustomerWithId: aCustomer nameIs: aCustomerFirstName lastNameIs: aCustomerLastName idTypeIs: aCustomerIdType
+	
+	self assert: (aCustomer firstNameIs: aCustomerFirstName).
+	self assert: (aCustomer lastNameIs: aCustomerLastName).
+	self assert: (aCustomer idTypeIs: aCustomerIdType).
+!
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/10/2022 20:04:40'!
+PASSED!
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/10/2022 20:05:14' prior: 50553281!
+assertCustomerJuanPerezWasCorrectlyImported
+	
+	| customerJuanPerez customerPepeFirstAddress |
+	
+	customerJuanPerez := (session select: [:aCustomer | aCustomer idIs: '23-25666777-9'] ofType: Customer) anyOne. 
+	self assert: (customerJuanPerez firstNameIs: 'Juan').
+	self assert: (customerJuanPerez lastNameIs: 'Perez').
+	self assert: (customerJuanPerez idTypeIs: 'C').
+
+	customerPepeFirstAddress := customerJuanPerez addressWithStreetName: 'Alem' ifNone: [self fail].
+	
+	self assert: (customerPepeFirstAddress streetNumberIs: 1122).
+	self assert: (customerPepeFirstAddress townIs: 'CABA').
+	self assert: (customerPepeFirstAddress zipCodeIs: 1001).
+	self assert: (customerPepeFirstAddress provinceIs: 'CABA').
+! !
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/10/2022 20:06:01' prior: 50553653!
+assertCustomerJuanPerezWasCorrectlyImported
+	
+	| customerJuanPerez customerPepeFirstAddress |
+	
+	customerJuanPerez := self customerWithId: '23-25666777-9'.
+	self assertImportedCustomer: customerJuanPerez nameIs: 'Juan' lastNameIs: 'Perez' idTypeIs: 'C'.
+
+	customerPepeFirstAddress := customerJuanPerez addressWithStreetName: 'Alem' ifNone: [self fail].
+	
+	self assert: (customerPepeFirstAddress streetNumberIs: 1122).
+	self assert: (customerPepeFirstAddress townIs: 'CABA').
+	self assert: (customerPepeFirstAddress zipCodeIs: 1001).
+	self assert: (customerPepeFirstAddress provinceIs: 'CABA').
+! !
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/10/2022 20:06:01'!
+PASSED!
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/10/2022 20:06:28'!
+assertImportedCustomer: aCustomer importedNameIs: aCustomerFirstName lastNameIs: aCustomerLastName idTypeIs: aCustomerIdType
+	
+	self assert: (aCustomer firstNameIs: aCustomerFirstName).
+	self assert: (aCustomer lastNameIs: aCustomerLastName).
+	self assert: (aCustomer idTypeIs: aCustomerIdType).
+! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'AS 11/10/2022 20:06:29' prior: 50553604!
+assertCustomerPepeSanchezWasCorrectlyImported
+	
+	| customerPepe customerPepeFirstAddress customerPepeSecondAddress |
+	
+	customerPepe := self customerWithId: '22333444'.
+	self assertImportedCustomer: customerPepe importedNameIs: 'Pepe' lastNameIs: 'Sanchez' idTypeIs: 'D'.
+	
+	customerPepeFirstAddress := customerPepe addressWithStreetName: 'San Martin' ifNone: [self fail].
+	
+	self assert: (customerPepeFirstAddress streetNumberIs: 3322).
+	self assert: (customerPepeFirstAddress townIs: 'Olivos').
+	self assert: (customerPepeFirstAddress zipCodeIs: 1636).
+	self assert: (customerPepeFirstAddress provinceIs: 'BsAs').
+	
+	customerPepeSecondAddress := customerPepe addressWithStreetName: 'Maipu' ifNone: [self fail].
+	
+	self assert: (customerPepeSecondAddress streetNumberIs: 888).
+	self assert: (customerPepeSecondAddress townIs: 'Florida').
+	self assert: (customerPepeSecondAddress zipCodeIs: 1122).
+	self assert: (customerPepeSecondAddress provinceIs: 'Buenos Aires').! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'AS 11/10/2022 20:06:29' prior: 50553678!
+assertCustomerJuanPerezWasCorrectlyImported
+	
+	| customerJuanPerez customerPepeFirstAddress |
+	
+	customerJuanPerez := self customerWithId: '23-25666777-9'.
+	self assertImportedCustomer: customerJuanPerez importedNameIs: 'Juan' lastNameIs: 'Perez' idTypeIs: 'C'.
+
+	customerPepeFirstAddress := customerJuanPerez addressWithStreetName: 'Alem' ifNone: [self fail].
+	
+	self assert: (customerPepeFirstAddress streetNumberIs: 1122).
+	self assert: (customerPepeFirstAddress townIs: 'CABA').
+	self assert: (customerPepeFirstAddress zipCodeIs: 1001).
+	self assert: (customerPepeFirstAddress provinceIs: 'CABA').
+! !
+
+!methodRemoval: ImportTest #assertImportedCustomer:nameIs:lastNameIs:idTypeIs: stamp: 'AS 11/10/2022 20:06:29'!
+assertImportedCustomer: aCustomer nameIs: aCustomerFirstName lastNameIs: aCustomerLastName idTypeIs: aCustomerIdType
+	
+	self assert: (aCustomer firstNameIs: aCustomerFirstName).
+	self assert: (aCustomer lastNameIs: aCustomerLastName).
+	self assert: (aCustomer idTypeIs: aCustomerIdType).
+!
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/10/2022 20:06:45'!
+PASSED!
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/10/2022 20:07:37'!
+assertAddress: customerPepeFirstAddress
+
+	self assert: (customerPepeFirstAddress streetNumberIs: 3322).
+	self assert: (customerPepeFirstAddress townIs: 'Olivos').
+	self assert: (customerPepeFirstAddress zipCodeIs: 1636).
+	self assert: (customerPepeFirstAddress provinceIs: 'BsAs')! !
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/10/2022 20:07:37' prior: 50553715!
+assertCustomerPepeSanchezWasCorrectlyImported
+	
+	| customerPepe customerPepeFirstAddress customerPepeSecondAddress |
+	
+	customerPepe := self customerWithId: '22333444'.
+	self assertImportedCustomer: customerPepe importedNameIs: 'Pepe' lastNameIs: 'Sanchez' idTypeIs: 'D'.
+	
+	customerPepeFirstAddress := customerPepe addressWithStreetName: 'San Martin' ifNone: [self fail].
+	
+	self assertAddress: customerPepeFirstAddress.
+	
+	customerPepeSecondAddress := customerPepe addressWithStreetName: 'Maipu' ifNone: [self fail].
+	
+	self assert: (customerPepeSecondAddress streetNumberIs: 888).
+	self assert: (customerPepeSecondAddress townIs: 'Florida').
+	self assert: (customerPepeSecondAddress zipCodeIs: 1122).
+	self assert: (customerPepeSecondAddress provinceIs: 'Buenos Aires').! !
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/10/2022 20:08:07'!
+assertAddress: customerPepeFirstAddress streetNumberIs: aStreetNumber 
+
+	self assert: (customerPepeFirstAddress streetNumberIs: 3322).
+	self assert: (customerPepeFirstAddress townIs: 'Olivos').
+	self assert: (customerPepeFirstAddress zipCodeIs: 1636).
+	self assert: (customerPepeFirstAddress provinceIs: 'BsAs')! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'AS 11/10/2022 20:08:07' prior: 50553797!
+assertCustomerPepeSanchezWasCorrectlyImported
+	
+	| customerPepe customerPepeFirstAddress customerPepeSecondAddress |
+	
+	customerPepe := self customerWithId: '22333444'.
+	self assertImportedCustomer: customerPepe importedNameIs: 'Pepe' lastNameIs: 'Sanchez' idTypeIs: 'D'.
+	
+	customerPepeFirstAddress := customerPepe addressWithStreetName: 'San Martin' ifNone: [self fail].
+	
+	self assertAddress: customerPepeFirstAddress streetNumberIs: 3322.
+	
+	customerPepeSecondAddress := customerPepe addressWithStreetName: 'Maipu' ifNone: [self fail].
+	
+	self assert: (customerPepeSecondAddress streetNumberIs: 888).
+	self assert: (customerPepeSecondAddress townIs: 'Florida').
+	self assert: (customerPepeSecondAddress zipCodeIs: 1122).
+	self assert: (customerPepeSecondAddress provinceIs: 'Buenos Aires').! !
+
+!methodRemoval: ImportTest #assertAddress: stamp: 'AS 11/10/2022 20:08:07'!
+assertAddress: customerPepeFirstAddress
+
+	self assert: (customerPepeFirstAddress streetNumberIs: 3322).
+	self assert: (customerPepeFirstAddress townIs: 'Olivos').
+	self assert: (customerPepeFirstAddress zipCodeIs: 1636).
+	self assert: (customerPepeFirstAddress provinceIs: 'BsAs')!
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'AS 11/10/2022 20:08:07' prior: 50553824!
+assertAddress: customerPepeFirstAddress streetNumberIs: aStreetNumber 
+
+	self assert: (customerPepeFirstAddress streetNumberIs: aStreetNumber).
+	self assert: (customerPepeFirstAddress townIs: 'Olivos').
+	self assert: (customerPepeFirstAddress zipCodeIs: 1636).
+	self assert: (customerPepeFirstAddress provinceIs: 'BsAs')! !
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/10/2022 20:08:09'!
+PASSED!
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/10/2022 20:08:47'!
+assertAddress: customerPepeFirstAddress streetNumberIs: aStreetNumber townIs: aTown  
+
+	self assert: (customerPepeFirstAddress streetNumberIs: aStreetNumber).
+	self assert: (customerPepeFirstAddress townIs: 'Olivos').
+	self assert: (customerPepeFirstAddress zipCodeIs: 1636).
+	self assert: (customerPepeFirstAddress provinceIs: 'BsAs')! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'AS 11/10/2022 20:08:47' prior: 50553837!
+assertCustomerPepeSanchezWasCorrectlyImported
+	
+	| customerPepe customerPepeFirstAddress customerPepeSecondAddress |
+	
+	customerPepe := self customerWithId: '22333444'.
+	self assertImportedCustomer: customerPepe importedNameIs: 'Pepe' lastNameIs: 'Sanchez' idTypeIs: 'D'.
+	
+	customerPepeFirstAddress := customerPepe addressWithStreetName: 'San Martin' ifNone: [self fail].
+	
+	self assertAddress: customerPepeFirstAddress streetNumberIs: 3322 townIs: 'Olivos'.
+	
+	customerPepeSecondAddress := customerPepe addressWithStreetName: 'Maipu' ifNone: [self fail].
+	
+	self assert: (customerPepeSecondAddress streetNumberIs: 888).
+	self assert: (customerPepeSecondAddress townIs: 'Florida').
+	self assert: (customerPepeSecondAddress zipCodeIs: 1122).
+	self assert: (customerPepeSecondAddress provinceIs: 'Buenos Aires').! !
+
+!methodRemoval: ImportTest #assertAddress:streetNumberIs: stamp: 'AS 11/10/2022 20:08:47'!
+assertAddress: customerPepeFirstAddress streetNumberIs: aStreetNumber 
+
+	self assert: (customerPepeFirstAddress streetNumberIs: aStreetNumber).
+	self assert: (customerPepeFirstAddress townIs: 'Olivos').
+	self assert: (customerPepeFirstAddress zipCodeIs: 1636).
+	self assert: (customerPepeFirstAddress provinceIs: 'BsAs')!
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'AS 11/10/2022 20:08:47' prior: 50553892!
+assertAddress: customerPepeFirstAddress streetNumberIs: aStreetNumber townIs: aTown  
+
+	self assert: (customerPepeFirstAddress streetNumberIs: aStreetNumber).
+	self assert: (customerPepeFirstAddress townIs: aTown).
+	self assert: (customerPepeFirstAddress zipCodeIs: 1636).
+	self assert: (customerPepeFirstAddress provinceIs: 'BsAs')! !
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/10/2022 20:09:05'!
+assertAddress: customerPepeFirstAddress streetNumberIs: aStreetNumber townIs: aTown zipCodeIs: aZipCode   
+
+	self assert: (customerPepeFirstAddress streetNumberIs: aStreetNumber).
+	self assert: (customerPepeFirstAddress townIs: aTown).
+	self assert: (customerPepeFirstAddress zipCodeIs: 1636).
+	self assert: (customerPepeFirstAddress provinceIs: 'BsAs')! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'AS 11/10/2022 20:09:05' prior: 50553906!
+assertCustomerPepeSanchezWasCorrectlyImported
+	
+	| customerPepe customerPepeFirstAddress customerPepeSecondAddress |
+	
+	customerPepe := self customerWithId: '22333444'.
+	self assertImportedCustomer: customerPepe importedNameIs: 'Pepe' lastNameIs: 'Sanchez' idTypeIs: 'D'.
+	
+	customerPepeFirstAddress := customerPepe addressWithStreetName: 'San Martin' ifNone: [self fail].
+	
+	self assertAddress: customerPepeFirstAddress streetNumberIs: 3322 townIs: 'Olivos' zipCodeIs: 1636.
+	
+	customerPepeSecondAddress := customerPepe addressWithStreetName: 'Maipu' ifNone: [self fail].
+	
+	self assert: (customerPepeSecondAddress streetNumberIs: 888).
+	self assert: (customerPepeSecondAddress townIs: 'Florida').
+	self assert: (customerPepeSecondAddress zipCodeIs: 1122).
+	self assert: (customerPepeSecondAddress provinceIs: 'Buenos Aires').! !
+
+!methodRemoval: ImportTest #assertAddress:streetNumberIs:townIs: stamp: 'AS 11/10/2022 20:09:05'!
+assertAddress: customerPepeFirstAddress streetNumberIs: aStreetNumber townIs: aTown  
+
+	self assert: (customerPepeFirstAddress streetNumberIs: aStreetNumber).
+	self assert: (customerPepeFirstAddress townIs: aTown).
+	self assert: (customerPepeFirstAddress zipCodeIs: 1636).
+	self assert: (customerPepeFirstAddress provinceIs: 'BsAs')!
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'AS 11/10/2022 20:09:05' prior: 50553961!
+assertAddress: customerPepeFirstAddress streetNumberIs: aStreetNumber townIs: aTown zipCodeIs: aZipCode   
+
+	self assert: (customerPepeFirstAddress streetNumberIs: aStreetNumber).
+	self assert: (customerPepeFirstAddress townIs: aTown).
+	self assert: (customerPepeFirstAddress zipCodeIs: aZipCode).
+	self assert: (customerPepeFirstAddress provinceIs: 'BsAs')! !
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/10/2022 20:09:33'!
+assertAddress: customerPepeFirstAddress streetNumberIs: aStreetNumber townIs: aTown zipCodeIs: aZipCode provinceIs: provinceIs    
+
+	self assert: (customerPepeFirstAddress streetNumberIs: aStreetNumber).
+	self assert: (customerPepeFirstAddress townIs: aTown).
+	self assert: (customerPepeFirstAddress zipCodeIs: aZipCode).
+	self assert: (customerPepeFirstAddress provinceIs: 'BsAs')! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'AS 11/10/2022 20:09:33' prior: 50553976!
+assertCustomerPepeSanchezWasCorrectlyImported
+	
+	| customerPepe customerPepeFirstAddress customerPepeSecondAddress |
+	
+	customerPepe := self customerWithId: '22333444'.
+	self assertImportedCustomer: customerPepe importedNameIs: 'Pepe' lastNameIs: 'Sanchez' idTypeIs: 'D'.
+	
+	customerPepeFirstAddress := customerPepe addressWithStreetName: 'San Martin' ifNone: [self fail].
+	
+	self assertAddress: customerPepeFirstAddress streetNumberIs: 3322 townIs: 'Olivos' zipCodeIs: 1636 provinceIs: 'BsAs'.
+	
+	customerPepeSecondAddress := customerPepe addressWithStreetName: 'Maipu' ifNone: [self fail].
+	
+	self assert: (customerPepeSecondAddress streetNumberIs: 888).
+	self assert: (customerPepeSecondAddress townIs: 'Florida').
+	self assert: (customerPepeSecondAddress zipCodeIs: 1122).
+	self assert: (customerPepeSecondAddress provinceIs: 'Buenos Aires').! !
+
+!methodRemoval: ImportTest #assertAddress:streetNumberIs:townIs:zipCodeIs: stamp: 'AS 11/10/2022 20:09:33'!
+assertAddress: customerPepeFirstAddress streetNumberIs: aStreetNumber townIs: aTown zipCodeIs: aZipCode   
+
+	self assert: (customerPepeFirstAddress streetNumberIs: aStreetNumber).
+	self assert: (customerPepeFirstAddress townIs: aTown).
+	self assert: (customerPepeFirstAddress zipCodeIs: aZipCode).
+	self assert: (customerPepeFirstAddress provinceIs: 'BsAs')!
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'AS 11/10/2022 20:09:33' prior: 50554033!
+assertAddress: customerPepeFirstAddress streetNumberIs: aStreetNumber townIs: aTown zipCodeIs: aZipCode provinceIs: provinceIs    
+
+	self assert: (customerPepeFirstAddress streetNumberIs: aStreetNumber).
+	self assert: (customerPepeFirstAddress townIs: aTown).
+	self assert: (customerPepeFirstAddress zipCodeIs: aZipCode).
+	self assert: (customerPepeFirstAddress provinceIs: provinceIs)! !
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/10/2022 20:09:37' prior: 50554093!
+assertAddress: customerPepeFirstAddress streetNumberIs: aStreetNumber townIs: aTown zipCodeIs: aZipCode provinceIs: aProvince    
+
+	self assert: (customerPepeFirstAddress streetNumberIs: aStreetNumber).
+	self assert: (customerPepeFirstAddress townIs: aTown).
+	self assert: (customerPepeFirstAddress zipCodeIs: aZipCode).
+	self assert: (customerPepeFirstAddress provinceIs: aProvince)! !
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/10/2022 20:09:39'!
+PASSED!
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/10/2022 20:15:27' prior: 50554048!
+assertCustomerPepeSanchezWasCorrectlyImported
+	
+	| customerPepe customerPepeFirstAddress customerPepeSecondAddress |
+	
+	customerPepe := self customerWithId: '22333444'.
+	self assertImportedCustomer: customerPepe importedNameIs: 'Pepe' lastNameIs: 'Sanchez' idTypeIs: 'D'.
+	
+	customerPepeFirstAddress := customerPepe addressWithStreetName: 'San Martin' ifNone: [self fail].
+	
+	self assertAddress: customerPepeFirstAddress streetNumberIs: 3322 townIs: 'Olivos' zipCodeIs: 1636 provinceIs: 'BsAs'.
+	
+	customerPepeSecondAddress := customerPepe addressWithStreetName: 'Maipu' ifNone: [self fail].
+	
+	self assertAddress: customerPepeSecondAddress streetNumberIs: 888 townIs: 'Florida' zipCodeIs: 1122 provinceIs: 'Buenos Aires'.! !
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/10/2022 20:15:28'!
+PASSED!
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/10/2022 20:15:34' prior: 50554126!
+assertCustomerPepeSanchezWasCorrectlyImported
+	
+	| customerPepe customerPepeFirstAddress customerPepeSecondAddress |
+	
+	customerPepe := self customerWithId: '22333444'.
+	self assertImportedCustomer: customerPepe importedNameIs: 'Pepe' lastNameIs: 'Sanchez' idTypeIs: 'D'.
+	
+	customerPepeFirstAddress := customerPepe addressWithStreetName: 'San Martin' ifNone: [self fail].
+	self assertAddress: customerPepeFirstAddress streetNumberIs: 3322 townIs: 'Olivos' zipCodeIs: 1636 provinceIs: 'BsAs'.
+	
+	customerPepeSecondAddress := customerPepe addressWithStreetName: 'Maipu' ifNone: [self fail].
+	self assertAddress: customerPepeSecondAddress streetNumberIs: 888 townIs: 'Florida' zipCodeIs: 1122 provinceIs: 'Buenos Aires'.! !
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/10/2022 20:15:35'!
+PASSED!
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/10/2022 20:18:04' prior: 50553749!
+assertCustomerJuanPerezWasCorrectlyImported
+	
+	| customerJuanPerez customerPepeFirstAddress |
+	
+	customerJuanPerez := self customerWithId: '23-25666777-9'.
+	self assertImportedCustomer: customerJuanPerez importedNameIs: 'Juan' lastNameIs: 'Perez' idTypeIs: 'C'.
+
+	customerPepeFirstAddress := customerJuanPerez addressWithStreetName: 'Alem' ifNone: [self fail].
+	
+	self assertAddress: customerPepeFirstAddress streetNumberIs: 1122 townIs: 'CABA'  zipCodeIs: 1001 provinceIs: 'CABA'.! !
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/10/2022 20:18:04'!
+PASSED!
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/10/2022 20:18:13' prior: 50554182!
+assertCustomerJuanPerezWasCorrectlyImported
+	
+	| customerJuanPerez customerPepeFirstAddress |
+	
+	customerJuanPerez := self customerWithId: '23-25666777-9'.
+	self assertImportedCustomer: customerJuanPerez importedNameIs: 'Juan' lastNameIs: 'Perez' idTypeIs: 'C'.
+
+	customerPepeFirstAddress := customerJuanPerez addressWithStreetName: 'Alem' ifNone: [self fail].
+	self assertAddress: customerPepeFirstAddress streetNumberIs: 1122 townIs: 'CABA'  zipCodeIs: 1001 provinceIs: 'CABA'.! !
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/10/2022 20:18:13'!
+PASSED!
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/10/2022 20:18:35'!
+assertImportedAddress: customerPepeFirstAddress importedStreetNumberIs: aStreetNumber townIs: aTown zipCodeIs: aZipCode provinceIs: aProvince    
+
+	self assert: (customerPepeFirstAddress streetNumberIs: aStreetNumber).
+	self assert: (customerPepeFirstAddress townIs: aTown).
+	self assert: (customerPepeFirstAddress zipCodeIs: aZipCode).
+	self assert: (customerPepeFirstAddress provinceIs: aProvince)! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'AS 11/10/2022 20:18:35' prior: 50554154!
+assertCustomerPepeSanchezWasCorrectlyImported
+	
+	| customerPepe customerPepeFirstAddress customerPepeSecondAddress |
+	
+	customerPepe := self customerWithId: '22333444'.
+	self assertImportedCustomer: customerPepe importedNameIs: 'Pepe' lastNameIs: 'Sanchez' idTypeIs: 'D'.
+	
+	customerPepeFirstAddress := customerPepe addressWithStreetName: 'San Martin' ifNone: [self fail].
+	self assertImportedAddress: customerPepeFirstAddress importedStreetNumberIs: 3322 townIs: 'Olivos' zipCodeIs: 1636 provinceIs: 'BsAs'.
+	
+	customerPepeSecondAddress := customerPepe addressWithStreetName: 'Maipu' ifNone: [self fail].
+	self assertImportedAddress: customerPepeSecondAddress importedStreetNumberIs: 888 townIs: 'Florida' zipCodeIs: 1122 provinceIs: 'Buenos Aires'.! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'AS 11/10/2022 20:18:35' prior: 50554203!
+assertCustomerJuanPerezWasCorrectlyImported
+	
+	| customerJuanPerez customerPepeFirstAddress |
+	
+	customerJuanPerez := self customerWithId: '23-25666777-9'.
+	self assertImportedCustomer: customerJuanPerez importedNameIs: 'Juan' lastNameIs: 'Perez' idTypeIs: 'C'.
+
+	customerPepeFirstAddress := customerJuanPerez addressWithStreetName: 'Alem' ifNone: [self fail].
+	self assertImportedAddress: customerPepeFirstAddress importedStreetNumberIs: 1122 townIs: 'CABA'  zipCodeIs: 1001 provinceIs: 'CABA'.! !
+
+!methodRemoval: ImportTest #assertAddress:streetNumberIs:townIs:zipCodeIs:provinceIs: stamp: 'AS 11/10/2022 20:18:35'!
+assertAddress: customerPepeFirstAddress streetNumberIs: aStreetNumber townIs: aTown zipCodeIs: aZipCode provinceIs: aProvince    
+
+	self assert: (customerPepeFirstAddress streetNumberIs: aStreetNumber).
+	self assert: (customerPepeFirstAddress townIs: aTown).
+	self assert: (customerPepeFirstAddress zipCodeIs: aZipCode).
+	self assert: (customerPepeFirstAddress provinceIs: aProvince)!
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/10/2022 20:22:29' prior: 50553344!
+test01Import
+	
+	
+	(CustomerImporter from: readStream into: session) value. 
+	
+	self assert: 2 equals: (session selectAllOfType: Customer) size.
+	
+	self assertCustomerPepeSanchezWasCorrectlyImported .
+	self assertCustomerJuanPerezWasCorrectlyImported ! !
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/10/2022 20:22:30'!
+PASSED!
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/10/2022 20:22:31'!
+PASSED!
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/10/2022 20:22:35' prior: 50554300!
+test01Import
+	
+	
+	(CustomerImporter from: readStream into: session) value. 
+	
+	self assert: 2 equals: (session selectAllOfType: Customer) size.
+	
+	self assertCustomerPepeSanchezWasCorrectlyImported.
+	self assertCustomerJuanPerezWasCorrectlyImported.! !
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/10/2022 20:22:35'!
+PASSED!
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/10/2022 20:22:36'!
+PASSED!
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/10/2022 20:22:50'!
+assertNumberOfImportedCustomersIs
+
+	^ self assert: 2 equals: (session selectAllOfType: Customer) size! !
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/10/2022 20:22:50' prior: 50554316!
+test01Import
+	
+	
+	(CustomerImporter from: readStream into: session) value. 
+	
+	self assertNumberOfImportedCustomersIs.
+	
+	self assertCustomerPepeSanchezWasCorrectlyImported.
+	self assertCustomerJuanPerezWasCorrectlyImported.! !
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/10/2022 20:23:08'!
+assertNumberOfImportedCustomersIs: aNumberOfCustomers
+
+	^ self assert: 2 equals: (session selectAllOfType: Customer) size! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'AS 11/10/2022 20:23:08' prior: 50554337!
+test01Import
+	
+	
+	(CustomerImporter from: readStream into: session) value. 
+	
+	self assertNumberOfImportedCustomersIs: 2.
+	
+	self assertCustomerPepeSanchezWasCorrectlyImported.
+	self assertCustomerJuanPerezWasCorrectlyImported.! !
+
+!methodRemoval: ImportTest #assertNumberOfImportedCustomersIs stamp: 'AS 11/10/2022 20:23:08'!
+assertNumberOfImportedCustomersIs
+
+	^ self assert: 2 equals: (session selectAllOfType: Customer) size!
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'AS 11/10/2022 20:23:08' prior: 50554347!
+assertNumberOfImportedCustomersIs: aNumberOfCustomers
+
+	^ self assert: aNumberOfCustomers equals: (session selectAllOfType: Customer) size! !
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/10/2022 20:23:12' prior: 50554354!
+test01Import
+	
+	
+	(CustomerImporter from: readStream into: session) value. 
+	
+	self assertNumberOfImportedCustomersIs: 2.
+	self assertCustomerPepeSanchezWasCorrectlyImported.
+	self assertCustomerJuanPerezWasCorrectlyImported.! !
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/10/2022 20:23:13'!
+PASSED!
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/10/2022 20:23:14'!
+PASSED!
+!ImportTest methodsFor: 'assertions' stamp: 'AS 11/10/2022 20:23:39' prior: 50554266!
+assertCustomerJuanPerezWasCorrectlyImported
+	
+	| customerJuanPerez customerPepeFirstAddress |
+	
+	self assertImportedCustomer: (self customerWithId: '23-25666777-9') importedNameIs: 'Juan' lastNameIs: 'Perez' idTypeIs: 'C'.
+
+	customerPepeFirstAddress := customerJuanPerez addressWithStreetName: 'Alem' ifNone: [self fail].
+	self assertImportedAddress: customerPepeFirstAddress importedStreetNumberIs: 1122 townIs: 'CABA'  zipCodeIs: 1001 provinceIs: 'CABA'.! !
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/10/2022 20:23:41'!
+ERROR!
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/10/2022 20:23:42'!
+ERROR!
+!ImportTest methodsFor: 'assertions' stamp: 'AS 11/10/2022 20:23:48' prior: 50554393!
+assertCustomerJuanPerezWasCorrectlyImported
+	
+	| customerJuanPerez customerPepeFirstAddress |
+	
+	customerJuanPerez := self customerWithId: '23-25666777-9'.
+	self assertImportedCustomer: customerJuanPerez importedNameIs: 'Juan' lastNameIs: 'Perez' idTypeIs: 'C'.
+
+	customerPepeFirstAddress := customerJuanPerez addressWithStreetName: 'Alem' ifNone: [self fail].
+	self assertImportedAddress: customerPepeFirstAddress importedStreetNumberIs: 1122 townIs: 'CABA'  zipCodeIs: 1001 provinceIs: 'CABA'.! !
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/10/2022 20:23:48'!
+PASSED!
+
+----SNAPSHOT----(10 November 2022 20:24:42) CuisUniversity-5481.image priorSource: 7091550!
