@@ -1,0 +1,34 @@
+
+
+----QUIT----(11 September 2022 19:10:09) CuisUniversity-5481.image priorSource: 2810882!
+
+----STARTUP---- (11 September 2022 19:10:10) as /Users/hernan/Documents/Cuis/5.0-64Bits/Cuis-University-Installer/CuisUniversity-5481.image!
+
+
+----QUIT----(11 September 2022 19:10:10) CuisUniversity-5481.image priorSource: 7059465!
+
+----STARTUP---- (10 November 2022 19:19:22) as /home/andisici/Documents/2022/ing-2c2022/cuisCustomerImporter/CuisUniversity-5481.image!
+
+
+----End fileIn of /home/andisici/Documents/2022/ing-2c2022/cuisCustomerImporter/CustomerImporter.st----!
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/10/2022 19:19:44'!
+ERROR!
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/10/2022 19:19:44'!
+ERROR!
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/10/2022 19:20:11'!
+ERROR!
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/10/2022 19:20:11'!
+ERROR!
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/10/2022 19:21:31'!
+FAILURE!
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/10/2022 19:21:33'!
+PASSED!
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/10/2022 19:21:42'!
+PASSED!
