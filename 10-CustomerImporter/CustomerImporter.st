@@ -1,68 +1,49 @@
 !classDefinition: #ImportTest category: 'CustomerImporter'!
 TestCase subclass: #ImportTest
-	instanceVariableNames: 'session'
+	instanceVariableNames: 'session readStream'
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'CustomerImporter'!
 
-!ImportTest methodsFor: 'tests' stamp: 'AS 11/10/2022 19:16:42'!
-test01Import
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/10/2022 19:50:59'!
+assertCustomerPepeWasCorrectlyImported
 	
-	| customerPepe customerPepeAddresses firstAddress |
-	
-	self importCustomers. 
-	
-	self assert: 2 equals: (session selectAllOfType: Customer) size.
+	| customerPepe customerPepeFirstAddress customerPepeSecondAddress |
 	
 	customerPepe := (session select: [:aCustomer | aCustomer idIs: '22333444'] ofType: Customer) anyOne. 
 	self assert: (customerPepe firstNameIs: 'Pepe').
 	self assert: (customerPepe lastNameIs: 'Sanchez').
 	self assert: (customerPepe idTypeIs: 'D').
 	
-	customerPepeAddresses := (session select: [:anAddress | customerPepe hasAddress: anAddress] ofType: Address) ifEmpty: [self fail].
-	firstAddress := customerPepeAddresses anyOne.
+	customerPepeFirstAddress := customerPepe addressWithStreetName: 'San Martin' ifNone: [self fail].
 	
-	self assert: (firstAddress streetNameIs: 'San Martin').
-	self assert: (firstAddress streetNumberIs: 3322).
-	self assert: (firstAddress townIs: 'Olivos').
-	self assert: (firstAddress zipCodeIs: 1636).
-	self assert: (firstAddress provinceIs: 'BsAs').! !
-
-
-!ImportTest methodsFor: 'as yet unclassified' stamp: 'AS 11/10/2022 19:17:41'!
-importCustomers
-
-	| inputStream  newCustomer line |
-	inputStream := StandardFileStream new open: 'input.txt' forWrite: false.
-	line := inputStream nextLine.
-	[ line notNil ] whileTrue: [
-		(line beginsWith: 'C') ifTrue: [ | customerData |
-			customerData := line findTokens: $,.
-			newCustomer := Customer new.
-			newCustomer firstName: customerData second.
-			newCustomer lastName: customerData third.
-			newCustomer identificationType: customerData fourth.
-			newCustomer identificationNumber: customerData fifth.
-			session persist: newCustomer ].
-
-		(line beginsWith: 'A') ifTrue: [ | addressData newAddress |
-			addressData := line findTokens: $,.
-			newAddress := Address new.
-			newCustomer addAddress: newAddress.
-			newAddress streetName: addressData second.
-			newAddress streetNumber: addressData third asNumber .
-			newAddress town: addressData fourth.
-			newAddress zipCode: addressData fifth asNumber .
-			newAddress province: addressData sixth.
-			session persist: newCustomer].
-
-		line := inputStream nextLine. ].
+	self assert: (customerPepeFirstAddress streetNumberIs: 3322).
+	self assert: (customerPepeFirstAddress townIs: 'Olivos').
+	self assert: (customerPepeFirstAddress zipCodeIs: 1636).
+	self assert: (customerPepeFirstAddress provinceIs: 'BsAs').
 	
-inputStream close! !
+	customerPepeSecondAddress := customerPepe addressWithStreetName: 'Maipu' ifNone: [self fail].
+	
+	self assert: (customerPepeSecondAddress streetNumberIs: 888).
+	self assert: (customerPepeSecondAddress townIs: 'Florida').
+	self assert: (customerPepeSecondAddress zipCodeIs: 1122).
+	self assert: (customerPepeSecondAddress provinceIs: 'Buenos Aires').! !
 
-!ImportTest methodsFor: 'as yet unclassified'!
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/10/2022 19:53:13'!
+test01Import
+	
+	
+	(CustomerImporter from: readStream into: session) value. 
+	
+	self assert: 2 equals: (session selectAllOfType: Customer) size.
+	
+	self assertCustomerPepeWasCorrectlyImported ! !
+
+
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'AS 11/10/2022 19:52:07'!
 setUp
-
+	
+	readStream := self validData.
 	session := DataBaseSession for: (Array with: Address with: Customer).
 	session beginTransaction! !
 
@@ -72,6 +53,16 @@ tearDown
 	session commit.
 	session close! !
 
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'AS 11/10/2022 19:31:38'!
+validData
+
+	^ReadStream on:
+'C,Pepe,Sanchez,D,22333444
+A,San Martin,3322,Olivos,1636,BsAs
+A,Maipu,888,Florida,1122,Buenos Aires
+C,Juan,Perez,C,23-25666777-9
+A,Alem,1122,CABA,1001,CABA'! !
+
 
 !classDefinition: #Address category: 'CustomerImporter'!
 Object subclass: #Address
@@ -79,11 +70,6 @@ Object subclass: #Address
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'CustomerImporter'!
-
-!Address methodsFor: 'province'!
-province
-
-	^province! !
 
 !Address methodsFor: 'province'!
 province: aProvince
@@ -99,11 +85,6 @@ provinceIs: aProvince
 
 
 !Address methodsFor: 'street'!
-streetName
-
-	^streetName ! !
-
-!Address methodsFor: 'street'!
 streetName: aStreetName
 
 	streetName := aStreetName ! !
@@ -112,11 +93,6 @@ streetName: aStreetName
 streetNameIs: aStreetName 
 	
 	^streetName = aStreetName ! !
-
-!Address methodsFor: 'street'!
-streetNumber
-
-	^streetNumber ! !
 
 !Address methodsFor: 'street'!
 streetNumber: aStreetNumber
@@ -130,11 +106,6 @@ streetNumberIs: aStreetNumber
 
 
 !Address methodsFor: 'twon'!
-town
-
-	^town! !
-
-!Address methodsFor: 'twon'!
 town: aTown
 
 	town := aTown! !
@@ -144,11 +115,6 @@ townIs: aTownName
 	
 	^town = aTownName .! !
 
-
-!Address methodsFor: 'zip code'!
-zipCode
-
-	^zipCode! !
 
 !Address methodsFor: 'zip code'!
 zipCode: aZipCode
@@ -172,6 +138,11 @@ Object subclass: #Customer
 addAddress: anAddress
 
 	addresses add: anAddress ! !
+
+!Customer methodsFor: 'addresses' stamp: 'AS 11/10/2022 19:49:59'!
+addressWithStreetName: aStreetName ifNone: aNoneBlock
+	
+	^(addresses select: [:anAddress | anAddress streetNameIs: aStreetName.]) anyOne.! !
 
 !Customer methodsFor: 'addresses'!
 addresses
@@ -241,6 +212,59 @@ initialize
 
 	super initialize.
 	addresses := OrderedCollection new.! !
+
+
+!classDefinition: #CustomerImporter category: 'CustomerImporter'!
+Object subclass: #CustomerImporter
+	instanceVariableNames: 'session readStream'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CustomerImporter'!
+
+!CustomerImporter methodsFor: 'initialization' stamp: 'AS 11/10/2022 19:52:47'!
+initializeFrom: aReadStream into: aSession
+	session := aSession.
+	readStream := aReadStream.! !
+
+
+!CustomerImporter methodsFor: 'evaluating' stamp: 'AS 11/10/2022 19:52:47'!
+value
+
+	|   newCustomer line |
+	line := readStream nextLine.
+	[ line notNil ] whileTrue: [
+		(line beginsWith: 'C') ifTrue: [ | customerData |
+			customerData := line findTokens: $,.
+			newCustomer := Customer new.
+			newCustomer firstName: customerData second.
+			newCustomer lastName: customerData third.
+			newCustomer identificationType: customerData fourth.
+			newCustomer identificationNumber: customerData fifth.
+			session persist: newCustomer ].
+
+		(line beginsWith: 'A') ifTrue: [ | addressData newAddress |
+			addressData := line findTokens: $,.
+			newAddress := Address new.
+			newCustomer addAddress: newAddress.
+			newAddress streetName: addressData second.
+			newAddress streetNumber: addressData third asNumber .
+			newAddress town: addressData fourth.
+			newAddress zipCode: addressData fifth asNumber .
+			newAddress province: addressData sixth.].
+
+		line := readStream nextLine. ].
+	
+readStream close! !
+
+"-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- "!
+
+!classDefinition: 'CustomerImporter class' category: 'CustomerImporter'!
+CustomerImporter class
+	instanceVariableNames: ''!
+
+!CustomerImporter class methodsFor: 'instance creation' stamp: 'AS 11/10/2022 19:52:47'!
+from: aReadStream into: aSession
+	^self new initializeFrom: aReadStream into: aSession! !
 
 
 !classDefinition: #DataBaseSession category: 'CustomerImporter'!
