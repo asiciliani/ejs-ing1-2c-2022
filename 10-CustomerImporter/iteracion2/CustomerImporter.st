@@ -72,6 +72,15 @@ test08ShouldFailImportingWhenAddressRecordSizeIsBiggerThanExpected
 							self assert: 0 equals: (session selectAllOfType: Address ) size.   
 							self assert: 1 equals: (session selectAllOfType: Customer) size.].! !
 
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/14/2022 20:10:55'!
+test09ShouldFailImportingAddressWithoutRespectiveCustomer
+
+	self should: [(CustomerImporter from: self addressRecordWithoutCustomerData into: session) value ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: CustomerImporter canNotImportAddressWithoutCustomerErrorMessage equals: anError messageText.
+							self assert: 0 equals: (session selectAllOfType: Address ) size.   
+							self assert: 0 equals: (session selectAllOfType: Customer) size.].! !
+
 
 !ImportTest methodsFor: 'assertions' stamp: 'HAW 5/22/2022 18:22:05'!
 assertAddressOf: importedCustomer at: aStreetName hasNumber: aNumber town: aTown zipCode: aZipCode province: aProvince
@@ -152,6 +161,11 @@ customerWithIdentificationType: anIdType number: anIdNumber
 		select: [ :aCustomer | aCustomer identificationType = anIdType and: [ aCustomer identificationNumber = anIdNumber ]]
 		ofType: Customer) anyOne! !
 
+
+!ImportTest methodsFor: 'test data' stamp: 'AS 11/14/2022 20:11:50'!
+addressRecordWithoutCustomerData
+		^ ReadStream on:
+'A,San Martin,3322,Olivos,1636,BsAs'! !
 
 !ImportTest methodsFor: 'test data' stamp: 'AS 11/14/2022 19:50:41'!
 biggerThanExpectedAddressRecordSizeData
@@ -364,6 +378,11 @@ assertCustomerRecordHasExpectedSize
 
 	^record size = self class expectedNumberOfRecordsPerLine ifFalse: [self error: self class differentThanExpectedCustomerRecordSizeErrorMessage ]! !
 
+!CustomerImporter methodsFor: 'assertions' stamp: 'AS 11/14/2022 20:16:46'!
+assertCustomerWasImported
+
+	^ newCustomer ifNil: [self canNotImportAddressWithoutCustomerErrorSignal]! !
+
 !CustomerImporter methodsFor: 'assertions' stamp: 'AS 11/14/2022 19:24:42'!
 assertRecordIsNotEmpty
 
@@ -390,6 +409,11 @@ value
 
 	! !
 
+
+!CustomerImporter methodsFor: 'error signal' stamp: 'AS 11/14/2022 20:15:53'!
+canNotImportAddressWithoutCustomerErrorSignal
+
+	^ self error: self class canNotImportAddressWithoutCustomerErrorMessage! !
 
 !CustomerImporter methodsFor: 'error signal' stamp: 'AS 11/14/2022 19:24:42'!
 invalidEmptyRecordErrorSignal
@@ -433,13 +457,15 @@ importCustomer
 	newCustomer identificationNumber: record fifth.
 	session persist: newCustomer! !
 
-!CustomerImporter methodsFor: 'import' stamp: 'AS 11/14/2022 19:46:52'!
+!CustomerImporter methodsFor: 'import' stamp: 'AS 11/14/2022 20:16:46'!
 importRecord
 
 	self assertRecordIsNotEmpty.
 	
 	(self isCustomerRecord) ifTrue: [ self assertCustomerRecordHasExpectedSize.^self importCustomer].
-		(self isAddressRecord) ifTrue: [ self assertAddressRecordHasExpectedSize.^self importAddress].
+		(self isAddressRecord) ifTrue: [ self assertAddressRecordHasExpectedSize.
+								self assertCustomerWasImported.
+								^self importAddress].
 		self invalidRecordTypeErrorSignal.
 		! !
 
@@ -459,6 +485,11 @@ valueFrom: aReadStream into: aSession
 
 	^(self from: aReadStream into: aSession) value! !
 
+
+!CustomerImporter class methodsFor: 'error message' stamp: 'AS 11/14/2022 20:15:02'!
+canNotImportAddressWithoutCustomerErrorMessage
+	
+	^'Must have a customer to import address to!!'! !
 
 !CustomerImporter class methodsFor: 'error message' stamp: 'AS 11/14/2022 19:45:19'!
 differentThanExpectedAddressRecordSizeErrorMessage

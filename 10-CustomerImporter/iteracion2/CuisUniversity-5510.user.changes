@@ -2991,3 +2991,134 @@ PASSED!
 PASSED!
 
 ----SNAPSHOT----(14 November 2022 19:52:07) CuisUniversity-5510.image priorSource: 7267938!
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/14/2022 20:10:55'!
+test09ShouldFailImportingAddressWithoutRespectiveCustomer
+
+	self should: [(CustomerImporter from: self addressRecordWithoutCustomerData into: session) value ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: CustomerImporter canNotImportAddressWithoutCustomerErrorMessage equals: anError messageText.
+							self assert: 0 equals: (session selectAllOfType: Address ) size.   
+							self assert: 0 equals: (session selectAllOfType: Customer) size.].! !
+
+!testRun: #ImportTest #test09ShouldFailImportingAddressWithoutRespectiveCustomer stamp: 'AS 11/14/2022 20:11:00'!
+ERROR!
+!ImportTest methodsFor: 'test data' stamp: 'AS 11/14/2022 20:11:03'!
+addressRecordWithoutCustomerData
+	self shouldBeImplemented.! !
+!ImportTest methodsFor: 'test data' stamp: 'AS 11/14/2022 20:11:50' prior: 50558996!
+addressRecordWithoutCustomerData
+		^ ReadStream on:
+'A,San Martin,3322,Olivos,1636,BsAs'! !
+
+!testRun: #ImportTest #test09ShouldFailImportingAddressWithoutRespectiveCustomer stamp: 'AS 11/14/2022 20:11:52'!
+ERROR!
+!CustomerImporter methodsFor: 'import' stamp: 'AS 11/14/2022 20:14:25' prior: 50558594!
+importRecord
+
+	self assertRecordIsNotEmpty.
+	
+	(self isCustomerRecord) ifTrue: [ self assertCustomerRecordHasExpectedSize.^self importCustomer].
+		(self isAddressRecord) ifTrue: [ self assertAddressRecordHasExpectedSize.
+								newCustomer ifNil: [self error: self class canNotImportAddressWithoutCustomerErrorMessage].
+								^self importAddress].
+		self invalidRecordTypeErrorSignal.
+		! !
+
+!testRun: #ImportTest #test09ShouldFailImportingAddressWithoutRespectiveCustomer stamp: 'AS 11/14/2022 20:14:26'!
+ERROR!
+!CustomerImporter class methodsFor: 'error message' stamp: 'AS 11/14/2022 20:14:32'!
+canNotImportAddressWithoutCustomerErrorMessage
+	self shouldBeImplemented.! !
+!CustomerImporter class methodsFor: 'error message' stamp: 'AS 11/14/2022 20:15:02' prior: 50559030!
+canNotImportAddressWithoutCustomerErrorMessage
+	
+	^'Must have a customer to import address to!!'! !
+
+!testRun: #ImportTest #test09ShouldFailImportingAddressWithoutRespectiveCustomer stamp: 'AS 11/14/2022 20:15:04'!
+PASSED!
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/14/2022 20:15:04'!
+PASSED!
+
+!testRun: #ImportTest #test02ShouldFailImportingInvalidRecordType stamp: 'AS 11/14/2022 20:15:04'!
+PASSED!
+
+!testRun: #ImportTest #test03ShouldFailImportingWithRepeatedRecordType stamp: 'AS 11/14/2022 20:15:05'!
+PASSED!
+
+!testRun: #ImportTest #test04ShouldFailImportingWithEmptyRecordType stamp: 'AS 11/14/2022 20:15:05'!
+PASSED!
+
+!testRun: #ImportTest #test05ShouldFailImportingWhenCustomerRecordSizeIsSmallerThanExpected stamp: 'AS 11/14/2022 20:15:05'!
+PASSED!
+
+!testRun: #ImportTest #test06ShouldFailImportingWhenCustomerRecordSizeIsBiggerThanExpected stamp: 'AS 11/14/2022 20:15:05'!
+PASSED!
+
+!testRun: #ImportTest #test07ShouldFailImportingWhenAddressRecordSizeIsSmallerThanExpected stamp: 'AS 11/14/2022 20:15:05'!
+PASSED!
+
+!testRun: #ImportTest #test08ShouldFailImportingWhenAddressRecordSizeIsBiggerThanExpected stamp: 'AS 11/14/2022 20:15:05'!
+PASSED!
+
+!testRun: #ImportTest #test09ShouldFailImportingAddressWithoutRespectiveCustomer stamp: 'AS 11/14/2022 20:15:06'!
+PASSED!
+!CustomerImporter methodsFor: 'import' stamp: 'AS 11/14/2022 20:15:53'!
+canNotImportAddressWithoutCustomerErrorSignal
+
+	^ self error: self class canNotImportAddressWithoutCustomerErrorMessage! !
+!CustomerImporter methodsFor: 'import' stamp: 'AS 11/14/2022 20:15:53' prior: 50559011!
+importRecord
+
+	self assertRecordIsNotEmpty.
+	
+	(self isCustomerRecord) ifTrue: [ self assertCustomerRecordHasExpectedSize.^self importCustomer].
+		(self isAddressRecord) ifTrue: [ self assertAddressRecordHasExpectedSize.
+								newCustomer ifNil: [self canNotImportAddressWithoutCustomerErrorSignal].
+								^self importAddress].
+		self invalidRecordTypeErrorSignal.
+		! !
+!CustomerImporter methodsFor: 'import' stamp: 'AS 11/14/2022 20:16:46'!
+assertCustomerWasImported
+
+	^ newCustomer ifNil: [self canNotImportAddressWithoutCustomerErrorSignal]! !
+!CustomerImporter methodsFor: 'import' stamp: 'AS 11/14/2022 20:16:46' prior: 50559086!
+importRecord
+
+	self assertRecordIsNotEmpty.
+	
+	(self isCustomerRecord) ifTrue: [ self assertCustomerRecordHasExpectedSize.^self importCustomer].
+		(self isAddressRecord) ifTrue: [ self assertAddressRecordHasExpectedSize.
+								self assertCustomerWasImported.
+								^self importAddress].
+		self invalidRecordTypeErrorSignal.
+		! !
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/14/2022 20:16:57'!
+PASSED!
+
+!testRun: #ImportTest #test02ShouldFailImportingInvalidRecordType stamp: 'AS 11/14/2022 20:16:58'!
+PASSED!
+
+!testRun: #ImportTest #test03ShouldFailImportingWithRepeatedRecordType stamp: 'AS 11/14/2022 20:16:58'!
+PASSED!
+
+!testRun: #ImportTest #test04ShouldFailImportingWithEmptyRecordType stamp: 'AS 11/14/2022 20:16:58'!
+PASSED!
+
+!testRun: #ImportTest #test05ShouldFailImportingWhenCustomerRecordSizeIsSmallerThanExpected stamp: 'AS 11/14/2022 20:16:58'!
+PASSED!
+
+!testRun: #ImportTest #test06ShouldFailImportingWhenCustomerRecordSizeIsBiggerThanExpected stamp: 'AS 11/14/2022 20:16:58'!
+PASSED!
+
+!testRun: #ImportTest #test07ShouldFailImportingWhenAddressRecordSizeIsSmallerThanExpected stamp: 'AS 11/14/2022 20:16:58'!
+PASSED!
+
+!testRun: #ImportTest #test08ShouldFailImportingWhenAddressRecordSizeIsBiggerThanExpected stamp: 'AS 11/14/2022 20:16:59'!
+PASSED!
+
+!testRun: #ImportTest #test09ShouldFailImportingAddressWithoutRespectiveCustomer stamp: 'AS 11/14/2022 20:16:59'!
+PASSED!
+
+----SNAPSHOT----(14 November 2022 20:17:06) CuisUniversity-5510.image priorSource: 7274261!
