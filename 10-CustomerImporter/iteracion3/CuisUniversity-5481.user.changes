@@ -1,0 +1,3373 @@
+
+
+----QUIT----(11 September 2022 19:10:09) CuisUniversity-5481.image priorSource: 2810882!
+
+----STARTUP---- (11 September 2022 19:10:10) as /Users/hernan/Documents/Cuis/5.0-64Bits/Cuis-University-Installer/CuisUniversity-5481.image!
+
+
+----QUIT----(11 September 2022 19:10:10) CuisUniversity-5481.image priorSource: 7059465!
+
+----STARTUP---- (14 November 2022 19:53:46) as /home/andisici/Documents/2022/ing-2c2022/linux64/CuisUniversity-5481.image!
+
+
+----End fileIn of /home/andisici/Documents/2022/ing-2c2022/linux64/CustomerImporter.st----!
+
+----QUIT----(14 November 2022 20:20:23) CuisUniversity-5481.image priorSource: 7059698!
+
+----STARTUP---- (17 November 2022 17:12:08) as /home/andisici/Documents/2022/ing-2c2022/linux64/CuisUniversity-5481.image!
+
+
+----QUIT----(17 November 2022 17:18:57) CuisUniversity-5481.image priorSource: 7081021!
+
+----STARTUP---- (17 November 2022 17:19:16) as /home/andisici/Documents/2022/ing-2c2022/linux64/CuisUniversity-5481.image!
+
+
+!classRemoval: #DataBaseSession stamp: 'AS 11/17/2022 17:19:25'!
+Object subclass: #DataBaseSession
+	instanceVariableNames: 'configuration tables id'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CustomerImporter'!
+
+!classRemoval: #CustomerImporter stamp: 'AS 11/17/2022 17:19:25'!
+Object subclass: #CustomerImporter
+	instanceVariableNames: 'session readStream record line newCustomer'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CustomerImporter'!
+
+!classRemoval: #Customer stamp: 'AS 11/17/2022 17:19:26'!
+Object subclass: #Customer
+	instanceVariableNames: 'id firstName lastName identificationType identificationNumber addresses'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CustomerImporter'!
+
+!classRemoval: #Address stamp: 'AS 11/17/2022 17:19:26'!
+Object subclass: #Address
+	instanceVariableNames: 'id streetName streetNumber town zipCode province'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CustomerImporter'!
+
+!classRemoval: #ImportTest stamp: 'AS 11/17/2022 17:19:26'!
+TestCase subclass: #ImportTest
+	instanceVariableNames: 'session'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CustomerImporter'!
+
+----End fileIn of /home/andisici/Documents/2022/ing-2c2022/linux64/CustomerImporter.st----!
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/17/2022 17:21:23'!
+assertNoCustomerWasImported
+
+	^ self assert: 0 equals: (session selectAllOfType: Customer) size! !
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/17/2022 17:21:23' prior: 50553061!
+test06ShouldFailImportingWhenCustomerRecordSizeIsBiggerThanExpected
+
+	self should: [(CustomerImporter from: self biggerThanExpectedCustomerRecordSizeData into: session) value ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: CustomerImporter differentThanExpectedCustomerRecordSizeErrorMessage equals: anError messageText.
+							   self assertNoCustomerWasImported].! !
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/17/2022 17:21:23' prior: 50553003!
+test02ShouldFailImportingInvalidRecordType
+
+	self should: [(CustomerImporter from: self invalidData into: session) value ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: CustomerImporter invalidRecordTypeErrorMessage equals: anError messageText.
+							   self assertNoCustomerWasImported].! !
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/17/2022 17:21:23' prior: 50553113!
+test09ShouldFailImportingAddressWithoutRespectiveCustomer
+
+	self should: [(CustomerImporter from: self addressRecordWithoutCustomerData into: session) value ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: CustomerImporter canNotImportAddressWithoutCustomerErrorMessage equals: anError messageText.
+							self assert: 0 equals: (session selectAllOfType: Address ) size.   
+							self assertNoCustomerWasImported.].! !
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/17/2022 17:21:23' prior: 50553045!
+test05ShouldFailImportingWhenCustomerRecordSizeIsSmallerThanExpected
+
+	self should: [(CustomerImporter from: self smallerThanExpectedCustomerRecordSizeData into: session) value ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: CustomerImporter differentThanExpectedCustomerRecordSizeErrorMessage equals: anError messageText.
+							   self assertNoCustomerWasImported].! !
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/17/2022 17:21:23' prior: 50553031!
+test04ShouldFailImportingWithEmptyRecordType
+
+	self should: [(CustomerImporter from: self emptyRecordData into: session) value ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: CustomerImporter invalidEmptyRecordErrorMessage equals: anError messageText.
+							   self assertNoCustomerWasImported].! !
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/17/2022 17:21:23' prior: 50553017!
+test03ShouldFailImportingWithRepeatedRecordType
+
+	self should: [(CustomerImporter from: self repeatedRecordTypeData into: session) value ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: CustomerImporter invalidRecordTypeErrorMessage equals: anError messageText.
+							   self assertNoCustomerWasImported].! !
+
+!testRun: #ImportTest #test02ShouldFailImportingInvalidRecordType stamp: 'AS 11/17/2022 17:21:35'!
+PASSED!
+
+!testRun: #ImportTest #test02ShouldFailImportingInvalidRecordType stamp: 'AS 11/17/2022 17:21:38'!
+PASSED!
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/17/2022 17:21:39'!
+PASSED!
+
+!testRun: #ImportTest #test02ShouldFailImportingInvalidRecordType stamp: 'AS 11/17/2022 17:21:39'!
+PASSED!
+
+!testRun: #ImportTest #test03ShouldFailImportingWithRepeatedRecordType stamp: 'AS 11/17/2022 17:21:39'!
+PASSED!
+
+!testRun: #ImportTest #test04ShouldFailImportingWithEmptyRecordType stamp: 'AS 11/17/2022 17:21:39'!
+PASSED!
+
+!testRun: #ImportTest #test05ShouldFailImportingWhenCustomerRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 17:21:40'!
+PASSED!
+
+!testRun: #ImportTest #test06ShouldFailImportingWhenCustomerRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 17:21:40'!
+PASSED!
+
+!testRun: #ImportTest #test07ShouldFailImportingWhenAddressRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 17:21:40'!
+PASSED!
+
+!testRun: #ImportTest #test08ShouldFailImportingWhenAddressRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 17:21:40'!
+PASSED!
+
+!testRun: #ImportTest #test09ShouldFailImportingAddressWithoutRespectiveCustomer stamp: 'AS 11/17/2022 17:21:40'!
+PASSED!
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/17/2022 17:23:45'!
+assertNoAddressWasImported
+
+	^ self assert: 0 equals: (session selectAllOfType: Address ) size! !
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/17/2022 17:23:45' prior: 50553719!
+test09ShouldFailImportingAddressWithoutRespectiveCustomer
+
+	self should: [(CustomerImporter from: self addressRecordWithoutCustomerData into: session) value ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: CustomerImporter canNotImportAddressWithoutCustomerErrorMessage equals: anError messageText.
+							self assertNoAddressWasImported.   
+							self assertNoCustomerWasImported.].! !
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/17/2022 17:23:45' prior: 50553077!
+test07ShouldFailImportingWhenAddressRecordSizeIsSmallerThanExpected
+
+	self should: [(CustomerImporter from: self smallerThanExpectedAddressRecordSizeData into: session) value ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: CustomerImporter differentThanExpectedAddressRecordSizeErrorMessage equals: anError messageText.
+							self assertNoAddressWasImported.   
+							self assert: 1 equals: (session selectAllOfType: Customer) size.].! !
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/17/2022 17:23:45' prior: 50553095!
+test08ShouldFailImportingWhenAddressRecordSizeIsBiggerThanExpected
+
+	self should: [(CustomerImporter from: self biggerThanExpectedAddressRecordSizeData into: session) value ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: CustomerImporter differentThanExpectedAddressRecordSizeErrorMessage equals: anError messageText.
+							self assertNoAddressWasImported.   
+							self assert: 1 equals: (session selectAllOfType: Customer) size.].! !
+!Behavior method!
+for: aConfiguration
+	#_coverageTracker318434_ markAsExecuted.
+	^ #_coverageTracker318434_
+		coverAll:
+			{33 to: 46}
+		evaluating: [
+			(#_coverageTracker318434_
+				coverAll:
+					{29 to: 31}
+				evaluating: [
+					(#_coverageTracker318434_
+						coverAll:
+							{24 to: 27}
+						byLiteralOrPseudoVariable: self) new ]) initializeFor:
+				(#_coverageTracker318434_
+					cover: (48 to: 61)
+					declaredAt: (6 to: 19)
+					by: aConfiguration) ].! !
+!Behavior method!
+initializeFor: aConfiguration
+	#_coverageTracker318674_ markAsExecuted.
+	#_coverageTracker318674_
+		cover: (33 to: 45)
+		declaredAt: (33 to: 45)
+		by:
+			(configuration _ #_coverageTracker318674_
+				cover: (50 to: 63)
+				declaredAt: (16 to: 29)
+				by: aConfiguration).
+	#_coverageTracker318674_
+		cover: (67 to: 72)
+		declaredAt: (67 to: 72)
+		by:
+			(tables _ #_coverageTracker318674_
+				coverAll:
+					{88 to: 90}
+				evaluating: [
+					(#_coverageTracker318674_
+						coverAll:
+							{77 to: 86}
+						by: Dictionary) new ]).
+	#_coverageTracker318674_
+		cover: (94 to: 95)
+		declaredAt: (94 to: 95)
+		by:
+			(id _ #_coverageTracker318674_
+				coverAll:
+					{100 to: 100}
+				byLiteralOrPseudoVariable: 0).! !
+!Behavior method!
+beginTransaction
+	#_coverageTracker318396_ markAsExecuted.! !
+!Behavior method!
+valueFrom: aReadStream into: aSession
+	#_coverageTracker318490_ markAsExecuted.
+	^ #_coverageTracker318490_
+		coverAll:
+			{82 to: 86}
+		evaluating: [
+			(#_coverageTracker318490_
+				coverAll:
+					{48 to: 52. 66 to: 70}
+				evaluating: [
+					(#_coverageTracker318490_
+						coverAll:
+							{43 to: 46}
+						byLiteralOrPseudoVariable: self)
+						from:
+							(#_coverageTracker318490_
+								cover: (54 to: 64)
+								declaredAt: (12 to: 22)
+								by: aReadStream)
+						into:
+							(#_coverageTracker318490_
+								cover: (72 to: 79)
+								declaredAt: (30 to: 37)
+								by: aSession) ]) value ].! !
+!Behavior method!
+from: aReadStream into: aSession
+	#_coverageTracker318203_ markAsExecuted.
+	^ #_coverageTracker318203_
+		coverAll:
+			{45 to: 59. 73 to: 77}
+		evaluating: [
+			(#_coverageTracker318203_
+				coverAll:
+					{41 to: 43}
+				evaluating: [
+					(#_coverageTracker318203_
+						coverAll:
+							{36 to: 39}
+						byLiteralOrPseudoVariable: self) new ])
+				initializeFrom:
+					(#_coverageTracker318203_
+						cover: (61 to: 71)
+						declaredAt: (7 to: 17)
+						by: aReadStream)
+				into:
+					(#_coverageTracker318203_
+						cover: (79 to: 86)
+						declaredAt: (25 to: 32)
+						by: aSession) ].! !
+!Behavior method!
+initializeFrom: aReadStream into: aSession
+	#_coverageTracker318473_ markAsExecuted.
+	#_coverageTracker318473_
+		cover: (45 to: 51)
+		declaredAt: (45 to: 51)
+		by:
+			(session _ #_coverageTracker318473_
+				cover: (56 to: 63)
+				declaredAt: (35 to: 42)
+				by: aSession).
+	#_coverageTracker318473_
+		cover: (67 to: 76)
+		declaredAt: (67 to: 76)
+		by:
+			(readStream _ #_coverageTracker318473_
+				cover: (81 to: 91)
+				declaredAt: (17 to: 27)
+				by: aReadStream).! !
+!Behavior method!
+value
+	#_coverageTracker318615_ markAsExecuted.
+	#_coverageTracker318615_
+		coverAll:
+			{33 to: 42}
+		evaluating: [
+			[
+			#_coverageTracker318615_
+				coverAll:
+					{15 to: 29}
+				evaluating: [
+					(#_coverageTracker318615_
+						coverAll:
+							{10 to: 13}
+						byLiteralOrPseudoVariable: self) hasLineToImport ]] whileTrue: [
+				#_coverageTracker318615_
+					coverAll:
+						{53 to: 64}
+					evaluating: [
+						(#_coverageTracker318615_
+							coverAll:
+								{48 to: 51}
+							byLiteralOrPseudoVariable: self) createRecord ].
+				#_coverageTracker318615_
+					coverAll:
+						{74 to: 85}
+					evaluating: [
+						(#_coverageTracker318615_
+							coverAll:
+								{69 to: 72}
+							byLiteralOrPseudoVariable: self) importRecord ]]].! !
+!Behavior method!
+hasLineToImport
+	#_coverageTracker318430_ markAsExecuted.
+	#_coverageTracker318430_
+		cover: (19 to: 22)
+		declaredAt: (19 to: 22)
+		by:
+			(line _ #_coverageTracker318430_
+				coverAll:
+					{38 to: 45}
+				evaluating: [
+					(#_coverageTracker318430_
+						cover: (27 to: 36)
+						declaredAt: (27 to: 36)
+						by: readStream) nextLine ]).
+	^ #_coverageTracker318430_
+		coverAll:
+			{55 to: 60}
+		evaluating: [
+			(#_coverageTracker318430_
+				cover: (50 to: 53)
+				declaredAt: (19 to: 22)
+				by: line) notNil ].! !
+!Behavior method!
+createRecord
+	#_coverageTracker318793_ markAsExecuted.
+	^ #_coverageTracker318793_
+		cover: (18 to: 23)
+		declaredAt: (18 to: 23)
+		by:
+			(record _ #_coverageTracker318793_
+				coverAll:
+					{33 to: 43}
+				evaluating: [
+					(#_coverageTracker318793_
+						cover: (28 to: 31)
+						declaredAt: (28 to: 31)
+						by: line) findTokens:
+						(#_coverageTracker318793_
+							coverAll:
+								{45 to: 46}
+							byLiteralOrPseudoVariable: $,) ]).! !
+!Behavior method!
+importRecord
+	#_coverageTracker318555_ markAsExecuted.
+	#_coverageTracker318555_
+		coverAll:
+			{21 to: 42}
+		evaluating: [
+			(#_coverageTracker318555_
+				coverAll:
+					{16 to: 19}
+				byLiteralOrPseudoVariable: self) assertRecordIsNotEmpty ].
+	#_coverageTracker318555_
+		coverAll:
+			{72 to: 78}
+		evaluating: [
+			(#_coverageTracker318555_
+				coverAll:
+					{54 to: 69}
+				evaluating: [
+					(#_coverageTracker318555_
+						coverAll:
+							{49 to: 52}
+						byLiteralOrPseudoVariable: self) isCustomerRecord ]) ifTrue: [
+				#_coverageTracker318555_
+					coverAll:
+						{87 to: 121}
+					evaluating: [
+						(#_coverageTracker318555_
+							coverAll:
+								{82 to: 85}
+							byLiteralOrPseudoVariable: self) assertCustomerRecordHasExpectedSize ].
+				^ #_coverageTracker318555_
+					coverAll:
+						{129 to: 142}
+					evaluating: [
+						(#_coverageTracker318555_
+							coverAll:
+								{124 to: 127}
+							byLiteralOrPseudoVariable: self) importCustomer ]]].
+	#_coverageTracker318555_
+		coverAll:
+			{171 to: 177}
+		evaluating: [
+			(#_coverageTracker318555_
+				coverAll:
+					{154 to: 168}
+				evaluating: [
+					(#_coverageTracker318555_
+						coverAll:
+							{149 to: 152}
+						byLiteralOrPseudoVariable: self) isAddressRecord ]) ifTrue: [
+				#_coverageTracker318555_
+					coverAll:
+						{186 to: 219}
+					evaluating: [
+						(#_coverageTracker318555_
+							coverAll:
+								{181 to: 184}
+							byLiteralOrPseudoVariable: self) assertAddressRecordHasExpectedSize ].
+				#_coverageTracker318555_
+					coverAll:
+						{235 to: 259}
+					evaluating: [
+						(#_coverageTracker318555_
+							coverAll:
+								{230 to: 233}
+							byLiteralOrPseudoVariable: self) assertCustomerWasImported ].
+				^ #_coverageTracker318555_
+					coverAll:
+						{276 to: 288}
+					evaluating: [
+						(#_coverageTracker318555_
+							coverAll:
+								{271 to: 274}
+							byLiteralOrPseudoVariable: self) importAddress ]]].
+	#_coverageTracker318555_
+		coverAll:
+			{299 to: 326}
+		evaluating: [
+			(#_coverageTracker318555_
+				coverAll:
+					{294 to: 297}
+				byLiteralOrPseudoVariable: self) invalidRecordTypeErrorSignal ].! !
+!Behavior method!
+assertRecordIsNotEmpty
+	#_coverageTracker318590_ markAsExecuted.
+	^ #_coverageTracker318590_
+		coverAll:
+			{35 to: 42}
+		evaluating: [
+			(#_coverageTracker318590_
+				cover: (28 to: 33)
+				declaredAt: (28 to: 33)
+				by: record) ifEmpty: [
+				#_coverageTracker318590_
+					coverAll:
+						{50 to: 78}
+					evaluating: [
+						(#_coverageTracker318590_
+							coverAll:
+								{45 to: 48}
+							byLiteralOrPseudoVariable: self) invalidEmptyRecordErrorSignal ]]].! !
+!Behavior method!
+isCustomerRecord
+	#_coverageTracker318461_ markAsExecuted.
+	^ #_coverageTracker318461_
+		coverAll:
+			{33 to: 33}
+		evaluating: [
+			(#_coverageTracker318461_
+				coverAll:
+					{27 to: 31}
+				evaluating: [
+					(#_coverageTracker318461_
+						cover: (20 to: 25)
+						declaredAt: (20 to: 25)
+						by: record) first ]) =
+				(#_coverageTracker318461_
+					coverAll:
+						{35 to: 37}
+					byLiteralOrPseudoVariable: 'C') ].! !
+!Behavior method!
+assertCustomerRecordHasExpectedSize
+	#_coverageTracker318521_ markAsExecuted.
+	^ #_coverageTracker318521_
+		coverAll:
+			{96 to: 103}
+		evaluating: [
+			(#_coverageTracker318521_
+				coverAll:
+					{52 to: 52}
+				evaluating: [
+					(#_coverageTracker318521_
+						coverAll:
+							{47 to: 50}
+						evaluating: [
+							(#_coverageTracker318521_
+								cover: (40 to: 45)
+								declaredAt: (40 to: 45)
+								by: record) size ]) =
+						(#_coverageTracker318521_
+							coverAll:
+								{65 to: 94}
+							evaluating: [
+								(#_coverageTracker318521_
+									coverAll:
+										{59 to: 63}
+									evaluating: [
+										(#_coverageTracker318521_
+											coverAll:
+												{54 to: 57}
+											byLiteralOrPseudoVariable: self) class ]) expectedNumberOfRecordsPerLine ]) ]) ifFalse: [
+				#_coverageTracker318521_
+					coverAll:
+						{111 to: 116}
+					evaluating: [
+						(#_coverageTracker318521_
+							coverAll:
+								{106 to: 109}
+							byLiteralOrPseudoVariable: self) error:
+							(#_coverageTracker318521_
+								coverAll:
+									{129 to: 179}
+								evaluating: [
+									(#_coverageTracker318521_
+										coverAll:
+											{123 to: 127}
+										evaluating: [
+											(#_coverageTracker318521_
+												coverAll:
+													{118 to: 121}
+												byLiteralOrPseudoVariable: self) class ]) differentThanExpectedCustomerRecordSizeErrorMessage ]) ]]].! !
+!Behavior method!
+expectedNumberOfRecordsPerLine
+	#_coverageTracker318655_ markAsExecuted.
+	^ #_coverageTracker318655_
+		coverAll:
+			{33 to: 34}
+		byLiteralOrPseudoVariable: 5.! !
+!Behavior method!
+importCustomer
+	#_coverageTracker318693_ markAsExecuted.
+	#_coverageTracker318693_
+		cover: (17 to: 27)
+		declaredAt: (17 to: 27)
+		by:
+			(newCustomer _ #_coverageTracker318693_
+				coverAll:
+					{41 to: 43}
+				evaluating: [
+					(#_coverageTracker318693_
+						coverAll:
+							{32 to: 39}
+						by: Customer) new ]).
+	#_coverageTracker318693_
+		coverAll:
+			{59 to: 68}
+		evaluating: [
+			(#_coverageTracker318693_
+				cover: (47 to: 57)
+				declaredAt: (17 to: 27)
+				by: newCustomer) firstName:
+				(#_coverageTracker318693_
+					coverAll:
+						{77 to: 82}
+					evaluating: [
+						(#_coverageTracker318693_
+							cover: (70 to: 75)
+							declaredAt: (70 to: 75)
+							by: record) second ]) ].
+	#_coverageTracker318693_
+		coverAll:
+			{98 to: 106}
+		evaluating: [
+			(#_coverageTracker318693_
+				cover: (86 to: 96)
+				declaredAt: (17 to: 27)
+				by: newCustomer) lastName:
+				(#_coverageTracker318693_
+					coverAll:
+						{115 to: 119}
+					evaluating: [
+						(#_coverageTracker318693_
+							cover: (108 to: 113)
+							declaredAt: (70 to: 75)
+							by: record) third ]) ].
+	#_coverageTracker318693_
+		coverAll:
+			{135 to: 153}
+		evaluating: [
+			(#_coverageTracker318693_
+				cover: (123 to: 133)
+				declaredAt: (17 to: 27)
+				by: newCustomer) identificationType:
+				(#_coverageTracker318693_
+					coverAll:
+						{162 to: 167}
+					evaluating: [
+						(#_coverageTracker318693_
+							cover: (155 to: 160)
+							declaredAt: (70 to: 75)
+							by: record) fourth ]) ].
+	#_coverageTracker318693_
+		coverAll:
+			{183 to: 203}
+		evaluating: [
+			(#_coverageTracker318693_
+				cover: (171 to: 181)
+				declaredAt: (17 to: 27)
+				by: newCustomer) identificationNumber:
+				(#_coverageTracker318693_
+					coverAll:
+						{212 to: 216}
+					evaluating: [
+						(#_coverageTracker318693_
+							cover: (205 to: 210)
+							declaredAt: (70 to: 75)
+							by: record) fifth ]) ].
+	#_coverageTracker318693_
+		coverAll:
+			{228 to: 235}
+		evaluating: [
+			(#_coverageTracker318693_
+				cover: (220 to: 226)
+				declaredAt: (220 to: 226)
+				by: session) persist:
+				(#_coverageTracker318693_
+					cover: (237 to: 247)
+					declaredAt: (17 to: 27)
+					by: newCustomer) ].! !
+!Behavior method!
+initialize
+	#_coverageTracker318284_ markAsExecuted.
+	#_coverageTracker318284_
+		coverAll:
+			{20 to: 29}
+		evaluating: [ super initialize ].
+	#_coverageTracker318284_
+		cover: (33 to: 41)
+		declaredAt: (33 to: 41)
+		by:
+			(addresses _ #_coverageTracker318284_
+				coverAll:
+					{64 to: 66}
+				evaluating: [
+					(#_coverageTracker318284_
+						coverAll:
+							{46 to: 62}
+						by: OrderedCollection) new ]).! !
+!Behavior method!
+firstName: aName
+	#_coverageTracker318789_ markAsExecuted.
+	#_coverageTracker318789_
+		cover: (20 to: 28)
+		declaredAt: (20 to: 28)
+		by:
+			(firstName _ #_coverageTracker318789_
+				cover: (33 to: 37)
+				declaredAt: (12 to: 16)
+				by: aName).! !
+!Behavior method!
+lastName: aLastName
+	#_coverageTracker318551_ markAsExecuted.
+	#_coverageTracker318551_
+		cover: (23 to: 30)
+		declaredAt: (23 to: 30)
+		by:
+			(lastName _ #_coverageTracker318551_
+				cover: (35 to: 43)
+				declaredAt: (11 to: 19)
+				by: aLastName).! !
+!Behavior method!
+identificationType: anIdentificationType
+	#_coverageTracker318799_ markAsExecuted.
+	#_coverageTracker318799_
+		cover: (44 to: 61)
+		declaredAt: (44 to: 61)
+		by:
+			(identificationType _ #_coverageTracker318799_
+				cover: (66 to: 85)
+				declaredAt: (21 to: 40)
+				by: anIdentificationType).! !
+!Behavior method!
+identificationNumber: anIdentificationNumber
+	#_coverageTracker318538_ markAsExecuted.
+	#_coverageTracker318538_
+		cover: (48 to: 67)
+		declaredAt: (48 to: 67)
+		by:
+			(identificationNumber _ #_coverageTracker318538_
+				cover: (72 to: 93)
+				declaredAt: (23 to: 44)
+				by: anIdentificationNumber).! !
+!Behavior method!
+persist: anObject
+	| table |
+	#_coverageTracker318828_ markAsExecuted.
+	#_coverageTracker318828_
+		coverAll:
+			{38 to: 42}
+		evaluating: [
+			(#_coverageTracker318828_
+				coverAll:
+					{33 to: 36}
+				byLiteralOrPseudoVariable: self) delay ].
+	#_coverageTracker318828_
+		cover: (46 to: 50)
+		declaredAt: (23 to: 27)
+		by:
+			(table _ #_coverageTracker318828_
+				coverAll:
+					{62 to: 64. 81 to: 92}
+				evaluating: [
+					(#_coverageTracker318828_
+						cover: (55 to: 60)
+						declaredAt: (55 to: 60)
+						by: tables)
+						at:
+							(#_coverageTracker318828_
+								coverAll:
+									{75 to: 79}
+								evaluating: [
+									(#_coverageTracker318828_
+										cover: (66 to: 73)
+										declaredAt: (10 to: 17)
+										by: anObject) class ])
+						ifAbsentPut: [
+							#_coverageTracker318828_
+								coverAll:
+									{100 to: 102}
+								evaluating: [
+									(#_coverageTracker318828_
+										coverAll:
+											{96 to: 98}
+										by: Set) new ]]]).
+	#_coverageTracker318828_
+		coverAll:
+			{114 to: 124}
+		evaluating: [
+			(#_coverageTracker318828_
+				coverAll:
+					{109 to: 112}
+				byLiteralOrPseudoVariable: self) defineIdOf:
+				(#_coverageTracker318828_
+					cover: (126 to: 133)
+					declaredAt: (10 to: 17)
+					by: anObject) ].
+	#_coverageTracker318828_
+		coverAll:
+			{143 to: 146}
+		evaluating: [
+			(#_coverageTracker318828_
+				cover: (137 to: 141)
+				declaredAt: (23 to: 27)
+				by: table) add:
+				(#_coverageTracker318828_
+					cover: (148 to: 155)
+					declaredAt: (10 to: 17)
+					by: anObject) ].
+	#_coverageTracker318828_
+		coverAll:
+			{190 to: 196}
+		evaluating: [
+			(#_coverageTracker318828_
+				coverAll:
+					{170 to: 178}
+				evaluating: [
+					(#_coverageTracker318828_
+						cover: (161 to: 168)
+						declaredAt: (10 to: 17)
+						by: anObject) isKindOf:
+						(#_coverageTracker318828_
+							coverAll:
+								{180 to: 187}
+							by: Customer) ]) ifTrue: [
+				#_coverageTracker318828_
+					coverAll:
+						{205 to: 223}
+					evaluating: [
+						(#_coverageTracker318828_
+							coverAll:
+								{200 to: 203}
+							byLiteralOrPseudoVariable: self) persistAddressesOf:
+							(#_coverageTracker318828_
+								cover: (225 to: 232)
+								declaredAt: (10 to: 17)
+								by: anObject) ]]].! !
+!Behavior method!
+delay
+	#_coverageTracker318496_ markAsExecuted.
+	#_coverageTracker318496_
+		coverAll:
+			{38 to: 41}
+		evaluating: [
+			(#_coverageTracker318496_
+				coverAll:
+					{16 to: 31}
+				evaluating: [
+					(#_coverageTracker318496_
+						coverAll:
+							{10 to: 14}
+						by: Delay) forMilliseconds:
+						(#_coverageTracker318496_
+							coverAll:
+								{33 to: 35}
+							byLiteralOrPseudoVariable: 100) ]) wait ].! !
+!Behavior method!
+defineIdOf: anObject
+	#_coverageTracker318346_ markAsExecuted.
+	#_coverageTracker318346_
+		coverAll:
+			{33 to: 45. 52 to: 55}
+		evaluating: [
+			(#_coverageTracker318346_
+				cover: (24 to: 31)
+				declaredAt: (13 to: 20)
+				by: anObject)
+				instVarNamed:
+					(#_coverageTracker318346_
+						coverAll:
+							{47 to: 50}
+						byLiteralOrPseudoVariable: 'id')
+				put:
+					(#_coverageTracker318346_
+						coverAll:
+							{63 to: 71}
+						evaluating: [
+							(#_coverageTracker318346_
+								coverAll:
+									{58 to: 61}
+								byLiteralOrPseudoVariable: self) newIdFor:
+								(#_coverageTracker318346_
+									cover: (73 to: 80)
+									declaredAt: (13 to: 20)
+									by: anObject) ]) ].! !
+!Behavior method!
+newIdFor: anObject
+	#_coverageTracker318813_ markAsExecuted.
+	#_coverageTracker318813_
+		cover: (28 to: 29)
+		declaredAt: (22 to: 23)
+		by:
+			(id _ #_coverageTracker318813_
+				coverAll:
+					{31 to: 31}
+				evaluating: [
+					(#_coverageTracker318813_
+						cover: (22 to: 23)
+						declaredAt: (22 to: 23)
+						by: id) +
+						(#_coverageTracker318813_
+							coverAll:
+								{33 to: 33}
+							byLiteralOrPseudoVariable: 1) ]).
+	^ #_coverageTracker318813_
+		cover: (38 to: 39)
+		declaredAt: (22 to: 23)
+		by: id.! !
+!Behavior method!
+persistAddressesOf: anObjectWithAddresses
+	#_coverageTracker318340_ markAsExecuted.
+	#_coverageTracker318340_
+		coverAll:
+			{77 to: 79}
+		evaluating: [
+			(#_coverageTracker318340_
+				coverAll:
+					{67 to: 75}
+				evaluating: [
+					(#_coverageTracker318340_
+						cover: (45 to: 65)
+						declaredAt: (21 to: 41)
+						by: anObjectWithAddresses) addresses ]) do: [ :anAddress |
+				#_coverageTracker318340_
+					coverAll:
+						{101 to: 108}
+					evaluating: [
+						(#_coverageTracker318340_
+							coverAll:
+								{96 to: 99}
+							byLiteralOrPseudoVariable: self) persist:
+							(#_coverageTracker318340_
+								cover: (110 to: 118)
+								declaredAt: (84 to: 92)
+								by: anAddress) ]]].! !
+!Behavior method!
+addresses
+	#_coverageTracker318428_ markAsExecuted.
+	^ #_coverageTracker318428_
+		cover: (15 to: 23)
+		declaredAt: (15 to: 23)
+		by: addresses.! !
+!Behavior method!
+isAddressRecord
+	#_coverageTracker318317_ markAsExecuted.
+	^ #_coverageTracker318317_
+		coverAll:
+			{32 to: 32}
+		evaluating: [
+			(#_coverageTracker318317_
+				coverAll:
+					{26 to: 30}
+				evaluating: [
+					(#_coverageTracker318317_
+						cover: (19 to: 24)
+						declaredAt: (19 to: 24)
+						by: record) first ]) =
+				(#_coverageTracker318317_
+					coverAll:
+						{34 to: 36}
+					byLiteralOrPseudoVariable: 'A') ].! !
+!Behavior method!
+assertAddressRecordHasExpectedSize
+	#_coverageTracker318224_ markAsExecuted.
+	^ #_coverageTracker318224_
+		coverAll:
+			{90 to: 97}
+		evaluating: [
+			(#_coverageTracker318224_
+				coverAll:
+					{51 to: 51}
+				evaluating: [
+					(#_coverageTracker318224_
+						coverAll:
+							{46 to: 49}
+						evaluating: [
+							(#_coverageTracker318224_
+								cover: (39 to: 44)
+								declaredAt: (39 to: 44)
+								by: record) size ]) =
+						(#_coverageTracker318224_
+							coverAll:
+								{64 to: 88}
+							evaluating: [
+								(#_coverageTracker318224_
+									coverAll:
+										{58 to: 62}
+									evaluating: [
+										(#_coverageTracker318224_
+											coverAll:
+												{53 to: 56}
+											byLiteralOrPseudoVariable: self) class ]) expectedAddressRecordSize ]) ]) ifFalse: [
+				#_coverageTracker318224_
+					coverAll:
+						{105 to: 110}
+					evaluating: [
+						(#_coverageTracker318224_
+							coverAll:
+								{100 to: 103}
+							byLiteralOrPseudoVariable: self) error:
+							(#_coverageTracker318224_
+								coverAll:
+									{123 to: 172}
+								evaluating: [
+									(#_coverageTracker318224_
+										coverAll:
+											{117 to: 121}
+										evaluating: [
+											(#_coverageTracker318224_
+												coverAll:
+													{112 to: 115}
+												byLiteralOrPseudoVariable: self) class ]) differentThanExpectedAddressRecordSizeErrorMessage ]) ]]].! !
+!Behavior method!
+expectedAddressRecordSize
+	#_coverageTracker318332_ markAsExecuted.
+	^ #_coverageTracker318332_
+		coverAll:
+			{28 to: 29}
+		byLiteralOrPseudoVariable: 6.! !
+!Behavior method!
+assertCustomerWasImported
+	#_coverageTracker318399_ markAsExecuted.
+	^ #_coverageTracker318399_
+		coverAll:
+			{43 to: 48}
+		evaluating: [
+			(#_coverageTracker318399_
+				cover: (31 to: 41)
+				declaredAt: (31 to: 41)
+				by: newCustomer) ifNil: [
+				#_coverageTracker318399_
+					coverAll:
+						{56 to: 100}
+					evaluating: [
+						(#_coverageTracker318399_
+							coverAll:
+								{51 to: 54}
+							byLiteralOrPseudoVariable: self) canNotImportAddressWithoutCustomerErrorSignal ]]].! !
+!Behavior method!
+importAddress
+	| newAddress |
+	#_coverageTracker318736_ markAsExecuted.
+	#_coverageTracker318736_
+		cover: (36 to: 45)
+		declaredAt: (20 to: 29)
+		by:
+			(newAddress _ #_coverageTracker318736_
+				coverAll:
+					{58 to: 60}
+				evaluating: [
+					(#_coverageTracker318736_
+						coverAll:
+							{50 to: 56}
+						by: Address) new ]).
+	#_coverageTracker318736_
+		coverAll:
+			{76 to: 86}
+		evaluating: [
+			(#_coverageTracker318736_
+				cover: (64 to: 74)
+				declaredAt: (64 to: 74)
+				by: newCustomer) addAddress:
+				(#_coverageTracker318736_
+					cover: (88 to: 97)
+					declaredAt: (20 to: 29)
+					by: newAddress) ].
+	#_coverageTracker318736_
+		coverAll:
+			{112 to: 122}
+		evaluating: [
+			(#_coverageTracker318736_
+				cover: (101 to: 110)
+				declaredAt: (20 to: 29)
+				by: newAddress) streetName:
+				(#_coverageTracker318736_
+					coverAll:
+						{131 to: 136}
+					evaluating: [
+						(#_coverageTracker318736_
+							cover: (124 to: 129)
+							declaredAt: (124 to: 129)
+							by: record) second ]) ].
+	#_coverageTracker318736_
+		coverAll:
+			{151 to: 163}
+		evaluating: [
+			(#_coverageTracker318736_
+				cover: (140 to: 149)
+				declaredAt: (20 to: 29)
+				by: newAddress) streetNumber:
+				(#_coverageTracker318736_
+					coverAll:
+						{178 to: 185}
+					evaluating: [
+						(#_coverageTracker318736_
+							coverAll:
+								{172 to: 176}
+							evaluating: [
+								(#_coverageTracker318736_
+									cover: (165 to: 170)
+									declaredAt: (124 to: 129)
+									by: record) third ]) asNumber ]) ].
+	#_coverageTracker318736_
+		coverAll:
+			{201 to: 205}
+		evaluating: [
+			(#_coverageTracker318736_
+				cover: (190 to: 199)
+				declaredAt: (20 to: 29)
+				by: newAddress) town:
+				(#_coverageTracker318736_
+					coverAll:
+						{214 to: 219}
+					evaluating: [
+						(#_coverageTracker318736_
+							cover: (207 to: 212)
+							declaredAt: (124 to: 129)
+							by: record) fourth ]) ].
+	#_coverageTracker318736_
+		coverAll:
+			{234 to: 241}
+		evaluating: [
+			(#_coverageTracker318736_
+				cover: (223 to: 232)
+				declaredAt: (20 to: 29)
+				by: newAddress) zipCode:
+				(#_coverageTracker318736_
+					coverAll:
+						{256 to: 263}
+					evaluating: [
+						(#_coverageTracker318736_
+							coverAll:
+								{250 to: 254}
+							evaluating: [
+								(#_coverageTracker318736_
+									cover: (243 to: 248)
+									declaredAt: (124 to: 129)
+									by: record) fifth ]) asNumber ]) ].
+	#_coverageTracker318736_
+		coverAll:
+			{279 to: 287}
+		evaluating: [
+			(#_coverageTracker318736_
+				cover: (268 to: 277)
+				declaredAt: (20 to: 29)
+				by: newAddress) province:
+				(#_coverageTracker318736_
+					coverAll:
+						{296 to: 300}
+					evaluating: [
+						(#_coverageTracker318736_
+							cover: (289 to: 294)
+							declaredAt: (124 to: 129)
+							by: record) sixth ]) ].! !
+!Behavior method!
+addAddress: anAddress
+	#_coverageTracker318877_ markAsExecuted.
+	#_coverageTracker318877_
+		coverAll:
+			{35 to: 38}
+		evaluating: [
+			(#_coverageTracker318877_
+				cover: (25 to: 33)
+				declaredAt: (25 to: 33)
+				by: addresses) add:
+				(#_coverageTracker318877_
+					cover: (40 to: 48)
+					declaredAt: (13 to: 21)
+					by: anAddress) ].! !
+!Behavior method!
+streetName: aStreetName
+	#_coverageTracker318632_ markAsExecuted.
+	#_coverageTracker318632_
+		cover: (27 to: 36)
+		declaredAt: (27 to: 36)
+		by:
+			(streetName _ #_coverageTracker318632_
+				cover: (41 to: 51)
+				declaredAt: (13 to: 23)
+				by: aStreetName).! !
+!Behavior method!
+streetNumber: aStreetNumber
+	#_coverageTracker318811_ markAsExecuted.
+	#_coverageTracker318811_
+		cover: (31 to: 42)
+		declaredAt: (31 to: 42)
+		by:
+			(streetNumber _ #_coverageTracker318811_
+				cover: (47 to: 59)
+				declaredAt: (15 to: 27)
+				by: aStreetNumber).! !
+!Behavior method!
+town: aTown
+	#_coverageTracker318334_ markAsExecuted.
+	#_coverageTracker318334_
+		cover: (15 to: 18)
+		declaredAt: (15 to: 18)
+		by:
+			(town _ #_coverageTracker318334_
+				cover: (23 to: 27)
+				declaredAt: (7 to: 11)
+				by: aTown).! !
+!Behavior method!
+zipCode: aZipCode
+	#_coverageTracker318289_ markAsExecuted.
+	#_coverageTracker318289_
+		cover: (21 to: 27)
+		declaredAt: (21 to: 27)
+		by:
+			(zipCode _ #_coverageTracker318289_
+				cover: (32 to: 39)
+				declaredAt: (10 to: 17)
+				by: aZipCode).! !
+!Behavior method!
+province: aProvince
+	#_coverageTracker318463_ markAsExecuted.
+	#_coverageTracker318463_
+		cover: (23 to: 30)
+		declaredAt: (23 to: 30)
+		by:
+			(province _ #_coverageTracker318463_
+				cover: (35 to: 43)
+				declaredAt: (11 to: 19)
+				by: aProvince).! !
+!Behavior method!
+selectAllOfType: aType
+	#_coverageTracker318403_ markAsExecuted.
+	#_coverageTracker318403_
+		coverAll:
+			{31 to: 35}
+		evaluating: [
+			(#_coverageTracker318403_
+				coverAll:
+					{26 to: 29}
+				byLiteralOrPseudoVariable: self) delay ].
+	^ #_coverageTracker318403_
+		coverAll:
+			{68 to: 71}
+		evaluating: [
+			(#_coverageTracker318403_
+				coverAll:
+					{46 to: 59}
+				evaluating: [
+					(#_coverageTracker318403_
+						coverAll:
+							{41 to: 44}
+						byLiteralOrPseudoVariable: self) objectsOfType:
+						(#_coverageTracker318403_
+							cover: (61 to: 65)
+							declaredAt: (18 to: 22)
+							by: aType) ]) copy ].! !
+!Behavior method!
+objectsOfType: aType
+	#_coverageTracker318659_ markAsExecuted.
+	^ #_coverageTracker318659_
+		coverAll:
+			{33 to: 35. 43 to: 51}
+		evaluating: [
+			(#_coverageTracker318659_
+				cover: (26 to: 31)
+				declaredAt: (26 to: 31)
+				by: tables)
+				at:
+					(#_coverageTracker318659_
+						cover: (37 to: 41)
+						declaredAt: (16 to: 20)
+						by: aType)
+				ifAbsent: [
+					#_coverageTracker318659_
+						coverAll:
+							{55 to: 57}
+						byLiteralOrPseudoVariable: #() ]].! !
+!Behavior method!
+select: aCondition ofType: aType
+	#_coverageTracker318311_ markAsExecuted.
+	#_coverageTracker318311_
+		coverAll:
+			{41 to: 45}
+		evaluating: [
+			(#_coverageTracker318311_
+				coverAll:
+					{36 to: 39}
+				byLiteralOrPseudoVariable: self) delay ].
+	^ #_coverageTracker318311_
+		coverAll:
+			{78 to: 84}
+		evaluating: [
+			(#_coverageTracker318311_
+				coverAll:
+					{56 to: 69}
+				evaluating: [
+					(#_coverageTracker318311_
+						coverAll:
+							{51 to: 54}
+						byLiteralOrPseudoVariable: self) objectsOfType:
+						(#_coverageTracker318311_
+							cover: (71 to: 75)
+							declaredAt: (28 to: 32)
+							by: aType) ]) select:
+				(#_coverageTracker318311_
+					cover: (86 to: 95)
+					declaredAt: (9 to: 18)
+					by: aCondition) ].! !
+!Behavior method!
+identificationType
+	#_coverageTracker318881_ markAsExecuted.
+	^ #_coverageTracker318881_
+		cover: (23 to: 40)
+		declaredAt: (23 to: 40)
+		by: identificationType.! !
+!Behavior method!
+identificationNumber
+	#_coverageTracker318613_ markAsExecuted.
+	^ #_coverageTracker318613_
+		cover: (25 to: 44)
+		declaredAt: (25 to: 44)
+		by: identificationNumber.! !
+!Behavior method!
+firstName
+	#_coverageTracker318655_ markAsExecuted.
+	^ #_coverageTracker318655_
+		cover: (14 to: 22)
+		declaredAt: (14 to: 22)
+		by: firstName.! !
+!Behavior method!
+lastName
+	#_coverageTracker318459_ markAsExecuted.
+	^ #_coverageTracker318459_
+		cover: (13 to: 20)
+		declaredAt: (13 to: 20)
+		by: lastName.! !
+!Behavior method!
+addressAt: aStreetName ifNone: aNoneBlock
+	#_coverageTracker318372_ markAsExecuted.
+	^ #_coverageTracker318372_
+		coverAll:
+			{56 to: 62. 105 to: 111}
+		evaluating: [
+			(#_coverageTracker318372_
+				cover: (46 to: 54)
+				declaredAt: (46 to: 54)
+				by: addresses)
+				detect: [ :address |
+					#_coverageTracker318372_
+						coverAll:
+							{85 to: 89}
+						evaluating: [
+							(#_coverageTracker318372_
+								cover: (77 to: 83)
+								declaredAt: (67 to: 73)
+								by: address) isAt:
+								(#_coverageTracker318372_
+									cover: (91 to: 101)
+									declaredAt: (12 to: 22)
+									by: aStreetName) ]]
+				ifNone:
+					(#_coverageTracker318372_
+						cover: (113 to: 122)
+						declaredAt: (32 to: 41)
+						by: aNoneBlock) ].! !
+!Behavior method!
+isAt: aStreetName
+	#_coverageTracker318622_ markAsExecuted.
+	^ #_coverageTracker318622_
+		coverAll:
+			{33 to: 33}
+		evaluating: [
+			(#_coverageTracker318622_
+				cover: (22 to: 31)
+				declaredAt: (22 to: 31)
+				by: streetName) =
+				(#_coverageTracker318622_
+					cover: (35 to: 45)
+					declaredAt: (7 to: 17)
+					by: aStreetName) ].! !
+!Behavior method!
+streetName
+	#_coverageTracker318338_ markAsExecuted.
+	^ #_coverageTracker318338_
+		cover: (15 to: 24)
+		declaredAt: (15 to: 24)
+		by: streetName.! !
+!Behavior method!
+streetNumber
+	#_coverageTracker318657_ markAsExecuted.
+	^ #_coverageTracker318657_
+		cover: (17 to: 28)
+		declaredAt: (17 to: 28)
+		by: streetNumber.! !
+!Behavior method!
+town
+	#_coverageTracker318457_ markAsExecuted.
+	^ #_coverageTracker318457_
+		cover: (9 to: 12)
+		declaredAt: (9 to: 12)
+		by: town.! !
+!Behavior method!
+zipCode
+	#_coverageTracker318601_ markAsExecuted.
+	^ #_coverageTracker318601_
+		cover: (12 to: 18)
+		declaredAt: (12 to: 18)
+		by: zipCode.! !
+!Behavior method!
+province
+	#_coverageTracker318222_ markAsExecuted.
+	^ #_coverageTracker318222_
+		cover: (13 to: 20)
+		declaredAt: (13 to: 20)
+		by: province.! !
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/17/2022 17:24:35'!
+PASSED!
+!Behavior method!
+commit
+	#_coverageTracker318636_ markAsExecuted.
+	#_coverageTracker318636_
+		coverAll:
+			{48 to: 50}
+		evaluating: [
+			(#_coverageTracker318636_
+				coverAll:
+					{18 to: 20. 31 to: 39}
+				evaluating: [
+					(#_coverageTracker318636_
+						cover: (11 to: 16)
+						declaredAt: (11 to: 16)
+						by: tables)
+						at:
+							(#_coverageTracker318636_
+								coverAll:
+									{22 to: 29}
+								by: Customer)
+						ifAbsent: [
+							#_coverageTracker318636_
+								coverAll:
+									{42 to: 44}
+								byLiteralOrPseudoVariable: #() ]]) do: [ :aCustomer |
+				#_coverageTracker318636_
+					coverAll:
+						{72 to: 90}
+					evaluating: [
+						(#_coverageTracker318636_
+							coverAll:
+								{67 to: 70}
+							byLiteralOrPseudoVariable: self) persistAddressesOf:
+							(#_coverageTracker318636_
+								cover: (92 to: 100)
+								declaredAt: (55 to: 63)
+								by: aCustomer) ]]].! !
+!Behavior method!
+close
+	#_coverageTracker318505_ markAsExecuted.! !
+!Behavior method!
+invalidRecordTypeErrorSignal
+	#_coverageTracker318873_ markAsExecuted.
+	^ #_coverageTracker318873_
+		coverAll:
+			{39 to: 44}
+		evaluating: [
+			(#_coverageTracker318873_
+				coverAll:
+					{34 to: 37}
+				byLiteralOrPseudoVariable: self) error:
+				(#_coverageTracker318873_
+					coverAll:
+						{57 to: 85}
+					evaluating: [
+						(#_coverageTracker318873_
+							coverAll:
+								{51 to: 55}
+							evaluating: [
+								(#_coverageTracker318873_
+									coverAll:
+										{46 to: 49}
+									byLiteralOrPseudoVariable: self) class ]) invalidRecordTypeErrorMessage ]) ].! !
+!Behavior method!
+invalidRecordTypeErrorMessage
+	#_coverageTracker318396_ markAsExecuted.
+	^ #_coverageTracker318396_
+		coverAll:
+			{33 to: 69}
+		byLiteralOrPseudoVariable: 'Can not import invalid record type!!'.! !
+
+!testRun: #ImportTest #test02ShouldFailImportingInvalidRecordType stamp: 'AS 11/17/2022 17:24:36'!
+PASSED!
+
+!testRun: #ImportTest #test03ShouldFailImportingWithRepeatedRecordType stamp: 'AS 11/17/2022 17:24:36'!
+PASSED!
+!Behavior method!
+invalidEmptyRecordErrorSignal
+	#_coverageTracker318365_ markAsExecuted.
+	^ #_coverageTracker318365_
+		coverAll:
+			{40 to: 45}
+		evaluating: [
+			(#_coverageTracker318365_
+				coverAll:
+					{35 to: 38}
+				byLiteralOrPseudoVariable: self) error:
+				(#_coverageTracker318365_
+					coverAll:
+						{58 to: 87}
+					evaluating: [
+						(#_coverageTracker318365_
+							coverAll:
+								{52 to: 56}
+							evaluating: [
+								(#_coverageTracker318365_
+									coverAll:
+										{47 to: 50}
+									byLiteralOrPseudoVariable: self) class ]) invalidEmptyRecordErrorMessage ]) ].! !
+!Behavior method!
+invalidEmptyRecordErrorMessage
+	#_coverageTracker318363_ markAsExecuted.
+	^ #_coverageTracker318363_
+		coverAll:
+			{34 to: 63}
+		byLiteralOrPseudoVariable: 'Can not import empty record!!'.! !
+
+!testRun: #ImportTest #test04ShouldFailImportingWithEmptyRecordType stamp: 'AS 11/17/2022 17:24:36'!
+PASSED!
+!Behavior method!
+differentThanExpectedCustomerRecordSizeErrorMessage
+	#_coverageTracker318262_ markAsExecuted.
+	^ #_coverageTracker318262_
+		coverAll:
+			{140 to: 140}
+		evaluating: [
+			(#_coverageTracker318262_
+				coverAll:
+					{94 to: 94}
+				evaluating: [
+					(#_coverageTracker318262_
+						coverAll:
+							{55 to: 93}
+						byLiteralOrPseudoVariable: 'Number of records per line should be ') ,
+						(#_coverageTracker318262_
+							coverAll:
+								{132 to: 139}
+							evaluating: [
+								(#_coverageTracker318262_
+									coverAll:
+										{101 to: 130}
+									evaluating: [
+										(#_coverageTracker318262_
+											coverAll:
+												{96 to: 99}
+											byLiteralOrPseudoVariable: self) expectedNumberOfRecordsPerLine ]) asString ]) ]) ,
+				(#_coverageTracker318262_
+					coverAll:
+						{142 to: 144}
+					byLiteralOrPseudoVariable: '!!') ].! !
+
+!testRun: #ImportTest #test05ShouldFailImportingWhenCustomerRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 17:24:36'!
+PASSED!
+
+!testRun: #ImportTest #test06ShouldFailImportingWhenCustomerRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 17:24:36'!
+PASSED!
+!Behavior method!
+differentThanExpectedAddressRecordSizeErrorMessage
+	#_coverageTracker318268_ markAsExecuted.
+	^ #_coverageTracker318268_
+		coverAll:
+			{136 to: 136}
+		evaluating: [
+			(#_coverageTracker318268_
+				coverAll:
+					{95 to: 95}
+				evaluating: [
+					(#_coverageTracker318268_
+						coverAll:
+							{56 to: 94}
+						byLiteralOrPseudoVariable: 'Number of records per line should be ') ,
+						(#_coverageTracker318268_
+							coverAll:
+								{128 to: 135}
+							evaluating: [
+								(#_coverageTracker318268_
+									coverAll:
+										{102 to: 126}
+									evaluating: [
+										(#_coverageTracker318268_
+											coverAll:
+												{97 to: 100}
+											byLiteralOrPseudoVariable: self) expectedAddressRecordSize ]) asString ]) ]) ,
+				(#_coverageTracker318268_
+					coverAll:
+						{138 to: 140}
+					byLiteralOrPseudoVariable: '!!') ].! !
+
+!testRun: #ImportTest #test07ShouldFailImportingWhenAddressRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 17:24:36'!
+PASSED!
+
+!testRun: #ImportTest #test08ShouldFailImportingWhenAddressRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 17:24:37'!
+PASSED!
+!Behavior method!
+canNotImportAddressWithoutCustomerErrorSignal
+	#_coverageTracker318245_ markAsExecuted.
+	^ #_coverageTracker318245_
+		coverAll:
+			{56 to: 61}
+		evaluating: [
+			(#_coverageTracker318245_
+				coverAll:
+					{51 to: 54}
+				byLiteralOrPseudoVariable: self) error:
+				(#_coverageTracker318245_
+					coverAll:
+						{74 to: 119}
+					evaluating: [
+						(#_coverageTracker318245_
+							coverAll:
+								{68 to: 72}
+							evaluating: [
+								(#_coverageTracker318245_
+									coverAll:
+										{63 to: 66}
+									byLiteralOrPseudoVariable: self) class ]) canNotImportAddressWithoutCustomerErrorMessage ]) ].! !
+!Behavior method!
+canNotImportAddressWithoutCustomerErrorMessage
+	#_coverageTracker318507_ markAsExecuted.
+	^ #_coverageTracker318507_
+		coverAll:
+			{52 to: 95}
+		byLiteralOrPseudoVariable: 'Must have a customer to import address to!!'.! !
+
+!testRun: #ImportTest #test09ShouldFailImportingAddressWithoutRespectiveCustomer stamp: 'AS 11/17/2022 17:24:37'!
+PASSED!
+!ImportTest methodsFor: 'setUp/tearDown' stamp: 'AS 11/17/2022 18:40:18' prior: 50553204 overrides: 16961394!
+setUp
+	
+	
+	session := DataBaseSession for: (Array with: Address with: Customer).
+	session beginTransaction.
+! !
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/17/2022 18:40:19'!
+PASSED!
+
+!testRun: #ImportTest #test02ShouldFailImportingInvalidRecordType stamp: 'AS 11/17/2022 18:40:19'!
+PASSED!
+
+!testRun: #ImportTest #test03ShouldFailImportingWithRepeatedRecordType stamp: 'AS 11/17/2022 18:40:20'!
+PASSED!
+
+!testRun: #ImportTest #test04ShouldFailImportingWithEmptyRecordType stamp: 'AS 11/17/2022 18:40:20'!
+PASSED!
+
+!testRun: #ImportTest #test05ShouldFailImportingWhenCustomerRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 18:40:20'!
+PASSED!
+
+!testRun: #ImportTest #test06ShouldFailImportingWhenCustomerRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 18:40:20'!
+PASSED!
+
+!testRun: #ImportTest #test07ShouldFailImportingWhenAddressRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 18:40:20'!
+PASSED!
+
+!testRun: #ImportTest #test08ShouldFailImportingWhenAddressRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 18:40:20'!
+PASSED!
+
+!testRun: #ImportTest #test09ShouldFailImportingAddressWithoutRespectiveCustomer stamp: 'AS 11/17/2022 18:40:21'!
+PASSED!
+
+!classDefinition: #ImportTest category: 'CustomerImporter' stamp: 'AS 11/17/2022 18:40:40'!
+TestCase subclass: #ImportTest
+	instanceVariableNames: 'session system'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CustomerImporter'!
+
+!classDefinition: #PersistentCustomerSystem category: 'CustomerImporter' stamp: 'AS 11/17/2022 18:40:44'!
+Object subclass: #PersistentCustomerSystem
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CustomerImporter'!
+!ImportTest methodsFor: 'setUp/tearDown' stamp: 'AS 11/17/2022 18:40:33' prior: 50555036 overrides: 16961394!
+setUp
+	
+	system := PersistentCustomerSystem new.
+	session := DataBaseSession for: (Array with: Address with: Customer).
+	session beginTransaction.
+! !
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/17/2022 18:40:46'!
+PASSED!
+
+!testRun: #ImportTest #test02ShouldFailImportingInvalidRecordType stamp: 'AS 11/17/2022 18:40:47'!
+PASSED!
+
+!testRun: #ImportTest #test03ShouldFailImportingWithRepeatedRecordType stamp: 'AS 11/17/2022 18:40:47'!
+PASSED!
+
+!testRun: #ImportTest #test04ShouldFailImportingWithEmptyRecordType stamp: 'AS 11/17/2022 18:40:47'!
+PASSED!
+
+!testRun: #ImportTest #test05ShouldFailImportingWhenCustomerRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 18:40:47'!
+PASSED!
+
+!testRun: #ImportTest #test06ShouldFailImportingWhenCustomerRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 18:40:47'!
+PASSED!
+
+!testRun: #ImportTest #test07ShouldFailImportingWhenAddressRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 18:40:47'!
+PASSED!
+
+!testRun: #ImportTest #test08ShouldFailImportingWhenAddressRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 18:40:48'!
+PASSED!
+
+!testRun: #ImportTest #test09ShouldFailImportingAddressWithoutRespectiveCustomer stamp: 'AS 11/17/2022 18:40:48'!
+PASSED!
+
+!classDefinition: #PersistentCustomerSystem category: 'CustomerImporter' stamp: 'AS 11/17/2022 18:41:23'!
+Object subclass: #PersistentCustomerSystem
+	instanceVariableNames: 'session'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CustomerImporter'!
+!PersistentCustomerSystem methodsFor: 'nil' stamp: 'AS 11/17/2022 18:41:22'!
+session
+
+	^session! !
+!ImportTest methodsFor: 'setUp/tearDown' stamp: 'AS 11/17/2022 18:41:39' prior: 50555092 overrides: 16961394!
+setUp
+	
+	system := PersistentCustomerSystem new.
+	session := system session.
+	session beginTransaction.
+! !
+!PersistentCustomerSystem methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 18:42:19'!
+start
+
+	session := DataBaseSession for: (Array with: Address with: Customer).! !
+!ImportTest methodsFor: 'setUp/tearDown' stamp: 'AS 11/17/2022 18:42:30' prior: 50555146 overrides: 16961394!
+setUp
+	
+	system := PersistentCustomerSystem new.
+	system start.
+	session := system session.
+	session beginTransaction.
+! !
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/17/2022 18:42:32'!
+PASSED!
+
+!testRun: #ImportTest #test02ShouldFailImportingInvalidRecordType stamp: 'AS 11/17/2022 18:42:32'!
+PASSED!
+
+!testRun: #ImportTest #test03ShouldFailImportingWithRepeatedRecordType stamp: 'AS 11/17/2022 18:42:32'!
+PASSED!
+
+!testRun: #ImportTest #test04ShouldFailImportingWithEmptyRecordType stamp: 'AS 11/17/2022 18:42:32'!
+PASSED!
+
+!testRun: #ImportTest #test05ShouldFailImportingWhenCustomerRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 18:42:33'!
+PASSED!
+
+!testRun: #ImportTest #test06ShouldFailImportingWhenCustomerRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 18:42:33'!
+PASSED!
+
+!testRun: #ImportTest #test07ShouldFailImportingWhenAddressRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 18:42:33'!
+PASSED!
+
+!testRun: #ImportTest #test08ShouldFailImportingWhenAddressRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 18:42:33'!
+PASSED!
+
+!testRun: #ImportTest #test09ShouldFailImportingAddressWithoutRespectiveCustomer stamp: 'AS 11/17/2022 18:42:33'!
+PASSED!
+!ImportTest methodsFor: 'customer' stamp: 'AS 11/17/2022 18:44:41' prior: 50553215!
+customerWithIdentificationType: anIdType number: anIdNumber
+
+	^system customerWithIdentificationType: anIdType number: anIdNumber.
+	! !
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/17/2022 18:44:53'!
+ERROR!
+
+!testRun: #ImportTest #test02ShouldFailImportingInvalidRecordType stamp: 'AS 11/17/2022 18:44:53'!
+PASSED!
+
+!testRun: #ImportTest #test03ShouldFailImportingWithRepeatedRecordType stamp: 'AS 11/17/2022 18:44:53'!
+PASSED!
+
+!testRun: #ImportTest #test04ShouldFailImportingWithEmptyRecordType stamp: 'AS 11/17/2022 18:44:53'!
+PASSED!
+
+!testRun: #ImportTest #test05ShouldFailImportingWhenCustomerRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 18:44:53'!
+PASSED!
+
+!testRun: #ImportTest #test06ShouldFailImportingWhenCustomerRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 18:44:53'!
+PASSED!
+
+!testRun: #ImportTest #test07ShouldFailImportingWhenAddressRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 18:44:54'!
+PASSED!
+
+!testRun: #ImportTest #test08ShouldFailImportingWhenAddressRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 18:44:54'!
+PASSED!
+
+!testRun: #ImportTest #test09ShouldFailImportingAddressWithoutRespectiveCustomer stamp: 'AS 11/17/2022 18:44:54'!
+PASSED!
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/17/2022 18:44:55'!
+ERROR!
+!PersistentCustomerSystem methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 18:45:27'!
+customerWithIdentificationType: aString number: aString2 
+	self shouldBeImplemented.! !
+!PersistentCustomerSystem methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 18:46:07' prior: 50555242!
+customerWithIdentificationType: anIdType number: anIdNumber
+
+	^(session
+		select: [ :aCustomer | aCustomer identificationType = anIdType and: [ aCustomer identificationNumber = anIdNumber ]]
+		ofType: Customer) anyOne! !
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/17/2022 18:46:09'!
+PASSED!
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/17/2022 18:49:00'!
+PASSED!
+
+!testRun: #ImportTest #test02ShouldFailImportingInvalidRecordType stamp: 'AS 11/17/2022 18:49:00'!
+PASSED!
+
+!testRun: #ImportTest #test03ShouldFailImportingWithRepeatedRecordType stamp: 'AS 11/17/2022 18:49:00'!
+PASSED!
+
+!testRun: #ImportTest #test04ShouldFailImportingWithEmptyRecordType stamp: 'AS 11/17/2022 18:49:00'!
+PASSED!
+
+!testRun: #ImportTest #test05ShouldFailImportingWhenCustomerRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 18:49:00'!
+PASSED!
+
+!testRun: #ImportTest #test06ShouldFailImportingWhenCustomerRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 18:49:01'!
+PASSED!
+
+!testRun: #ImportTest #test07ShouldFailImportingWhenAddressRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 18:49:01'!
+PASSED!
+
+!testRun: #ImportTest #test08ShouldFailImportingWhenAddressRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 18:49:01'!
+PASSED!
+
+!testRun: #ImportTest #test09ShouldFailImportingAddressWithoutRespectiveCustomer stamp: 'AS 11/17/2022 18:49:01'!
+PASSED!
+!ImportTest methodsFor: 'assertions' stamp: 'AS 11/17/2022 18:57:35' prior: 50553169!
+assertImportedRightNumberOfCustomers
+
+	^ self assert: 2 equals: (system session selectAllOfType: Customer) size! !
+!ImportTest methodsFor: 'assertions' stamp: 'AS 11/17/2022 18:57:40' prior: 50553819!
+assertNoAddressWasImported
+
+	^ self assert: 0 equals: (system session selectAllOfType: Address ) size! !
+!ImportTest methodsFor: 'assertions' stamp: 'AS 11/17/2022 18:57:43' prior: 50553684!
+assertNoCustomerWasImported
+
+	^ self assert: 0 equals: (system session selectAllOfType: Customer) size! !
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/17/2022 18:58:35' prior: 50552994!
+test01Import
+
+	CustomerImporter valueFrom: self validImportData into: system session..
+
+	self assertImportedRightNumberOfCustomers.
+	self assertPepeSanchezWasImportedCorrecty.
+	self assertJuanPerezWasImportedCorrectly ! !
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/17/2022 18:58:49' prior: 50553706!
+test02ShouldFailImportingInvalidRecordType
+
+	self should: [(CustomerImporter from: self invalidData into: system session) value ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: CustomerImporter invalidRecordTypeErrorMessage equals: anError messageText.
+							   self assertNoCustomerWasImported].! !
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/17/2022 18:58:53' prior: 50553766!
+test03ShouldFailImportingWithRepeatedRecordType
+
+	self should: [(CustomerImporter from: self repeatedRecordTypeData into: system session) value ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: CustomerImporter invalidRecordTypeErrorMessage equals: anError messageText.
+							   self assertNoCustomerWasImported].! !
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/17/2022 18:58:55' prior: 50553752!
+test04ShouldFailImportingWithEmptyRecordType
+
+	self should: [(CustomerImporter from: self emptyRecordData into: system session) value ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: CustomerImporter invalidEmptyRecordErrorMessage equals: anError messageText.
+							   self assertNoCustomerWasImported].! !
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/17/2022 18:59:00' prior: 50553736!
+test05ShouldFailImportingWhenCustomerRecordSizeIsSmallerThanExpected
+
+	self should: [(CustomerImporter from: self smallerThanExpectedCustomerRecordSizeData into: system session) value ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: CustomerImporter differentThanExpectedCustomerRecordSizeErrorMessage equals: anError messageText.
+							   self assertNoCustomerWasImported].! !
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/17/2022 18:59:03' prior: 50553690!
+test06ShouldFailImportingWhenCustomerRecordSizeIsBiggerThanExpected
+
+	self should: [(CustomerImporter from: self biggerThanExpectedCustomerRecordSizeData into: system session) value ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: CustomerImporter differentThanExpectedCustomerRecordSizeErrorMessage equals: anError messageText.
+							   self assertNoCustomerWasImported].! !
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/17/2022 18:59:07' prior: 50553841!
+test07ShouldFailImportingWhenAddressRecordSizeIsSmallerThanExpected
+
+	self should: [(CustomerImporter from: self smallerThanExpectedAddressRecordSizeData into: system session) value ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: CustomerImporter differentThanExpectedAddressRecordSizeErrorMessage equals: anError messageText.
+							self assertNoAddressWasImported.   
+							self assert: 1 equals: (session selectAllOfType: Customer) size.].! !
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/17/2022 18:59:11' prior: 50553859!
+test08ShouldFailImportingWhenAddressRecordSizeIsBiggerThanExpected
+
+	self should: [(CustomerImporter from: self biggerThanExpectedAddressRecordSizeData into: system session) value ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: CustomerImporter differentThanExpectedAddressRecordSizeErrorMessage equals: anError messageText.
+							self assertNoAddressWasImported.   
+							self assert: 1 equals: (session selectAllOfType: Customer) size.].! !
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/17/2022 18:59:17' prior: 50553825!
+test09ShouldFailImportingAddressWithoutRespectiveCustomer
+
+	self should: [(CustomerImporter from: self addressRecordWithoutCustomerData into: system session) value ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: CustomerImporter canNotImportAddressWithoutCustomerErrorMessage equals: anError messageText.
+							self assertNoAddressWasImported.   
+							self assertNoCustomerWasImported.].! !
+!ImportTest methodsFor: 'setUp/tearDown' stamp: 'AS 11/17/2022 19:02:23' prior: 50555159 overrides: 16961394!
+setUp
+	
+	system := PersistentCustomerSystem new.
+	system start.
+	session beginTransaction.
+! !
+!ImportTest methodsFor: 'setUp/tearDown' stamp: 'AS 11/17/2022 19:02:27' prior: 50555451 overrides: 16961394!
+setUp
+	
+	system := PersistentCustomerSystem new.
+	system start.
+	system beginTransaction.
+! !
+!PersistentCustomerSystem methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:02:41'!
+beginTransaction
+
+	session beginTransaction ! !
+!ImportTest methodsFor: 'setUp/tearDown' stamp: 'AS 11/17/2022 19:03:01' prior: 50553211 overrides: 16961402!
+tearDown
+
+	system stop.
+	session close.
+	! !
+!PersistentCustomerSystem methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:03:08'!
+stop
+
+	session commit! !
+!ImportTest methodsFor: 'setUp/tearDown' stamp: 'AS 11/17/2022 19:03:30' prior: 50555469 overrides: 16961402!
+tearDown
+
+	system stop.! !
+!PersistentCustomerSystem methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:03:36' prior: 50555474!
+stop
+
+	session commit.
+	session close! !
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/17/2022 19:04:02' prior: 50555398!
+test07ShouldFailImportingWhenAddressRecordSizeIsSmallerThanExpected
+
+	self should: [(CustomerImporter from: self smallerThanExpectedAddressRecordSizeData into: system session) value ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: CustomerImporter differentThanExpectedAddressRecordSizeErrorMessage equals: anError messageText.
+							self assertNoAddressWasImported.   
+							self assert: 1 equals: (system session selectAllOfType: Customer) size.].! !
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/17/2022 19:04:06' prior: 50555416!
+test08ShouldFailImportingWhenAddressRecordSizeIsBiggerThanExpected
+
+	self should: [(CustomerImporter from: self biggerThanExpectedAddressRecordSizeData into: system session) value ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: CustomerImporter differentThanExpectedAddressRecordSizeErrorMessage equals: anError messageText.
+							self assertNoAddressWasImported.   
+							self assert: 1 equals: (system session selectAllOfType: Customer) size.].! !
+
+!classDefinition: #ImportTest category: 'CustomerImporter' stamp: 'AS 11/17/2022 19:04:11'!
+TestCase subclass: #ImportTest
+	instanceVariableNames: 'system'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CustomerImporter'!
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/17/2022 19:04:43'!
+PASSED!
+
+!testRun: #ImportTest #test02ShouldFailImportingInvalidRecordType stamp: 'AS 11/17/2022 19:04:43'!
+PASSED!
+
+!testRun: #ImportTest #test03ShouldFailImportingWithRepeatedRecordType stamp: 'AS 11/17/2022 19:04:44'!
+PASSED!
+
+!testRun: #ImportTest #test04ShouldFailImportingWithEmptyRecordType stamp: 'AS 11/17/2022 19:04:44'!
+PASSED!
+
+!testRun: #ImportTest #test05ShouldFailImportingWhenCustomerRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:04:44'!
+PASSED!
+
+!testRun: #ImportTest #test06ShouldFailImportingWhenCustomerRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:04:44'!
+PASSED!
+
+!testRun: #ImportTest #test07ShouldFailImportingWhenAddressRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:04:44'!
+PASSED!
+
+!testRun: #ImportTest #test08ShouldFailImportingWhenAddressRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:04:45'!
+PASSED!
+
+!testRun: #ImportTest #test09ShouldFailImportingAddressWithoutRespectiveCustomer stamp: 'AS 11/17/2022 19:04:45'!
+PASSED!
+
+----SNAPSHOT----(17 November 2022 19:04:53) CuisUniversity-5481.image priorSource: 7081235!
+!ImportTest methodsFor: 'assertions' stamp: 'AS 11/17/2022 19:08:14' prior: 50555295!
+assertImportedRightNumberOfCustomers
+
+	^ self assert: 2 equals: (system numberOfCustomers) size! !
+!ImportTest methodsFor: 'assertions' stamp: 'AS 11/17/2022 19:08:20' prior: 50555568!
+assertImportedRightNumberOfCustomers
+
+	^ self assert: 2 equals: system numberOfCustomers size! !
+!PersistentCustomerSystem methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:08:40'!
+numberOfCustomers
+
+	^session selectAllOfType: Customer! !
+!PersistentCustomerSystem methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:09:14'!
+numberOfAddresses
+
+	^session selectAllOfType: Address! !
+!ImportTest methodsFor: 'assertions' stamp: 'AS 11/17/2022 19:09:25' prior: 50555302!
+assertNoAddressWasImported
+
+	^ self assert: 0 equals: system numberOfAddresses size! !
+!ImportTest methodsFor: 'assertions' stamp: 'AS 11/17/2022 19:09:47' prior: 50555308!
+assertNoCustomerWasImported
+
+	^ self assert: 0 equals: system numberOfCustomers size! !
+
+----SNAPSHOT----(17 November 2022 19:10:18) CuisUniversity-5481.image priorSource: 7165242!
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/17/2022 19:10:29'!
+PASSED!
+
+!testRun: #ImportTest #test02ShouldFailImportingInvalidRecordType stamp: 'AS 11/17/2022 19:10:29'!
+PASSED!
+
+!testRun: #ImportTest #test03ShouldFailImportingWithRepeatedRecordType stamp: 'AS 11/17/2022 19:10:29'!
+PASSED!
+
+!testRun: #ImportTest #test04ShouldFailImportingWithEmptyRecordType stamp: 'AS 11/17/2022 19:10:30'!
+PASSED!
+
+!testRun: #ImportTest #test05ShouldFailImportingWhenCustomerRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:10:30'!
+PASSED!
+
+!testRun: #ImportTest #test06ShouldFailImportingWhenCustomerRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:10:30'!
+PASSED!
+
+!testRun: #ImportTest #test07ShouldFailImportingWhenAddressRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:10:30'!
+PASSED!
+
+!testRun: #ImportTest #test08ShouldFailImportingWhenAddressRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:10:30'!
+PASSED!
+
+!testRun: #ImportTest #test09ShouldFailImportingAddressWithoutRespectiveCustomer stamp: 'AS 11/17/2022 19:10:31'!
+PASSED!
+!CustomerImporter class methodsFor: 'importing' stamp: 'AS 11/17/2022 19:11:22'!
+valueFrom: aReadStream into: aSession using: aSystem 
+
+	^(self from: aReadStream into: aSession) value! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:11:22' prior: 50555314!
+test01Import
+
+	CustomerImporter valueFrom: self validImportData into: system session using: system..
+
+	self assertImportedRightNumberOfCustomers.
+	self assertPepeSanchezWasImportedCorrecty.
+	self assertJuanPerezWasImportedCorrectly ! !
+
+!methodRemoval: CustomerImporter class #valueFrom:into: stamp: 'AS 11/17/2022 19:11:22'!
+valueFrom: aReadStream into: aSession
+
+	^(self from: aReadStream into: aSession) value!
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/17/2022 19:13:10'!
+PASSED!
+
+!testRun: #ImportTest #test02ShouldFailImportingInvalidRecordType stamp: 'AS 11/17/2022 19:13:10'!
+PASSED!
+
+!testRun: #ImportTest #test03ShouldFailImportingWithRepeatedRecordType stamp: 'AS 11/17/2022 19:13:10'!
+PASSED!
+
+!testRun: #ImportTest #test04ShouldFailImportingWithEmptyRecordType stamp: 'AS 11/17/2022 19:13:10'!
+PASSED!
+
+!testRun: #ImportTest #test05ShouldFailImportingWhenCustomerRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:13:11'!
+PASSED!
+
+!testRun: #ImportTest #test06ShouldFailImportingWhenCustomerRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:13:11'!
+PASSED!
+
+!testRun: #ImportTest #test07ShouldFailImportingWhenAddressRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:13:11'!
+PASSED!
+
+!testRun: #ImportTest #test08ShouldFailImportingWhenAddressRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:13:11'!
+PASSED!
+
+!testRun: #ImportTest #test09ShouldFailImportingAddressWithoutRespectiveCustomer stamp: 'AS 11/17/2022 19:13:11'!
+PASSED!
+!CustomerImporter class methodsFor: 'instance creation' stamp: 'AS 11/17/2022 19:14:23'!
+from: aReadStream into: aSession using: aSystem 
+	^self new initializeFrom: aReadStream into: aSession! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:14:23' prior: 50555506!
+test08ShouldFailImportingWhenAddressRecordSizeIsBiggerThanExpected
+
+	self should: [(CustomerImporter from: self biggerThanExpectedAddressRecordSizeData into: system session using: system) value ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: CustomerImporter differentThanExpectedAddressRecordSizeErrorMessage equals: anError messageText.
+							self assertNoAddressWasImported.   
+							self assert: 1 equals: (system session selectAllOfType: Customer) size.].! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:14:23' prior: 50555488!
+test07ShouldFailImportingWhenAddressRecordSizeIsSmallerThanExpected
+
+	self should: [(CustomerImporter from: self smallerThanExpectedAddressRecordSizeData into: system session using: system) value ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: CustomerImporter differentThanExpectedAddressRecordSizeErrorMessage equals: anError messageText.
+							self assertNoAddressWasImported.   
+							self assert: 1 equals: (system session selectAllOfType: Customer) size.].! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:14:23' prior: 50555338!
+test03ShouldFailImportingWithRepeatedRecordType
+
+	self should: [(CustomerImporter from: self repeatedRecordTypeData into: system session using: system) value ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: CustomerImporter invalidRecordTypeErrorMessage equals: anError messageText.
+							   self assertNoCustomerWasImported].! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:14:23' prior: 50555382!
+test06ShouldFailImportingWhenCustomerRecordSizeIsBiggerThanExpected
+
+	self should: [(CustomerImporter from: self biggerThanExpectedCustomerRecordSizeData into: system session using: system) value ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: CustomerImporter differentThanExpectedCustomerRecordSizeErrorMessage equals: anError messageText.
+							   self assertNoCustomerWasImported].! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:14:23' prior: 50555352!
+test04ShouldFailImportingWithEmptyRecordType
+
+	self should: [(CustomerImporter from: self emptyRecordData into: system session using: system) value ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: CustomerImporter invalidEmptyRecordErrorMessage equals: anError messageText.
+							   self assertNoCustomerWasImported].! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:14:23' prior: 50555434!
+test09ShouldFailImportingAddressWithoutRespectiveCustomer
+
+	self should: [(CustomerImporter from: self addressRecordWithoutCustomerData into: system session using: system) value ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: CustomerImporter canNotImportAddressWithoutCustomerErrorMessage equals: anError messageText.
+							self assertNoAddressWasImported.   
+							self assertNoCustomerWasImported.].! !
+!CustomerImporter class methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:14:23' prior: 50555638!
+valueFrom: aReadStream into: aSession using: aSystem 
+
+	^(self from: aReadStream into: aSession using: system) value! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:14:23' prior: 50555366!
+test05ShouldFailImportingWhenCustomerRecordSizeIsSmallerThanExpected
+
+	self should: [(CustomerImporter from: self smallerThanExpectedCustomerRecordSizeData into: system session using: system) value ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: CustomerImporter differentThanExpectedCustomerRecordSizeErrorMessage equals: anError messageText.
+							   self assertNoCustomerWasImported].! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:14:23' prior: 50555324!
+test02ShouldFailImportingInvalidRecordType
+
+	self should: [(CustomerImporter from: self invalidData into: system session using: system) value ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: CustomerImporter invalidRecordTypeErrorMessage equals: anError messageText.
+							   self assertNoCustomerWasImported].! !
+
+!methodRemoval: CustomerImporter class #from:into: stamp: 'AS 11/17/2022 19:14:23'!
+from: aReadStream into: aSession
+	^self new initializeFrom: aReadStream into: aSession!
+!CustomerImporter methodsFor: 'initialization' stamp: 'AS 11/17/2022 19:14:53'!
+initializeFrom: aReadStream into: aSession using: aSystem 
+	session := aSession.
+	readStream := aReadStream.! !
+!CustomerImporter class methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:14:53' prior: 50555694!
+from: aReadStream into: aSession using: aSystem 
+	^self new initializeFrom: aReadStream into: aSession using: aSystem! !
+
+!methodRemoval: CustomerImporter #initializeFrom:into: stamp: 'AS 11/17/2022 19:14:53'!
+initializeFrom: aReadStream into: aSession
+	session := aSession.
+	readStream := aReadStream.!
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/17/2022 19:14:59'!
+PASSED!
+
+!testRun: #ImportTest #test02ShouldFailImportingInvalidRecordType stamp: 'AS 11/17/2022 19:15:00'!
+PASSED!
+
+!testRun: #ImportTest #test03ShouldFailImportingWithRepeatedRecordType stamp: 'AS 11/17/2022 19:15:00'!
+PASSED!
+
+!testRun: #ImportTest #test04ShouldFailImportingWithEmptyRecordType stamp: 'AS 11/17/2022 19:15:00'!
+PASSED!
+
+!testRun: #ImportTest #test05ShouldFailImportingWhenCustomerRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:15:00'!
+PASSED!
+
+!testRun: #ImportTest #test06ShouldFailImportingWhenCustomerRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:15:00'!
+PASSED!
+
+!testRun: #ImportTest #test07ShouldFailImportingWhenAddressRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:15:00'!
+PASSED!
+
+!testRun: #ImportTest #test08ShouldFailImportingWhenAddressRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:15:01'!
+PASSED!
+
+!testRun: #ImportTest #test09ShouldFailImportingAddressWithoutRespectiveCustomer stamp: 'AS 11/17/2022 19:15:01'!
+PASSED!
+
+!classDefinition: #CustomerImporter category: 'CustomerImporter' stamp: 'AS 11/17/2022 19:15:27'!
+Object subclass: #CustomerImporter
+	instanceVariableNames: 'session readStream record line newCustomer system'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CustomerImporter'!
+!CustomerImporter methodsFor: 'initialization' stamp: 'AS 11/17/2022 19:15:25' prior: 50555847!
+initializeFrom: aReadStream into: aSession using: aSystem 
+	session := aSession.
+	system := aSystem.
+	readStream := aReadStream.! !
+!CustomerImporter methodsFor: 'import' stamp: 'AS 11/17/2022 19:15:55' prior: 50553501!
+importCustomer
+	newCustomer := Customer new.
+	newCustomer firstName: record second.
+	newCustomer lastName: record third.
+	newCustomer identificationType: record fourth.
+	newCustomer identificationNumber: record fifth.
+	system add: newCustomer.! !
+!PersistentCustomerSystem methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:16:10'!
+add: aCustomerToAdd
+
+	session persist: aCustomerToAdd.! !
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/17/2022 19:16:27'!
+ERROR!
+
+!testRun: #ImportTest #test02ShouldFailImportingInvalidRecordType stamp: 'AS 11/17/2022 19:16:27'!
+PASSED!
+
+!testRun: #ImportTest #test03ShouldFailImportingWithRepeatedRecordType stamp: 'AS 11/17/2022 19:16:27'!
+PASSED!
+
+!testRun: #ImportTest #test04ShouldFailImportingWithEmptyRecordType stamp: 'AS 11/17/2022 19:16:27'!
+PASSED!
+
+!testRun: #ImportTest #test05ShouldFailImportingWhenCustomerRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:16:27'!
+PASSED!
+
+!testRun: #ImportTest #test06ShouldFailImportingWhenCustomerRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:16:27'!
+PASSED!
+
+!testRun: #ImportTest #test07ShouldFailImportingWhenAddressRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:16:28'!
+PASSED!
+
+!testRun: #ImportTest #test08ShouldFailImportingWhenAddressRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:16:28'!
+PASSED!
+
+!testRun: #ImportTest #test09ShouldFailImportingAddressWithoutRespectiveCustomer stamp: 'AS 11/17/2022 19:16:28'!
+PASSED!
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/17/2022 19:16:28'!
+ERROR!
+!CustomerImporter class methodsFor: 'importing' stamp: 'AS 11/17/2022 19:17:19' prior: 50555804!
+valueFrom: aReadStream into: aSession using: aSystem 
+
+	^(self from: aReadStream into: aSession using: aSystem) value! !
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/17/2022 19:17:20'!
+ERROR!
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/17/2022 19:17:23'!
+PASSED!
+
+!testRun: #ImportTest #test02ShouldFailImportingInvalidRecordType stamp: 'AS 11/17/2022 19:17:24'!
+PASSED!
+
+!testRun: #ImportTest #test03ShouldFailImportingWithRepeatedRecordType stamp: 'AS 11/17/2022 19:17:24'!
+PASSED!
+
+!testRun: #ImportTest #test04ShouldFailImportingWithEmptyRecordType stamp: 'AS 11/17/2022 19:17:24'!
+PASSED!
+
+!testRun: #ImportTest #test05ShouldFailImportingWhenCustomerRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:17:24'!
+PASSED!
+
+!testRun: #ImportTest #test06ShouldFailImportingWhenCustomerRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:17:24'!
+PASSED!
+
+!testRun: #ImportTest #test07ShouldFailImportingWhenAddressRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:17:24'!
+PASSED!
+
+!testRun: #ImportTest #test08ShouldFailImportingWhenAddressRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:17:25'!
+PASSED!
+
+!testRun: #ImportTest #test09ShouldFailImportingAddressWithoutRespectiveCustomer stamp: 'AS 11/17/2022 19:17:25'!
+PASSED!
+!CustomerImporter methodsFor: 'initialization' stamp: 'AS 11/17/2022 19:18:20' prior: 50555909!
+initializeFrom: aReadStream into: aSession using: aSystem 
+	
+	system := aSystem.
+	readStream := aReadStream.! !
+
+!classDefinition: #CustomerImporter category: 'CustomerImporter' stamp: 'AS 11/17/2022 19:18:23'!
+Object subclass: #CustomerImporter
+	instanceVariableNames: 'readStream record line newCustomer system'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CustomerImporter'!
+!CustomerImporter methodsFor: 'initialization' stamp: 'AS 11/17/2022 19:18:46'!
+initializeFrom: aReadStream using: aSystem 
+	
+	system := aSystem.
+	readStream := aReadStream.! !
+!CustomerImporter class methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:18:46' prior: 50555854!
+from: aReadStream into: aSession using: aSystem 
+	^self new initializeFrom: aReadStream using: aSystem! !
+
+!methodRemoval: CustomerImporter #initializeFrom:into:using: stamp: 'AS 11/17/2022 19:18:46'!
+initializeFrom: aReadStream into: aSession using: aSystem 
+	
+	system := aSystem.
+	readStream := aReadStream.!
+!CustomerImporter class methodsFor: 'instance creation' stamp: 'AS 11/17/2022 19:19:04'!
+from: aReadStream using: aSystem 
+	^self new initializeFrom: aReadStream using: aSystem! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:19:04' prior: 50555701!
+test08ShouldFailImportingWhenAddressRecordSizeIsBiggerThanExpected
+
+	self should: [(CustomerImporter from: self biggerThanExpectedAddressRecordSizeData using: system) value ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: CustomerImporter differentThanExpectedAddressRecordSizeErrorMessage equals: anError messageText.
+							self assertNoAddressWasImported.   
+							self assert: 1 equals: (system session selectAllOfType: Customer) size.].! !
+!CustomerImporter class methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:19:04' prior: 50555968!
+valueFrom: aReadStream into: aSession using: aSystem 
+
+	^(self from: aReadStream using: aSystem) value! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:19:04' prior: 50555720!
+test07ShouldFailImportingWhenAddressRecordSizeIsSmallerThanExpected
+
+	self should: [(CustomerImporter from: self smallerThanExpectedAddressRecordSizeData using: system) value ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: CustomerImporter differentThanExpectedAddressRecordSizeErrorMessage equals: anError messageText.
+							self assertNoAddressWasImported.   
+							self assert: 1 equals: (system session selectAllOfType: Customer) size.].! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:19:04' prior: 50555811!
+test05ShouldFailImportingWhenCustomerRecordSizeIsSmallerThanExpected
+
+	self should: [(CustomerImporter from: self smallerThanExpectedCustomerRecordSizeData using: system) value ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: CustomerImporter differentThanExpectedCustomerRecordSizeErrorMessage equals: anError messageText.
+							   self assertNoCustomerWasImported].! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:19:04' prior: 50555739!
+test03ShouldFailImportingWithRepeatedRecordType
+
+	self should: [(CustomerImporter from: self repeatedRecordTypeData using: system) value ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: CustomerImporter invalidRecordTypeErrorMessage equals: anError messageText.
+							   self assertNoCustomerWasImported].! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:19:04' prior: 50555786!
+test09ShouldFailImportingAddressWithoutRespectiveCustomer
+
+	self should: [(CustomerImporter from: self addressRecordWithoutCustomerData using: system) value ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: CustomerImporter canNotImportAddressWithoutCustomerErrorMessage equals: anError messageText.
+							self assertNoAddressWasImported.   
+							self assertNoCustomerWasImported.].! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:19:04' prior: 50555828!
+test02ShouldFailImportingInvalidRecordType
+
+	self should: [(CustomerImporter from: self invalidData using: system) value ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: CustomerImporter invalidRecordTypeErrorMessage equals: anError messageText.
+							   self assertNoCustomerWasImported].! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:19:04' prior: 50555771!
+test04ShouldFailImportingWithEmptyRecordType
+
+	self should: [(CustomerImporter from: self emptyRecordData using: system) value ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: CustomerImporter invalidEmptyRecordErrorMessage equals: anError messageText.
+							   self assertNoCustomerWasImported].! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:19:04' prior: 50555754!
+test06ShouldFailImportingWhenCustomerRecordSizeIsBiggerThanExpected
+
+	self should: [(CustomerImporter from: self biggerThanExpectedCustomerRecordSizeData using: system) value ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: CustomerImporter differentThanExpectedCustomerRecordSizeErrorMessage equals: anError messageText.
+							   self assertNoCustomerWasImported].! !
+
+!methodRemoval: CustomerImporter class #from:into:using: stamp: 'AS 11/17/2022 19:19:04'!
+from: aReadStream into: aSession using: aSystem 
+	^self new initializeFrom: aReadStream using: aSystem!
+!CustomerImporter class methodsFor: 'importing' stamp: 'AS 11/17/2022 19:19:19'!
+valueFrom: aReadStream using: aSystem 
+
+	^(self from: aReadStream using: aSystem) value! !
+!ImportTest methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:19:19' prior: 50555645!
+test01Import
+
+	CustomerImporter valueFrom: self validImportData using: system..
+
+	self assertImportedRightNumberOfCustomers.
+	self assertPepeSanchezWasImportedCorrecty.
+	self assertJuanPerezWasImportedCorrectly ! !
+
+!methodRemoval: CustomerImporter class #valueFrom:into:using: stamp: 'AS 11/17/2022 19:19:19'!
+valueFrom: aReadStream into: aSession using: aSystem 
+
+	^(self from: aReadStream using: aSystem) value!
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/17/2022 19:19:22'!
+PASSED!
+
+!testRun: #ImportTest #test02ShouldFailImportingInvalidRecordType stamp: 'AS 11/17/2022 19:19:22'!
+PASSED!
+
+!testRun: #ImportTest #test03ShouldFailImportingWithRepeatedRecordType stamp: 'AS 11/17/2022 19:19:22'!
+PASSED!
+
+!testRun: #ImportTest #test04ShouldFailImportingWithEmptyRecordType stamp: 'AS 11/17/2022 19:19:22'!
+PASSED!
+
+!testRun: #ImportTest #test05ShouldFailImportingWhenCustomerRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:19:22'!
+PASSED!
+
+!testRun: #ImportTest #test06ShouldFailImportingWhenCustomerRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:19:23'!
+PASSED!
+
+!testRun: #ImportTest #test07ShouldFailImportingWhenAddressRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:19:23'!
+PASSED!
+
+!testRun: #ImportTest #test08ShouldFailImportingWhenAddressRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:19:23'!
+PASSED!
+
+!testRun: #ImportTest #test09ShouldFailImportingAddressWithoutRespectiveCustomer stamp: 'AS 11/17/2022 19:19:23'!
+PASSED!
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/17/2022 19:19:46' prior: 50556078!
+test07ShouldFailImportingWhenAddressRecordSizeIsSmallerThanExpected
+
+	self should: [(CustomerImporter from: self smallerThanExpectedAddressRecordSizeData using: system) value ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: CustomerImporter differentThanExpectedAddressRecordSizeErrorMessage equals: anError messageText.
+							self assertNoAddressWasImported.   
+							self assert: 1 equals:  system numberOfCustomers size.].! !
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/17/2022 19:19:52' prior: 50556052!
+test08ShouldFailImportingWhenAddressRecordSizeIsBiggerThanExpected
+
+	self should: [(CustomerImporter from: self biggerThanExpectedAddressRecordSizeData using: system) value ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: CustomerImporter differentThanExpectedAddressRecordSizeErrorMessage equals: anError messageText.
+							self assertNoAddressWasImported.   
+							self assert: 1 equals: system numberOfCustomers size.].! !
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/17/2022 19:19:55'!
+PASSED!
+
+!testRun: #ImportTest #test02ShouldFailImportingInvalidRecordType stamp: 'AS 11/17/2022 19:19:55'!
+PASSED!
+
+!testRun: #ImportTest #test03ShouldFailImportingWithRepeatedRecordType stamp: 'AS 11/17/2022 19:19:56'!
+PASSED!
+
+!testRun: #ImportTest #test04ShouldFailImportingWithEmptyRecordType stamp: 'AS 11/17/2022 19:19:56'!
+PASSED!
+
+!testRun: #ImportTest #test05ShouldFailImportingWhenCustomerRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:19:56'!
+PASSED!
+
+!testRun: #ImportTest #test06ShouldFailImportingWhenCustomerRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:19:56'!
+PASSED!
+
+!testRun: #ImportTest #test07ShouldFailImportingWhenAddressRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:19:56'!
+PASSED!
+
+!testRun: #ImportTest #test08ShouldFailImportingWhenAddressRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:19:56'!
+PASSED!
+
+!testRun: #ImportTest #test09ShouldFailImportingAddressWithoutRespectiveCustomer stamp: 'AS 11/17/2022 19:19:57'!
+PASSED!
+
+!methodRemoval: PersistentCustomerSystem #session stamp: 'AS 11/17/2022 19:20:22'!
+session
+
+	^session!
+
+----SNAPSHOT----(17 November 2022 19:21:18) CuisUniversity-5481.image priorSource: 7166423!
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/17/2022 19:22:19'!
+PASSED!
+
+!testRun: #ImportTest #test02ShouldFailImportingInvalidRecordType stamp: 'AS 11/17/2022 19:22:19'!
+PASSED!
+
+!testRun: #ImportTest #test03ShouldFailImportingWithRepeatedRecordType stamp: 'AS 11/17/2022 19:22:20'!
+PASSED!
+
+!testRun: #ImportTest #test04ShouldFailImportingWithEmptyRecordType stamp: 'AS 11/17/2022 19:22:20'!
+PASSED!
+
+!testRun: #ImportTest #test05ShouldFailImportingWhenCustomerRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:22:20'!
+PASSED!
+
+!testRun: #ImportTest #test06ShouldFailImportingWhenCustomerRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:22:20'!
+PASSED!
+
+!testRun: #ImportTest #test07ShouldFailImportingWhenAddressRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:22:20'!
+PASSED!
+
+!testRun: #ImportTest #test08ShouldFailImportingWhenAddressRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:22:20'!
+PASSED!
+
+!testRun: #ImportTest #test09ShouldFailImportingAddressWithoutRespectiveCustomer stamp: 'AS 11/17/2022 19:22:21'!
+PASSED!
+
+!classDefinition: #CustomerSystem category: 'CustomerImporter' stamp: 'AS 11/17/2022 19:22:30'!
+Object subclass: #CustomerSystem
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CustomerImporter'!
+
+!classDefinition: #PersistentCustomerSystem category: 'CustomerImporter' stamp: 'AS 11/17/2022 19:22:30'!
+CustomerSystem subclass: #PersistentCustomerSystem
+	instanceVariableNames: 'session'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CustomerImporter'!
+!CustomerSystem methodsFor: 'nil' stamp: 'AS 11/17/2022 19:23:03'!
+add: aCustomerToAdd
+	
+	self subclassResponsibility.! !
+!CustomerSystem methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:24:20'!
+beginTransaction	
+	self subclassResponsibility.! !
+!PersistentCustomerSystem methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:25:51'!
+commit
+
+	session commit.! !
+!PersistentCustomerSystem methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:26:17' prior: 50555484!
+stop
+
+	session close! !
+!ImportTest methodsFor: 'setUp/tearDown' stamp: 'AS 11/17/2022 19:26:29' prior: 50555479 overrides: 16961402!
+tearDown
+
+	system commit.
+	system stop.! !
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/17/2022 19:26:31'!
+PASSED!
+
+!testRun: #ImportTest #test02ShouldFailImportingInvalidRecordType stamp: 'AS 11/17/2022 19:26:31'!
+PASSED!
+
+!testRun: #ImportTest #test03ShouldFailImportingWithRepeatedRecordType stamp: 'AS 11/17/2022 19:26:31'!
+PASSED!
+
+!testRun: #ImportTest #test04ShouldFailImportingWithEmptyRecordType stamp: 'AS 11/17/2022 19:26:31'!
+PASSED!
+
+!testRun: #ImportTest #test05ShouldFailImportingWhenCustomerRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:26:32'!
+PASSED!
+
+!testRun: #ImportTest #test06ShouldFailImportingWhenCustomerRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:26:32'!
+PASSED!
+
+!testRun: #ImportTest #test07ShouldFailImportingWhenAddressRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:26:32'!
+PASSED!
+
+!testRun: #ImportTest #test08ShouldFailImportingWhenAddressRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:26:32'!
+PASSED!
+
+!testRun: #ImportTest #test09ShouldFailImportingAddressWithoutRespectiveCustomer stamp: 'AS 11/17/2022 19:26:32'!
+PASSED!
+!CustomerSystem methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:27:05'!
+commit	
+	self subclassResponsibility.! !
+!CustomerSystem methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:27:28'!
+customerWithIdentificationType: anIdType number: anIdNumber	
+	self subclassResponsibility.! !
+!CustomerSystem methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:27:38'!
+numberOfAddresses
+	self subclassResponsibility.! !
+!CustomerSystem methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:27:41'!
+numberOfCustomers
+	self subclassResponsibility.! !
+!CustomerSystem methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:27:46'!
+start
+	self subclassResponsibility.! !
+!CustomerSystem methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:27:49'!
+stop
+	self subclassResponsibility.! !
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/17/2022 19:27:59'!
+PASSED!
+
+!testRun: #ImportTest #test02ShouldFailImportingInvalidRecordType stamp: 'AS 11/17/2022 19:27:59'!
+PASSED!
+
+!testRun: #ImportTest #test03ShouldFailImportingWithRepeatedRecordType stamp: 'AS 11/17/2022 19:27:59'!
+PASSED!
+
+!testRun: #ImportTest #test04ShouldFailImportingWithEmptyRecordType stamp: 'AS 11/17/2022 19:27:59'!
+PASSED!
+
+!testRun: #ImportTest #test05ShouldFailImportingWhenCustomerRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:28:00'!
+PASSED!
+
+!testRun: #ImportTest #test06ShouldFailImportingWhenCustomerRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:28:00'!
+PASSED!
+
+!testRun: #ImportTest #test07ShouldFailImportingWhenAddressRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:28:00'!
+PASSED!
+
+!testRun: #ImportTest #test08ShouldFailImportingWhenAddressRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:28:00'!
+PASSED!
+
+!testRun: #ImportTest #test09ShouldFailImportingAddressWithoutRespectiveCustomer stamp: 'AS 11/17/2022 19:28:00'!
+PASSED!
+
+!classDefinition: #TransientCustomerSystem category: 'CustomerImporter' stamp: 'AS 11/17/2022 19:28:29'!
+CustomerSystem subclass: #TransientCustomerSystem
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CustomerImporter'!
+!ImportTest methodsFor: 'setUp/tearDown' stamp: 'AS 11/17/2022 19:28:19' prior: 50555458 overrides: 16961394!
+setUp
+	
+	system := TransientCustomerSystem new.
+	system start.
+	system beginTransaction.
+! !
+!TransientCustomerSystem methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:28:39' overrides: 50556450!
+start
+	self shouldBeImplemented.! !
+
+!classDefinition: #TransientCustomerSystem category: 'CustomerImporter' stamp: 'AS 11/17/2022 19:28:50'!
+CustomerSystem subclass: #TransientCustomerSystem
+	instanceVariableNames: 'customers'
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CustomerImporter'!
+!TransientCustomerSystem methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:28:48' prior: 50556507 overrides: 50556450!
+start
+	
+	customers := OrderedCollection new.! !
+!TransientCustomerSystem methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:28:56' overrides: 50556377!
+beginTransaction
+	self shouldBeImplemented.! !
+!TransientCustomerSystem methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:28:59' prior: 50556526 overrides: 50556377!
+beginTransaction
+	
+	! !
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/17/2022 19:29:00'!
+ERROR!
+!TransientCustomerSystem methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:29:05' overrides: 50556372!
+add: aCustomer 
+	self shouldBeImplemented.! !
+!TransientCustomerSystem methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:29:11' prior: 50556539 overrides: 50556372!
+add: aCustomer 
+	
+	customers add: aCustomer ! !
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/17/2022 19:29:12'!
+ERROR!
+!TransientCustomerSystem methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:29:21' overrides: 50556445!
+numberOfCustomers
+	self shouldBeImplemented.! !
+!TransientCustomerSystem methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:29:28' prior: 50556553 overrides: 50556445!
+numberOfCustomers
+	
+	customers size.! !
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/17/2022 19:29:31'!
+ERROR!
+!TransientCustomerSystem methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:30:07' prior: 50556559 overrides: 50556445!
+numberOfCustomers
+	
+	^customers size.! !
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/17/2022 19:30:15'!
+ERROR!
+
+!testRun: #ImportTest #test02ShouldFailImportingInvalidRecordType stamp: 'AS 11/17/2022 19:30:15'!
+ERROR!
+
+!testRun: #ImportTest #test03ShouldFailImportingWithRepeatedRecordType stamp: 'AS 11/17/2022 19:30:15'!
+ERROR!
+
+!testRun: #ImportTest #test04ShouldFailImportingWithEmptyRecordType stamp: 'AS 11/17/2022 19:30:15'!
+ERROR!
+
+!testRun: #ImportTest #test05ShouldFailImportingWhenCustomerRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:30:15'!
+ERROR!
+
+!testRun: #ImportTest #test06ShouldFailImportingWhenCustomerRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:30:15'!
+ERROR!
+
+!testRun: #ImportTest #test07ShouldFailImportingWhenAddressRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:30:15'!
+ERROR!
+
+!testRun: #ImportTest #test08ShouldFailImportingWhenAddressRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:30:15'!
+ERROR!
+
+!testRun: #ImportTest #test09ShouldFailImportingAddressWithoutRespectiveCustomer stamp: 'AS 11/17/2022 19:30:15'!
+ERROR!
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/17/2022 19:30:17'!
+ERROR!
+!ImportTest methodsFor: 'assertions' stamp: 'AS 11/17/2022 19:30:39' prior: 50555574!
+assertImportedRightNumberOfCustomers
+
+	^ self assert: 2 equals: system numberOfCustomers! !
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/17/2022 19:30:40'!
+ERROR!
+!TransientCustomerSystem methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:30:55' overrides: 50556434!
+customerWithIdentificationType: aString number: aString2 
+	self shouldBeImplemented.! !
+!TransientCustomerSystem methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:31:47' prior: 50556616 overrides: 50556434!
+customerWithIdentificationType: anIdType number: anIdNumber	
+
+	^customers detect: [ :aCustomer | aCustomer identificationType = anIdType and: [ aCustomer identificationNumber = anIdNumber ]].! !
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/17/2022 19:31:48'!
+PASSED!
+!TransientCustomerSystem methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:31:55' overrides: 50556430!
+commit
+	self shouldBeImplemented.! !
+!TransientCustomerSystem methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:31:58' prior: 50556636 overrides: 50556430!
+commit
+	! !
+!TransientCustomerSystem methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:32:04' overrides: 50556454!
+stop
+	self shouldBeImplemented.! !
+!TransientCustomerSystem methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:32:10' prior: 50556646 overrides: 50556454!
+stop
+	customers := nil! !
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/17/2022 19:32:19'!
+PASSED!
+
+!testRun: #ImportTest #test02ShouldFailImportingInvalidRecordType stamp: 'AS 11/17/2022 19:32:19'!
+ERROR!
+
+!testRun: #ImportTest #test03ShouldFailImportingWithRepeatedRecordType stamp: 'AS 11/17/2022 19:32:19'!
+ERROR!
+
+!testRun: #ImportTest #test04ShouldFailImportingWithEmptyRecordType stamp: 'AS 11/17/2022 19:32:19'!
+ERROR!
+
+!testRun: #ImportTest #test05ShouldFailImportingWhenCustomerRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:32:19'!
+ERROR!
+
+!testRun: #ImportTest #test06ShouldFailImportingWhenCustomerRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:32:19'!
+ERROR!
+
+!testRun: #ImportTest #test07ShouldFailImportingWhenAddressRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:32:19'!
+ERROR!
+
+!testRun: #ImportTest #test08ShouldFailImportingWhenAddressRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:32:19'!
+ERROR!
+
+!testRun: #ImportTest #test09ShouldFailImportingAddressWithoutRespectiveCustomer stamp: 'AS 11/17/2022 19:32:19'!
+ERROR!
+
+!testRun: #ImportTest #test02ShouldFailImportingInvalidRecordType stamp: 'AS 11/17/2022 19:32:21'!
+ERROR!
+!ImportTest methodsFor: 'assertions' stamp: 'AS 11/17/2022 19:32:26' prior: 50555596!
+assertNoCustomerWasImported
+
+	^ self assert: 0 equals: system numberOfCustomers! !
+
+!testRun: #ImportTest #test02ShouldFailImportingInvalidRecordType stamp: 'AS 11/17/2022 19:32:29'!
+PASSED!
+
+!testRun: #ImportTest #test03ShouldFailImportingWithRepeatedRecordType stamp: 'AS 11/17/2022 19:32:30'!
+PASSED!
+
+!testRun: #ImportTest #test04ShouldFailImportingWithEmptyRecordType stamp: 'AS 11/17/2022 19:32:31'!
+PASSED!
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/17/2022 19:32:31'!
+PASSED!
+
+!testRun: #ImportTest #test02ShouldFailImportingInvalidRecordType stamp: 'AS 11/17/2022 19:32:31'!
+PASSED!
+
+!testRun: #ImportTest #test03ShouldFailImportingWithRepeatedRecordType stamp: 'AS 11/17/2022 19:32:31'!
+PASSED!
+
+!testRun: #ImportTest #test04ShouldFailImportingWithEmptyRecordType stamp: 'AS 11/17/2022 19:32:31'!
+PASSED!
+
+!testRun: #ImportTest #test05ShouldFailImportingWhenCustomerRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:32:31'!
+PASSED!
+
+!testRun: #ImportTest #test06ShouldFailImportingWhenCustomerRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:32:31'!
+PASSED!
+
+!testRun: #ImportTest #test07ShouldFailImportingWhenAddressRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:32:31'!
+ERROR!
+
+!testRun: #ImportTest #test08ShouldFailImportingWhenAddressRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:32:31'!
+ERROR!
+
+!testRun: #ImportTest #test09ShouldFailImportingAddressWithoutRespectiveCustomer stamp: 'AS 11/17/2022 19:32:31'!
+ERROR!
+
+!testRun: #ImportTest #test07ShouldFailImportingWhenAddressRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:32:33'!
+ERROR!
+!TransientCustomerSystem methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:34:29' overrides: 50556440!
+numberOfAddresses
+	self shouldBeImplemented.! !
+!TransientCustomerSystem methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:38:08' prior: 50556746 overrides: 50556440!
+numberOfAddresses
+	
+	customers inject: 0 into: [:numberOfAddresses :customer | customer addresses size] ! !
+
+!testRun: #ImportTest #test07ShouldFailImportingWhenAddressRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:38:09'!
+ERROR!
+!ImportTest methodsFor: 'assertions' stamp: 'AS 11/17/2022 19:38:18' prior: 50555590!
+assertNoAddressWasImported
+
+	^ self assert: 0 equals: system numberOfAddresses! !
+
+!testRun: #CollectionTest #testAsCommaSeparatedOnWorksAsCommaStringAnd stamp: 'AS 11/17/2022 19:38:21'!
+PASSED!
+
+!testRun: #CollectionTest #testAsCommaStringAndDoesNotAddAnythingWhenEmpty stamp: 'AS 11/17/2022 19:38:21'!
+PASSED!
+
+!testRun: #CollectionTest #testAsCommaStringAndDoesNotAddAnythingWhenHasOneElement stamp: 'AS 11/17/2022 19:38:21'!
+PASSED!
+
+!testRun: #CollectionTest #testAsCommaStringAndSeparatesWithAndWhenTwoOneElements stamp: 'AS 11/17/2022 19:38:21'!
+PASSED!
+
+!testRun: #CollectionTest #testAsCommaStringAndSeparatesWithCommaButLastOneWithAndWhenMoreThanTwoElements stamp: 'AS 11/17/2022 19:38:21'!
+PASSED!
+
+!testRun: #CollectionTest #testAverageFailsWhenTheCollectionIsEmpty stamp: 'AS 11/17/2022 19:38:21'!
+PASSED!
+
+!testRun: #CollectionTest #testAverageIfEmptyCalculatesItAsUsualWhenTheCollectionIsNotEmpty stamp: 'AS 11/17/2022 19:38:21'!
+PASSED!
+
+!testRun: #CollectionTest #testAverageIfEmptyEvaluatesEmptyBlockWhenTheCollectionIsEmpty stamp: 'AS 11/17/2022 19:38:21'!
+PASSED!
+
+!testRun: #CollectionTest #testGroupByHavingSelectsTheResultOfGroupBy stamp: 'AS 11/17/2022 19:38:21'!
+PASSED!
+
+!testRun: #CollectionTest #testGroupByReturnsADictionaryThatGroupsACollectionByThePluggableKey stamp: 'AS 11/17/2022 19:38:21'!
+PASSED!
+
+!testRun: #CollectionTest #testIsCollection stamp: 'AS 11/17/2022 19:38:21'!
+PASSED!
+
+!testRun: #CollectionTest #testItMaintainsTheSameCollectionSpecies stamp: 'AS 11/17/2022 19:38:21'!
+PASSED!
+
+!testRun: #CollectionTest #testSetEquality stamp: 'AS 11/17/2022 19:38:21'!
+PASSED!
+
+!testRun: #CollectionTest #testWhenCollectionContainsASingleLevelOfElementsItReturnsTheSameCollection stamp: 'AS 11/17/2022 19:38:21'!
+PASSED!
+
+!testRun: #CollectionTest #testWhenCollectionContainsMoreThanTwoLevelsltReturnsTheElementsOfAllNestedCollections stamp: 'AS 11/17/2022 19:38:21'!
+PASSED!
+
+!testRun: #CollectionTest #testWhenCollectionContainsStringCollectionsItDoesNotFlattenTheStrings stamp: 'AS 11/17/2022 19:38:21'!
+PASSED!
+
+!testRun: #CollectionTest #testWhenCollectionContainsStringsItReturnsTheSameCollection stamp: 'AS 11/17/2022 19:38:21'!
+PASSED!
+
+!testRun: #CollectionTest #testWhenCollectionContainsTwoLevelsOfElementsItReturnsTheElementsOfAllNestedCollections stamp: 'AS 11/17/2022 19:38:21'!
+PASSED!
+
+!testRun: #CollectionTest #testWhenCollectionIsEmptyItReturnsTheSameCollection stamp: 'AS 11/17/2022 19:38:21'!
+PASSED!
+
+!testRun: #CollectionTest #testsAverageWorksWithABlock stamp: 'AS 11/17/2022 19:38:21'!
+PASSED!
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/17/2022 19:38:30'!
+PASSED!
+
+!testRun: #ImportTest #test02ShouldFailImportingInvalidRecordType stamp: 'AS 11/17/2022 19:38:30'!
+PASSED!
+
+!testRun: #ImportTest #test03ShouldFailImportingWithRepeatedRecordType stamp: 'AS 11/17/2022 19:38:30'!
+PASSED!
+
+!testRun: #ImportTest #test04ShouldFailImportingWithEmptyRecordType stamp: 'AS 11/17/2022 19:38:30'!
+PASSED!
+
+!testRun: #ImportTest #test05ShouldFailImportingWhenCustomerRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:38:30'!
+PASSED!
+
+!testRun: #ImportTest #test06ShouldFailImportingWhenCustomerRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:38:30'!
+PASSED!
+
+!testRun: #ImportTest #test07ShouldFailImportingWhenAddressRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:38:30'!
+FAILURE!
+
+!testRun: #ImportTest #test08ShouldFailImportingWhenAddressRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:38:30'!
+FAILURE!
+
+!testRun: #ImportTest #test09ShouldFailImportingAddressWithoutRespectiveCustomer stamp: 'AS 11/17/2022 19:38:30'!
+FAILURE!
+
+!testRun: #ImportTest #test07ShouldFailImportingWhenAddressRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:38:32'!
+FAILURE!
+!TransientCustomerSystem methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:38:48' prior: 50556752 overrides: 50556440!
+numberOfAddresses
+	
+	^customers inject: 0 into: [:numberOfAddresses :customer | customer addresses size] ! !
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/17/2022 19:38:56'!
+PASSED!
+
+!testRun: #ImportTest #test02ShouldFailImportingInvalidRecordType stamp: 'AS 11/17/2022 19:38:56'!
+PASSED!
+
+!testRun: #ImportTest #test03ShouldFailImportingWithRepeatedRecordType stamp: 'AS 11/17/2022 19:38:56'!
+PASSED!
+
+!testRun: #ImportTest #test04ShouldFailImportingWithEmptyRecordType stamp: 'AS 11/17/2022 19:38:56'!
+PASSED!
+
+!testRun: #ImportTest #test05ShouldFailImportingWhenCustomerRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:38:56'!
+PASSED!
+
+!testRun: #ImportTest #test06ShouldFailImportingWhenCustomerRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:38:56'!
+PASSED!
+
+!testRun: #ImportTest #test07ShouldFailImportingWhenAddressRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:38:56'!
+ERROR!
+
+!testRun: #ImportTest #test08ShouldFailImportingWhenAddressRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:38:56'!
+ERROR!
+
+!testRun: #ImportTest #test09ShouldFailImportingAddressWithoutRespectiveCustomer stamp: 'AS 11/17/2022 19:38:56'!
+PASSED!
+
+!testRun: #ImportTest #test07ShouldFailImportingWhenAddressRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:38:57'!
+ERROR!
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/17/2022 19:39:04' prior: 50556249!
+test07ShouldFailImportingWhenAddressRecordSizeIsSmallerThanExpected
+
+	self should: [(CustomerImporter from: self smallerThanExpectedAddressRecordSizeData using: system) value ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: CustomerImporter differentThanExpectedAddressRecordSizeErrorMessage equals: anError messageText.
+							self assertNoAddressWasImported.   
+							self assert: 1 equals:  system numberOfCustomers.].! !
+!ImportTest methodsFor: 'tests' stamp: 'AS 11/17/2022 19:39:25' prior: 50556267!
+test08ShouldFailImportingWhenAddressRecordSizeIsBiggerThanExpected
+
+	self should: [(CustomerImporter from: self biggerThanExpectedAddressRecordSizeData using: system) value ]
+		raise: Error - MessageNotUnderstood 
+		withExceptionDo: [:anError | self assert: CustomerImporter differentThanExpectedAddressRecordSizeErrorMessage equals: anError messageText.
+							self assertNoAddressWasImported.   
+							self assert: 1 equals: system numberOfCustomers.].! !
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/17/2022 19:39:32'!
+PASSED!
+
+!testRun: #ImportTest #test02ShouldFailImportingInvalidRecordType stamp: 'AS 11/17/2022 19:39:32'!
+PASSED!
+
+!testRun: #ImportTest #test03ShouldFailImportingWithRepeatedRecordType stamp: 'AS 11/17/2022 19:39:32'!
+PASSED!
+
+!testRun: #ImportTest #test04ShouldFailImportingWithEmptyRecordType stamp: 'AS 11/17/2022 19:39:32'!
+PASSED!
+
+!testRun: #ImportTest #test05ShouldFailImportingWhenCustomerRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:39:32'!
+PASSED!
+
+!testRun: #ImportTest #test06ShouldFailImportingWhenCustomerRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:39:32'!
+PASSED!
+
+!testRun: #ImportTest #test07ShouldFailImportingWhenAddressRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:39:32'!
+PASSED!
+
+!testRun: #ImportTest #test08ShouldFailImportingWhenAddressRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:39:32'!
+PASSED!
+
+!testRun: #ImportTest #test09ShouldFailImportingAddressWithoutRespectiveCustomer stamp: 'AS 11/17/2022 19:39:32'!
+PASSED!
+!ImportTest methodsFor: 'setUp/tearDown' stamp: 'AS 11/17/2022 19:39:42' prior: 50556500 overrides: 16961394!
+setUp
+	
+	system := PersistentCustomerSystem new.
+	system start.
+	system beginTransaction.
+! !
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/17/2022 19:39:43'!
+FAILURE!
+
+!testRun: #ImportTest #test02ShouldFailImportingInvalidRecordType stamp: 'AS 11/17/2022 19:39:44'!
+FAILURE!
+
+!testRun: #ImportTest #test03ShouldFailImportingWithRepeatedRecordType stamp: 'AS 11/17/2022 19:39:44'!
+FAILURE!
+
+!testRun: #ImportTest #test04ShouldFailImportingWithEmptyRecordType stamp: 'AS 11/17/2022 19:39:44'!
+FAILURE!
+
+!testRun: #ImportTest #test05ShouldFailImportingWhenCustomerRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:39:44'!
+FAILURE!
+
+!testRun: #ImportTest #test06ShouldFailImportingWhenCustomerRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:39:44'!
+FAILURE!
+
+!testRun: #ImportTest #test07ShouldFailImportingWhenAddressRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:39:44'!
+FAILURE!
+
+!testRun: #ImportTest #test08ShouldFailImportingWhenAddressRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:39:44'!
+FAILURE!
+
+!testRun: #ImportTest #test09ShouldFailImportingAddressWithoutRespectiveCustomer stamp: 'AS 11/17/2022 19:39:45'!
+FAILURE!
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/17/2022 19:39:47'!
+FAILURE!
+!PersistentCustomerSystem methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:40:04' prior: 50555580 overrides: 50556445!
+numberOfCustomers
+
+	^(session selectAllOfType: Customer) size! !
+!PersistentCustomerSystem methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:40:17' prior: 50555585 overrides: 50556440!
+numberOfAddresses
+
+	^(session selectAllOfType: Address) size! !
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/17/2022 19:40:22'!
+PASSED!
+
+!testRun: #ImportTest #test02ShouldFailImportingInvalidRecordType stamp: 'AS 11/17/2022 19:40:22'!
+PASSED!
+
+!testRun: #ImportTest #test03ShouldFailImportingWithRepeatedRecordType stamp: 'AS 11/17/2022 19:40:22'!
+PASSED!
+
+!testRun: #ImportTest #test04ShouldFailImportingWithEmptyRecordType stamp: 'AS 11/17/2022 19:40:23'!
+PASSED!
+
+!testRun: #ImportTest #test05ShouldFailImportingWhenCustomerRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:40:23'!
+PASSED!
+
+!testRun: #ImportTest #test06ShouldFailImportingWhenCustomerRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:40:23'!
+PASSED!
+
+!testRun: #ImportTest #test07ShouldFailImportingWhenAddressRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:40:23'!
+PASSED!
+
+!testRun: #ImportTest #test08ShouldFailImportingWhenAddressRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:40:23'!
+PASSED!
+
+!testRun: #ImportTest #test09ShouldFailImportingAddressWithoutRespectiveCustomer stamp: 'AS 11/17/2022 19:40:24'!
+PASSED!
+!ImportTest methodsFor: 'setUp/tearDown' stamp: 'AS 11/17/2022 19:40:44' prior: 50556998 overrides: 16961394!
+setUp
+	
+	system := TransientCustomerSystem new.
+	system start.
+	system beginTransaction.
+! !
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/17/2022 19:40:44'!
+PASSED!
+
+!testRun: #ImportTest #test02ShouldFailImportingInvalidRecordType stamp: 'AS 11/17/2022 19:40:44'!
+PASSED!
+
+!testRun: #ImportTest #test03ShouldFailImportingWithRepeatedRecordType stamp: 'AS 11/17/2022 19:40:44'!
+PASSED!
+
+!testRun: #ImportTest #test04ShouldFailImportingWithEmptyRecordType stamp: 'AS 11/17/2022 19:40:44'!
+PASSED!
+
+!testRun: #ImportTest #test05ShouldFailImportingWhenCustomerRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:40:44'!
+PASSED!
+
+!testRun: #ImportTest #test06ShouldFailImportingWhenCustomerRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:40:44'!
+PASSED!
+
+!testRun: #ImportTest #test07ShouldFailImportingWhenAddressRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:40:44'!
+PASSED!
+
+!testRun: #ImportTest #test08ShouldFailImportingWhenAddressRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:40:44'!
+PASSED!
+
+!testRun: #ImportTest #test09ShouldFailImportingAddressWithoutRespectiveCustomer stamp: 'AS 11/17/2022 19:40:44'!
+PASSED!
+
+!classDefinition: #Enviroment category: 'CustomerImporter' stamp: 'AS 11/17/2022 19:41:08'!
+Object subclass: #Enviroment
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CustomerImporter'!
+!ImportTest methodsFor: 'setUp/tearDown' stamp: 'AS 11/17/2022 19:41:05' prior: 50557087 overrides: 16961394!
+setUp
+	
+	system := Enviroment current new.
+	system start.
+	system beginTransaction.
+! !
+!Enviroment class methodsFor: 'instance creation' stamp: 'AS 11/17/2022 19:41:17'!
+current
+	"DO NOT FORGET TO RENAME COLLABORATORS AND REMOVE THIS COMMENT!!!!"
+	self shouldBeImplemented.
+	^self new initializeCurrent! !
+!Enviroment class methodsFor: 'instance creation' stamp: 'AS 11/17/2022 19:43:10' prior: 50557140!
+current
+	^self allSubclasses detect: [:subClass | subClass canHandle: (Smalltalk at: #ENV)]! !
+!Enviroment class methodsFor: 'instance creation' stamp: 'AS 11/17/2022 19:43:19' prior: 50557148!
+current
+	^(self allSubclasses detect: [:subClass | subClass canHandle: (Smalltalk at: #ENV)]) new! !
+
+Enviroment subclass: #PersistentEnviroment
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CustomerImporter'!
+
+!classDefinition: #PersistentEnviroment category: 'CustomerImporter' stamp: 'AS 11/17/2022 19:43:39'!
+Enviroment subclass: #PersistentEnviroment
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CustomerImporter'!
+
+Enviroment subclass: #TransientEnviroment
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CustomerImporter'!
+
+!classDefinition: #TransientEnviroment category: 'CustomerImporter' stamp: 'AS 11/17/2022 19:43:43'!
+Enviroment subclass: #TransientEnviroment
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	category: 'CustomerImporter'!
+!ImportTest methodsFor: 'setUp/tearDown' stamp: 'AS 11/17/2022 19:44:28' prior: 50557134 overrides: 16961394!
+setUp
+	
+	system := (Enviroment current) system.
+	system start.
+	system beginTransaction.
+! !
+
+----SNAPSHOT----(17 November 2022 19:44:57) CuisUniversity-5481.image priorSource: 7189439!
+!ImportTest methodsFor: 'setUp/tearDown' stamp: 'AS 11/17/2022 19:45:18' prior: 50557187 overrides: 16961394!
+setUp
+	self halt.
+	system := (Enviroment current) system.
+	system start.
+	system beginTransaction.
+! !
+
+self allSubclasses!
+
+Smalltalk at: #ENV put: 'DEV'!
+
+Smalltalk at: #ENV!
+!PersistentEnviroment class methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:47:08'!
+canHandle: aString 
+	self shouldBeImplemented.! !
+!PersistentEnviroment class methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:47:27' prior: 50557206!
+canHandle: anEnviromentVariable 
+	self shouldBeImplemented.! !
+!PersistentEnviroment class methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:47:43' prior: 50557212!
+canHandle: anEnviromentVariable 
+	^#INT = 	anEnviromentVariable ! !
+!TransientEnviroment class methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:47:50'!
+canHandle: aString 
+	self shouldBeImplemented.! !
+!TransientEnviroment class methodsFor: 'as yet unclassified' stamp: 'AS 11/17/2022 19:48:12' prior: 50557224!
+canHandle: anEnviromentVariable 
+	^#DEV = anEnviromentVariable.! !
+!TransientEnviroment methodsFor: 'system' stamp: 'AS 11/17/2022 19:48:21'!
+system
+	self shouldBeImplemented.! !
+!TransientEnviroment methodsFor: 'system' stamp: 'AS 11/17/2022 19:48:43' prior: 50557234!
+system
+	^TransientCustomerSystem new! !
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/17/2022 19:48:44'!
+PASSED!
+!ImportTest methodsFor: 'setUp/tearDown' stamp: 'AS 11/17/2022 19:48:54' prior: 50557197 overrides: 16961394!
+setUp
+	
+	system := (Enviroment current) system.
+	system start.
+	system beginTransaction.
+! !
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/17/2022 19:48:55'!
+PASSED!
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/17/2022 19:48:56'!
+PASSED!
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/17/2022 19:48:56'!
+PASSED!
+
+!testRun: #ImportTest #test02ShouldFailImportingInvalidRecordType stamp: 'AS 11/17/2022 19:48:56'!
+PASSED!
+
+!testRun: #ImportTest #test02ShouldFailImportingInvalidRecordType stamp: 'AS 11/17/2022 19:48:56'!
+PASSED!
+
+!testRun: #ImportTest #test03ShouldFailImportingWithRepeatedRecordType stamp: 'AS 11/17/2022 19:48:56'!
+PASSED!
+
+!testRun: #ImportTest #test03ShouldFailImportingWithRepeatedRecordType stamp: 'AS 11/17/2022 19:48:56'!
+PASSED!
+
+!testRun: #ImportTest #test04ShouldFailImportingWithEmptyRecordType stamp: 'AS 11/17/2022 19:48:56'!
+PASSED!
+
+!testRun: #ImportTest #test04ShouldFailImportingWithEmptyRecordType stamp: 'AS 11/17/2022 19:48:56'!
+PASSED!
+
+!testRun: #ImportTest #test05ShouldFailImportingWhenCustomerRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:48:56'!
+PASSED!
+
+!testRun: #ImportTest #test05ShouldFailImportingWhenCustomerRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:48:56'!
+PASSED!
+
+!testRun: #ImportTest #test06ShouldFailImportingWhenCustomerRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:48:56'!
+PASSED!
+
+!testRun: #ImportTest #test06ShouldFailImportingWhenCustomerRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:48:56'!
+PASSED!
+
+!testRun: #ImportTest #test07ShouldFailImportingWhenAddressRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:48:56'!
+PASSED!
+
+!testRun: #ImportTest #test07ShouldFailImportingWhenAddressRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:48:56'!
+PASSED!
+
+!testRun: #ImportTest #test08ShouldFailImportingWhenAddressRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:48:56'!
+PASSED!
+
+!testRun: #ImportTest #test08ShouldFailImportingWhenAddressRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:48:56'!
+PASSED!
+
+!testRun: #ImportTest #test09ShouldFailImportingAddressWithoutRespectiveCustomer stamp: 'AS 11/17/2022 19:48:56'!
+PASSED!
+
+!testRun: #ImportTest #test09ShouldFailImportingAddressWithoutRespectiveCustomer stamp: 'AS 11/17/2022 19:48:56'!
+PASSED!
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/17/2022 19:48:58'!
+PASSED!
+
+!testRun: #ImportTest #test02ShouldFailImportingInvalidRecordType stamp: 'AS 11/17/2022 19:48:58'!
+PASSED!
+
+!testRun: #ImportTest #test03ShouldFailImportingWithRepeatedRecordType stamp: 'AS 11/17/2022 19:48:58'!
+PASSED!
+
+!testRun: #ImportTest #test04ShouldFailImportingWithEmptyRecordType stamp: 'AS 11/17/2022 19:48:58'!
+PASSED!
+
+!testRun: #ImportTest #test05ShouldFailImportingWhenCustomerRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:48:58'!
+PASSED!
+
+!testRun: #ImportTest #test06ShouldFailImportingWhenCustomerRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:48:58'!
+PASSED!
+
+!testRun: #ImportTest #test07ShouldFailImportingWhenAddressRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:48:58'!
+PASSED!
+
+!testRun: #ImportTest #test08ShouldFailImportingWhenAddressRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:48:58'!
+PASSED!
+
+!testRun: #ImportTest #test09ShouldFailImportingAddressWithoutRespectiveCustomer stamp: 'AS 11/17/2022 19:48:58'!
+PASSED!
+
+Smalltalk at: #ENV put: 'INT'.!
+!PersistentEnviroment methodsFor: 'system' stamp: 'AS 11/17/2022 19:49:23'!
+system
+	self shouldBeImplemented.! !
+!PersistentEnviroment methodsFor: 'system' stamp: 'AS 11/17/2022 19:49:30' prior: 50557355!
+system
+	^PersistentCustomerSystem new.! !
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/17/2022 19:49:32'!
+PASSED!
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/17/2022 19:49:34'!
+PASSED!
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/17/2022 19:49:35'!
+PASSED!
+
+!testRun: #ImportTest #test02ShouldFailImportingInvalidRecordType stamp: 'AS 11/17/2022 19:49:35'!
+PASSED!
+
+!testRun: #ImportTest #test02ShouldFailImportingInvalidRecordType stamp: 'AS 11/17/2022 19:49:35'!
+PASSED!
+
+!testRun: #ImportTest #test03ShouldFailImportingWithRepeatedRecordType stamp: 'AS 11/17/2022 19:49:35'!
+PASSED!
+
+!testRun: #ImportTest #test03ShouldFailImportingWithRepeatedRecordType stamp: 'AS 11/17/2022 19:49:35'!
+PASSED!
+
+!testRun: #ImportTest #test04ShouldFailImportingWithEmptyRecordType stamp: 'AS 11/17/2022 19:49:35'!
+PASSED!
+
+!testRun: #ImportTest #test04ShouldFailImportingWithEmptyRecordType stamp: 'AS 11/17/2022 19:49:36'!
+PASSED!
+
+!testRun: #ImportTest #test05ShouldFailImportingWhenCustomerRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:49:36'!
+PASSED!
+
+!testRun: #ImportTest #test05ShouldFailImportingWhenCustomerRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:49:36'!
+PASSED!
+
+!testRun: #ImportTest #test06ShouldFailImportingWhenCustomerRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:49:36'!
+PASSED!
+
+!testRun: #ImportTest #test06ShouldFailImportingWhenCustomerRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:49:36'!
+PASSED!
+
+!testRun: #ImportTest #test07ShouldFailImportingWhenAddressRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:49:36'!
+PASSED!
+
+!testRun: #ImportTest #test07ShouldFailImportingWhenAddressRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:49:37'!
+PASSED!
+
+!testRun: #ImportTest #test08ShouldFailImportingWhenAddressRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:49:37'!
+PASSED!
+
+!testRun: #ImportTest #test08ShouldFailImportingWhenAddressRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:49:37'!
+PASSED!
+
+!testRun: #ImportTest #test09ShouldFailImportingAddressWithoutRespectiveCustomer stamp: 'AS 11/17/2022 19:49:37'!
+PASSED!
+
+!testRun: #ImportTest #test09ShouldFailImportingAddressWithoutRespectiveCustomer stamp: 'AS 11/17/2022 19:49:38'!
+PASSED!
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/17/2022 19:49:42'!
+PASSED!
+
+!testRun: #ImportTest #test02ShouldFailImportingInvalidRecordType stamp: 'AS 11/17/2022 19:49:43'!
+PASSED!
+
+!testRun: #ImportTest #test03ShouldFailImportingWithRepeatedRecordType stamp: 'AS 11/17/2022 19:49:43'!
+PASSED!
+
+!testRun: #ImportTest #test04ShouldFailImportingWithEmptyRecordType stamp: 'AS 11/17/2022 19:49:43'!
+PASSED!
+
+!testRun: #ImportTest #test05ShouldFailImportingWhenCustomerRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:49:43'!
+PASSED!
+
+!testRun: #ImportTest #test06ShouldFailImportingWhenCustomerRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:49:43'!
+PASSED!
+
+!testRun: #ImportTest #test07ShouldFailImportingWhenAddressRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:49:43'!
+PASSED!
+
+!testRun: #ImportTest #test08ShouldFailImportingWhenAddressRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:49:44'!
+PASSED!
+
+!testRun: #ImportTest #test09ShouldFailImportingAddressWithoutRespectiveCustomer stamp: 'AS 11/17/2022 19:49:44'!
+PASSED!
+
+Smalltalk at: #ENV put: 'DEV'.!
+
+!testRun: #ImportTest #test01Import stamp: 'AS 11/17/2022 19:49:56'!
+PASSED!
+
+!testRun: #ImportTest #test02ShouldFailImportingInvalidRecordType stamp: 'AS 11/17/2022 19:49:56'!
+PASSED!
+
+!testRun: #ImportTest #test03ShouldFailImportingWithRepeatedRecordType stamp: 'AS 11/17/2022 19:49:56'!
+PASSED!
+
+!testRun: #ImportTest #test04ShouldFailImportingWithEmptyRecordType stamp: 'AS 11/17/2022 19:49:56'!
+PASSED!
+
+!testRun: #ImportTest #test05ShouldFailImportingWhenCustomerRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:49:56'!
+PASSED!
+
+!testRun: #ImportTest #test06ShouldFailImportingWhenCustomerRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:49:56'!
+PASSED!
+
+!testRun: #ImportTest #test07ShouldFailImportingWhenAddressRecordSizeIsSmallerThanExpected stamp: 'AS 11/17/2022 19:49:56'!
+PASSED!
+
+!testRun: #ImportTest #test08ShouldFailImportingWhenAddressRecordSizeIsBiggerThanExpected stamp: 'AS 11/17/2022 19:49:56'!
+PASSED!
+
+!testRun: #ImportTest #test09ShouldFailImportingAddressWithoutRespectiveCustomer stamp: 'AS 11/17/2022 19:49:56'!
+PASSED!
+
+----SNAPSHOT----(17 November 2022 19:50:04) CuisUniversity-5481.image priorSource: 7217340!
